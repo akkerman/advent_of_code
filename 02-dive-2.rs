@@ -11,17 +11,19 @@ fn main() {
     for (_index, line) in reader.lines().enumerate() {
         let line = line.unwrap();
         let mut iter = line.split_whitespace();
-        let command = iter.next().unwrap();
-        let x = iter.next().unwrap();
-        let x = x.parse::<i32>().unwrap();
+        let command = iter.next();
+        let num = iter.next().map(|s| s.parse::<i32>());
 
-        if command == "down" {
-            aim = aim + x;
-        } else if command == "up" {
-            aim = aim - x;
-        } else if command == "forward" {
-            forward = forward + x;
-            depth = depth + (aim * x);
+        match (command, num) {
+            (Some("down"), Some(Ok(x))) =>
+                aim = aim + x,
+            (Some("up"), Some(Ok(x)) ) => 
+                aim = aim - x,
+            (Some("forward"), Some(Ok(x))) => {
+                forward = forward + x;
+                depth = depth + (aim * x);
+            },
+            _ => (),
         }
     }
 
