@@ -10,20 +10,20 @@ fn main() {
     let reader = BufReader::new(file);
     for (_index, line) in reader.lines().enumerate() {
         let line = line.unwrap();
-        let mut iter = line.split_whitespace();
-        let command = iter.next();
-        let num = iter.next().map(|s| s.parse::<i32>());
+        let parts = line.split_once(" ").map(|(s,i)| (s, i.parse::<i32>()));
 
-        match (command, num) {
-            (Some("down"), Some(Ok(x))) =>
-                aim = aim + x,
-            (Some("up"), Some(Ok(x)) ) => 
-                aim = aim - x,
-            (Some("forward"), Some(Ok(x))) => {
-                forward = forward + x;
-                depth = depth + (aim * x);
-            },
-            _ => (),
+        if let Some((command, Ok(x))) = parts {
+            match command {
+                "down" =>
+                    aim = aim + x,
+                "up" => 
+                    aim = aim - x,
+                "forward"=> {
+                    forward = forward + x;
+                    depth = depth + (aim * x);
+                },
+                _ => (),
+            }
         }
     }
 
