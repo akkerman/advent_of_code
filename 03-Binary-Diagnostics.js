@@ -1,69 +1,43 @@
-R = require('ramda')
+const { add, filter, gt, join, lte, map, pipe, prop, propEq, reduce, split, subtract, sum, zipWith, } = require('ramda')
 
 const readline = require('readline')
 const rl = readline.createInterface({ input: process.stdin })
-
-let tally = [ 0,0,0,0,0,0,0,0,0,0,0,0 ]
-let lines = []
-
-const add = (a,b) => {
-  return  Number.parseInt(a) + Number.parseInt(b)
-}
+const lines = []
 
 rl.on("line", data => {
-const input = data.split('')
-  tally = R.zipWith(add, input, tally)
-  lines.push(data)
+  const input = pipe(split(''), map(s=>Number.parseInt(s)))(data)
+
+  lines.push(input)
 })
 
 rl.on('close', () => {
-  const half = lines.length / 2
-  console.log(tally)
-
-  const rates = tally.reduce(({gamma, epsilon}, curr) => {
-    if (curr > half) {
-      return { gamma: `${gamma}1`, epsilon: `${epsilon}0` }
-    } else {
-      return { gamma: `${gamma}0`, epsilon: `${epsilon}1` }
-    }
-
-  }, {gamma:"", epsilon:""})
-
-  const answer = { }
-  answer.gamma = Number.parseInt(rates.gamma, 2)
-  answer.epsilon = Number.parseInt(rates.epsilon, 2)
-  answer.partOne = answer.gamma * answer.epsilon
-
-  console.log({rates, answer})
-
-  const max =  (numZeros, numOnes) => numZeros <= numOnes ? '1' : '0'
-  const min =  (numZeros, numOnes) => numZeros <= numOnes ? '0' : '1'
-
-  const oxygen = filterLines( max, lines.slice(0), 0)
-  const co2 = filterLines(min, lines.slice(0), 0)
-
-  console.log({
-    oxygen,  // 10111, or 23 in decimal.
-    co2,     // 01010, or 10 in decimal.
-  }) 
-
-  answer.oxygen = Number.parseInt(oxygen,2)
-  answer.co2 = Number.parseInt(co2,2)
-  answer.partTwo = answer.oxygen * answer.co2 // 230
-
-
-  console.log({answer})
-
+  console.log('partOne', partOne(lines))
+  console.log('partTwo', partTwo(lines))
 })
 
-function filterLines(pred, lines, idx) {
-  const numOnes = lines.reduce((acc, line) => (line.charAt(idx) === '1' ? acc+1 : acc), 0)
-  const numZeros = lines.length - numOnes
-  const bitToKeep = pred(numZeros, numOnes)
-  const filtered = lines.filter(l => l.charAt(idx) == bitToKeep)
+const toi = pipe(join(''), s => Number.parseInt(s, 2))
 
-  if (filtered.length === 1) {
-    return filtered[0]
+function partOne(lines) {
+  const tally = reduce(zipWith(add), Array(12).fill(0))(lines)
+  const half = lines.length / 2
+  const gamma = map(i => +(half < i), tally)
+  const epsilon = zipWith(subtract, Array(12).fill(1), gamma)
+  return toi(gamma) * toi(epsilon) // 198
+}
+
+function partTwo(lines) {
+  const oxygen = filterLines(lte, lines)
+  const co2 = filterLines(gt, lines)
+  return  toi(oxygen) * toi(co2) // 230
+}
+
+function filterLines(pred, lines) {
+  return solve(lines)
+  function solve (lines, idx=0) {
+    const numOnes = pipe(map(prop(idx)), sum)(lines)
+    const numZeroes = lines.length - numOnes
+    const filtered = filter(propEq(idx, +(pred(numZeroes, numOnes))))(lines)
+    if (filtered.length === 1) return filtered[0]
+    return solve(filtered, idx+1)
   }
-  return filterLines(pred, filtered, idx+1)
 }
