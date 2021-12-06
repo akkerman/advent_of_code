@@ -31,11 +31,7 @@ partOne :: [[Int]] -> Int
 partOne xss = (bintodec gamma) * (bintodec epsilon)
   where 
       half = div (length xss) 2
-<<<<<<< HEAD
       gamma = map (half <) $ tally xss
-=======
-      gamma = map (\i -> half < i) $ tally xss
->>>>>>> d242b37 (Day 3: Binary Diagnostics in haskell)
       epsilon = map not gamma
 
 partTwo :: [[Int]] -> Int
