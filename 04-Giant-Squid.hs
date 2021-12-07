@@ -20,7 +20,7 @@ parseBoards = splitlist 5 . map toiList
 -- | - a list of numbers to be called/drawn
 -- | - a list of bingo boards
 parseInput :: [String] -> (Draws, [Board])
-parseInput input = (drawSequence, boards) 
+parseInput input = (drawSequence, boards)
   where
     drawSequence = atoiList $ head input
     boards = parseBoards $ filter (/="") $ tail input
@@ -29,9 +29,9 @@ parseInput input = (drawSequence, boards)
 -- | all numbers in a row or column have been drawn
 isWinningBoard :: Draws -> Board -> Bool
 isWinningBoard draws board = winningRows || winningColumns
-  where 
+  where
     sortedDraws = sort draws
-    winningRows = any isWin board 
+    winningRows = any isWin board
     winningColumns = any isWin $ transpose board
     isWin nums = isSubsequenceOf (sort nums) sortedDraws
 
@@ -39,21 +39,21 @@ isWinningBoard draws board = winningRows || winningColumns
 -- | calculate the number of draws needed to win
 play :: Draws -> Board -> (Board, Int)
 play draws board = (board, numDraws)
-   where 
+   where
      (numDraws, _) = foldl step (0, False) [1..(length draws)]
      step (numDraws, True)  _ = (numDraws, True)
-     step (_,        False) n = (n, (isWinningBoard (take n draws) board))
+     step (_,        False) n = (n, isWinningBoard (take n draws) board)
 
 -- | The score of the winning board is
 -- | the sum of all unmarked numbers on that board
 -- | multiply that sum by the number that was just called when the board won
 score :: [Int] -> (Board, Int) -> Int
 score draws (board, numDraws) = boardScore * winningDraw
-  where 
-    boardScore = foldl (+) 0 unmarkedNumbers 
+  where
+    boardScore = sum unmarkedNumbers
     winningDraw = draws !! (numDraws-1)
     drawsToWin = take numDraws draws
-    unmarkedNumbers = filter (\i -> notElem i drawsToWin) $ flatten board
+    unmarkedNumbers = filter (`notElem` drawsToWin) $ flatten board
 
 -- | Calculate the number of draws needed to win for all board
 -- | sort ascending by number of draws
@@ -65,6 +65,6 @@ main = do
   let input = lines contents
       (drawSequence, boards) = parseInput input
       result = playAll drawSequence boards
-     
+
   print $ score drawSequence $ head result
   print $ score drawSequence $ last result
