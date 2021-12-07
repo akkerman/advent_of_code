@@ -1,6 +1,6 @@
 module Whales where
 
-import Data.List (sortOn)
+import Data.List (sortOn,nub)
 import Utils (atoiList)
 
 type CrabPosition = Int
@@ -22,7 +22,7 @@ incfuel xs pos = map steptofuel $ steps xs pos
 solve :: FuelCalculator -> [CrabPosition] -> (CrabPosition, FuelCost)
 solve calculateFuel input = head $ sortOn snd positionsWithFuel
   where
-    positionsWithFuel = map totalFuelOnPosition input
+    positionsWithFuel = map totalFuelOnPosition $ nub input
     totalFuelOnPosition pos = (pos, sum $ calculateFuel input pos)
 
 main = do
