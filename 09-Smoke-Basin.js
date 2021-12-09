@@ -23,9 +23,8 @@ function cell(row,col) {
   return lines[row][col]
 }
 
-function isLow(row, col) {
-  const current = cell(row,col)
-  const nums = [current]
+function getNeighbours(row, col) {
+  const nums = []
   if (row > 0) {
     nums.push(cell(row-1, col))
   }
@@ -38,9 +37,14 @@ function isLow(row, col) {
   if (col < maxCol) {
     nums.push(cell(row, col+1))
   }
+  return nums
+}
 
-  if (nums.filter(n => n === current).length > 1) return false
-  return current === Math.min(...nums)
+function isLow(row, col) {
+  const current = cell(row,col)
+  const neighbours = getNeighbours(row,col)
+
+  return current < Math.min(...neighbours)
 }
 
 function partOne(lines) {
@@ -48,7 +52,6 @@ function partOne(lines) {
   for (let row = 0; row <= maxRow; row +=1 ) {
     for (let col = 0; col <= maxCol; col +=1 ) {
       if (isLow(row, col)) {
-        console.log(row,col)
         sum+=cell(row, col) + 1
       }
     }
