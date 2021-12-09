@@ -13,7 +13,7 @@ splitlist  :: Int -> [a] -> [[a]]
 splitlist n xs = sp xs
     where
         sp [] = []
-        sp xs = [take n xs] ++ sp (drop n xs)
+        sp xs = take n xs : sp (drop n xs)
 
 -- | flatten a list of list into one list
 flatten :: [[a]] -> [a]
