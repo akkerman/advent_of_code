@@ -15,29 +15,33 @@ rl.on("line", data => {
 
 rl.on('close', () => {
   console.log({maxRow, maxCol})
-  console.log('partOne', partOne(lines))
-  console.log('partTwo', partTwo(lines))
+  console.log('partOne', partOne())
+  console.log('partTwo', partTwo())
 })
 
-function cell(row,col) {
-  return lines[row][col]
-}
+const cell = (row,col) => lines[row][col]
+const coordValue = (row,col) => ({row, col, value: cell(row,col)})
 
-function getNeighbours(row, col) {
-  const nums = []
-  if (row > 0) {
-    nums.push(cell(row-1, col))
-  }
-  if (row < maxRow) {
-    nums.push(cell(row+1, col))
-  }
-  if (col > 0) {
-    nums.push(cell(row, col-1))
-  }
-  if (col < maxCol) {
-    nums.push(cell(row, col+1))
-  }
-  return nums
+const getNeighbours = makeGetNeigbours(cell)
+const getNeighboursWithCoord = makeGetNeigbours(coordValue)
+
+function makeGetNeigbours (cell) {
+    return function getNeighbours(row, col) {
+      const neighbours = []
+      if (row > 0) {
+        neighbours.push(cell(row-1, col))
+      }
+      if (row < maxRow) {
+        neighbours.push(cell(row+1, col))
+      }
+      if (col > 0) {
+        neighbours.push(cell(row, col-1))
+      }
+      if (col < maxCol) {
+        neighbours.push(cell(row, col+1))
+      }
+      return neighbours
+    }
 }
 
 function isLow(row, col) {
@@ -47,7 +51,25 @@ function isLow(row, col) {
   return current < Math.min(...neighbours)
 }
 
-function partOne(lines) {
+function coordInBassin(coord, bassin) {
+  return !!bassin.find(({row,col}) => row === coord.row && col === coord.col)
+}
+
+function createBassin(row,col) {
+  return solve(coordValue(row,col))
+
+  function solve(cv, bassin=[]) {
+    if (coordInBassin(cv,bassin) || cv.value === 9) return bassin
+    let newBassin = bassin.concat(cv)
+    const nbs = getNeighboursWithCoord(cv.row, cv.col)
+    for (let nb of nbs) {
+      newBassin = solve(nb, newBassin)
+    }
+    return newBassin
+  }
+}
+
+function partOne() {
   let sum = 0
   for (let row = 0; row <= maxRow; row +=1 ) {
     for (let col = 0; col <= maxCol; col +=1 ) {
@@ -59,6 +81,15 @@ function partOne(lines) {
   return sum
 }
 
-function partTwo(lines) {
-  return 'todo'
+function partTwo() {
+  const bassins = []
+  outer:for (let row = 0; row <= maxRow; row +=1 ) {
+    for (let col = 0; col <= maxCol; col +=1 ) {
+      if (isLow(row, col)) {
+        bassins.push(createBassin(row,col))
+      }
+    }
+  }
+
+  return bassins.map(b => b.length).sort((a,b)=>b-a).slice(0,3).reduce((a,c) => a*c,1)
 }
