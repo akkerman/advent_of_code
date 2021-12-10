@@ -31,19 +31,16 @@ const toSortedArrays = str => str.split('').sort()
 function analyze(signalPatterns) {
   const patterns = signalPatterns.map(toSortedArrays)
 
-  const one = patterns.find(s => s.length === 2)
-  const four = patterns.find(s => s.length === 4)
+  const one   = patterns.find(s => s.length === 2)
+  const four  = patterns.find(s => s.length === 4)
   const seven = patterns.find(s => s.length === 3)
   const eight = patterns.find(s => s.length === 7)
-
   const three = patterns.find(s => s.length === 5 && includes(s, one))
-
-  const six = patterns.find(s => s.length === 6 && (!s.includes(one[0]) || !s.includes(one[1])))
-  const nine = patterns.find(s => s.length === 6 && includes(s, three))
-  const zero = patterns.find(s => s.length === 6 && s !== six && s !== nine)
-
-  const five = patterns.find(s => s.length == 5 && includes(nine, s) && s !== three)
-  const two = patterns.find(s => s.length == 5 && s !== three && s !== five)
+  const six   = patterns.find(s => s.length === 6 && (!s.includes(one[0]) || !s.includes(one[1])))
+  const nine  = patterns.find(s => s.length === 6 && includes(s, three))
+  const zero  = patterns.find(s => s.length === 6 && s !== six && s !== nine)
+  const five  = patterns.find(s => s.length === 5 && s !== three && includes(nine, s))
+  const two   = patterns.find(s => s.length === 5 && s !== three && s !== five)
 
   const analysis = {
     zero, one, two, three, four, five, six, seven, eight, nine
