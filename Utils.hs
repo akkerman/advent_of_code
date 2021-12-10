@@ -18,3 +18,7 @@ splitlist n xs = sp xs
 -- | flatten a list of list into one list
 flatten :: [[a]] -> [a]
 flatten xss = [x | xs <- xss, x <-xs]
+
+-- | pretty print a list of lists
+pp :: Show a => [[a]] -> IO ()
+pp = putStrLn . unlines . map (unwords . map show)
