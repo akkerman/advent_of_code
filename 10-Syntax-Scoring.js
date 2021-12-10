@@ -31,6 +31,13 @@ const score = {
 '>': 25137,
 }
 
+const incompleteScore ={
+')': 1,
+']': 2,
+'}': 3,
+'>': 4,
+}
+
 function validate(line) {
   const stuff = []
   for (let c of line) {
@@ -40,29 +47,57 @@ function validate(line) {
     }
 
     if (stuff.length === 0) {
-      console.log(`Expected nothing but found ${c} instead`)
+      // console.log(`Expected nothing but found ${c} instead`)
       return score[ c ]
     }
 
     expected = stuff.pop()
 
     if (expected !== c) {
-      console.log(`Expected ${expected} but found ${c} instead`)
+      // console.log(`Expected ${expected} but found ${c} instead`)
       return score[ c ]
     }
   }
 
-  // if (stuff.length > 0) {
-  //   throw `Expected ${stuff} but found nothing`
-  // }
-
   return 0
 }
+
 
 function partOne(lines) {
   return lines.map(validate).reduce((a,b)=>a+b)
 }
 
+function validate2(line) {
+  const stuff = []
+  for (let c of line) {
+    if (opens.includes(c))  {
+      stuff.push(openclose[c])
+      continue
+    }
+
+    if (stuff.length === 0) {
+      // console.log(`Expected nothing but found ${c} instead`)
+      return null
+    }
+
+    expected = stuff.pop()
+
+    if (expected !== c) {
+      // console.log(`Expected ${expected} but found ${c} instead`)
+      return null
+    }
+  }
+
+  const completion = stuff.reverse()
+  // console.log(`expected ${completion.join('')}`)
+
+  const score = completion.map(c => incompleteScore[c]).reduce((a,b) => a*5 + b, 0)
+  return score
+}
+
 function partTwo(lines) {
-  return 'todo'
+  const result = lines.map(validate2).filter(_=>_).sort((a,b)=>a-b)
+  const idx = (result.length-1)/2
+
+  return result[idx]
 }
