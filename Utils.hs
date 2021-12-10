@@ -22,3 +22,9 @@ flatten xss = [x | xs <- xss, x <-xs]
 -- | pretty print a list of lists
 pp :: Show a => [[a]] -> IO ()
 pp = putStrLn . unlines . map (unwords . map show)
+
+-- | create one Int from a list
+
+fromDigits :: [Int] -> Int
+fromDigits = foldl addDigit 0
+   where addDigit num d = 10*num + d
