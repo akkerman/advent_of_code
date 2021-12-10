@@ -11,34 +11,39 @@ rl.on("line", data => {
 })
 
 rl.on('close', () => {
+  if (process.env.CORRECT) {
+    correctTheProgram(lines)
+    return
+  } 
+
   console.log('partOne', partOne(lines))
   console.log('partTwo', partTwo(lines))
 })
 
 const openclose = {
-'(':')',
-'[':']',
-'{':'}',
-'<':'>',
+  '(':')',
+  '[':']',
+  '{':'}',
+  '<':'>',
 }
 
 const opens = Object.keys(openclose)
 
 const score = {
-')': 3,
-']': 57,
-'}': 1197,
-'>': 25137,
+  ')': 3,
+  ']': 57,
+  '}': 1197,
+  '>': 25137,
 }
 
 const incompleteScore ={
-')': 1,
-']': 2,
-'}': 3,
-'>': 4,
+  ')': 1,
+  ']': 2,
+  '}': 3,
+  '>': 4,
 }
 
-function validate(line) {
+function validatePartOne(line) {
   const stuff = []
   for (let c of line) {
     if (opens.includes(c))  {
@@ -62,12 +67,11 @@ function validate(line) {
   return 0
 }
 
-
 function partOne(lines) {
-  return lines.map(validate).reduce((a,b)=>a+b)
+  return lines.map(validatePartOne).reduce((a,b)=>a+b)
 }
 
-function validate2(line) {
+function validatePartTwo(line) {
   const stuff = []
   for (let c of line) {
     if (opens.includes(c))  {
@@ -96,8 +100,32 @@ function validate2(line) {
 }
 
 function partTwo(lines) {
-  const result = lines.map(validate2).filter(_=>_).sort((a,b)=>a-b)
+
+  const result = lines.map(validatePartTwo).filter(_=>_).sort((a,b)=>a-b)
   const idx = (result.length-1)/2
 
   return result[idx]
+}
+
+
+
+function correct(line) {
+  const stuff = []
+  for (let c of line) {
+    if (opens.includes(c))  {
+      stuff.push(openclose[c])
+      continue
+    }
+
+    if (stuff.length === 0) return null
+
+    expected = stuff.pop()
+
+    if (expected !== c) return null
+  }
+
+  return line.concat(stuff.reverse())
+}
+function correctTheProgram(program) {
+  program.map(correct).filter(_=>_).map(l=>console.log(l.join('')))
 }
