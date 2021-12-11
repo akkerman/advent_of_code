@@ -14,7 +14,7 @@ let maxCol = 0
 rl.on('close', () => {
   maxRow = lines.length-1
   maxCol = lines[0].length-1
-  console.log(lines.length, 'lines in file of length')
+  console.log(maxRow+1, 'lines in file of length', maxCol+1)
 
   console.log('partOne', partOne(lines))
   console.log('partTwo', partTwo(lines))
@@ -88,6 +88,15 @@ function partOne(lines) {
   return sum
 }
 
+
 function partTwo(lines) {
-  return 'todo'
+  let step = lines
+  for (let nr = 1; nr <= 1000; nr +=1) {
+    step = flash(nextStep(step))
+
+    const flashers = step.flatMap(_=>_).filter(o=>o===0)
+    if (flashers.length === 100)
+      return nr
+  }
+  return -1
 }
