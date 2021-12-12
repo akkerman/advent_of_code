@@ -44,18 +44,20 @@ function findPaths(from, to) {
   return solve({from, to})
 
   function solve({from, to, paths=[], currentPath=[], visited=new Set()}) {
-    if (visited.has(from)) return paths
     if (from === to) {
       paths.push([...currentPath, to])
       return paths
     }
-    if (visitOnce.has(from)) visited.add(from)
-    currentPath.push(from)
+
+    if (visited.has(from)) return paths
+
+    const myVisited = new Set([...visited])
+
+    if (visitOnce.has(from)) myVisited.add(from)
+
     for (const next of adjacent.get(from)) {
-      solve({from:next, to, paths, currentPath, visited})
+      solve({from:next, to, paths, currentPath:[...currentPath, from], visited:myVisited})
     }
-    currentPath.pop()
-    visited.delete(from)
     return paths
   }
 }
@@ -64,28 +66,26 @@ function findPaths2(from, to, nodeToVisitTwice=null) {
   return solve({from, to})
 
   function solve({from, to, paths=[], currentPath=[], visited=new Set()}) {
+    if (from === to) {
+      paths.push([...currentPath])
+      return paths
+    }
+
     if (visited.has(from)) return paths
+
     let label = from
+    const myVisited = new Set([...visited])
     if (visitOnce.has(label)) {
       if (label === nodeToVisitTwice) {
         if (!visited.has(label+"1")) 
           label = label+"1"
       } 
 
-      visited.add(label)
+      myVisited.add(label)
     } 
-    currentPath.push(from)
-    if (from === to) {
-      paths.push([...currentPath])
-      visited.delete(label)
-      currentPath.pop()
-      return paths
-    }
     for (const next of adjacent.get(from)) {
-      solve({from:next, to, paths, currentPath, visited})
+      solve({from:next, to, paths, currentPath:[...currentPath, from], visited:myVisited})
     }
-    currentPath.pop()
-    visited.delete(label)
     return paths
   }
 }
