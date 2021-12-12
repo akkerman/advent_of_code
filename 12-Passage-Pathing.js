@@ -62,29 +62,28 @@ function findPaths(from, to) {
   }
 }
 
-function findPaths2(from, to, nodeToVisitTwice=null) {
+function findPaths2(from, to) {
   return solve({from, to})
 
-  function solve({from, to, paths=[], currentPath=[], visited=new Set()}) {
+  function solve({from, to, paths=[], currentPath=[], visited=new Set(), hasDouble=false}) {
     if (from === to) {
-      paths.push([...currentPath])
+      paths.push([...currentPath, to])
       return paths
     }
 
-    if (visited.has(from)) return paths
+    if (visited.has(from) && (from === 'start' || hasDouble)) return paths
 
-    let label = from
     const myVisited = new Set([...visited])
-    if (visitOnce.has(label)) {
-      if (label === nodeToVisitTwice) {
-        if (!visited.has(label+"1")) 
-          label = label+"1"
-      } 
 
-      myVisited.add(label)
-    } 
+    if (visitOnce.has(from)) {
+      if (myVisited.has(from))
+        hasDouble = true
+      else
+        myVisited.add(from) 
+    }
+
     for (const next of adjacent.get(from)) {
-      solve({from:next, to, paths, currentPath:[...currentPath, from], visited:myVisited})
+      solve({from:next, to, paths, currentPath:[...currentPath, from], visited:myVisited, hasDouble})
     }
     return paths
   }
@@ -99,14 +98,7 @@ function partOne() {
 }
 
 function partTwo() {
-  const answ = new Set()
-  for (const nodeToVisitTwice  of visitOnce) {
-    if (['start','end'].includes(nodeToVisitTwice)) continue
-    const paths = findPaths2('start', 'end', nodeToVisitTwice)
-    for (let path of paths) {
-      answ.add(path.join('-'))
-    }
-  }
+  const paths = findPaths2('start', 'end')
 
-  return answ.size
+  return paths.length
 }
