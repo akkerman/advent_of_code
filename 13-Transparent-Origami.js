@@ -58,7 +58,8 @@ function foldLeft(arr, num) {
 }
 
 function createTransparentPaper(coords) {
-  const transparentPaper = Array.from({length:maxY+2}, () => Array(maxX+1).fill('.'))
+  const length = (maxY % 2 === 0) ? maxY + 1: maxY +2
+  const transparentPaper = Array.from({length}, () => Array(maxX+1).fill('.'))
   for (let [x,y] of coords) {
     transparentPaper[y][x] = '#'
   }
