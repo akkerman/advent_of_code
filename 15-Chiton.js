@@ -71,6 +71,31 @@ function partOne() {
   return 'oeps'
 }
 
-function partTwo() {
-  return 'todo'
+function incMaxtrix(matrix, num=1) {
+  return matrix.map(l => l.map(i => (i+num-1) % 9 + 1))
 }
+
+function genMatrices(matrix,lastMatrix) {
+  return Array.from({length:lastMatrix+1}, (_,i) => incMaxtrix(matrix, i))
+}
+
+function generateLargeField(matrix) {
+  let largeField = []
+  const matrices = genMatrices(matrix, 8)
+  for (row = 0; row<5; row +=1) {
+    let matricesRow = matrices[row]
+    for (col = 1; col<5; col+=1) {
+      matricesRow= matricesRow.map((nums, i) => nums.concat(matrices[row+col][i]))
+    }
+    largeField = largeField.concat(matricesRow)
+  }
+  return largeField
+}
+
+function partTwo() {
+  lines = generateLargeField(lines)
+  maxRow = lines.length - 1
+  maxCol = lines[0].length - 1
+  return partOne()
+}
+
