@@ -1,3 +1,4 @@
+const Heap = require('heap')
 
 const readline = require('readline')
 const rl = readline.createInterface({ input: process.stdin })
@@ -47,20 +48,13 @@ function makeGetNeigbours (cell) {
     }
 }
 
-let parents = new Map()
 const visited = new Set()
-const prio = []
-const cmp = (a, b) =>  b.value - a.value
-
-function prioAdd(elem) {
-  prio.push(elem)
-  prio.sort(cmp)
-}
+const prio = new Heap((a, b) =>  a.value - b.value)
 
 function partOne() {
   visited.clear()
   prio.length = 0
-  prioAdd(coordValue(0,0,0))
+  prio.push(coordValue(0,0,0))
 
   while (true) {
     const {row, col, value, label} = prio.pop()
@@ -71,8 +65,7 @@ function partOne() {
 
     for (const nb of getNeighboursWithCoord(row, col)) {
       if (visited.has(nb.label)) continue
-      parents.set(nb.label, label)
-      prioAdd(coordValue(nb.row, nb.col, value + nb.value))
+      prio.push(coordValue(nb.row, nb.col, value + nb.value))
     }
   }
   return 'oeps'
