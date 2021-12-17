@@ -1,4 +1,4 @@
-//
+
 // const readline = require('readline')
 // const rl = readline.createInterface({ input: process.stdin })
 //
@@ -101,12 +101,29 @@ function analyze (message) {
 }
 
 function versionSum (packet) {
-  if (!packet) return 0
   if (packet.packets) {
     return packet.packets.map(versionSum).reduce((a, b) => a + b, packet.version)
   }
 
   return packet.version
+}
+
+const gt = (a, b) => a > b ? 1 : 0
+const lt = (a, b) => a < b ? 1 : 0
+const eq = (a, b) => a === b ? 1 : 0
+
+function calculate (packet) {
+  const values = packet.packets ? packet.packets.map(calculate) : []
+  switch (packet.typeId) {
+    case 0: return values.reduce((a, b) => a + b, 0)
+    case 1: return values.reduce((a, b) => a * b, 1)
+    case 2: return Math.min(...values)
+    case 3: return Math.max(...values)
+    case 5: return gt(...values)
+    case 6: return lt(...values)
+    case 7: return eq(...values)
+    default: return packet.value
+  }
 }
 function partOne (hex) {
   const message = hex2message(hex)
@@ -114,8 +131,11 @@ function partOne (hex) {
   return versionSum(result[0])
 }
 
-function partTwo (lines) {
-  return 'todo'
+function partTwo (hex) {
+  const message = hex2message(hex)
+  const result = analyze(message)
+  // console.log(JSON.stringify(result[0], null, 2))
+  return calculate(result[0])
 }
 
 function hex2message (hex) {
