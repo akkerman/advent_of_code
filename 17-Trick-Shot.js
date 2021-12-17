@@ -57,40 +57,24 @@ function createVelocityGenerator (_, maxX, minY) {
   }
 }
 
-function partOne () { // 5253
+function solve () {
   const calc = createTrajectoryCalculator(...input)
   const velo = createVelocityGenerator(...input)
 
   let max = 0
+  let count = 0
   for (const v of velo()) {
     const [hit, height] = calc(...v)
     if (hit) {
       max = Math.max(max, height)
-    }
-  }
-
-  return max
-}
-
-function partTwo () { // 1770
-  const calc = createTrajectoryCalculator(...input)
-  const velo = createVelocityGenerator(...input)
-
-  let count = 0
-
-  for (const v of velo()) {
-    const [hit] = calc(...v)
-    if (hit) {
       count += 1
     }
   }
 
-  return count
+  return {
+    partOne: max, // 5253
+    partTwo: count // 1770
+  }
 }
 
-function main () {
-  console.log('partOne', partOne())
-  console.log('partTwo', partTwo())
-}
-
-main()
+console.log(solve())
