@@ -1,13 +1,13 @@
 
 // target area: x=265..287, y=-103..-58
-const input = [256, 287, -103, -58] // input
+const input = [265, 287, -103, -58] // input
 const example = [20, 30, -10, -5] // example
 
 function createTrajectoryCalculator (minX, maxX, minY, maxY) {
   function isHit (x, y) {
     return (
       minX <= x && x <= maxX &&
-    minY <= y && y <= maxY
+      minY <= y && y <= maxY
     )
   }
 
@@ -47,28 +47,17 @@ function createTrajectoryCalculator (minX, maxX, minY, maxY) {
   }
 }
 
-function createVelocityGenerator (_, maxX) {
+function createVelocityGenerator (_, maxX, minY) {
   return function * generate () {
-    for (let vx = 1; vx < maxX; vx += 1) {
-      for (let vy = 1; vy < 1000; vy += 1) {
+    for (let vx = 1; vx <= maxX; vx += 1) {
+      for (let vy = minY; vy <= -minY; vy += 1) {
         yield [vx, vy]
       }
     }
   }
 }
 
-const readline = require('readline')
-const rl = readline.createInterface({ input: process.stdin })
-
-const lines = []
-
-rl.on('line', data => {
-  const line = data
-
-  lines.push(line)
-})
-
-function partOne () {
+function partOne () { // 5253
   const calc = createTrajectoryCalculator(...input)
   const velo = createVelocityGenerator(...input)
 
@@ -83,13 +72,25 @@ function partOne () {
   return max
 }
 
-function partTwo () {
-  return 'todo'
+function partTwo () { // 1770
+  const calc = createTrajectoryCalculator(...input)
+  const velo = createVelocityGenerator(...input)
+
+  let count = 0
+
+  for (const v of velo()) {
+    const [hit] = calc(...v)
+    if (hit) {
+      count += 1
+    }
+  }
+
+  return count
 }
 
 function main () {
-  console.log('partOne', partOne(lines))
-  console.log('partTwo', partTwo(lines))
+  console.log('partOne', partOne())
+  console.log('partTwo', partTwo())
 }
 
 main()
