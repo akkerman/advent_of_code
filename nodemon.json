@@ -1,0 +1,8 @@
+{
+  "ext": "yaml,js,json",
+  "ignore": [
+    "globalConfigMongo.json",
+    "*.test.js",
+    "coverage/*"
+  ]
+}
