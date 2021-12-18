@@ -6,19 +6,44 @@ module.exports = {
   reduce,
 }
 
+function parse (number) {
+  if (Array.isArray(number)) {
+    return new Pair(
+      parse(number[0]),
+      parse(number[1]),
+    )
+  }
+  return new Regular(number)
+}
+
 function add (left, right) {
   return new Pair(left, right)
+}
+
+function reduce (pair) {
+  while (true) {
+    if (explode(pair)) {
+      continue
+    }
+    if (split(pair)) {
+      continue
+    }
+    break
+  }
+  return pair
 }
 
 function explode (pair) {
   const finder = p => p.numParents() === 4 && p instanceof Pair
   const exploding = pair.lfind(finder)
   if (!exploding) return false
+
   const [left, right] = [exploding.left(), exploding.right()]
 
   if (right) {
     right.value += exploding.snd.value
   }
+
   if (left) {
     left.value += exploding.fst.value
   }
@@ -39,28 +64,13 @@ function split (pair) {
 
   const half = splitting.value / 2
   const parsed = parse([Math.floor(half), Math.ceil(half)])
+
   if (splitting.parent.fst === splitting) {
     splitting.parent.fst = parsed
   } else {
     splitting.parent.snd = parsed
   }
   return true
-}
-
-function reduce (pair) {
-  // console.log('after addition:', JSON.stringify(pair.show(), null, 0))
-  while (true) {
-    if (explode(pair)) {
-      // console.log('after explode:', JSON.stringify(pair.show(), null, 0))
-      continue
-    }
-    if (split(pair)) {
-      // console.log('after split:', JSON.stringify(pair.show(), null, 0))
-      continue
-    }
-    break
-  }
-  return pair
 }
 
 class SnailfishNumber {
@@ -185,14 +195,4 @@ class Regular extends SnailfishNumber {
   show () {
     return this.value
   }
-}
-
-function parse (number) {
-  if (Array.isArray(number)) {
-    return new Pair(
-      parse(number[0]),
-      parse(number[1]),
-    )
-  }
-  return new Regular(number)
 }
