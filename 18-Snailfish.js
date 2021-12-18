@@ -3,16 +3,19 @@ const readline = require('readline')
 const rl = readline.createInterface({ input: process.stdin })
 
 const pairs = []
+const lines = []
 
 rl.on('line', data => {
-  const pair = parse(eval(data)) // eslint-disable-line 
+  const line = eval(data) // eslint-disable-line 
+  const pair = parse(line)
 
+  lines.push(line)
   pairs.push(pair)
 })
 
 rl.on('close', () => {
   console.log('partOne', partOne(pairs))
-  console.log('partTwo', partTwo(pairs))
+  console.log('partTwo', partTwo(lines))
 })
 
 function partOne (pairs) {
@@ -29,5 +32,13 @@ function partOne (pairs) {
 }
 
 function partTwo (lines) {
-  return 'todo'
+  let maxMagnitude = 0
+
+  for (const line1 of lines) {
+    for (const line2 of lines) {
+      const result = reduce(add(parse(line1), parse(line2)))
+      maxMagnitude = Math.max(maxMagnitude, result.magnitude())
+    }
+  }
+  return maxMagnitude
 }
