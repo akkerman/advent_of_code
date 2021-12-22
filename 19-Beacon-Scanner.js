@@ -12,6 +12,7 @@ const rl = readline.createInterface({ input: process.stdin })
  * @typedef Scanner
  * @type Object
  * @property {Number} id
+ * @property {Coordinate} base
  * @property {Boolean} processed
  * @property {CoordinateList} beacons
  * @property {Map<Distance, Pair>} distances
@@ -49,6 +50,14 @@ rl.on('close', () => {
  */
 const euclideanDistance = (a, b) =>
   Math.hypot(...Object.keys(a).map(k => b[k] - a[k]))
+
+/**
+ * @param {Coordinate} a
+ * @param {Coordinate} b
+ * @returns {Distance}
+ */
+const manhattanDistance = (a, b) =>
+  [...Object.keys(a).map(k => Math.abs(a[k] - b[k]))].reduce((x, y) => x + y)
 
 const possibleRotations = [
   ([x, y, z]) => [x, y, z],
@@ -204,7 +213,7 @@ function normalize (theUniverse, scanner, distance) {
 
       const normalizedBeacons = scanner.rotations[rot].map(([x1, y1, z1]) => [x + x1, y + y1, z + z1])
 
-      return distances(normalizedBeacons)
+      return [distances(normalizedBeacons), result.base]
     }
   }
 }
@@ -214,13 +223,15 @@ function partOne () {
   const scanner0 = scanners.get('0')
   let theUniverse = new Map(scanner0.distances)
   scanner0.processed = true
+  scanner0.base = [0, 0, 0]
 
   while (true) {
     const [scanner, distance] = findMatchingDistance(theUniverse, scanners.values())
-    const subUniverse = normalize(theUniverse, scanner, distance)
+    const [subUniverse, base] = normalize(theUniverse, scanner, distance)
 
     theUniverse = new Map([...theUniverse, ...subUniverse])
 
+    scanner.base = base
     scanner.processed = true
     if ([...scanners.values()].every(s => s.processed)) break
   }
@@ -234,5 +245,10 @@ function partOne () {
 }
 
 function partTwo () {
-  return 'todo'
+  const scannerCoords = [...scanners.values()].map(s => s.base)
+  let max = 0
+  for (const pair of generatePairs(scannerCoords)) {
+    max = Math.max(max, manhattanDistance(...pair))
+  }
+  return max
 }
