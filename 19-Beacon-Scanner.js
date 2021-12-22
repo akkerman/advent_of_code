@@ -1,5 +1,4 @@
 const { intersection } = require('ramda')
-require('util').inspect.defaultOptions.depth = null
 const readline = require('readline')
 const rl = readline.createInterface({ input: process.stdin })
 
@@ -19,12 +18,13 @@ const rl = readline.createInterface({ input: process.stdin })
  * @property {Array<CoordinateList>} rotations
  */
 
+/** @type {Map<String, Scanner>} */
 const scanners = new Map()
+
+/** @type {String} */
 let id
 
-let scannerPattern = 'nix'
-
-scannerPattern = /.+scanner (\d+) .+/
+const scannerPattern = /.+scanner (\d+) .+/
 
 rl.on('line', data => {
   if (data === '') return
@@ -123,6 +123,10 @@ function * generatePairs (coords) {
   }
 }
 
+/**
+ * @param {CoordinateList} beacons
+ * @returns {Map<Distance, Pair>}
+ */
 function distances (beacons) {
   const dist = new Map()
   for (const [from, to] of generatePairs(beacons)) {
@@ -219,7 +223,6 @@ function normalize (theUniverse, scanner, distance) {
 }
 
 function partOne () {
-  /** @type Scanner */
   const scanner0 = scanners.get('0')
   let theUniverse = new Map(scanner0.distances)
   scanner0.processed = true
