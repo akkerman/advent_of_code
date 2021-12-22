@@ -103,3 +103,12 @@ function partTwo (lines) {
 // If the cube is on add it to the list.
 //
 // e.g. adding two 'on' cubes results in three cubes, the original with 'on' and the interseaction becomes 'off'
+//
+// CAVEAT: the max of each input is inclusive. This dit not give any problems in part one,
+// because all cubes were generated. At first I thought I could get away by adding
+// 1 to the length while calculating the volume. This gave a sum of a lot of off-by-one errors.
+// In the end I refactored the input to add 1 to the max.
+// A small refactor of part was was necessary: < instead of <=
+//
+// Keeping the condition by only considering stuff between -50 and +50 enabled a quick test
+// to compare if partTwo yields the same results as partOne
