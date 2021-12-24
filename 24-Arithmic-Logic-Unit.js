@@ -65,6 +65,7 @@ function captureVariableParts () {
 
 function partOne () {
   const max = Array(14).fill(null)
+  const min = Array(14).fill(null)
 
   const variables = captureVariableParts()
   const backtrack = []
@@ -81,13 +82,22 @@ function partOne () {
     if (diff < 0) {
       max[idx] = 9 + diff
       max[prevIdx] = 9
+
+      min[prevIdx] = 1 - diff
+      min[idx] = 1
     } else {
       max[idx] = 9
       max[prevIdx] = 9 - diff
+
+      min[prevIdx] = 1
+      min[idx] = 1 + diff
     }
   }
 
-  return max.join('')
+  return {
+    max: max.join(''), // 98491959997994
+    min: min.join(''), // 61191516111321
+  }
 }
 function partTwo () {
   return 'todo'
