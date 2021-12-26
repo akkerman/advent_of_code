@@ -5,8 +5,6 @@ import Data.List.Split (splitOn)
 atoi :: String -> Int
 atoi s = read s::Int
 
--- atoiList = map atoi . splitOn ","
-
 atoiList :: String -> String -> [Int]
 atoiList x = map atoi . splitOn x
 
