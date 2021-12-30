@@ -1,0 +1,91 @@
+
+#+begin_src
+      inp w     inp w     inp w      inp w      inp w      inp w      inp w      inp w       inp w      inp w      inp w     inp w     inp w      inp w
+      mul x 0   mul x 0   mul x 0    mul x 0    mul x 0    mul x 0    mul x 0    mul x 0     mul x 0    mul x 0    mul x 0   mul x 0   mul x 0    mul x 0
+      add x z   add x z   add x z    add x z    add x z    add x z    add x z    add x z     add x z    add x z    add x z   add x z   add x z    add x z
+      mod x 26  mod x 26  mod x 26   mod x 26   mod x 26   mod x 26   mod x 26   mod x 26    mod x 26   mod x 26   mod x 26  mod x 26  mod x 26   mod x 26
+divz  div z 1   div z 1   div z 1    div z 1    div z 26   div z 1    div z 26   div z 26    div z 1    div z 26   div z 1   div z 26  div z 26   div z 26
+addx  add x 10  add x 15  add x 14   add x 15   add x -8   add x 10   add x -16  add x -4    add x 11   add x -3   add x 12  add x -7  add x -15  add x -7
+      eql x w   eql x w   eql x w    eql x w    eql x w    eql x w    eql x w    eql x w     eql x w    eql x w    eql x w   eql x w   eql x w    eql x w
+      eql x 0   eql x 0   eql x 0    eql x 0    eql x 0    eql x 0    eql x 0    eql x 0     eql x 0    eql x 0    eql x 0   eql x 0   eql x 0    eql x 0
+      mul y 0   mul y 0   mul y 0    mul y 0    mul y 0    mul y 0    mul y 0    mul y 0     mul y 0    mul y 0    mul y 0   mul y 0   mul y 0    mul y 0
+      add y 25  add y 25  add y 25   add y 25   add y 25   add y 25   add y 25   add y 25    add y 25   add y 25   add y 25  add y 25  add y 25   add y 25
+      mul y x   mul y x   mul y x    mul y x    mul y x    mul y x    mul y x    mul y x     mul y x    mul y x    mul y x   mul y x   mul y x    mul y x
+      add y 1   add y 1   add y 1    add y 1    add y 1    add y 1    add y 1    add y 1     add y 1    add y 1    add y 1   add y 1   add y 1    add y 1
+      mul z y   mul z y   mul z y    mul z y    mul z y    mul z y    mul z y    mul z y     mul z y    mul z y    mul z y   mul z y   mul z y    mul z y
+      mul y 0   mul y 0   mul y 0    mul y 0    mul y 0    mul y 0    mul y 0    mul y 0     mul y 0    mul y 0    mul y 0   mul y 0   mul y 0    mul y 0
+      add y w   add y w   add y w    add y w    add y w    add y w    add y w    add y w     add y w    add y w    add y w   add y w   add y w    add y w
+addy  add y 2   add y 16  add y 9    add y 0    add y 1    add y 12   add y 6    add y 6     add y 3    add y 5    add y 9   add y 3   add y 2    add y 3
+      mul y x   mul y x   mul y x    mul y x    mul y x    mul y x    mul y x    mul y x     mul y x    mul y x    mul y x   mul y x   mul y x    mul y x
+      add z y   add z y   add z y    add z y    add z y    add z y    add z y    add z y     add z y    add z y    add z y   add z y   add z y    add z y
+#+end_src
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+   +w+2      26*z+w+16     z+w+9      z+w+0      z/26+w+1   z+w+12     z/26+w+6   z/26+w+6    z/26+w+3   z/26+w+5   z+w+9     z/26+w+3  z/26+w+2   z/26+w+3+
+
+
+| idx | var  | instr        | x = w       | x ≠ w              |
+|-----+------+--------------+-------------+--------------------|
+|     |      | ~inp w~        |             |                    |
+|   1 |      | ~mul x 0~      | ~x=0~         | ~x=0~                |
+|   2 |      | ~add x z~      | ~x=z~         | ~x=z~                |
+|   3 |      | ~mod x 2~      | ~x=z%26~      | ~x=z%26~             |
+|-----+------+--------------+-------------+--------------------|
+|   4 | ~divz~ | ~div z 1∨26~   | ~z=z/divz~    | ~z=z/divz~           |
+|-----+------+--------------+-------------+--------------------|
+|-----+------+--------------+-------------+--------------------|
+|   5 | ~addx~ | ~add x …~      | ~x=z%26+addx~ | ~x=z%26+addx~        |
+|-----+------+--------------+-------------+--------------------|
+|   6 |      | ~eql x w~      | ~x=1~         | ~x=0~                |
+|   7 |      | ~eql x 0~      | ~x=0~         | ~x=1~                |
+|   8 |      | ~mul y 0~      | ~y=0~         | ~y=0~                |
+|   9 |      | ~add y 2~      | ~y=25~        | ~y=25~               |
+|  10 |      | ~mul y x~      | ~y=0~         | ~y=25~               |
+|  11 |      | ~add y 1~      | ~y=1~         | ~y=26~               |
+|  12 |      | ~mul z y~      | ~z=z/divz~    | ~z=z/divz*26~        |
+|  13 |      | ~mul y 0~      | ~y=0~         | ~y=0~                |
+|  14 |      | ~add y w~      | ~y=w~         | ~y=w~                |
+|-----+------+--------------+-------------+--------------------|
+|  15 | ~addy~ | ~add y …~      | ~y=w+3~       | ~y=w+addy~           |
+|-----+------+--------------+-------------+--------------------|
+|  16 |      | ~mul y x~      | ~y=0~         | ~y=w+addy~           |
+|  17 |      | ~add z y~      | ~z=z/divz~    | ~z=z/divz*26+w+addy~ |
+
+
+#+begin_src javascript
+function programPart (divz, addx, addy) {
+    w = monad.shift()
+    x = z % 26 + addx
+    z = Math.floor(z / divz)
+    if (x !== w) {
+        z = z * 26 + w + addy
+    }
+    return {w,x,z}
+}
+#+end_src
+
+Als x !== w dan wordt z alleen maar hoger. \\
+De enige manier om z richting 0 te krijgen is om ervoor te zorgen dat de berekening van x met de vorige z gelijk is aan w \\
+
+#+begin_src javascript
+w = monad.shift()
+if ((z % 26 + addx) === w) {
+    z = Math.floor(z / divz)
+}
+#+end_src
+
+Nu wordt z ∈ [0..25] + addx. Het geheel moet dan gelijk zijn aan w ∈ [1..9] \\
+De manier om dat voor elkaar te krijgen is bij een negatieve addx.
+
+Elke z die binnenkomt bij de het laatse programPart moet kleiner zijn dan 26. \\
+Dan is nl de afronding naar beneden van ~z/26~ gelijk aan 0.
+
+Dit betekend ook dat de ~z % 26~ geen rol speelt in het wel/niet gelijk krijgen van x met w. \\
+En is dus is de laatste gelijk aan ~w+7~ z ∈ [8..16]
+
+Kunnen we elke w nu afhankelijk maken van de vorige w?
+
+z13 = w14+addx
+
+maar als divz == 1 dan moeten we ook rekening houden met addy
