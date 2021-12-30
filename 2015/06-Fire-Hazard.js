@@ -14,9 +14,9 @@ rl.on("line", data => {
 
 
 const englishOperations = {
-  on: x => 1,
-  off: x => 0,
-  toggle: x => x === 1 ? 0 : 1
+  on: _ => 1,
+  off: _ => 0,
+  toggle: x => x ^ 1
 }
 
 const elfOperations = {
