@@ -1,3 +1,4 @@
+{-# LANGUAGE TupleSections #-}
 
 import Data.List.Split (splitOn)
 import Utils (atoi,pp,flatten)
@@ -17,16 +18,20 @@ getneighbours heightmap (row, col) = map height neighbours
     withinMap (r,c) = 0 <= r && 0 <= c && r <= maxRow && c <= maxCol
     height = getHeight heightmap
 
+isLow :: HeightMap -> Coords -> Bool
 isLow heightmap (row, col) = current < minimum neighbours
    where
      current = getHeight heightmap (row, col)
      neighbours = getneighbours heightmap (row, col)
 
+getHeight :: HeightMap -> Coords -> Height
 getHeight heightmap (r,c) = heightmap !! r !! c
 
-toc xs n = map (\x -> (n,x)) xs
+coords :: HeightMap  -> [[Coords]]
 coords xs = map (toc [0..maxCol]) [0..maxRow]
+  where toc xs n = map (n,) xs
 
+solve1 :: HeightMap -> Height
 solve1 input = sum lowpoints + length lowpoints
   where lowpoints = map (getHeight input) $ filter (isLow input) $ concat $ coords input
 

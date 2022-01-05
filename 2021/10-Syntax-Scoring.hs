@@ -1,6 +1,7 @@
 
 import Data.List(sort)
 
+openclose :: Char -> Char
 openclose x
   | x == '('  = ')'
   | x == '['  = ']'
@@ -8,6 +9,7 @@ openclose x
   | x == '<'  = '>'
   | otherwise = ' '
 
+isopen :: Char -> Bool
 isopen o = o `elem` "([{<"
 
 score x
@@ -17,6 +19,7 @@ score x
   | x == '>'  = 25137
   | otherwise = 0
 
+incompleteScore :: Num p => Char -> p
 incompleteScore x
   | x == ')'  = 1
   | x == ']'  = 2
