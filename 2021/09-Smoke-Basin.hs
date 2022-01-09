@@ -8,12 +8,10 @@ type HeightMap = [[Height]]
 type Coords = (Int,Int)
 type Cell = (Coords,Height)
 
-maxRow = 99
-maxCol = 99
-
 getneighbours :: HeightMap -> Coords -> [Height]
 getneighbours heightmap (row, col) = map height neighbours
   where
+    (maxCol, maxRow) = maxCoords heightmap
     neighbours = filter withinMap [(row-1, col), (row+1, col), (row,  col-1), (row, col+1)]
     withinMap (r,c) = 0 <= r && 0 <= c && r <= maxRow && c <= maxCol
     height = getHeight heightmap
@@ -27,13 +25,17 @@ isLow heightmap (row, col) = current < minimum neighbours
 getHeight :: HeightMap -> Coords -> Height
 getHeight heightmap (r,c) = heightmap !! r !! c
 
-coords :: HeightMap  -> [[Coords]]
-coords xs = map (toc [0..maxCol]) [0..maxRow]
-  where toc xs n = map (n,) xs
+maxCoords :: HeightMap -> Coords
+maxCoords heightmap = (maxRow, maxCol)
+  where maxRow = length heightmap - 1
+        maxCol = length (head heightmap) - 1
+
+coords :: Coords -> [Coords]
+coords (maxRow, maxCol) = [(row, col) | row <- [0..maxRow], col <-[0..maxCol]]
 
 solve1 :: HeightMap -> Height
-solve1 input = sum lowpoints + length lowpoints
-  where lowpoints = map (getHeight input) $ filter (isLow input) $ concat $ coords input
+solve1 heightmap = sum lowpoints + length lowpoints
+  where lowpoints = map (getHeight heightmap) $ filter (isLow heightmap) $ coords $ maxCoords heightmap
 
 main = do
   contents <- getContents
