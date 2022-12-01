@@ -1,17 +1,23 @@
 module One where
 
-import Data.List.Split (splitWhen)
 import Data.List (sort)
+import Data.List.Split (splitWhen)
 import Utils (atoi)
 
+parse :: [Char] -> Int
 parse "" = 0
 parse x = atoi x
 
-sorted xs = reverse $ sort $ map sum $ splitWhen (==0) xs
+sorted :: [Int] -> [Int]
+sorted = reverse . sort . map sum . splitWhen (== 0)
 
+partOne :: [Int] -> Int
 partOne = head
-partTwo = sum . (take 3)
 
+partTwo :: [Int] -> Int
+partTwo = sum . take 3
+
+main :: IO ()
 main = do
   contents <- getContents
   let input = lines contents
@@ -19,5 +25,6 @@ main = do
 
   print "partOne"
   print $ partOne theLines
+
   print "partTwo"
   print $ partTwo theLines
