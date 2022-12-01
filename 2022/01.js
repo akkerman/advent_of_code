@@ -31,5 +31,14 @@ function partOne (lines) {
 }
 
 function partTwo (lines) {
-  return 'todo'
+  const totals = lines.reduce((acc, cur) => {
+    if (cur === '') {
+      acc.push(0)
+    } else {
+      acc[acc.length - 1] += cur
+    }
+    return acc
+  }, [0])
+
+  return totals.sort((a, b) => b - a).slice(0, 3).reduce((a, b) => a + b)
 }
