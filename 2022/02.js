@@ -31,6 +31,12 @@ const WINS = {
   [P]: R,
 }
 
+const LOSS = {
+  [S]: R,
+  [P]: S,
+  [R]: P,
+}
+
 function roundScore ([opponent, self]) {
   if (opponent === self) { return 3 }
   if (WINS[self] === opponent) { return 6 }
@@ -38,10 +44,18 @@ function roundScore ([opponent, self]) {
   return 0
 }
 
-rl.on('line', data => {
-  const [opponent, self] = data.split(' ')
+function pickSelf ([opponent, result]) {
+  switch (result) {
+    case 'Y': return opponent
+    case 'X': return WINS[opponent]
+    case 'Z': return LOSS[opponent]
+  }
+}
 
-  lines.push([OPPONENT[opponent], SELF[self]])
+rl.on('line', data => {
+  const line = data.split(' ')
+
+  lines.push(line)
 })
 
 rl.on('close', () => {
@@ -51,12 +65,15 @@ rl.on('close', () => {
 
 function partOne (lines) {
   return lines
+    .map(([abc, xyz]) => [OPPONENT[abc], SELF[xyz]])
     .map(([opponent, self]) => roundScore([opponent, self]) + SCORE[self])
     .reduce((a, b) => a + b)
-
-  return 'todo'
 }
 
 function partTwo (lines) {
-  return 'todo'
+  return lines
+    .map(([abc, result]) => [OPPONENT[abc], result])
+    .map(([opponent, result]) => [opponent, pickSelf([opponent, result])])
+    .map(([opponent, self]) => roundScore([opponent, self]) + SCORE[self])
+    .reduce((a, b) => a + b)
 }
