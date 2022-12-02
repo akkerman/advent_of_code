@@ -1,4 +1,3 @@
-
 module Two () where
 
 import Data.Bifunctor (bimap, first)
@@ -24,15 +23,12 @@ value Scissors = 3
 
 roundScore :: (Move, Move) -> Integer
 roundScore (opponent, self)
-  | opponent == self = 3
   | winFrom opponent == self = 6
+  | opponent == self = 3
   | otherwise = 0
 
 score :: (Move, Move) -> Integer
 score (opponent, self) = roundScore (opponent, self) + value self
-
-partOne :: [(Char, Char)] -> Integer
-partOne = sum . map (score . bimap abc xyz)
 
 loseFrom :: Move -> Move
 loseFrom Rock = Scissors
@@ -50,13 +46,15 @@ moveFromResult (m, 'Y') = (m, m)
 moveFromResult (m, 'Z') = (m, winFrom m)
 moveFromResult _ = error "invalid result"
 
+partOne :: [(Char, Char)] -> Integer
+partOne = sum . map (score . bimap abc xyz)
+
 partTwo :: [(Char, Char)] -> Integer
 partTwo lines = sum $ map (score . moveFromResult . first abc) lines
 
-
 parse :: String -> (Char, Char)
-parse [a,' ',x] = (a,x)
-parse _ = error  "wrong input"
+parse [a, ' ', x] = (a, x)
+parse _ = error "wrong input"
 
 main :: IO ()
 main = do
