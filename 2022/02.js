@@ -25,13 +25,13 @@ const SCORE = {
   [S]: 3,
 }
 
-const WINS = {
+const LOSE_FROM = {
   [R]: S,
   [S]: P,
   [P]: R,
 }
 
-const LOSS = {
+const WIN_FROM = {
   [S]: R,
   [P]: S,
   [R]: P,
@@ -39,7 +39,7 @@ const LOSS = {
 
 function roundScore ([opponent, self]) {
   if (opponent === self) { return 3 }
-  if (WINS[self] === opponent) { return 6 }
+  if (LOSE_FROM[self] === opponent) { return 6 }
 
   return 0
 }
@@ -47,8 +47,8 @@ function roundScore ([opponent, self]) {
 function pickSelf ([opponent, result]) {
   switch (result) {
     case 'Y': return opponent
-    case 'X': return WINS[opponent]
-    case 'Z': return LOSS[opponent]
+    case 'X': return LOSE_FROM[opponent]
+    case 'Z': return WIN_FROM[opponent]
   }
 }
 
