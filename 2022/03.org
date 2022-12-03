@@ -1,0 +1,46 @@
+#+title: Day 3: Rucksack Reorganization
+#+options: toc:nil num:nil
+
+* Solve in javascript
+
+I cannot rember the last time I needed to convert a character to in integer. It might be in Java some years back. \\
+I thought of implementing it like
+
+#+begin_src java
+int prio(char c) {
+    return isUpperCase(c)
+        ? (int)c - (int)'A' + 27
+        : (int)c - (int)'a' + 1;
+}
+#+end_src
+
+I found the [[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/charCodeAt][thing]] that translates to a number.
+But it requires an index where in a string you want the charcode from, that was a
+bit confusing to me but, now I think about it, it is probably because
+javascript's characters are also strings?
+
+Apparently isUpperCase does not exist in javascript? So I used ~c === c.toUpperCase()~
+
+From there on it was a case of splitting the rugsack in two and finding an
+element that's also in the other. Once this array of elements is constructed map
+to prio and sum all numbers. Easy with Ramda, although quickly written with a ~reduce((a,b)=>a+b)~.
+
+** Part Two
+
+First group the sacks than find an element that is in all three.
+Maybe I should create an [[file:util.js][util]] for splitting a list in sublists...
+
+At the time I could not think of a way of finding the item in two lists so I did it in two passes.
+
+* Haskell
+
+For the Haskell version, there were several things easier than in the javascript version
+
+1. strings are lists so no ~arr.split('')~
+2. I had already written a Util that splits a list into sub lists of given length
+3. list comprehension makes finding a common element in three list super easy
+
+Character to number is done by using fromEnum. I have to figure out how toEnum works,
+maybe I could have used that on Day 2 where I used an enum for RPS.
+
+The rest is a pretty straight forward translation and simplification of the js code.
