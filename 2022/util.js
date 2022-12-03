@@ -15,14 +15,14 @@ const splitList = (n, xs) => (xs.length)
  * @param {Array<Array<T>>} arrays
  * @returns {Array<T>}
  */
-const findInCommon = arrays => arrays[0].filter(
+const intersection = arrays => [...new Set(arrays[0].filter(
   item => arrays.slice(1).reduce(
     (acc, curr) => acc && curr.includes(item),
     true,
   ),
-)
+))]
 
 module.exports = {
   splitList,
-  findInCommon,
+  intersection,
 }
