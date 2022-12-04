@@ -5,7 +5,7 @@ const rl = readline.createInterface({ input: process.stdin })
 const lines = []
 
 rl.on('line', data => {
-  const line = data.replaceAll('-', ',').split(',').map(i => parseInt(i))
+  const line = data.split(/[-,]/).map(i => parseInt(i))
 
   lines.push(line)
 })
@@ -15,23 +15,10 @@ rl.on('close', () => {
   console.log('partTwo', partTwo(lines))
 })
 
-function contains ([a1, a2, b1, b2]) {
-  if (
-    (a1 <= b1 && b2 <= a2) ||
-    (b1 <= a1 && a2 <= b2)
-  ) return 1
+const contains = ([a1, a2, b1, b2]) => (a1 <= b1 && b2 <= a2) || (b1 <= a1 && a2 <= b2) ? 1 : 0
 
-  return 0
-}
+const overlap = ([a1, a2, b1, b2]) => (a1 <= b1 && a2 >= b1) || (b1 <= a1 && b2 >= a1) ? 1 : 0
 
-function overlap ([a1, a2, b1, b2]) {
-  if (
-    (a1 <= b1 && a2 >= b1) ||
-    (b1 <= a1 && b2 >= a1)
-  ) return 1
-
-  return 0
-}
 function partOne (lines) {
   return R.sum(R.map(contains, lines))
 }
