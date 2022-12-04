@@ -1,0 +1,10 @@
+#+title: Day 4: Camp Cleanup
+
+* Solve in javascript
+
+Pretty straight forward, check if there is overlap by checking the boundaries.
+
+* Haskell
+
+For the haskell version I sort of copy/pasted the javascript version ;-) \\
+It looks kinda weird having if/else statements in haskell
