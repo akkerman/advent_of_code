@@ -24,10 +24,18 @@ function contains ([a1, a2, b1, b2]) {
   return 0
 }
 
+function overlap ([a1, a2, b1, b2]) {
+  if (
+    (a1 <= b1 && a2 >= b1) ||
+    (b1 <= a1 && b2 >= a1)
+  ) return 1
+
+  return 0
+}
 function partOne (lines) {
   return R.sum(R.map(contains, lines))
 }
 
 function partTwo (lines) {
-  return 'todo'
+  return R.sum(R.map(overlap, lines))
 }
