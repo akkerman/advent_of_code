@@ -1,0 +1,27 @@
+#+title: Day 5: Supply Stacks
+
+* Solve in Javascript
+
+Reading the text I quickly had an idea how I wanted to solve it.
+Thing is, I still nedded to parse the text. I couldn't come up with a way to get
+it quickly into code so I used some vim macro magic to move and rotate the
+stacks to horizontal arrays.
+
+From that moment it is pretty straight forward to code the steps as described.
+Then pop all stackt to get the top elements.
+
+** Part Two
+
+My code doesn't actually do the steps as described. It uses a temporary stack
+and then puts them reversed on the goal stack.
+
+The alternative would be:
+
+#+begin_src javascript
+function partTwo (stack, instructions) {
+  for (const [move, from, to] of instructions) {
+    stack[to].push(...stack[from].splice(-move))
+  }
+  return stack.map(s => s.pop()).join('')
+}
+#+end_src
