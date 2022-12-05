@@ -3,7 +3,7 @@
 * Solve in Javascript
 
 Reading the text I quickly had an idea how I wanted to solve it.
-Thing is, I still nedded to parse the text. I couldn't come up with a way to get
+Thing is, I still needed to parse the text. I couldn't come up with a way to get
 it quickly into code so I used some vim macro magic to move and rotate the
 stacks to horizontal arrays.
 
