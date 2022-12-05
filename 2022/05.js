@@ -2,8 +2,8 @@ const readline = require('readline')
 const rl = readline.createInterface({ input: process.stdin })
 
 const instructions = []
-const stack1 = [null]
-const stack2 = [null]
+const stack1 = [[]]
+const stack2 = [[]]
 
 let readStack = true
 
@@ -25,8 +25,7 @@ rl.on('line', data => {
     .replace('from ', '')
     .replace('to ', '')
     .split(/ +/)
-    .map(i => Number
-      .parseInt(i))
+    .map(i => Number.parseInt(i))
 
   instructions.push(line)
 })
@@ -43,7 +42,7 @@ function partOne (stack, instructions) {
       stack[to].push(elem)
     }
   }
-  return stack.slice(1).map(s => s.pop()).join('')
+  return stack.map(s => s.pop()).join('')
 }
 
 function partTwo (stack, instructions) {
@@ -55,5 +54,5 @@ function partTwo (stack, instructions) {
     }
     stack[to] = stack[to].concat(lifted.reverse())
   }
-  return stack.slice(1).map(s => s.pop()).join('')
+  return stack.map(s => s.pop()).join('')
 }
