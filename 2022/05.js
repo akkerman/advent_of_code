@@ -30,7 +30,7 @@ rl.on('line', data => {
 })
 
 rl.on('close', () => {
-  console.log('partOne', partOne(stack, instructions))
+  // console.log('partOne', partOne(stack, instructions))
   console.log('partTwo', partTwo(stack, instructions))
 })
 
@@ -45,5 +45,13 @@ function partOne (stack, instructions) {
 }
 
 function partTwo (lines) {
-  return 'todo'
+  for (const [move, from, to] of instructions) {
+    const lifted = []
+    for (let i = 0; i < move; i += 1) {
+      const elem = stack[from].pop()
+      lifted.push(elem)
+    }
+    stack[to] = stack[to].concat(lifted.reverse())
+  }
+  return stack.slice(1).map(s => s.pop()).join('')
 }
