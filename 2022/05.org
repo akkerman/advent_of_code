@@ -25,3 +25,44 @@ function partTwo (stack, instructions) {
   return stack.map(s => s.pop()).join('')
 }
 #+end_src
+
+** Parsing the stack
+
+I explored some ways to parse the input stack.
++ reading character by character and figuring out if the char is needed or not (~' []'.includes(char)~)
++ chunking lines and cleaning it with a regex (~R.splitEvery(4)~ and ~s => s.replace(/[\[ \]]/)~)
+
+Although the [[https://ramdajs.com/][Ramda]] works, it is not at all readable.
+
+#+begin_src javascript
+const clean = s => s.replace(/[\[ \]]/g, '') // eslint-disable-line
+const parseStack = stack => [[], ...R.pipe(
+  R.map(R.pipe(R.splitEvery(4), R.map(clean))),
+  R.pipe(R.reverse, R.transpose),
+  R.map(R.filter(R.pipe(R.isEmpty, R.not))),
+)(stack)]
+#+end_src
+
+
+The one I'm going to stick with isn't that clever at all but pretty easy to follow.
+
+Go throught the ascii art line by line, character by character and keep a record of it's index. \\
+If it's a character we want, add it, in front of a nested array, effectively rotating it 90° clockwise. \\
+At the end we remove all empty arrays (the ones that only contained spaces and square brackets) \\
+
+#+begin_src javascript
+function parseStack (stack) {
+  const newStack = []
+  const size = stack[0].length
+  for (const line of stack) {
+    for (let i = 0; i < size; i += 1) {
+      const elem = line[i]
+      if (' []'.includes(elem)) continue
+      if (!newStack[i]) newStack[i] = []
+      newStack[i].unshift(elem)
+    }
+  }
+
+  return [[], ...newStack.filter(a => a.length)]
+}
+#+end_src
