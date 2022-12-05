@@ -26,7 +26,7 @@ function partTwo (stack, instructions) {
 }
 #+end_src
 
-** Parsing the stack
+** Parsing the input
 
 I explored some ways to parse the input stack.
 + reading character by character and figuring out if the char is needed or not (~' []'.includes(char)~)
@@ -66,3 +66,6 @@ function parseStack (stack) {
   return [[], ...newStack.filter(a => a.length)]
 }
 #+end_src
+
+
+Refer to [[https://github.com/akkerman/advent_of_code/blob/2022-day5-parse-stack/2022/05.js][advent_of_code/05.js at 2022-day5-parse-stack]] for an updated version of day 5 in javascript
