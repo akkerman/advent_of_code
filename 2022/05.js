@@ -2,7 +2,8 @@ const readline = require('readline')
 const rl = readline.createInterface({ input: process.stdin })
 
 const instructions = []
-const stack = [null]
+const stack1 = [null]
+const stack2 = [null]
 
 let readStack = true
 
@@ -14,7 +15,8 @@ rl.on('line', data => {
 
   if (readStack) {
     const line = data.split('')
-    stack.push(line)
+    stack1.push(line)
+    stack2.push([...line])
     return
   }
 
@@ -30,8 +32,8 @@ rl.on('line', data => {
 })
 
 rl.on('close', () => {
-  // console.log('partOne', partOne(stack, instructions))
-  console.log('partTwo', partTwo(stack, instructions))
+  console.log('partOne', partOne(stack1, instructions))
+  console.log('partTwo', partTwo(stack2, instructions))
 })
 
 function partOne (stack, instructions) {
@@ -44,7 +46,7 @@ function partOne (stack, instructions) {
   return stack.slice(1).map(s => s.pop()).join('')
 }
 
-function partTwo (lines) {
+function partTwo (stack, instructions) {
   for (const [move, from, to] of instructions) {
     const lifted = []
     for (let i = 0; i < move; i += 1) {
