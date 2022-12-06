@@ -42,3 +42,14 @@ function findFirstSet (stream, size) {
 #+end_src
 
 Caveat: dumps when there is no such set in the stream
+
+* Haskell
+
+For the Haskell version I went the 'one solution way'.
+In a solution of [[https://github.com/iroghair/aoc2022/blob/main/Day06/day06.py#L20][iroghair]] I saw an optimization which got me intrigued.
+
+In stead of walking through the characters one-by-one you can skip the amount of
+duplicate characters instead. The idea is dat, although these duplicate could be
+anywhere in the slice of the desired size, the most conservative guess would be
+that they are all at the start of the slice. Thus it is safe to skip this amount
+of characters.
