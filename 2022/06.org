@@ -1,0 +1,29 @@
+#+title: Day 6: Tuning Trouble
+#+options: toc:nil num:nil
+
+* Solve in Javascript
+
+For some reason I could not get the correct answers, I was typing out all
+conditions ~w === y && y === z~ etc..  Only after switching to a different strategy
+~![x,y,z].includes(w)~ did I realise I started out checking for equality instead
+of inequality.
+
+** Part Two
+
+Ok now it needs to be 14 chars instead of 3, that is going to be tedious to
+write out. So I switched to using a ~Set~ and checking if the size of the set is
+equal to length of the original list, trusting that ~Set~ would remove duplicates.
+
+This also did NOT work properly at first, I was doing:
+
+#+begin_src javascript
+const list = stream.slice(i, i + 14)
+const set = new Set(list)
+#+end_src
+
+Which seems ok because I also did ~[w,x,y,z] = stream.slice(i, i + 4)~, but while
+you can apparently destructure a string into an array, [[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/slice][String.prototype.slice()]]
+still returns a string so my Set contained just one string of 14 chars instead
+of the 14 characters.
+
+*Next time split it directly into an array again.*
