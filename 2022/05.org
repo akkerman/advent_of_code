@@ -11,6 +11,13 @@ stacks to horizontal arrays.
 From that moment it is pretty straight forward to code the steps as described.
 Then pop all stackt to get the top elements.
 
+** Index mismatch
+
+Since arrays start at zero in javascript the stacks would naturally endup on index-1.
+I could have accounted for that by substracting 1 from each instruction but I've
+choosen to just put an empty array at the start effectively eliminating the
+of-by-one errors.
+
 ** Part Two
 
 My code doesn't actually do the steps as described. It uses a temporary stack
