@@ -41,4 +41,4 @@ function findFirstSet (stream, size) {
 }
 #+end_src
 
-Caveat: dumps when there is no such set in the streaml
+Caveat: dumps when there is no such set in the stream
