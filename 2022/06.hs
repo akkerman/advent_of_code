@@ -1,13 +1,13 @@
 module Six () where
 
-import Data.List (nub)
+import Data.Set (fromList)
 
 firstSubSet :: Int -> Int -> String -> Int
 firstSubSet start size xs
   | uniqChars == size = start + size
   | otherwise = firstSubSet (start + duplicateChars) size (drop duplicateChars xs)
   where
-    uniqChars = length $ nub (take size xs)
+    uniqChars = length $ fromList (take size xs)
     duplicateChars = size - uniqChars
 
 main :: IO ()
