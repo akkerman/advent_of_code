@@ -33,7 +33,7 @@ function partOne (stream) {
 function partTwo (stream) {
   let idx = 0
   for (let i = 0; i < stream.length - 4; i += 1) {
-    const list = stream.slice(i, i + 14).split('')
+    const list = stream.slice(i, i + 14)
     const set = new Set(list)
     if (set.size === list.length) {
       return idx + 14
