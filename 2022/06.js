@@ -11,9 +11,7 @@ rl.on('line', data => {
 
 rl.on('close', () => {
   console.log('partOne', lines.map(partOne)) // 7,5,6,10,11
-  console.log('partTwo', lines.map(partTwo)) // 19, 23,23,29,26
-  console.log('partTwo', partOne(lines[0]))
-  console.log('partTwo', partTwo(lines[0]))
+  console.log('partTwo', lines.map(partTwo)) // 19,23,23,29,26
 })
 
 function partOne (stream) {
