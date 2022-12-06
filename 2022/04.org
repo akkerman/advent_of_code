@@ -8,3 +8,10 @@ Pretty straight forward, check if there is overlap by checking the boundaries.
 
 For the haskell version I sort of copy/pasted the javascript version ;-) \\
 It looks kinda weird having if/else statements in haskell
+
+* Golang
+
+What a lot of plumbing.
+Cannot find a way to destructure the array. Thus I used the variable names from the previous solutions as array indices.
+
+Splitting a text using a pre-compiled regex is pretty nice.
