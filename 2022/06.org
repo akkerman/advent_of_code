@@ -27,3 +27,18 @@ still returns a string so my Set contained just one string of 14 chars instead
 of the 14 characters.
 
 *Next time split it directly into an array again.*
+
+** Generic
+
+#+begin_src javascript
+function findFirstSet (stream, size) {
+  for (let i = 0; i < stream.length; i += 1) {
+    const list = stream.slice(i, i + size)
+    if (new Set(list).size === size) {
+      return i + size
+    }
+  }
+}
+#+end_src
+
+Caveat: dumps when there is no such set in the streaml
