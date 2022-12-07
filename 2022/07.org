@@ -1,6 +1,69 @@
 #+title: Day 7: No Space Left On Device
+#+options: toc:nil num:nil
 
 * Solve in javascript
 
 At first i had the idea of just constructing the tree and then use recursion to find the directory sizes.
 This worked for the sample data but gave a ~RangeError: Maximam call stack size exceeded~ on the input data.
+
+I could just make a ledger of file paths and their sizes.
+Then I would have to sort them by path depth to start summarizing.
+
+** For some time I could not figure out why my answer was too low (that's wat the site said.)
+There were two reasons
+
+*** 1. I did NOT add the directories properly
+I just added them without checking if they were already in the dictionary
+
+#+begin_src js :results verbatim :exports both
+dict = {}
+dict['exists'] = 0
+dict['exists'] += 12
+dict['not exists'] += 12
+return dict
+#+end_src
+
+#+RESULTS:
+: { exists: 12, 'not exists': NaN }
+
+I later came to learn that python has an excellent feature for this:
+
+#+begin_src python :results verbatim :exports both
+from collections import defaultdict
+
+dict = defaultdict(int)
+dict['exists'] = 0
+dict['exists'] += 12
+dict['not exists'] += 12
+return dict
+#+end_src
+
+#+RESULTS:
+: defaultdict(<class 'int'>, {'exists': 12, 'not exists': 12})
+
+*** 2. When listing I ignored directories
+The reason being that I did not add files to the dictionary only directories.
+
+So while processing the directories, for which I had already encountered a filelisting, a directory would contain the sum of the files.
+Later on I intended to sum the directories. But for some reason this does not work when not also adding the directories from the listing.
+
+(see comment ~oeps vergeten~)
+
+** Part One - finding the sum of directories smaller than 100k
+
+Since the heavy lifting of calculating the size of each directory is done, what remains is filtering and summarizing.
+
+CAVEAT: ignore the top level directory.
+
+** Part Two - finding a directory to remove
+
+1. move the logic of finding the sums out of the solution for partOne, to a separate function
+2. do some pre-amble to calculate the amount of space to freeup (read it again because the anwser is wrong)
+3. filter all nodes that wil freeup at least this amount
+4. take the minium
+
+* Thoughts
+
+Since javascript has no tail call optimization (unless I revert back to nodejs < v7 and use some --harmony flags) I have some hopes of implementing a tree based solution in Haskell.
+
+Another solution might be something called 'accumulator pattern'. I think this involves use of a queue for, temporary, storage of nodes to be processed.
