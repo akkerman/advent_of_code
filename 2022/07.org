@@ -1,0 +1,6 @@
+#+title: Day 7: No Space Left On Device
+
+* Solve in javascript
+
+At first i had the idea of just constructing the tree and then use recursion to find the directory sizes.
+This worked for the sample data but gave a ~RangeError: Maximam call stack size exceeded~ on the input data.
