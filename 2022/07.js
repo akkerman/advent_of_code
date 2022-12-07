@@ -60,19 +60,26 @@ function list (lines) {
 
 const sort = dirs => Object.keys(dirs).sort((a, b) => b.split('/').length - a.split('/').length)
 
-function partOne (dirs) {
+const sum = dirs => {
   for (const path of sort(dirs)) {
     if (path === '') continue
     const parent = path.split('/').slice(0, -1).join('/')
     if (!dirs[parent]) dirs[parent] = 0
     dirs[parent] += dirs[path]
   }
+}
+
+function partOne (dirs) {
+  sum(dirs)
 
   delete dirs['']
-
   return Object.values(dirs).filter(size => size <= 100000).reduce((a, b) => a + b)
 }
 
-function partTwo (lines) {
-  return '//todo'
+function partTwo (dirs) {
+  sum(dirs)
+
+  const unused = 70000000 - dirs['']
+  const freeup = 30000000 - unused
+  return Math.min(...Object.values(dirs).filter(size => size > freeup))
 }
