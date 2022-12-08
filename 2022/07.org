@@ -67,3 +67,18 @@ CAVEAT: ignore the top level directory.
 Since javascript has no tail call optimization (unless I revert back to nodejs < v7 and use some --harmony flags) I have some hopes of implementing a tree based solution in Haskell.
 
 Another solution might be something called 'accumulator pattern'. I think this involves use of a queue for, temporary, storage of nodes to be processed.
+
+* Haskell
+
+The Haskell version basically has the same approach but is different in a few respects.
+
+First, Haskell can pattern match on lists. The instructions were split at forehand enabling a clear overview of the different inputs being parsed. At some point I realised I can just drop the ~$ ls~ instruction because the output of the listing is a different pattern than ~$ cd ..~ etc. i.e. ~["$", "cd", dirname]~ vs ~["dir", dirname]~ and ~[size, filename]~.
+
+Second, ~Data.Map~ supports (nested) lists as keys so no split/join is necessary afther the initial split of the instructions
+
+Third, [[https://hackage.haskell.org/package/containers-0.6.6/docs/Data-Map-Strict.html#v:insertWith][Data.Map.insertWith]] (+) can be used in a simular way like ~dictionary[idx] += 12~ but it inserts the pair (key,value) if the keys does not exist. So no explicit checking and adding null values.
+
+Fourth, as an aditional challenge, I wanted to see if it were possible to not only add the file sizes to the directly containing directory but also to all of it's parents.
+
+
+Because the map is alway passed along the next function call, reducing the instruction list, the construction of the net incarnation of this map is inline with the function paramaters. i.m.o this is not easily readable with all those brackets.
