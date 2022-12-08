@@ -92,17 +92,8 @@ function partTwo (lines) {
     return visible
   }
 
-  // const maximum = 5
-  // const test = [3, 5, 3]
-  // console.log(takeVisible(maximum)(test))
-
-  // if (true !== false) return
-
   for (let i = 0; i < lines.length; i += 1) {
     for (let j = 0; j < lines[0].length; j += 1) {
-      // const i = 3
-      // const j = 2
-
       const max = lines[i][j]
 
       const left = getLeft(i, j).reverse()
@@ -119,6 +110,4 @@ function partTwo (lines) {
     }
   }
   return maxScore
-
-  // 196 is too low
 }
