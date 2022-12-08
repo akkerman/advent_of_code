@@ -1,0 +1,51 @@
+#+title: Day 8: Treetop Tree House
+#+options: toc:nil num:nil
+
+* Solve in javascript
+
+Pretty straight forward but hard to get right.
+
+My ideas
+1. put all numbers in a 2D list.
+2. Create functions to get the trees up, left, down, right from an index
+3. Figure out if the tree is visible from all of those directions
+
+After some fiddling and rereading:
+Change nr 3. to: figure out if the tree is visible from any of those directions
+
+** Part Two
+
+Ideas
+1. copy paste part one
+2. make sure the up, left, down, right tree sequences are in the order from the perspective of the tree
+3. Take the visible trees from the directions
+4. apply the the given formula on the viewing distances
+
+After a lot of tries, re-read the text again and come to the conclusion that the intended mental model was not at all what I was going with.
+
+
+i.e. the solution is the below function ~takeVisible~
+
+
+#+begin_src js :results verbatim :exports both
+const takeVisible = max => xs => {
+  const visible = []
+  for (const x of xs) {
+    visible.push(x)
+    if (x >= max) break
+  }
+  return visible
+}
+
+return takeVisible(5)([1,2,3,4,5,6,7,8,9])
+#+end_src
+
+#+RESULTS:
+: [ 1, 2, 3, 4, 5 ]
+
+For some reason I figured that all of those tree lengths should be visible from height 5.
+But the assignment clearly states
+
+#+begin_quote
+stop if you reach an edge or at the first tree that is the same height or taller than the tree under consideration
+#+end_quote
