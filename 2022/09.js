@@ -15,13 +15,20 @@ rl.on('close', () => {
 })
 
 function partOne (lines) {
-  const head = [0, 0]
-  const tail = [0, 0]
+  return solve(lines, 2)
+}
+function partTwo (lines) {
+  return solve(lines, 10)
+}
+function solve (lines, length) {
+  const rope = Array.from({ length }, () => [0, 0])
 
   const tailpositions = new Set()
 
   for (const { direction, steps } of lines) {
     for (let i = 0; i < steps; i += 1) {
+      let head = rope[0]
+      let tail = rope[1]
       switch (direction) {
         case 'U':
           head[1] -= 1
@@ -39,29 +46,34 @@ function partOne (lines) {
         // noop
       }
 
-      if (tail[0] === head[0] && tail[1] < head[1] - 1) {
-        tail[1] = head[1] - 1
-      } else
+      for (let knot = 0; knot < rope.length - 1; knot += 1) {
+        head = rope[knot]
+        tail = rope[knot + 1]
 
-      if (tail[0] === head[0] && tail[1] > head[1] + 1) {
-        tail[1] = head[1] + 1
-      } else
+        if (tail[0] === head[0] && tail[1] < head[1] - 1) {
+          tail[1] = head[1] - 1
+        } else
 
-      if (tail[1] === head[1] && tail[0] < head[0] - 1) {
-        tail[0] = head[0] - 1
-      } else
+        if (tail[0] === head[0] && tail[1] > head[1] + 1) {
+          tail[1] = head[1] + 1
+        } else
 
-      if (tail[1] === head[1] && tail[0] > head[0] + 1) {
-        tail[0] = head[0] + 1
-      } else
+        if (tail[1] === head[1] && tail[0] < head[0] - 1) {
+          tail[0] = head[0] - 1
+        } else
 
-      if (tail[0] !== head[0] && tail[1] !== head[1]) {
-        const lr = head[0] - tail[0]
-        const ud = head[1] - tail[1]
+        if (tail[1] === head[1] && tail[0] > head[0] + 1) {
+          tail[0] = head[0] + 1
+        } else
 
-        if (Math.abs(lr) > 1 || Math.abs(ud) > 1) {
-          tail[0] += (lr > 0 ? 1 : -1)
-          tail[1] += (ud > 0 ? 1 : -1)
+        if (tail[0] !== head[0] && tail[1] !== head[1]) {
+          const lr = head[0] - tail[0]
+          const ud = head[1] - tail[1]
+
+          if (Math.abs(lr) > 1 || Math.abs(ud) > 1) {
+            tail[0] += (lr > 0 ? 1 : -1)
+            tail[1] += (ud > 0 ? 1 : -1)
+          }
         }
       }
 
@@ -69,9 +81,5 @@ function partOne (lines) {
     }
   }
 
-  return tailpositions.size
-}
-
-function partTwo (lines) {
-  return 'todo'
+  return tailpositions.size // 2527 is too high
 }
