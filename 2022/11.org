@@ -1,0 +1,40 @@
+#+title: Day 11: Monkey in the Middle
+#+options: toc:nil num:nil
+
+* Solve in javascript
+
+This problem starts of as an excercise in carefull reading, continues with some text parsing magic and to play rounds according to given rules.
+
+The funny part imho is that I can use [[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval][eval]] to do calculations, no if/else on operations.
+
+The stupid part is, and I forgot this, that javascript always [[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort][sorts]] an array converting the elements to string, thus numbers are sorted in alphabetical order.
+
+** Part Two
+
+10k rounds and don't divide by 3...
+
+#+begin_quote
+Worry levels are no longer divided by three after each item is inspected; *you'll need to find another way to keep your worry levels manageable.*
+#+end_quote
+
+My first idea to make levels manageable was to switch to [[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt][BigInt]]. For some time the program quickly finished but even the first 20 rounds, (part one) were quickly wrong. I should have read the javascript reference more carefully:
+
+
+#+begin_quote
+A BigInt value is not strictly equal to a Number value, but it is loosely so:
+#+end_quote
+
+#+begin_src js
+0n === 0
+// false
+
+0n == 0
+// true
+#+end_src
+
+
+So a lot of the modulo operations went the wrong way when doing: ~BigInt(worrylevel) % BigInt(monkey.test) === 0~
+
+When this whas fixed, the numbers became quickly too large for my PC to handle, and somewhere in round 8k+ calculations stalled.
+
+In the end I went with reverting to the solution of part one and keep worry levels manageable by calculating it with the modulo of the largest common multiple of ~monkey.test~ values.
