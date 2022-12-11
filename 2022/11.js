@@ -43,9 +43,11 @@ function solve (monkeys, rounds, div) {
   for (let round = 1; round <= rounds; round += 1) {
     for (const monkey of monkeys) {
       const length = monkey.items.length
+      monkey.inspections += length
+
       for (let i = 0; i < length; i += 1) {
         const old = monkey.items.shift()
-        monkey.inspections += 1
+
         let worrylevel = Math.floor(eval(monkey.operation) / div)
         worrylevel = worrylevel % MOD
 
