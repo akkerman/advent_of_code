@@ -1,5 +1,4 @@
 const Heap = require('heap')
-const { exit } = require('process')
 const readline = require('readline')
 const rl = readline.createInterface({ input: process.stdin })
 
@@ -42,8 +41,17 @@ rl.on('line', line => {
 rl.on('close', () => {
   maxCol = lines[0].length - 1
   maxRow = lines.length - 1
+
+  let start = new Date()
   console.log('partOne', partOne())
+  console.log(new Date().getTime() - start.getTime(), 'ms')
+  start = new Date()
   console.log('partTwo', partTwo())
+  console.log(new Date().getTime() - start.getTime(), 'ms')
+  start = new Date()
+  console.log('partTwoBrute', partTwoBrute())
+  console.log(new Date().getTime() - start.getTime(), 'ms')
+  start = new Date()
 })
 
 const coordWithSteps = (row, col, steps) => {
@@ -51,14 +59,20 @@ const coordWithSteps = (row, col, steps) => {
   return { row, col, height: lines[row][col], steps, label: `${row}_${col}` }
 }
 
-const getNeighboursWithCoord = makeGetNeigbours(coordWithSteps)
-
-const makeIsReachable = (refRow, refCol) => {
+const makeIsReachableGoingUp = (refRow, refCol) => {
   const maxHeight = lines[refRow][refCol] + 1
   return (row, col) => lines[row][col] <= maxHeight
 }
 
-function makeGetNeigbours (cell) {
+const makeIsReachableGoingDown = (refRow, refCol) => {
+  const minHeight = lines[refRow][refCol] - 1
+  return (row, col) => minHeight <= lines[row][col]
+}
+
+const getNeighboursWithCoord = makeGetNeigbours(coordWithSteps, makeIsReachableGoingUp)
+const getNeighboursDownWithCoord = makeGetNeigbours(coordWithSteps, makeIsReachableGoingDown)
+
+function makeGetNeigbours (cell, makeIsReachable) {
   return function getNeighbours (row, col) {
     const isReachable = makeIsReachable(row, col)
     const neighbours = []
@@ -79,14 +93,10 @@ function makeGetNeigbours (cell) {
 }
 
 const visited = new Set()
-const added = new Set()
-const inprio = new Set()
 const prio = new Heap((a, b) => a.steps - b.steps)
 
 function partOne () {
   visited.clear()
-  added.clear()
-  inprio.clear()
   prio.length = 0
   prio.push(coordWithSteps(startRow, startCol, 0))
 
@@ -94,17 +104,17 @@ function partOne () {
     const { row, col, steps, label } = prio.pop()
 
     if (row === endRow && col === endCol) return steps
+    if (visited.has(label)) continue
     visited.add(label)
 
     for (const nb of getNeighboursWithCoord(row, col)) {
-      if (visited.has(nb.label) || added.has(nb.label)) continue
-      added.add(nb.label)
+      if (visited.has(nb.label)) continue
       prio.push(coordWithSteps(nb.row, nb.col, steps + nb.steps))
     }
   }
 }
 
-function partTwo () {
+function partTwoBrute () {
   let min = Number.MAX_SAFE_INTEGER
 
   for (let row = 0; row < lines.length; row += 1) {
@@ -117,4 +127,23 @@ function partTwo () {
     }
   }
   return min
+}
+
+function partTwo () {
+  visited.clear()
+  prio.length = 0
+  prio.push(coordWithSteps(endRow, endCol, 0))
+
+  while (true) {
+    const { row, col, steps, label } = prio.pop()
+
+    if (lines[row][col] === 1) return steps
+    if (visited.has(label)) continue
+    visited.add(label)
+
+    for (const nb of getNeighboursDownWithCoord(row, col)) {
+      if (visited.has(nb.label)) continue
+      prio.push(coordWithSteps(nb.row, nb.col, steps + nb.steps))
+    }
+  }
 }
