@@ -18,7 +18,7 @@ const delta = 'a'.charCodeAt(0) - 1
 const toInt = s => {
   switch (s) {
     case 'S': return 1
-    case 'E': return 27
+    case 'E': return 26
     default: return s.charCodeAt(0) - delta
   }
 }
@@ -46,10 +46,9 @@ rl.on('close', () => {
   console.log('partTwo', partTwo())
 })
 
-const height = (row, col) => lines[row][col]
 const coordWithSteps = (row, col, steps) => {
   if (steps === undefined) steps = 1
-  return { row, col, height: height(row, col), steps, label: `${row}_${col}` }
+  return { row, col, height: lines[row][col], steps, label: `${row}_${col}` }
 }
 
 const getNeighboursWithCoord = makeGetNeigbours(coordWithSteps)
@@ -106,5 +105,16 @@ function partOne () {
 }
 
 function partTwo () {
-  return 'todo'
+  let min = Number.MAX_SAFE_INTEGER
+
+  for (let row = 0; row < lines.length; row += 1) {
+    for (let col = 0; col < lines[0].length; col += 1) {
+      if (lines[row][col] === 1) {
+        startRow = row
+        startCol = col
+        min = Math.min(min, partOne())
+      }
+    }
+  }
+  return min
 }
