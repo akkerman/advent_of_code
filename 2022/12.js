@@ -49,14 +49,16 @@ rl.on('close', () => {
   console.log('partTwo', partTwo())
   console.log(new Date().getTime() - start.getTime(), 'ms')
   start = new Date()
-  console.log('partTwoBrute', partTwoBrute())
-  console.log(new Date().getTime() - start.getTime(), 'ms')
-  start = new Date()
+  // console.log('partTwoBrute', partTwoBrute())
+  // console.log(new Date().getTime() - start.getTime(), 'ms')
+  // start = new Date()
 })
 
+const manhattanDistance = (row, col) => Math.abs(row - endRow) + Math.abs(col - endCol)
+const euclideanDistance = (row, col) => Math.hypot(row - endRow, col - endCol)
 const coordWithSteps = (row, col, steps) => {
   if (steps === undefined) steps = 1
-  return { row, col, height: lines[row][col], steps, label: `${row}_${col}` }
+  return { row, col, height: lines[row][col], distance: manhattanDistance(row, col), steps, label: `${row}_${col}` }
 }
 
 const makeIsReachableGoingUp = (refRow, refCol) => {
@@ -93,17 +95,21 @@ function makeGetNeigbours (cell, makeIsReachable) {
 }
 
 const visited = new Set()
-const prio = new Heap((a, b) => a.steps - b.steps)
+// const prio = new Heap((a, b) => a.steps - b.steps)
+const prio = new Heap((a, b) => (a.steps + a.distance) - (b.steps + b.distance))
 
 function partOne () {
   visited.clear()
   prio.length = 0
   prio.push(coordWithSteps(startRow, startCol, 0))
 
+  let pops = 0
+
   while (true) {
     const { row, col, steps, label } = prio.pop()
+    pops += 1
 
-    if (row === endRow && col === endCol) return steps
+    if (row === endRow && col === endCol) return { steps, pops }
     if (visited.has(label)) continue
     visited.add(label)
 
@@ -122,7 +128,7 @@ function partTwoBrute () {
       if (lines[row][col] === 1) {
         startRow = row
         startCol = col
-        min = Math.min(min, partOne())
+        min = Math.min(min, partOne().steps)
       }
     }
   }
@@ -134,10 +140,12 @@ function partTwo () {
   prio.length = 0
   prio.push(coordWithSteps(endRow, endCol, 0))
 
+  let pops = 0
   while (true) {
     const { row, col, steps, label } = prio.pop()
+    pops += 1
 
-    if (lines[row][col] === 1) return steps
+    if (lines[row][col] === 1) return { steps, pops }
     if (visited.has(label)) continue
     visited.add(label)
 
