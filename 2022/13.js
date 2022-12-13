@@ -28,19 +28,30 @@ rl.on('line', data => {
 })
 
 rl.on('close', () => {
-  console.log('partOne', partOne(lines)) // too low: 679 977
-  // console.log('partTwo', partTwo(lines))
+  console.log('partOne', partOne(lines))
+  console.log('partTwo', partTwo(lines))
 })
 
-function partOne (lines) {
-  for (const pair of lines) {
+function partOne (pairs) {
+  for (const pair of pairs) {
     const { left, right } = pair
     pair.correct = check(left, right)
-    console.log(pair.correct)
   }
-  return lines.filter(p => p.correct).reduce((acc, pair) => acc + pair.idx, 0)
+  return pairs.filter(p => p.correct).reduce((acc, pair) => acc + pair.idx, 0)
 }
 
-function partTwo (lines) {
-  return 'todo'
+function partTwo (pairs) {
+  const divider2 = [[2]]
+  const divider6 = [[6]]
+
+  const packets = [divider2, divider6]
+  for (const pair of pairs) {
+    const { left, right } = pair
+    packets.push(left)
+    packets.push(right)
+  }
+
+  packets.sort((a, b) => check(a, b) ? -1 : 1)
+
+  return (1 + packets.indexOf(divider2)) * (1 + packets.indexOf(divider6))
 }

@@ -1,9 +1,14 @@
+const R = require('ramda')
 module.exports = check
 
 const isInteger = n => typeof n === 'number'
 const isList = n => Array.isArray(n)
 
 function check (left, right) {
+  return checkPrime(R.clone(left), R.clone(right))
+}
+
+function checkPrime (left, right) {
   if (isInteger(left) && isInteger(right)) {
     if (left < right) return true
     if (left > right) return false
