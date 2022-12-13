@@ -1,1 +1,62 @@
 #+title: Day 12: Hill Climbing Algorithm
+#+options: toc:nil num:nil
+
+* Solve in javascript
+Ok so this is a path finding algorithm I remembered I had a lot of trouble
+figuring this out last year so I went back to that puzzle and borrowed some
+code.
+
+I created a BFS with a priority queue sorted on steps from starting point.
+
+The algorithm for finding the neigbours is as follows.
+1. take the cells up, down, left, and right of the visiting node
+2. figure out if it is reachable.
+   It is reachable from the current node if the height of the destination node is atmost the same height or one higher.
+   Aparrently it is ok to drop to the bottom ;-)
+
+#+begin_src js
+const makeIsReachable = (refRow, refCol) => {
+    const maxHeight = lines[refRow][refCol] + 1
+    return (row, col) => lines[row][col] <= maxHeight
+}
+#+end_src
+
+
+For some reason the solution went OOME verry quickly, after some debugging I
+realised the algorithm was adding way to much nodes on the queue (hundreds of
+thousands). I did not realise it at the time what it was but I also saw a lot of
+duplicates.
+
+At long last I decided to keep a record of nodes added to the queue. If it was
+added, do not add again. Although it gave the correct solution it didn't sit
+right with me. It is, typically, not part of the algorithm so why did I need it?
+
+After entering the aswer to part 2 and several hours later, I revisited the algorithm I wrote to find that it was missing aline. After taking a node from the queue you are supposed to check if it was already visited. Since I was not doing that, I got the results I saw (OOME).
+
+The basic algorithm, using a [[https://en.wikipedia.org/wiki/Priority_queue][priority queue]], is:
+
+
+#+begin_src
+add start node to queue
+
+while True:
+   get node from queue
+   if node visited -> continue
+   if node is endpoint -> done
+   mark node visited
+
+   get neighbours of node
+   for each neighbour:
+      if visited -> continue
+      update cost
+      add to queue
+#+end_src
+
+** Part 2 - brute force
+
+Solved it by just repeatable changing the starting position and solving part 1
+
+
+** Part 2 - reverse
+
+Starting at the end, there should be a route down. Would reversing the constraint for going up, knowing that the shortest path should be taken first due to priority, yield the same result as brute forcing it?
