@@ -1,1 +1,19 @@
 #+title: Day 14: Regolith Reservoir
+#+options: toc:nil num:nil
+
+* Solve in javascript
+
+I love it when a plan just works from the start.
+Realisation: for the sand it does NOT matter if it rests on sand or stone so ik kan just treat them the same.
+
+Steps
+1. fill a set with the x,y coords of rock
+2. simulate falling sand until it cannot go any further (hits a coord that is in the set)
+3. place it in the set and increment counter
+4. if sand reaches below maxY -> done return number of sand units
+
+** Part Two
+
+Instead of checking if sand reaches a point in a set also check if it reaches the bottom (without actually putting a lot of bottom rock into the set)
+
+as soon as the starting point for the sand is in the set, we're done.
