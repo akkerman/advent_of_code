@@ -1,0 +1,18 @@
+#+title: Day 13: Distress Signal
+#+options: toc:nil num:nil
+
+* Solve in javascript
+
+Okay, so, I start early in the morning. AoC starts at 6:00am for me.  I have
+40-50 minutes to solve stuff when family live starts. This morning I had some
+code, but nothing worked. I even extracted the functionality to a separate
+function and added testcases from the example.
+
+Much later that day I notices two of my collegues finished this day. When asking for some elaborations, about e.g. why Pair 2 is in the right order, I still didn't understand.
+
+In the evening I had time to figure things out.
+I removed the implementation and started to translate from english to javascript and see where that will bring me. It solved part 1!. Jeey, still don't onderstand the rules btw.
+
+** Part Two
+
+Okay just flatten out the pairs into an array, translate my function to a comparator. Done
