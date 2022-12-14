@@ -65,7 +65,6 @@ function partOne (lines) {
       if (!reservoir.has(label(x - 1, y))) { x -= 1; continue }
       if (!reservoir.has(label(x + 1, y))) { x += 1; continue }
       reservoir.add(label(x, y - 1))
-      console.log('added', label(x, y - 1))
       units += 1
       break
     }
@@ -73,14 +72,43 @@ function partOne (lines) {
       return units
     }
 
-    if (iterations++ > 10000) {
-      throw new Exception('Infinity protection')
+    if (iterations++ > 100000) {
+      throw new Error('Infinity protection')
     }
   }
-
-  return 'todo'
 }
 
 function partTwo (lines) {
-  return 'todo'
+  const reservoir = createReservoirWithPaths(lines)
+  // start dumping sand
+  let iterations = 0
+  let units = 0
+
+  const has = (x, y) => {
+    return reservoir.has(label(x, y)) || y === maxY + 2
+  }
+
+  const startLabel = label(500, 0)
+  while (true) {
+    let x = 500
+    let y = 0
+
+    for (; y <= maxY + 2; y += 1) {
+      if (!has(x, y)) continue
+      if (!has(x - 1, y)) { x -= 1; continue }
+      if (!has(x + 1, y)) { x += 1; continue }
+      reservoir.add(label(x, y - 1))
+      units += 1
+      break
+    }
+
+    if (reservoir.has(startLabel)) {
+      return units
+    }
+
+    if (iterations++ > 100000) {
+      console.log(units)
+      throw new Error('Infinity protection')
+    }
+  }
 }
