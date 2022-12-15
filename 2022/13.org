@@ -20,3 +20,41 @@ onderstand the rules btw.
 ** Part Two
 
 Okay just flatten out the pairs into an array, translate my function to a comparator. Done
+
+
+* Haskell
+
+The trick here was that I had no clue how to read the input file into a haskell data structure.
+
+Searching the internet for haskell solution I came across, quite complicated, parsing logic but also a one liner implementing the Read Typeclass.
+
+
+#+begin_src haskell
+data Packet = List [Packet] | Int Integer deriving Eq
+
+instance Read Packet where
+  readsPrec :: Int -> ReadS Packet
+  readsPrec d r = [(List x, rest) | (x, rest) <- readsPrec d r] ++ [(Int x, rest) | (x, rest) <- readsPrec d r]
+#+end_src
+
+Comparing the parts of the data structure is done by using the Ord Typeclass but not all of the syntax is familiar to me.
+
+#+begin_src haskell
+instance Ord Packet where
+  compare :: Packet -> Packet -> Ordering
+  compare (Int x) (Int y)      = compare x y
+  compare (List xs) (List ys)  = compare xs ys
+  compare x@(Int _) (List ys)  = compare [x] ys
+  compare (List xs) y@(Int _)  = compare xs [y]
+#+end_src
+
+
+** TODO figure out how to implement Read typeclass
+what does that ~readsPrec~ function do?
+** TODO figure out how to implement Ord typeclass
+** DONE figure out what is that ~@~ sign ??
+CLOSED: [2022-12-14 Wed 21:05]
+
+The pattern ~x@(Int _)~ is called an as-pattern. (see [[https://www.haskell.org/tutorial/patterns.html][A Gentle Introduction to Haskell: Patterns]])
+It means that if the pattern on the right of the @ is matched, it is contained in the variable of the left.
+In this case: x contains ~Int _~
