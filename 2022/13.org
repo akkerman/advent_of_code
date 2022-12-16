@@ -58,3 +58,9 @@ CLOSED: [2022-12-14 Wed 21:05]
 The pattern ~x@(Int _)~ is called an as-pattern. (see [[https://www.haskell.org/tutorial/patterns.html][A Gentle Introduction to Haskell: Patterns]])
 It means that if the pattern on the right of the @ is matched, it is contained in the variable of the left.
 In this case: x contains ~Int _~
+
+* Python
+
+Since it was already known we were writing in comparator, for the python version I went with returning the a difference instead of true/false/undefined.
+
+Python, like javascript, also has eval so the arrays were easily parsed.
