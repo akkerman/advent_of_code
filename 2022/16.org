@@ -1,0 +1,9 @@
+#+title: Day 16: Proboscidea Volcanium
+
+* Solve in javascript
+
+Okay, nice parsing challenge with a lot of optional es-s.
+
+#+begin_src javascript
+const re = /Valve ([A-Z]{2}) has flow rate=(\d+); tunnels? leads? to valves? (.+)/
+#+end_src
