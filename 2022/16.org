@@ -7,3 +7,38 @@ Okay, nice parsing challenge with a lot of optional es-s.
 #+begin_src javascript
 const re = /Valve ([A-Z]{2}) has flow rate=(\d+); tunnels? leads? to valves? (.+)/
 #+end_src
+
+
+- optimizing the pressure released.
+- moving takes a minute
+- opening takes a minute
+- passing by should take zero minutes
+- maybe add possible paths to each node?
+
+
+#+begin_src mermaid :file ./valves.png
+graph LR;
+A((AA 0))
+B((BB 13))
+C((CC 2))
+D((DD 20))
+E((EE 3))
+F((FF 0))
+G((GG 0))
+H((HH 22))
+I((II 0))
+J((JJ 21))
+A---D
+A---I
+A---B
+B---C
+C---D
+D---E
+E---F
+F---G
+G---H
+I---J
+#+end_src
+
+#+RESULTS:
+[[file:./valves.png]]
