@@ -34,6 +34,52 @@ function partOne (lines) {
   return area
 }
 
+function getLimits (lines) {
+  return lines.reduce((
+    { minX, minY, minZ, maxX, maxY, maxZ },
+    [x, y, z]) => {
+    return {
+      minX: Math.min(minX, x),
+      minY: Math.min(minY, y),
+      minZ: Math.min(minZ, z),
+      maxX: Math.max(maxX, x),
+      maxY: Math.max(maxY, y),
+      maxZ: Math.max(maxZ, z),
+    }
+  },
+  {
+    minX: Infinity,
+    minY: Infinity,
+    minZ: Infinity,
+    maxX: -Infinity,
+    maxY: -Infinity,
+    maxZ: -Infinity,
+  })
+}
 function partTwo (lines) {
-  return 'todo'
+  // only calculates air pockets of exactly one within solid rock
+  // not larger pockets IN rock, which works for example, not input
+  const { minX, minY, minZ, maxX, maxY, maxZ } = getLimits(lines)
+  let area = partOne(lines)
+
+  for (let x = minX; x <= maxX; x += 1) {
+    for (let y = minY; y <= maxY; y += 1) {
+      for (let z = minZ; z <= maxZ; z += 1) {
+        if (cubes.has(label([x, y, z]))) { // solid rock
+          continue
+        } // else air/water
+        let air = true
+        for (const [dx, dy, dz] of directions) {
+          const neighbour = [x + dx, y + dy, z + dz]
+          if (!cubes.has(label(neighbour))) {
+            air = false
+            break
+          }
+        }
+        if (air) area -= 6
+      }
+    }
+  }
+  return area
+  // too high: 3220
 }
