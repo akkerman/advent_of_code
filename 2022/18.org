@@ -1,0 +1,55 @@
+#+title: Day 18: Boiling Boulders
+#+options: toc:nil num:nil
+
+* Solve in javascript
+
+3D coordinates · 1x1x1 boxes.
+
+*Steps*
+1. put all coordinates in a set ~cubes~
+2. determine neigbours by moving a cube into each of the 6 directions
+3. if a neigbour is NOT one of the ~cubes~ then that side of the cube is exposed
+
+JavaScript not supporting [[https://mathworld.wolfram.com/n-Tuple.html][n-tuples]] natively is a real pita. I have to convert to string *and* keep two records of the same data (~cave~ vs ~lines~ and ~airLabels~ vs ~air~) unless I want to convert back from string again.
+
+** Part two
+
+I am glad I learned [[https://en.wikipedia.org/wiki/Breadth-first_search][Breadth-first search]] (again) last year!
+
+I did start witch approaching this the wrong way. I searched for air within the rock
+but that only yielded boxes of 1x1x1 touching rock on all 6 sides. This would
+not yield forms like 1x2x1 or stranger stuf like an ~L~ and the like.
+
+In the solution I only used air but the problem stated that the rock went into /water/ and air was trapped inside the rock.
+So in order to determine the area of the /outside/ of the rock we need to model the water and figure out where water and rock meet.
+
+*Steps*
+1. determine the minimum and maximum points of all rocks \\
+   The goal is to use these points (min-1 and max+1) as a bounding box (cube) around the rock
+2. Depth first search all /water/. \\
+   A neigbour of a water cube is /inside/ the bounding box if it is unequal to rock.
+   we need to stop at rock to prevent going /through/ the rock.
+3. for all cubes of water figure out how many sides touch rock. \\
+   The sum is the /exterior surface area/
+
+** Python version
+
+Port the JavaScript version to Python. Properly use tuples in sets.
+
+Just another titbit that is different and I did not know before:
+
+In stead of writing:
+
+#+begin_src python
+if minX <= x and x <= maxX:
+  # do something
+#+end_src
+
+I can write
+
+#+begin_src python
+if minX <= x <= maxX:
+  # do something
+#+end_src
+
+Which, for some reason, feels more natural to me.
