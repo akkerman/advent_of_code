@@ -5,8 +5,9 @@ const lines = []
 const cubes = new Set()
 
 rl.on('line', data => {
-  const line = data.split(',').map(i => parseInt(i))
+  // const line = data.split(',').map(i => parseInt(i))
 
+  const line = JSON.parse(`[${data}]`)
   lines.push(line)
   cubes.add(label(line))
 })
@@ -18,8 +19,8 @@ rl.on('close', () => {
 
 const directions = [[1, 0, 0], [0, 1, 0], [0, 0, 1], [-1, 0, 0], [0, -1, 0], [0, 0, -1]]
 
-function label ([x, y, z]) {
-  return `${x},${y},${z}`
+function label (s) {
+  return JSON.stringify(s)
 }
 
 function partOne (lines) {
