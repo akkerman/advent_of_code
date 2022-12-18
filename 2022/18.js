@@ -17,6 +17,7 @@ rl.on('close', () => {
 })
 
 const directions = [[1, 0, 0], [0, 1, 0], [0, 0, 1], [-1, 0, 0], [0, -1, 0], [0, 0, -1]]
+
 function label ([x, y, z]) {
   return `${x},${y},${z}`
 }
@@ -34,17 +35,17 @@ function partOne (lines) {
   return area
 }
 
-function getLimits (lines) {
+function getLimitsAroundRock (lines) {
   return lines.reduce((
     { minX, minY, minZ, maxX, maxY, maxZ },
     [x, y, z]) => {
     return {
-      minX: Math.min(minX, x),
-      minY: Math.min(minY, y),
-      minZ: Math.min(minZ, z),
-      maxX: Math.max(maxX, x),
-      maxY: Math.max(maxY, y),
-      maxZ: Math.max(maxZ, z),
+      minX: Math.min(minX, x - 1),
+      minY: Math.min(minY, y - 1),
+      minZ: Math.min(minZ, z - 1),
+      maxX: Math.max(maxX, x + 1),
+      maxY: Math.max(maxY, y + 1),
+      maxZ: Math.max(maxZ, z + 1),
     }
   },
   {
@@ -57,29 +58,48 @@ function getLimits (lines) {
   })
 }
 function partTwo (lines) {
-  // only calculates air pockets of exactly one within solid rock
-  // not larger pockets IN rock, which works for example, not input
-  const { minX, minY, minZ, maxX, maxY, maxZ } = getLimits(lines)
-  let area = partOne(lines)
+  // oposide points of a cube around the rock
+  const { minX, minY, minZ, maxX, maxY, maxZ } = getLimitsAroundRock(lines)
+  const airLabels = new Set()
+  const air = []
+  console.log({ minX, minY, minZ, maxX, maxY, maxZ })
 
-  for (let x = minX; x <= maxX; x += 1) {
-    for (let y = minY; y <= maxY; y += 1) {
-      for (let z = minZ; z <= maxZ; z += 1) {
-        if (cubes.has(label([x, y, z]))) { // solid rock
-          continue
-        } // else air/water
-        let air = true
-        for (const [dx, dy, dz] of directions) {
-          const neighbour = [x + dx, y + dy, z + dz]
-          if (!cubes.has(label(neighbour))) {
-            air = false
-            break
-          }
-        }
-        if (air) area -= 6
+  const isOutside = ([x, y, z]) => {
+    return (
+      x < minX || y < minY || z < minZ ||
+      x > maxX || y > maxY || z > maxZ
+    )
+  }
+
+  const queue = [[minX, minY, minZ]]
+  airLabels.add(label([minX, minY, minZ]))
+
+  // all 1x1x1 cubs of air around the rock
+  while (queue.length) {
+    const [x, y, z] = queue.shift()
+    for (const [dx, dy, dz] of directions) {
+      const neighbour = [x + dx, y + dy, z + dz]
+      if (isOutside(neighbour)) continue
+      const nbl = label(neighbour)
+      if (cubes.has(nbl) || airLabels.has(nbl)) {
+        continue
+      }
+      airLabels.add(nbl)
+      air.push(neighbour)
+
+      queue.push(neighbour)
+    }
+  }
+
+  // figure out if stuff is touching
+  let area = 0
+  for (const [x, y, z] of air) {
+    for (const [dx, dy, dz] of directions) {
+      const neighbour = [x + dx, y + dy, z + dz]
+      if (cubes.has(label(neighbour))) {
+        area += 1
       }
     }
   }
   return area
-  // too high: 3220
 }
