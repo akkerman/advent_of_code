@@ -1,0 +1,34 @@
+#+title: Day 10: Cathode-Ray Tube
+
+* Solve in JavaScript
+
+A straight forward simulation. Loop over the contructions and keep a running tally of
+- value of register X
+- current cycle
+- current strenght
+
+At first I checked the strenght at each 20th cycle, which was wrong. It says `during the 20th cycle and every 40 cycles after that`. Which is equivalent to `every 40 cycles but start at 20`. ~(20 + cycles) % 40 == 0~
+
+Reading the instructions it seems that an addx behaves ~noop~ first and then adds something to the register.
+
+If we define `check` as
+- increase cycle
+- update strength when it is time
+
+We can define handling an instruction as
+- check
+- if addX
+  - check
+  - increase register
+
+** Part Two
+
+
+For part two I copied the simulation from part one and modified the check function.
+
+- create a sprite ~[registerX - 1, registerX, registerX + 1]~
+- add a ~#~  or ~.~ to a an array if the sprite is visible.
+
+The sprite is visible if ~cycles % 40~ (width of CRT is 40) equals one of the sprites value
+
+After the simulation is done, split the long list of chars into chunks of 40 and print to screen.
