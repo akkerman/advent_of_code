@@ -19,3 +19,29 @@ After some failed attempts with distance I just wrote out each individual situat
 
 By handling each segment of the rope as if it is a head/tail combination we can move the entire rope.
 Generalize the solution of part one for arbitrary length.
+
+
+* Python
+
+The code for the python version looks slightly smaller because
+
+#+begin_quote python
+# I wrote
+if tail0 == head0 and tail1 < head1 -1:
+
+# in stead of
+if tail[0] == head[0] and tail[1] < head[1] -1:
+#+end_quote
+
+Pre-filling an array with something is a lot easier too:
+
+#+begin_quote python
+# Python
+rope = [(0, 0)] * length
+#+end_quote
+
+instead of
+#+begin_src javascript
+// JavaScript
+const rope = Array.from({ length }, () => [0, 0])
+#+end_src
