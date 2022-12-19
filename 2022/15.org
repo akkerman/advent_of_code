@@ -2,3 +2,45 @@
 #+options: toc:nil num:nil
 
 * Solve in javascript
+
+During parsing I enriched each line of the input with the distance between Sensor and Beacon.
+
+Before starting make sure the outer limits of the playing field are known. At first I simply used the min/max of the coordinates but then my answer to part one was too low. So use the min/max of the coordinates and subtract/add the distance to the beacon.
+
+If [sx,sx] and [bx,by] are the coordinates of respectivel Sensor and Beacon:
+
+#+begin_src javascript
+const distance = manhattanDistance([sx, sy], [bx, by])
+minX = Math.min(minX, sx - distance, bx - distance)
+maxX = Math.max(maxX, sx + distance, bx + distance)
+minY = Math.min(minY, sy - distance, by - distance)
+maxY = Math.max(maxY, sy + distance, by + distance)
+#+end_src
+
+
+** Part One
+
+#+begin_quote
+In the row where ~y=2000000~, how many positions cannot contain a beacon?
+#+end_quote
+
+
+For all of the possible points on line I checked if it was within the manhattanDistance of each of the Sensor.
+This gives a total number of possible positions where a beacon cannot be.
+
+When we subtract the number of beacons already detected on that line we have the required anwer.
+
+
+** Part Two
+
+Shortly after the answer to part one was given, family live started (AoC starts at 6am) and I had just enough time to start a brute force attempt for part two using the solution of part one.
+
+In the evening I had time again and shortly before 8pm the solution was given.
+
+The idea is to keep a record of intersecting line segments for each beacon.
+
+For each line calculate the 26 line segments ~[from, to]~. sort them by ~from~ and reduce them to one line, by calculating overlap. There are a few options for overlapping segments A and B.
+
+1. Segment B is in A - keep A
+2. Segment B starts before A ends, keep one new segment from the start of A to the end of B
+3. Segment B does not overlap -> the distress beacon is between the enf of A and before the start of B
