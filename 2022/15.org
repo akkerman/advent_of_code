@@ -43,4 +43,4 @@ For each line calculate the 26 line segments ~[from, to]~. sort them by ~from~ a
 
 1. Segment B is in A - keep A
 2. Segment B starts before A ends, keep one new segment from the start of A to the end of B
-3. Segment B does not overlap -> the distress beacon is between the enf of A and before the start of B
+3. Segment B does not overlap -> the distress beacon is after the end of A and before the start of B

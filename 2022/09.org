@@ -1,0 +1,21 @@
+#+title: Day 9: Rope Bridge
+
+* Solve in JavaScript
+
+We have to play snake with a length of 2.
+
+Simulating the head movement was quickly written but I had some trouble figuring out how to move the tail.
+After some failed attempts with distance I just wrote out each individual situation
+
+- if on the same line, but with a gap, move it closer (left/right)
+- if on the same column, but with a gap, move it closer  (up/down)
+- if NOT on the same line/column
+  - calculate the horizontal difference (left/right · ~lr~)
+  - calculate the vertical difference (up/down · ~ud~)
+  - if either of them has a distance larger than 1 we need to move
+- put the coordinates of the tail into a set to ensure we do not count the same position multiple times
+
+** Part Two
+
+By handling each segment of the rope as if it is a head/tail combination we can move the entire rope.
+Generalize the solution of part one for arbitrary length.
