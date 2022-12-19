@@ -1,4 +1,5 @@
 #+title: Day 10: Cathode-Ray Tube
+#+options: toc:nil num:nil
 
 * Solve in JavaScript
 
