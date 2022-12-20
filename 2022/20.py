@@ -18,8 +18,27 @@ def part_one(lines, zero):
 
     return x + y + z
 
-def part_two(lines):
-    pass
+def part_two(lines, zero):
+    decrypted = [(i,  811589153 * val) for (i, val) in lines]
+
+    file = decrypted[:]
+    length = len(lines)
+
+    for _ in range(10):
+        for elem in decrypted:
+            _, num = elem
+            pos = file.index(elem)
+            pos_new = (pos+num) % (length - 1)
+            del file[pos]
+            file.insert(pos_new, elem)
+
+
+    pos = file.index(zero)
+    _, x = file[(pos + 1000) % length]
+    _, y = file[(pos + 2000) % length]
+    _, z = file[(pos + 3000) % length]
+
+    return x + y + z
 
 
 def main():
@@ -37,7 +56,7 @@ def main():
 
     print('part_one', part_one(lines, zero))
 
-    print('part_two', part_two(lines))
+    print('part_two', part_two(lines, zero))
 
 
 main()
