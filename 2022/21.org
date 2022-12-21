@@ -1,0 +1,16 @@
+#+title: Day 21: Monkey Math
+#+options: toc:nil num:nil
+
+* Solve in JavaScript
+
+I approched this as a kind of a search.
+First put each monkey into a dictionary for easy access.
+Then, starting with root, do one of two things
+
+1. If the left *and* right side of the operation have numbers, perform the operation and save the result in the monkey
+2. for each left/right without a number, put on a queue
+
+** Part Two
+
+By trying out some values it looks like the left component of root decreases when humn increases.
+If we assume this is _always_ the case i.e. after some decreases it does not increase again, we can solve this with a [[https://en.wikipedia.org/wiki/Binary_search_algorithm][Binary search algorithm]].
