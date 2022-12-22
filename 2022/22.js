@@ -48,6 +48,7 @@ function * parsePath (path) {
       steps += c
     }
   }
+  yield parseInt(steps)
 }
 
 const turn = {
@@ -105,6 +106,7 @@ function partOne (map, path) {
       facing = turn[facing][steps]
       continue
     }
+    console.log(row, col, facing, steps)
     let r = row
     let c = col
     while (steps-- > 0) {
@@ -148,10 +150,9 @@ function partOne (map, path) {
         row = r
       }
     }
-    console.log(facing, row, col)
   }
 
-  console.log(facing, row, col)
+  console.log(facing, row, col, 'finished')
 
   // too low: 89204
   return 1000 * row + 4 * col + score[facing]
