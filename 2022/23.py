@@ -1,5 +1,7 @@
 import sys
 
+from collections import deque
+
 # blijf als alles rondom vrij
 #
 # de _eerste_ richting wijzigt elke ronde Z N W E Z N W E etc.
@@ -10,25 +12,46 @@ import sys
 # Vrij is als de naburige DRIE velden vrij zijn in die richting
 # move Z ; try ZW Z ZE
 
-def free_moves(elfs, current): 
-    we, ns = current
 
-    n = (we, ns-1)
-    s = (we, ns+1)
-    w = (we-1, ns)
-    e = (we+1, ns)
+directionsToCheck = {
+    'A': [(-1, -1), (0, -1), (1, -1), (1, 0), (1, 1), (0, 1), (-1, 1), (-1, 0)],
+    'N': [(-1, -1), (0, -1), (1, -1)],
+    'S': [(-1, 1), (0, 1), (1, 1)],
+    'W': [(-1, -1), (-1, 0), (-1, 1)],
+    'E': [(1, -1), (1, 0), (1, 1)],
+}
 
-    nw = (we-1, ns-1)
-    ne = (we+1, ns-1)
+directionsToMove = {
+    'N': [(0, -1)],
+    'S': [(0, 1)],
+    'W': [(-1, 0)],
+    'E': [(1, 0)],
+}
 
-    nw = (we-1, ns+1)
-    ne = (we+1, ns+1)
+moves = deque(['N', 'S', 'E', 'W'])
+
+def move(elf, direction): 
+    x, y = elf
+    return set([(x + dx, y + dy) for (dx,dy) in directionsToCheck[direction]])
 
 
+def move(elf, direction):
+    x, y = elf
+    dx, dy = direction
+    return (x+dx, y+dy)
 
 
 def part_one(elfs):
     """ get number of free squares after 10 rounds """
+
+    for _ in range(10):
+        for elf in elfs:
+            if not elfs & move(elf, 'A'):
+                continue
+
+        
+
+    
     return 'todo'
 
 
