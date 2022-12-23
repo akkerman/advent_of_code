@@ -106,7 +106,7 @@ function partOne (map, path) {
       facing = turn[facing][steps]
       continue
     }
-    console.log(row, col, facing, steps)
+    // console.log(row, col, facing, steps)
     let r = row
     let c = col
     while (steps-- > 0) {
@@ -152,12 +152,134 @@ function partOne (map, path) {
     }
   }
 
-  console.log(facing, row, col, 'finished')
-
-  // too low: 89204
   return 1000 * row + 4 * col + score[facing]
 }
 
-function partTwo (lines) {
-  return 'todo'
+function partTwo (map, path) {
+  let facing = '>'
+  let row = 1
+  let col = map[row].indexOf('.')
+
+  for (let steps of parsePath(path)) {
+    if (['L', 'R'].includes(steps)) {
+      facing = turn[facing][steps]
+      continue
+    }
+    // console.log(row, col, facing, steps)
+    let r = row
+    let c = col
+    let newFacing = facing
+    while (steps-- > 0) {
+      if (facing === '>') {
+        c += 1
+        if (map[r][c] === '#') break
+        if (map[r][c] === ' ') {
+          if (r < 51) {
+            r = 151 - r
+            c = 100
+            newFacing = '<'
+          } else if (r < 101) {
+            c = r + 50
+            r = 50
+            newFacing = '^'
+          } else if (r < 151) {
+            r = 151 - r
+            c = 150
+            newFacing = '<'
+          } else if (r < 201) {
+            c = r - 100
+            r = 150
+            newFacing = '^'
+          }
+          if (map[r][c] === '#') break
+        }
+        col = c
+        row = r
+        facing = newFacing
+      } else
+
+      if (facing === '<') {
+        c -= 1
+        if (map[r][c] === '#') break
+        if (map[r][c] === ' ') {
+          if (r < 51) {
+            r = 151 - r
+            c = 1
+            newFacing = '>'
+          } else if (r < 101) {
+            c = r - 50
+            r = 101
+            newFacing = 'v'
+          } else if (r < 151) {
+            r = 151 - r
+            c = 51
+            newFacing = '>'
+          } else if (r < 201) {
+            c = r - 100
+            r = 1
+            newFacing = 'v'
+          }
+          if (map[r][c] === '#') break
+        }
+        col = c
+        row = r
+        facing = newFacing
+      } else
+
+      if (facing === '^') {
+        r -= 1
+        if (map[r][c] === '#') break
+        if (map[r][c] === ' ') {
+          if (c < 51) {
+            r = c + 50
+            c = 51
+            newFacing = '>'
+          } else if (c < 101) {
+            r = c + 100
+            c = 1
+            newFacing = '>'
+          } else if (c < 151) {
+            c = c - 100
+            r = 200
+            newFacing = '^'
+          }
+          if (map[r][c] === '#') break
+          col = c
+          row = r
+          facing = newFacing
+        }
+        col = c
+        row = r
+        facing = newFacing
+      } else
+
+      if (facing === 'v') {
+        r += 1
+        if (map[r][c] === '#') break
+        if (map[r][c] === ' ') {
+          if (c < 51) {
+            c = c + 100
+            r = 1
+            newFacing = 'v'
+          } else if (c < 101) {
+            r = c + 100
+            c = 50
+            newFacing = '<'
+          } else if (c < 151) {
+            r = c - 50
+            c = 100
+            newFacing = '<'
+          }
+          if (map[r][c] === '#') break
+        }
+        col = c
+        row = r
+        facing = newFacing
+      }
+    }
+  }
+
+  // too high: 162005
+  // too high: 137205
+  return 1000 * row + 4 * col + score[facing]
 }
