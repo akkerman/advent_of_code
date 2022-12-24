@@ -49,54 +49,72 @@ def calc_empty_tiles(elves):
     return (maxR - minR + 1) * (maxC - minC + 1) - len(elves)
 
 
+def one_round(elves):
+    proposals = set()
+    collisions = set()
+
+    # first half, generate proposals and collisions
+    for elf in elves:
+        if not elves & moves_to_check(elf, 'A'):
+            # wants to stay
+            continue
+
+        for direction in directions:
+            if not elves & moves_to_check(elf, direction):
+                prop = move_direction(elf, direction)
+                if prop in proposals:
+                    collisions.add(prop)
+                proposals.add(prop)
+                break
+
+    # second half, move elves that don't collide
+    moved_elves = set(elves)
+    for elf in elves:
+        if not elves & moves_to_check(elf, 'A'):
+            # wants to stay
+            continue
+
+        for direction in directions:
+            if not elves & moves_to_check(elf, direction):
+                prop = move_direction(elf, direction)
+                if prop not in collisions:
+                    moved_elves.remove(elf)
+                    moved_elves.add(prop)
+                break
+
+
+    # the first direction the Elves considered
+    # is moved to the end of the list of directions
+    directions.append(directions.pop(0))
+
+    return moved_elves
+
+
 def part_one(elves):
     """ get number of free squares after 10 rounds """
 
+    global directions
+    directions = ['N', 'S', 'W', 'E']
+
     for _ in range(10):
-        proposals = set()
-        collisions = set()
-
-        # first half, generate proposals and collisions
-        for elf in elves:
-            if not elves & moves_to_check(elf, 'A'):
-                # wants to stay
-                continue
-
-            for direction in directions:
-                if not elves & moves_to_check(elf, direction):
-                    prop = move_direction(elf, direction)
-                    if prop in proposals:
-                        collisions.add(prop)
-                    proposals.add(prop)
-                    break
-
-        # second half, move elves that don't collide
-        moved_elves = set(elves)
-        for elf in elves:
-            if not elves & moves_to_check(elf, 'A'):
-                # wants to stay
-                continue
-
-            for direction in directions:
-                if not elves & moves_to_check(elf, direction):
-                    prop = move_direction(elf, direction)
-                    if prop not in collisions:
-                        moved_elves.remove(elf)
-                        moved_elves.add(prop)
-                    break
-
-        elves = moved_elves
-
-        # the first direction the Elves considered
-        # is moved to the end of the list of directions
-        directions.append(directions.pop(0))
+        elves = one_round(elves)
 
     return calc_empty_tiles(elves)
 
 
-def part_two(lines):
+def part_two(elves):
     """ part_two """
-    return 'todo'
+
+    global directions
+    directions = ['N', 'S', 'W', 'E']
+
+    rounds = 0
+    while True:
+        rounds += 1
+        new_elves = one_round(elves)
+        if elves == new_elves:
+            return rounds
+        elves = new_elves
 
 
 def elves_as_coords(lines):
@@ -118,11 +136,11 @@ def main():
 
         lines.append(line)
 
-    elves = elves_as_coords(lines)
+    elves1 = elves_as_coords(lines)
+    elves2 = set(elves1)
 
-    print('part_one', part_one(elves))
-
-    print('part_two', part_two(lines))
+    print('part_one', part_one(elves1))
+    print('part_two', part_two(elves2))
 
 
 main()
