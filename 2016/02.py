@@ -3,33 +3,44 @@
 import sys
 import string
 
-keypad = [
-    ['1', '2', '3'],
-    ['4', '5', '6'],
-    ['7', '8', '9'],
+keypad1 = [
+    [None , None , None , None , None] ,
+    [None , '1'  , '2'  , '3'  , None] ,
+    [None , '4'  , '5'  , '6'  , None] ,
+    [None , '7'  , '8'  , '9'  , None] ,
+    [None , None , None , None , None] ,
 ]
 
-def part_one(lines):
+keypad2 = [
+[ None , None , None , None , None , None , None] ,
+[ None , None , None , '1'  , None , None , None] ,
+[ None , None , '2'  , '3'  , '4'  , None , None] ,
+[ None , '5'  , '6'  , '7'  , '8'  , '9'  , None] ,
+[ None , None , 'A'  , 'B'  , 'C'  , None , None] ,
+[ None , None , None , 'D'  , None , None , None] ,
+[ None , None , None , None , None , None , None] ,
+]
+
+def solve(lines, keypad, r, c):
     """ part one """
     code = ''
-    r, c = 0, 0
     for line in lines:
         for d in line:
-            if d == 'U' and r > 0:
-                r -= 1
-            if d == 'D' and r < 2:
-                r += 1
-            if d == 'R' and c < 2:
-                c += 1
-            if d == 'L' and c > 0:
-                c -= 1
+            nr = r
+            nc = c
+            if d == 'U':
+                nr -= 1
+            if d == 'D':
+                nr += 1
+            if d == 'R':
+                nc += 1
+            if d == 'L':
+                nc -= 1
+            if keypad[nr][nc]:
+                r, c = nr, nc
+
         code += keypad[r][c]
     return code
-
-
-def part_two(lines):
-    """ part two """
-    return 'todo'
 
 
 def main():
@@ -40,9 +51,9 @@ def main():
     
         lines.append(line)
 
-    print('part_one', part_one(lines))
+    print('part_one', solve(lines, keypad1, 2, 2))
 
-    print('part_two', part_two(lines))
+    print('part_two', solve(lines, keypad2, 3, 1))
 
 
 main()
