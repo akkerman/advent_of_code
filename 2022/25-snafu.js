@@ -45,7 +45,7 @@ function dec2snafu (int) {
       if (rem === 4) rem = '-'
       int += 1
 
-      snafu = '' + rem + snafu
+      snafu = rem + snafu
     }
   }
   return snafu
