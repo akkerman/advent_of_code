@@ -4,8 +4,7 @@ const rl = readline.createInterface({ input: process.stdin })
 const lines = []
 
 rl.on('line', data => {
-  const line = data.trim().replace(/ +/g, ' ').split(' ').map(i => parseInt(i)).sort((a,b)=>a-b)
-console.log(line);  
+  const line = data.trim().replace(/ +/g, ' ').split(' ').map(i => parseInt(i))
   lines.push(line)
 })
 
@@ -16,7 +15,8 @@ rl.on('close', () => {
 
 function partOne (lines) {
   let sum=0
-  for (const [a,b,c] of lines){
+  for (line of lines){
+    const [a,b,c]=   line.sort((a,b)=>a-b)
     if (a+b > c) sum+=1
   }
   return sum
