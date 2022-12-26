@@ -1,0 +1,6 @@
+#+title: Day 19: Not Enough Minerals
+
+
+- pruning paths that lead to later geode robot
+  example from 1m40 to 5.5s
+  input from 6:05.79 to 1:51.79
