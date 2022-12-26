@@ -1,3 +1,4 @@
+const R = require('ramda')
 const readline = require('readline')
 const rl = readline.createInterface({ input: process.stdin })
 
@@ -22,14 +23,6 @@ rl.on('line', data => {
   valvesDict[id] = valve
   valves.push(valve)
 })
-
-function shortestPathMatrix () {
-  const start = valvesDict.AA
-  const matrix = {}
-  const activeValves = Object.values(valvesDict).filter(v => v.rate)
-
-  return matrix
-}
 
 /**
  * Floyd-Warshall
@@ -84,23 +77,42 @@ function purgeBrokenValves (matrix) {
 
 function dfsFlowRate (dist, time, valve) {
   const cache = new Map()
-  return dfsFlowRatePrime(time, valve, 0, [valve])
+  const maxForOpenValves = new Map()
+
+  const result = dfsFlowRatePrime(time, valve, 0, [valve])
+  return [...result, maxForOpenValves]
+
+  function record (pressure, on) {
+    const key = JSON.stringify(on.sort())
+    if (maxForOpenValves.has(key) && pressure < maxForOpenValves.get(key)) {
+      return
+    }
+    maxForOpenValves.set(key, pressure)
+  }
 
   function dfsFlowRatePrime (time, valve, pressure, on) {
-    if (time <= 0) return pressure
+    record(pressure, on)
+    if (time <= 0) {
+      return [pressure, on]
+    }
     const key = JSON.stringify({ time, valve, on })
     if (cache.has(key)) return cache.get(key)
 
     let newPressure = pressure
+    let newOn = on
     for (const [id, mins] of Object.entries(dist[valve])) {
       if (on.includes(id)) continue
 
       const newTime = time - mins - 1
-      const p = dfsFlowRatePrime(newTime, id, pressure + newTime * valvesDict[id].rate, [...on, id])
-      cache.set(key, p)
-      newPressure = Math.max(newPressure, p)
+      const [p, o] = dfsFlowRatePrime(newTime, id, pressure + newTime * valvesDict[id].rate, [...on, id])
+      cache.set(key, [p, o])
+      if (newPressure < p) {
+        newPressure = p
+        newOn = o
+      }
     }
-    return newPressure
+
+    return [newPressure, newOn]
   }
 }
 
@@ -112,10 +124,32 @@ rl.on('close', () => {
 function partOne () {
   const dist = purgeBrokenValves(allPairsShortestPath(valves).dist)
 
-  const flow = dfsFlowRate(dist, 30, 'AA')
+  const [flow] = dfsFlowRate(dist, 30, 'AA')
   return flow
 }
 
 function partTwo (cave) {
-  return 'todo'
+  const dist = purgeBrokenValves(allPairsShortestPath(valves).dist)
+
+  const [,, f] = dfsFlowRate(dist, 26, 'AA')
+
+  const flows = []
+  for (const [key, value] of f.entries()) {
+    flows.push([JSON.parse(key), value])
+  }
+
+  let maxFlowRate = 0
+  while (flows.length > 0) {
+    const [set1, flowRate1] = flows.pop()
+    for (const [set2, flowRate2] of flows) {
+      if (R.intersection(set1, set2).length === 1) {
+        const flowRate = flowRate1 + flowRate2
+        if (maxFlowRate < flowRate) {
+          maxFlowRate = flowRate
+        }
+      }
+    }
+  }
+
+  return maxFlowRate
 }
