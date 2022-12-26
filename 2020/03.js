@@ -14,23 +14,41 @@ rl.on('close', () => {
   console.log('partTwo', partTwo(lines))
 })
 
-function partOne (lines) {
+function solve (lines, dCol, dRow) {
   const repeat = lines[0].length
   let trees = 0
   let row = 0
   let col = 0
 
   while (row < lines.length) {
-    col = (col + 3) % repeat
-    row += 1
+    col = (col + dCol) % repeat
+    row += dRow
     if (row < lines.length && lines[row][col] === '#') {
       trees += 1
     }
   }
-  console.log(row)
   return trees
 }
 
+function partOne (lines) {
+  return solve(lines, 3, 1)
+}
+
 function partTwo (lines) {
-  return 'todo'
+  const slopes = [
+    [1, 1],
+    [3, 1],
+    [5, 1],
+    [7, 1],
+    [1, 2],
+  ]
+
+  let prod = 1
+
+  for (const [r, c] of slopes) {
+    const result = solve(lines, r, c)
+    prod *= result
+  }
+
+  return prod
 }
