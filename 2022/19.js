@@ -31,68 +31,86 @@ function bluePrint ([id, oreOre, clayOre, obsOre, obsClay, geoOre, geoObs]) {
   }
 }
 
-function maxGeodes (blueprint) {
-  const initialRobots = { ore: 1, clay: 0, obsidian: 0, geode: 0 }
-  const initialResources = { ore: 0, clay: 0, obsidian: 0, geode: 0 }
-  const maxSpend = blueprint.robots.reduce((cost, robot) => {
-    for (const type of resourceTypes) {
-      cost[type] = Math.max(cost[type] || 0, robot[type] || 0)
-    }
-    return cost
-  }, {
-  })
+function maxGeodes (starttime) {
+  return function (blueprint) {
+    const initialRobots = { ore: 1, clay: 0, obsidian: 0, geode: 0 }
+    const initialResources = { ore: 0, clay: 0, obsidian: 0, geode: 0 }
+    const maxSpend = blueprint.robots.reduce((cost, robot) => {
+      for (const type of resourceTypes) {
+        cost[type] = Math.max(cost[type] || 0, robot[type] || 0)
+      }
+      return cost
+    }, {
+    })
 
-  const cache = new Map()
+    const cache = new Map()
 
-  return dfs(24, initialRobots, initialResources)
+    let firstGeodeTime = -1
 
-  function dfs (time, bots, resources) {
-    const key = JSON.stringify({ time, bots, resources })
-    if (cache.has(key)) {
-      return cache.get(key)
-    }
-    if (time <= 0) {
-      return resources.geode
-    }
+    return dfs(starttime, initialRobots, initialResources)
 
-    // console.log(time, bots, resources)
-
-    let maxGeodes = bots.geode * time + resources.geode
-
-    for (const currentBot of blueprint.robots) {
-      const newBots = { ...bots }
-      const newResources = { ...resources }
-      for (const type of ['geode', ...resourceTypes]) {
-        newResources[type] += bots[type]
+    function dfs (time, bots, resources) {
+      const key = JSON.stringify({ time, bots, resources })
+      if (cache.has(key)) {
+        return cache.get(key)
+      }
+      if (time <= 0) {
+        return resources.geode
+      }
+      if (firstGeodeTime > time && bots.geode === 0) {
+      // prune paths that lead to a later time of getting the first geode robot
+        return 0
       }
 
-      // do we have the resources to build this bot
-      const canBuildBot = resourceTypes.reduce((canBuild, type) => canBuild && currentBot[type] <= resources[type], true)
-      // we always want a geode bot, but we do not need to gather more resources in a minute than we can spend in a minute
-      const wantBuildBot = currentBot.type === 'geode' || bots[currentBot.type] < maxSpend[currentBot.type]
+      // console.log(time, bots, resources)
 
-      if (wantBuildBot && canBuildBot) {
-        for (const type of resourceTypes) {
-          newResources[type] -= currentBot[type]
+      let maxGeodes = bots.geode * time + resources.geode
+
+      for (const currentBot of blueprint.robots) {
+        const newBots = { ...bots }
+        const newResources = { ...resources }
+        for (const type of ['geode', ...resourceTypes]) {
+          newResources[type] += bots[type]
         }
-        newBots[currentBot.type] += 1
+
+        // do we have the resources to build this bot
+        const canBuildBot =
+        resourceTypes.reduce((canBuild, type) => canBuild && currentBot[type] <= resources[type], true)
+
+        // we always want a geode bot, but we do not need to gather more
+        // resources in a minute than we can spend in a minute
+        const wantBuildBot =
+        currentBot.type === 'geode' || bots[currentBot.type] < maxSpend[currentBot.type]
+
+        if (wantBuildBot && canBuildBot) {
+          for (const type of resourceTypes) {
+            newResources[type] -= currentBot[type]
+          }
+          newBots[currentBot.type] += 1
+          if (currentBot.type === 'geode' && newBots.geode === 1) {
+            firstGeodeTime = Math.max(firstGeodeTime, time)
+          }
+        }
+
+        const result = dfs(time - 1, newBots, newResources)
+        cache.set(key, result)
+
+        maxGeodes = Math.max(maxGeodes, result)
       }
-      const result = dfs(time - 1, newBots, newResources)
-      cache.set(key, result)
 
-      maxGeodes = Math.max(maxGeodes, result)
+      return maxGeodes
     }
-
-    return maxGeodes
   }
 }
 
 function partOne (blueprints) {
-  const mx = blueprints.map(maxGeodes)
+  const mx = blueprints.map(maxGeodes(24))
   console.log(mx)
   return mx.map((m, i) => (i + 1) * m).reduce((a, b) => a + b)
 }
 
-function partTwo (lines) {
-  return 'todo'
+function partTwo (blueprints) { // too low: 1441
+  const mx = blueprints.slice(0, 3).map(maxGeodes(32))
+  console.log(mx)
+  return mx.reduce((a, b) => a * b, 1)
 }
