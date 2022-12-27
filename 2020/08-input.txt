@@ -614,4 +614,4 @@ acc +47
 acc +16
 acc -13
 acc +11
-jmp +g
+jmp +1
