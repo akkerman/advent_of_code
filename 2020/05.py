@@ -33,6 +33,8 @@ def part_two(lines):
     for before, after in zip(ids, ids[1:]):
         if before + 2 == after:
             return before + 1
+    return None
+
 
 def main():
     """ main """
