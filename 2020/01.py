@@ -1,7 +1,6 @@
 # pylint: disable=missing-module-docstring,missing-function-docstring
 # pylint: disable=invalid-name
 import sys
-import string
 
 
 def part_one(lines):
@@ -19,7 +18,6 @@ def main():
     lines = []
     for line in sys.stdin:
         line = line.replace('\n', '')
-    
         lines.append(int(line))
 
     print('part_one', part_one(lines))
