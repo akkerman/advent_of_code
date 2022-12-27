@@ -1,0 +1,36 @@
+#+title: Day 4: Passport Processing
+
+* Solve in python
+
+I translated to a set so the check could be written as:
+
+#+begin_src python
+expected_fields = {'byr', 'iyr', 'eyr', 'hcl', 'ecl', 'pid', 'cid', 'hgt'}
+optional_fields = {'cid'}
+
+def has_valid_fields(fields):
+    return fields == expected_fields or (expected_fields - fields) == optional_fields
+#+end_src
+
+I like the readability of this solution because it explicitly mentions the expected /and/ optional fields.
+
+An alternative would be:
+#+begin_src python
+expected_fields = ['byr', 'iyr', 'eyr', 'hcl', 'ecl', 'pid', 'cid', 'hgt']
+
+def has_valid_fields(fields):
+    for field in expected_fields:
+        if not field in d:
+            return False
+    return True
+#+end_src
+
+
+** Part Two
+
+Add a check for values after the check for field (keys), for part one, succeeds.
+First translate into a dictionary for easy access then write out all the conditions, read carefully.
+
+Remember to put start and end tokens in regex!
+I had a one-off error on the solution because =re.match(f'[0-9]{9}', pid)= also
+matches when pid is longer than 9. Better to do: =re.match(r'^[0-9]{9}$', pid)=.
