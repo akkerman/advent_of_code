@@ -23,17 +23,16 @@ def seat(bsp):
 
 def part_one(lines):
     """ part one """
-    maxId = 0
-    for bsp in lines:
-        seatId = seat(bsp)
-        maxId = max(maxId, seatId)
-    return maxId
+    return max([seat(bsp) for bsp in lines])
 
 
 def part_two(lines):
     """ part two """
-    return 'todo'
+    ids = sorted([seat(bsp) for bsp in lines])
 
+    for before, after in zip(ids, ids[1:]):
+        if before + 2 == after:
+            return before + 1
 
 def main():
     """ main """
@@ -46,6 +45,5 @@ def main():
     print('part_one', part_one(lines))
 
     print('part_two', part_two(lines))
-
 
 main()
