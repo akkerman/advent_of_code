@@ -1,6 +1,7 @@
 # pylint: disable=missing-module-docstring,missing-function-docstring
 # pylint: disable=invalid-name
 import sys
+from collections import Counter
 
 
 def split_on(arr, on):
@@ -29,7 +30,19 @@ def part_one(lines):
 
 def part_two(lines):
     """ part two """
-    return 'todo'
+    total = 0
+    for group in split_on(lines, ''):
+        c = Counter()
+        persons = 0
+        for person in group:
+            persons += 1
+            for answer in person:
+                c.update(answer)
+
+        everyone = [answer for answer, count in c.items() if count == persons]
+        total += len(everyone)
+
+    return total
 
 
 def main():
