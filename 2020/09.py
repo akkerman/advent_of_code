@@ -35,7 +35,7 @@ def part_two(lines):
         if probe > needle:
             start += 1
 
-    lst = sorted(lines[start:end]) 
+    lst = sorted(lines[start:end])
     smallest = lst[0]
     largest = lst[-1]
     return smallest + largest
