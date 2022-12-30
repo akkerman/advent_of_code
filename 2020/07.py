@@ -20,12 +20,25 @@ def part_one(lines):
         for container in contained_in[bag]:
             q.append(container)
 
-    return len(visited) - 1  # 'shiny gold' does not contian itself
+    return len(visited) - 1  # 'shiny gold' does not contain itself
 
 
 def part_two(lines):
     """ part two """
-    return 'todo'
+    containers = defaultdict(list)
+    for bag, contains in lines:
+        containers[bag] = contains
+
+    total = 0
+    q = deque([(1, 'shiny gold')])
+
+    while q:
+        n, bag = q.popleft()
+        total += n
+        for m, contained in containers[bag]:
+            q.append((n*m, contained))
+
+    return total - 1  # 'shiny gold' does not contain itself
 
 
 def main():
