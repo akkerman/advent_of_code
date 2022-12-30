@@ -33,8 +33,6 @@ def main():
         lines.append(int(line))
 
     print('part_one', part_one(lines))
-    print('too low ', 2015)
-
     print('part_two', part_two(lines))
 
 
