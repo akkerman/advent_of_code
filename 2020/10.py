@@ -4,15 +4,15 @@ import sys
 from collections import defaultdict
 
 
-def part_one(lines):
+def part_one(adapters):
     """ part one """
     outlet = 0
-    device = max(lines) + 3
-    adapters = [outlet] + sorted(lines) + [device]
+    device = max(adapters) + 3
+    chain = [outlet] + sorted(adapters) + [device]
     diffs = defaultdict(int)
 
-    for i in range(len(adapters) - 1):
-        diff = adapters[i+1] - adapters[i]
+    for i in range(len(chain) - 1):
+        diff = chain[i+1] - chain[i]
         diffs[diff] += 1
 
     assert len(diffs) == 2
