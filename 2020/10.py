@@ -1,5 +1,6 @@
 # pylint: disable=missing-module-docstring,missing-function-docstring
 # pylint: disable=invalid-name
+from functools import lru_cache
 import sys
 from collections import defaultdict
 
@@ -45,6 +46,27 @@ def part_two(adapters):
     return dfs(0)
 
 
+def part_two_alt(adapters):
+    neighbours = {}
+    for adapter in [0] + adapters:
+        neighbours[adapter] = [a for a in adapters if adapter < a <= adapter+3]
+
+    lst = max(adapters)
+
+    @lru_cache
+    def dfs(start):
+        if start == lst:
+            return 1
+
+        arrangements = 0
+        for nb in neighbours[start]:
+            result = dfs(nb)
+            arrangements += result
+        return arrangements
+
+    return dfs(0)
+
+
 def main():
     """ main """
     lines = []
@@ -55,6 +77,7 @@ def main():
 
     print('part_one', part_one(lines))
     print('part_two', part_two(lines))
+    print('part_alt', part_two_alt(lines))
 
 
 main()
