@@ -1,4 +1,5 @@
 #+title: Day 11: Seating System
+#+options: toc:nil num:nil
 
 * Part One
 
@@ -19,12 +20,12 @@ for seat in seats:
 #+end_src
 
 
-+ =seats= - translation of the input to coordinates, all seats (no floor, either empty or occupied)
-+ ~occupied~ - positions of all currently occupied seats (starts out empty)
-+ ~new_occupied~ - positions of all occupied seats after applying the rules (start out the same as ~occupied~)
-+ =adjacent_seats= - one of the eight positions immediately up, down, left right, or diagonal from the seat
-+ =possible_seats= - set cross section of all seats and adjacent_seats, making sure the floor parts in ~adjacent_seats~ get removed
-+ ~free_seats~ - set difference of ~possible_seats~ and ~occupied~ seats, making sure the occupied seats in ~adjacent_seats~ get removed
++ =seats= :: translation of the input to coordinates, all seats (no floor, either empty or occupied)
++ ~occupied~ :: positions of all currently occupied seats (starts out empty)
++ ~new_occupied~ :: positions of all occupied seats after applying the rules (start out the same as ~occupied~)
++ =adjacent_seats= :: one of the eight positions immediately up, down, left right, or diagonal from the seat
++ =possible_seats= :: set cross section of all seats and adjacent_seats, making sure the floor parts in ~adjacent_seats~ get removed
++ ~free_seats~ :: set difference of ~possible_seats~ and ~occupied~ seats, making sure the occupied seats in ~adjacent_seats~ get removed
 
 * Part Two
 
@@ -40,6 +41,6 @@ def solve(seats, get_neigbouring_seats, tolerance):
 #+end_src
 
 
-+ =seats= - translation of the input to coordinates, all seats (no floor, either empty or occupied)
-+ ~get_neigbouring_seats~ - a function accepting a seat and returning a set of seats around this seat (either ~adjacent_seats~ or ~visible_seats~)
-+ ~tolerance~ - how many neigbouring seats must be occupied before a seat becomes empty (either 4 or 5).
++ =seats= :: translation of the input to coordinates, all seats (no floor, either empty or occupied)
++ ~get_neigbouring_seats~ :: a function accepting a seat and returning a set of seats around this seat (either ~adjacent_seats~ or ~visible_seats~)
++ ~tolerance~ :: how many neigbouring seats must be occupied before a seat becomes empty (either 4 or 5).
