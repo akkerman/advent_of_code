@@ -19,9 +19,30 @@ def part_one(adapters):
     return diffs[1] * diffs[3]
 
 
-def part_two(lines):
+def part_two(adapters):
     """ part two """
-    return 'todo'
+    neighbours = {}
+    for adapter in sorted([0] + adapters):
+        neighbours[adapter] = sorted([a for a in adapters if adapter < a <= adapter+3])
+
+    lst = max(adapters)
+    cache = {}
+
+    def dfs(start):
+        if start == lst:
+            return 1
+
+        arrangements = 0
+        for nb in neighbours[start]:
+            if nb in cache:
+                arrangements += cache[nb]
+            else:
+                result = dfs(nb)
+                arrangements += result
+                cache[nb] = result
+        return arrangements
+
+    return dfs(0)
 
 
 def main():
@@ -29,7 +50,7 @@ def main():
     lines = []
     for line in sys.stdin:
         line = line.replace('\n', '')
-    
+
         lines.append(int(line))
 
     print('part_one', part_one(lines))
