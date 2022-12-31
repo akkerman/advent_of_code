@@ -47,17 +47,17 @@ def make_visible_seats(seats):
     return visible_seats
 
 
-def solve(seats, get_neigbours, threshold):
+def solve(seats, get_neigbouring_seats, tolerance):
     occupied = set()
     rounds = 0
     while True:
         rounds += 1
         new_occupied = set(occupied)
         for seat in seats:
-            possible_seats = seats & get_neigbours(seat)
+            possible_seats = seats & get_neigbouring_seats(seat)
 
             if seat in occupied:
-                if len(possible_seats & occupied) >= threshold:
+                if len(possible_seats & occupied) >= tolerance:
                     new_occupied.remove(seat)
             else:
                 free_seats = possible_seats - occupied
