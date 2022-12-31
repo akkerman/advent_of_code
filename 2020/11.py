@@ -25,11 +25,12 @@ def adjacent_seats(seat):
     r, c = seat
     return {(r+dr, c+dc) for dr, dc in offsets}
 
+
 def make_visible_seats(seats):
     max_row = max([r for (r, _) in seats])
     max_col = max([c for (_, c) in seats])
 
-    def visible_seat(seat):
+    def visible_seats(seat):
         visible = set()
         for dr, dc in offsets:
             r, c = seat
@@ -43,57 +44,40 @@ def make_visible_seats(seats):
 
         return visible
 
-    return visible_seat
+    return visible_seats
+
+
+def solve(seats, get_neigbours, threshold):
+    occupied = set()
+    rounds = 0
+    while True:
+        rounds += 1
+        new_occupied = set(occupied)
+        for seat in seats:
+            possible_seats = seats & get_neigbours(seat)
+
+            if seat in occupied:
+                if len(possible_seats & occupied) >= threshold:
+                    new_occupied.remove(seat)
+            else:
+                free_seats = possible_seats - occupied
+                if free_seats == possible_seats:
+                    new_occupied.add(seat)
+
+        if occupied == new_occupied:
+            return len(occupied)
+
+        occupied = new_occupied
 
 
 def part_one(seats):
     """ part one """
-    occupied = set()
-    rounds = 0
-    while True:
-        rounds += 1
-        new_occupied = set(occupied)
-        for seat in seats:
-            possible_seats = seats & adjacent_seats(seat)
-
-            if seat in occupied:
-                if len(possible_seats & occupied) >= 4:
-                    new_occupied.remove(seat)
-            else:
-                free_seats = possible_seats - occupied
-                if free_seats == possible_seats:
-                    new_occupied.add(seat)
-
-        if occupied == new_occupied:
-            return len(occupied)
-
-        occupied = new_occupied
-
+    return solve(seats, adjacent_seats, 4)
 
 
 def part_two(seats):
     """ part two """
-    occupied = set()
-    rounds = 0
-    visible_seats = make_visible_seats(seats)
-    while True:
-        rounds += 1
-        new_occupied = set(occupied)
-        for seat in seats:
-            possible_seats = seats & visible_seats(seat)
-
-            if seat in occupied:
-                if len(possible_seats & occupied) >= 5:
-                    new_occupied.remove(seat)
-            else:
-                free_seats = possible_seats - occupied
-                if free_seats == possible_seats:
-                    new_occupied.add(seat)
-
-        if occupied == new_occupied:
-            return len(occupied)
-
-        occupied = new_occupied
+    return solve(seats, make_visible_seats(seats), 5)
 
 
 def main():
