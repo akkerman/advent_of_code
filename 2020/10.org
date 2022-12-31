@@ -1,0 +1,45 @@
+#+title: Day 10: Adapter Array
+
+* Part One
+
+The way the problem was explained made me think that the only way to have all the adapters in a chain is to just sort them.
+
+I reasoned that it might be possible that the input also could have jolt differences other than 3 so instead of just checking if the diff was 1 or 3 and incrementing one counter I decided to increment counters for each difference with a dictionary.
+
+#+begin_src python
+for i in range(len(chain) - 1):
+    diff = chain[i+1] - chain[i]
+    diffs[diff] += 1
+#+end_src
+
+This allowed me to quickly check if there were indeed more jolt differences (there were not).
+
+CAVEAT: At first I did not get the correct answer because I forgot to put the outlet and device into the chain.
+
+* Part Two
+
+I have to count all possible chains from the outlet to the device. In this case we do not actually need the device because the number of ways to connect the hightes adapter to the device is 1.
+
+I approached this as a depth first search in a graph.
+
+There are two cases
+
+1. base case: when arriving at the adapter with the maximum value there is only one possible arrangement.
+2. recursion: the number of chains for an adapter is the sum of the number of chains of it's neighbours
+
+
+#+begin_src python
+def dfs(adapter):
+    if adapter == last:
+        return 1
+
+    arrangements = 0
+    for nb in neighbours[adapter]:
+        arrangements += dfs(nb)
+    return arrangements
+#+end_src
+
+This is yields the correct answer to the two example inputs but is terribly slow on the input.
+
+By caching the result for an input it is much much faster.
+I solved this by coding my own cache logic but later on learned that python has a decorator [[https://docs.python.org/3/library/functools.html#functools.cache][functools.cache]] making it very easy to speed up calculations.

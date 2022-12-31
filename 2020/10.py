@@ -1,6 +1,6 @@
 # pylint: disable=missing-module-docstring,missing-function-docstring
 # pylint: disable=invalid-name
-from functools import lru_cache
+from functools import cache
 import sys
 from collections import defaultdict
 
@@ -46,22 +46,24 @@ def part_two(adapters):
     return dfs(0)
 
 
+# alternative to part_two
+# sorting is not necessary, used it for debugging/printing
+# rolling my own cache is not required
 def part_two_alt(adapters):
     neighbours = {}
     for adapter in [0] + adapters:
         neighbours[adapter] = [a for a in adapters if adapter < a <= adapter+3]
 
-    lst = max(adapters)
+    last = max(adapters)
 
-    @lru_cache
-    def dfs(start):
-        if start == lst:
+    @cache
+    def dfs(adapter):
+        if adapter == last:
             return 1
 
         arrangements = 0
-        for nb in neighbours[start]:
-            result = dfs(nb)
-            arrangements += result
+        for nb in neighbours[adapter]:
+            arrangements += dfs(nb)
         return arrangements
 
     return dfs(0)
