@@ -1,0 +1,10 @@
+#+title: 13
+
+* Part One
+
+This is simple multiplication. If we divide the expected departure time by the bus id (retour frequency) we know how many times it can go to and from the airpoirt *before* the expected the departure. If we take the remainder we know how much time it arrives *before* the expected departure. One cycle more and we get the arrival time *after* the expected departure.
+
+so:
+
+minutes before departure = ~departure % bus~
+minutes after departure  = ~bus - departure % bus~
