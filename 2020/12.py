@@ -3,8 +3,8 @@
 import sys
 
 directions = {
-        'N': (0, -1),
-        'S': (0, 1),
+        'N': (0, 1),
+        'S': (0, -1),
         'E': (1, 0),
         'W': (-1, 0),
         }
@@ -13,16 +13,14 @@ NESW = 'NESW'
 
 
 def turn(instruction, facing):
-    direction = NESW.index(facing)
+    idx = NESW.index(facing)
     match instruction:
-        case ('R', num):
-            n = (direction + (num // 90)) % 4
-            return NESW[n]
-        case ('L', num):
-            n = (direction - (num // 90)) % 4
-            return NESW[n]
-        case _:
-            return facing
+        case ('R', degrees):
+            idx = (idx + (degrees // 90)) % 4
+        case ('L', degrees):
+            idx = (idx - (degrees // 90)) % 4
+
+    return NESW[idx]
 
 
 def part_one(instructions):
@@ -46,12 +44,43 @@ def part_one(instructions):
         x = x + num * dx
         y = y + num * dy
 
-    return abs(x + y)
+    return abs(x) + abs(y)
 
 
-def part_two(lines):
+def rotate(instruction, x, y):
+    match instruction:
+        case ('R', 90) | ('L', 270):
+            return y, -x
+        case ('R', 180) | ('L', 180):
+            return -x, -y
+        case ('R', 270) | ('L', 90):
+            return -y, x
+    return x, y
+
+
+def part_two(instructions):
     """ part two """
-    return 'todo'
+    x, y = 0, 0
+    wx, wy = 10, 1
+    for instruction in instructions:
+        i, num = instruction
+
+        if i in 'RL':
+            wx, wy = rotate(instruction, wx, wy)
+
+        elif i in NESW:
+            dx, dy = directions[i]
+            wx = wx + num * dx
+            wy = wy + num * dy
+
+        elif i == 'F':
+            x = x + num * wx
+            y = y + num * wy
+
+        else:
+            assert False
+
+    return abs(x) + abs(y)
 
 
 def main():
@@ -63,8 +92,7 @@ def main():
         instructions.append(instruction)
 
     print('part_one', part_one(instructions))
-
     print('part_two', part_two(instructions))
 
-    print(turn(('L', 90), 'S'))
+
 main()

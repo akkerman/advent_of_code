@@ -1,0 +1,78 @@
+#+title: Day 12: Rain Risk
+
+* Part one
+
+Choose to translate East,North to ~(x,y)~ and West,South to ~(-x,-y)~
+
+Created a mapping from facing to directions.
+
+#+begin_src python
+directions = {
+        'N': (0, 1),
+        'S': (0, -1),
+        'E': (1, 0),
+        'W': (-1, 0),
+        }
+#+end_src
+
+I had to come up with a way to change the facing direction.
+
+The order was ~NESW~, By translating letters and rotations to indices, I can pick
+the next letter based on the current letter and the degrees.
+
+The number of rotations is ~degrees // 90~, then pick the next letter by adding it
+to the index of the current and warp around the lenght of the string (4).
+
+#+begin_src python
+def turn(instruction, facing):
+    idx = NESW.index(facing)
+    match instruction:
+        case ('R', degrees):
+            idx = (idx + (degrees // 90)) % 4
+        case ('L', degrees):
+            idx = (idx - (degrees // 90)) % 4
+
+    return NESW[idx]
+#+end_src
+
+Based on the currently facing direction or the direction in the instruction it is possible to translate a letter to a coordinate which we can add to the coordinates of the ship for all of the steps:
+
+#+begin_src python
+dx, dy = direction
+x = x + num * dx
+y = y + num * dy
+#+end_src
+
+
+* Part Two
+
+To me it was not entirely clear what "waypoint which is relative to the ship's position:" implicated. At first I thought it ment that the waypiont should be moved when the schip moved, but if I did that the rotation logic became a bit difficult.
+
+Instead it just means that we can keep separate coordinate systems for the ship and the waypoint. Where (0,0) in the ships coordinate system is the starting point of the ship and (0,0) of the waypoint coordinate system is just where the ship happens to be at that time. So if we wanted we could calculate the absolute position of the waypoint bij adding schip and waypoint. (we don't need to)
+
+** Rotating the waypoint
+
+Rotating the waypoint was a bit problematic for me, for some reason I couldn't get my head around. I noticed that the degreed were always 90, 180, 270 something which I did not need in part one.
+
+180° was quickly found,  just invert the x and y axis: ~(-x,-y)~
+R90 and L270 is the same as is L90 and R270 but I cannot put to words why the transformation is what is is, other than that I drew several poins on a x/y axis, did the transformation by hand and wrote down the repeating pattern.
+
+#+begin_src python
+def rotate(instruction, x, y):
+    match instruction:
+        case ('R', 90) | ('L', 270):
+            return y, -x
+        case ('R', 180) | ('L', 180):
+            return -x, -y
+        case ('R', 270) | ('L', 90):
+            return -y, x
+    return x, y
+#+end_src
+
+** Correct result for example but not input??
+
+I had two small bugs that, together resulted in the wrong result.
+
+1. switched north ~(0, -1)~ and south ~(0, 1)~
+2. wrong use of abs:
+When x and y are both positive or negative the result of ~abs(x+y)~ is the same as ~abs(x) + abs(y)~, for some reason this was the case for the example data when north and south got switched.
