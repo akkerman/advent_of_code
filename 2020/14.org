@@ -1,0 +1,30 @@
+#+title: Day 14: Docking Data
+
+* Part One
+For me the first challenge here was to figure out how to translate an int to a string of bits.
+Aparently this is easily done with string formatting in python
+
+#+begin_src python :exports both
+num = 47
+return f"{num:36b}"
+#+end_src
+
+#+RESULTS:
+: 101111
+
+I modelled the memory as a dictionary and just used the input =mem[55081]= as
+  the key, so no difficult parsing nor a very long array.
+
+Applying the mask is simply going through all positions and applying the provided logic:
+
+#+begin_src python :exports both :results verbatim
+value = "000000000000000000000000000000001011"  # (decimal 11)
+mask  = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X"
+result = [y if x == 'X' else x for x, y in zip(mask, value)]
+return  "".join(result)
+#+end_src
+
+#+RESULTS:
+: 000000000000000000000000000001001001
+
+* Part Two
