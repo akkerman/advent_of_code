@@ -2,7 +2,6 @@
 # pylint: disable=invalid-name
 from collections import defaultdict
 import sys
-import string
 
 from itertools import chain
 
