@@ -1,9 +1,24 @@
 # pylint: disable=missing-module-docstring,missing-function-docstring
 # pylint: disable=invalid-name
+from collections import defaultdict
 import sys
 import string
 
 from itertools import chain
+
+
+def make_is_valid(fields):
+    def is_valid(ticket):
+        for num in ticket:
+            match_any = False
+            for ranges in fields.values():
+                if num in ranges:
+                    match_any = True
+            if not match_any:
+                return False
+        return True
+    return is_valid
+
 
 def part_one(fields, tickets):
     """ part one """
@@ -22,7 +37,34 @@ def part_one(fields, tickets):
 
 def part_two(fields, ticket, tickets):
     """ part two """
-    return 'todo'
+    is_valid = make_is_valid(fields)
+    valid_tickets = [t for t in tickets if is_valid(t)]
+    candidates = defaultdict(list)
+
+    for field, ranges in fields.items():
+        for i in range(len(ticket)):
+            all_match = True
+            for t in valid_tickets:
+                if t[i] not in ranges:
+                    all_match = False
+            if all_match:
+                candidates[field].append(i)
+
+    while True:
+        length_one = [lst[0] for lst in candidates.values() if len(lst) == 1]
+        if len(length_one) == len(candidates):
+            break
+        for num in set(length_one):
+            for c in candidates.values():
+                if num in c and len(c) > 1:
+                    c.remove(num)
+
+    product = 1
+    for field, value in candidates.items():
+        if 'departure' in field:
+            product *= ticket[value[0]]
+
+    return product
 
 
 def main():
@@ -69,7 +111,7 @@ def main():
     print('part_one', part_one(fields, tickets))
 
     print('part_two', part_two(fields, ticket, tickets))
-    # too high 50234380
+
 
 
 main()
