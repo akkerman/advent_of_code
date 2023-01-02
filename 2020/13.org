@@ -8,3 +8,12 @@ so:
 
 minutes before departure = ~departure % bus~
 minutes after departure  = ~bus - departure % bus~
+
+* Part Two
+
+No clue, went searching and found mention of the chniese remainder theorem.
++ [[https://en.wikipedia.org/wiki/Chinese_remainder_theorem][Chinese remainder theorem - Wikipedia]]
++ [[https://www.geeksforgeeks.org/introduction-to-chinese-remainder-theorem/][Introduction to Chinese Remainder Theorem - GeeksforGeeks]]
+
+Although the algorithm was quickly implemented. I now need to translate the input to this theorem.
+What exactly here are the numbers and remainders that I need to feed the theorem?
