@@ -11,3 +11,13 @@ However! when determining the next number the rules are:
 #+end_quote
 
 Which translates as, "the element index from the end of the list", thus in a reversed list, the index from the start...
+
+* Part Two
+
+Hmm... creating a list of 30m entries takes way too long.
+
+In the hopes that there are a lot of repeating number, I decided to put the last
+turn a number was called into a dictionary. This results in the correct answer
+in about 7 seconds which is fine with me.
+
+And btw. the resulting dictionary is =175594= entries large, which is a lot smaller than 30m.
