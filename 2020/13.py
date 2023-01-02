@@ -9,17 +9,16 @@ def part_one(busses, departure):
     return bus * diff
 
 
-def chinese_remainder(numbers, remainders):
-    x = 1
+def solve(x, inc, numbers, remainders):
+    # adaptation of chinese remainder theorem
     while True:
+        x += inc
         for num, rem in zip(numbers, remainders):
-            if x % num != rem:
+            if (x + rem) % num != 0:
                 break
         else:
             # did not break out of loop, all match
             return x
-
-        x += 1
 
 
 def part_two(busses):
@@ -32,7 +31,15 @@ def part_two(busses):
         num.append(int(bus))
         rem.append(i)
 
-    return chinese_remainder(num, rem)
+    x = num[0]
+    inc = num[0]
+
+
+    for i, n in enumerate(num):
+        x = solve(x, inc, num[0:i+1], rem[0:i+1])
+        inc = lcm(inc, n)
+
+    return x
 
 
 def main():
@@ -46,11 +53,6 @@ def main():
     busses = [int(i) for i in lines[1].split(',') if i != 'x']
 
     print('part_one', part_one(busses, departure))
-
-    print('x,5,x,7 is        31', part_two('x,5,x,7'.split(',')))
-    print('17,x,13,19 is   3417', part_two('17,x,13,19'.split(',')))
-    print('67,7,59,61 is 754018', part_two('67,7,59,61'.split(',')))
-
     print('part_two', part_two(lines[1].split(',')))
 
 
