@@ -1,0 +1,13 @@
+#+title: Day 15: Rambunctious Recitation
+
+* Part One
+
+While searching for a way to get the last index of an element in a list, it seems like that is done by first reversing the list. So I quickly decided to build a reversed list. I can get the actual index by subtracting it from the lenght of the list.
+
+However! when determining the next number the rules are:
+
+#+begin_quote
+*how many turns apart* the number is from when it was previously spoken
+#+end_quote
+
+Which translates as, "the element index from the end of the list", thus in a reversed list, the index from the start...
