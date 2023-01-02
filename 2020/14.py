@@ -30,7 +30,14 @@ def bits_to_int(bits):
 
 
 def overwrite(mask, value):
-    return ''.join([y if x == 'X' else x for x, y in zip(mask, value)])
+    result = ""
+    for m, v in zip(mask, value):
+        if m == 'X':
+            result += v
+        else:
+            result += m
+
+    return result
 
 
 def overwrite_int(mask, value):
