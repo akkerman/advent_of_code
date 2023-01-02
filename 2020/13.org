@@ -15,5 +15,22 @@ No clue, went searching and found mention of the chniese remainder theorem.
 + [[https://en.wikipedia.org/wiki/Chinese_remainder_theorem][Chinese remainder theorem - Wikipedia]]
 + [[https://www.geeksforgeeks.org/introduction-to-chinese-remainder-theorem/][Introduction to Chinese Remainder Theorem - GeeksforGeeks]]
 
-Although the algorithm was quickly implemented, or taken over from above links, I now need to translate the input to this theorem.
-What exactly here are the numbers and remainders that I need to feed the theorem?
+Although the algorithm was quickly implemented, or taken over from above links,
+  I now need to translate the input to this theorem. What exactly here are the
+  numbers and remainders that I need to feed the theorem?
+
+Ok, at first I used the indices as remainders. Testing the given example this
+  dit not yield a correct answer. After some thought I figured that it is not
+  the remainders we are after. The equation is: ~(time + bus_index) % bus_id ==
+  0~ this does yield the correct numbers for the example but is incredibly slow
+  on the actual input.
+
+It is slow because I'm incrementing by 1. I know that the answer wil always be
+  a multiple of the first bus so I can always increment by that instead of 1.
+  This, however, is still too slow. What if I can calculate the result by
+  breaking it into parts. So first find for the first 2 numbers, then 3 etc. 
+
+ At first I thought I could just use the result as the new increment, but that
+  results in a too large number. So what if I took the least common multiple
+  from the current increment and the next bus_id and start the calculation
+  again from the previous result.
