@@ -1,16 +1,38 @@
 # pylint: disable=missing-module-docstring,missing-function-docstring
 # pylint: disable=invalid-name
 import sys
+from math import lcm
 
 
 def part_one(busses, departure):
     diff, bus = min((b - departure % b, b) for b in busses)
     return bus * diff
 
+def chinese_remainder(num, rem):
+    x = 1
+    while True:
+        for j, n in enumerate(num):
+            if x % n != rem[j]:
+                break
+        else:
+            return x
+
+        x += 1
+
+
 
 def part_two(busses):
     """ part two """
-    return 'todo'
+    num = []
+    rem = []
+    for i, bus in enumerate(busses):
+        if bus == 'x':
+            continue
+        num.append(int(bus))
+        rem.append(i)
+
+    return chinese_remainder(num, rem)
+
 
 
 def main():
@@ -25,7 +47,16 @@ def main():
 
     print('part_one', part_one(busses, departure))
 
-    print('part_two', part_two(busses))
+
+    print('x,5,x,7 is        31', part_two('x,5,x,7'.split(',')))
+    print('17,x,13,19 is   3417', part_two('17,x,13,19'.split(',')))
+    print('67,7,59,61 is 754018', part_two('67,7,59,61'.split(',')))
+
+
+    print('part_two', part_two(lines[1].split(',')))
+
+
+    # nok 2093560
 
 
 main()
