@@ -1,4 +1,5 @@
 #+title: Day 14: Docking Data
+#+options: toc:nil num:nil
 
 * Part One
 For me the first challenge here was to figure out how to translate an int to a string of bits.
@@ -20,11 +21,30 @@ Applying the mask is simply going through all positions and applying the provide
 #+begin_src python :exports both :results verbatim
 value = "000000000000000000000000000000001011"  # (decimal 11)
 mask  = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X"
-result = [y if x == 'X' else x for x, y in zip(mask, value)]
-return  "".join(result)
+
+result = ""
+for m, v in zip(mask, value):
+    if m == 'X':
+        result += v
+    else:
+        result += m
+
+return result
 #+end_src
 
 #+RESULTS:
 : 000000000000000000000000000001001001
+
+Or with list comprehension:
+#+begin_src python :exports both :results verbatim
+value = "000000000000000000000000000000001011"  # (decimal 11)
+mask  = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X"
+masked = [y if x == 'X' else x for x, y in zip(mask, value)]
+return  "".join(masked)
+#+end_src
+
+#+RESULTS:
+: 000000000000000000000000000001001001
+
 
 * Part Two
