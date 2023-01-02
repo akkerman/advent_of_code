@@ -24,9 +24,25 @@ def part_one(numbers):
     return last
 
 
-def part_two(lines):
+def part_two(numbers):
     """ part two """
-    return 'todo'
+    num_turns = len(numbers)
+    turns = {n: i for i, n in enumerate(numbers[:-1], 1)}
+    last = numbers[-1]
+    while num_turns < 30000000:
+        try:
+            current = num_turns - turns[last]
+        except:
+            # not in list
+            current = 0
+
+        turns[last] = num_turns
+        last = current
+
+        num_turns += 1
+
+    print(len(turns))
+    return last
 
 
 def main():
@@ -40,7 +56,7 @@ def main():
 
     print('part_one', part_one(numbers))
 
-    print('part_two', part_two(lines))
+    print('part_two', part_two(numbers))
 
 
 main()
