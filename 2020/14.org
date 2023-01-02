@@ -6,6 +6,7 @@ For me the first challenge here was to figure out how to translate an int to a s
 Aparently this is easily done with string formatting in python
 
 #+begin_src python :exports both
+# int_to_bits
 num = 47
 return f"{num:36b}"
 #+end_src
@@ -48,3 +49,72 @@ return  "".join(masked)
 
 
 * Part Two
+
+First, the rules for overwriting an address are different from overwriting a value. I chose to leave X in the overwritten address for further processing:
+
+#+begin_src python :exports both :results verbatim
+address = '000000000000000000000000000000101010'  # (decimal 42)
+mask    = '000000000000000000000000000000X1001X'
+result = ""
+for m, v in zip(mask, address):
+    if m == '0':
+        result += v
+    elif m == '1':
+        result += '1'
+    elif m == 'X':
+        result += 'X'
+    else:
+        assert False
+
+return result
+#+end_src
+
+#+RESULTS:
+: 000000000000000000000000000000X1101X
+
+
+Now we have to generate all variants of the addresses. To me this felt like a
+recusive function. The base case being that if the address does not contain any
+'X' we are done. And if it /does/ contain a 'X' we have two recursive paths, one
+where we repace the first X with a 1 and one where we replace the first X with
+a 0.
+
+Since we do not actually need to save of all those addresses into a list, we
+just need to loop over all of them, this can be done with e recursive generator
+function:
+
+#+begin_src python :exports both :results list
+def generate_addresses(address):
+    if 'X' not in address:
+        yield address
+    else:
+        for x0 in generate_addresses(address.replace('X', '0', 1)):
+            yield x0
+        for x1 in generate_addresses(address.replace('X', '1', 1)):
+            yield x1
+
+address = '00000000000000000000000000000001X0XX'
+
+return list(generate_addresses(address))
+#+end_src
+
+#+RESULTS:
+- 000000000000000000000000000000010000
+- 000000000000000000000000000000010001
+- 000000000000000000000000000000010010
+- 000000000000000000000000000000010011
+- 000000000000000000000000000000011000
+- 000000000000000000000000000000011001
+- 000000000000000000000000000000011010
+- 000000000000000000000000000000011011
+
+
+This time it *was* necessary to parse the memory text:
+
+#+begin_src python :export both :results verbatim
+txt = 'mem[55081]'
+return txt.replace('mem[', '').replace(']', '')
+#+end_src
+
+#+RESULTS:
+: 55081
