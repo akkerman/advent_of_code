@@ -11,13 +11,13 @@ def part_one(numbers):
     last = turns.popleft()
     while num_turns < 2020:
         try:
-            idx = turns.index(last) + 1
-            turns.appendleft(last)
-            last = idx
+            current = turns.index(last) + 1
         except:
             # not in list
-            turns.appendleft(last)
-            last = 0
+            current = 0
+
+        turns.appendleft(last)
+        last = current
 
         num_turns += 1
 
