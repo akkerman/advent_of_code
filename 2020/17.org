@@ -1,0 +1,42 @@
+#+title: Day 17: Conway Cubes
+
+* Part One
+
+Two observations:
+
+1. the final solution is only interested in active cubes
+2. inactive cubes can only become active whey they are neigbours of active cubes
+
+Basic algorithm for active cubes:
+
++ make a copy of active cubes
++ for each active cube get the neighbours
++ modify the active cubes copy according to the rules
+
+Basic algorithm for inactive cubes:
+
++ for each active cube get the inactive neigbours
++ modify the active cubes copy according to the rules
+
+Gathering the correct active/inactive neighbours can all be done with set operations:
+
+#+begin_src python
+nbs = get_neigbours(active)
+
+# intersection of neigbours and active cubes yield active neigbours
+active_nbs = nbs & active_cubes
+
+# difference of neighbours and active neigbours yield inactive neigbours
+inactive_nbs = nbs - active_nbs
+
+# union of all inactive neigbours yield input for second part of the iteration
+inactive_cubes |= inactive_nbs
+#+end_src
+
+* Part Two
+
+Ok 3 modifications.
+
+1. also create a set of 4d coordinates when parsing the lines
+2. create a ~neigbours_4d~ function
+3. extract solution of part_one into a solve funciton, accepting a ~get_neigbours~ function
