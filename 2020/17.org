@@ -35,7 +35,7 @@ inactive_cubes |= inactive_nbs
 
 * Part Two
 
-Ok 3 modifications.
+Ok 3 [[https://github.com/akkerman/advent_of_code/commit/2df05272c0f1a0efd90d67183cce0429e715d1ec][modifications]].
 
 1. also create a set of 4d coordinates when parsing the lines
 2. create a ~neigbours_4d~ function
