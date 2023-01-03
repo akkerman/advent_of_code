@@ -75,3 +75,28 @@ This approach did give a lot of correct answers but I ran into a bug. When
             expression.appendleft(')')
         return result
 #+end_src
+
+* Alternatives
+
+I did parsing pretty naively and ugly. Reading up on regexes there is an
+  'findall' which can do the same thing I wrote manually: 
+  ~line = re.findall(r'\d+|[+*()]', line)~
+
+Funny thing is if we put parenteses around each line in the input the calculate
+  function will give the total result:
+
+
+#+begin_src python
+def main():
+    """ main """
+    # Create one giant expression
+    expression = []
+    for line in sys.stdin:
+        line = '('+line+')+'
+        line = re.findall(r'\d+|[+*()]', line)
+        expression = expression + line
+
+
+    print('part_one', calculate(deque(expression)))
+    print('part_two', calculate2(deque(expression)))
+#+end_src
