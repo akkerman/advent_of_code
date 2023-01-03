@@ -1,21 +1,24 @@
 # pylint: disable=missing-module-docstring,missing-function-docstring
 # pylint: disable=invalid-name
+# pylint: disable=eval-used
+
 import sys
 from collections import deque
 
-def calculate(equation):
+
+def calculate(expression):
     operator = ''
     result = ''
-    while equation:
-        part = equation.popleft()
+    while expression:
+        part = expression.popleft()
         match part:
             case '+' | '*':
                 operator = part
             case '(':
-                intermediate = calculate(equation)
+                intermediate = calculate(expression)
                 if operator:
                     result = str(eval(result + operator + intermediate))
-                elif equation:
+                elif expression:
                     result = intermediate
                 else:
                     return intermediate
@@ -29,7 +32,36 @@ def calculate(equation):
     return result
 
 
-
+def calculate2(expression, prev=None):
+    operator = ''
+    result = ''
+    while expression:
+        part = expression.popleft()
+        match part:
+            case '+':
+                operator = part
+            case '*':
+                operator = part
+                intermediate = calculate2(expression)
+                result = str(eval(result + operator + intermediate))
+            case '(':
+                intermediate = calculate2(expression, '(')
+                if operator:
+                    result = str(eval(result + operator + intermediate))
+                elif expression:
+                    result = intermediate
+                else:
+                    return intermediate
+            case ')':
+                if prev != '(':
+                    expression.appendleft(')')
+                return result
+            case _:
+                if operator:
+                    result = str(eval(result + operator + part))
+                else:
+                    result = part
+    return result
 
 
 def part_one(lines):
@@ -44,7 +76,12 @@ def part_one(lines):
 
 def part_two(lines):
     """ part two """
-    return 'todo'
+    total = 0
+    for line in lines:
+        result = calculate2(deque(line))
+        total += int(result)
+
+    return total
 
 
 def main():
@@ -58,6 +95,8 @@ def main():
     print('part_one', part_one(lines))
 
     print('part_two', part_two(lines))
+
+    # too high: 168775135619137
 
 
 main()
