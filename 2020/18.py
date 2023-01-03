@@ -16,12 +16,7 @@ def calculate(expression):
                 operator = part
             case '(':
                 intermediate = calculate(expression)
-                if operator:
-                    result = str(eval(result + operator + intermediate))
-                elif expression:
-                    result = intermediate
-                else:
-                    return intermediate
+                expression.appendleft(intermediate)
             case ')':
                 return result
             case _:
@@ -43,15 +38,10 @@ def calculate2(expression, prev=None):
             case '*':
                 operator = part
                 intermediate = calculate2(expression)
-                result = str(eval(result + operator + intermediate))
+                expression.appendleft(intermediate)
             case '(':
                 intermediate = calculate2(expression, '(')
-                if operator:
-                    result = str(eval(result + operator + intermediate))
-                elif expression:
-                    result = intermediate
-                else:
-                    return intermediate
+                expression.appendleft(intermediate)
             case ')':
                 if prev != '(':
                     expression.appendleft(')')
