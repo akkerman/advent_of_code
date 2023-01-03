@@ -37,14 +37,16 @@ Adding parenteses is like doing a sub-calculation. A sub-calculation can be
 #+begin_src python
 case '(':
     intermediate = calculate(expression)
-    expression.appendleft(intermediate)
+    # put intermediate result back into deque for further processing
+    expression.appendleft(intermediate)  
 case ')':
     return result
 #+end_src
 
 * Part Two
 
-Now addition take precedence over multiplication. Another way of saying this is, always do addition, only do multiplication when there is no other choice.
+Now addition takes precedence over multiplication. Another way of saying this
+  is, always do addition, only do multiplication when there is no other choice.
 
 And thus we start a new sub-calculation as soon as we encounter an asterisk.
 
@@ -52,6 +54,7 @@ And thus we start a new sub-calculation as soon as we encounter an asterisk.
 case '*':
     operator = part
     intermediate = calculate2(expression)
+    # put intermediate result back into deque for further processing
     expression.appendleft(intermediate)
 #+end_src
 
@@ -60,3 +63,15 @@ This approach did give a lot of correct answers but I ran into a bug. When
   multiplication the sub-calculation for parenteses did not terminate
   correctly. A fix was to make the sub-calculation aware that is is calculating
   paranteses or not, if not the parentesis should be added to the deque.
+
+
+#+begin_src python
+    case '(':
+        intermediate = calculate2(expression, '(')
+        expression.appendleft(intermediate)
+    case ')':
+        if prev != '(':
+            # re-add closing parentesis when not processing parenteses
+            expression.appendleft(')')
+        return result
+#+end_src
