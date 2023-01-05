@@ -43,10 +43,26 @@ def part_one(rules, messages):
 
     return total
 
+def make_matcher(rules):
+    def match(msg, rule=rules['0']):
+        if msg == '':
+            return True
+        return False
+    return match
 
-def part_two(lines):
+def part_two(rules, messages):
     """ part two """
-    return 'todo'
+
+    rules[8] = '42 | 42 8'.split(' ')
+    rules[11] = '42 31 | 42 11 31'.split(' ')
+
+    match = make_matcher(rules)
+
+    total = 0
+    for msg in messages:
+        if match(msg):
+            total += 1
+    return total
 
 
 def main():
@@ -74,7 +90,7 @@ def main():
 
     print('part_one', part_one(rules, messages))
 
-    print('part_two', part_two(rules))
+    print('part_two', part_two(rules, messages))
 
 
 main()
