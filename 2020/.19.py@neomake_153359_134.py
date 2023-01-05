@@ -84,8 +84,4 @@ def main():
 
     print('part_two', part_two(rules, messages))
 
-    # too high: 294
-    # too high: 295
-
-
 main()
