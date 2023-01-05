@@ -52,7 +52,6 @@ def part_two(rules, messages):
     total = 0
     for msg in messages:
         if match(msg):
-            print(msg)
             total += 1
     return total
 
@@ -83,9 +82,5 @@ def main():
     print('part_one', part_one(rules, messages))
 
     print('part_two', part_two(rules, messages))
-
-    # too high: 294
-    # too high: 295
-
 
 main()
