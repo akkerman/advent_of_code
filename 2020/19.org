@@ -1,0 +1,118 @@
+#+title: Day 19: Monster Messages
+#+options: toc:nil num:nil
+
+* Part One
+
+We have to match some messages with an elaborate set of rules. We have to start with rule 0 and see if any of the messages match that one.
+
+The below fragment shows the result of how I parsed the input into code.
+
+#+begin_src python :session aoc2020day19 :exports code
+rules = {
+    '0': ['4', '1', '5'],
+    '1': ['2', '3', '|', '3', '2'],
+    '2': ['4', '4', '|', '5', '5'],
+    '3': ['4', '5', '|', '5', '4'],
+    '4': 'a',
+    '5': 'b'
+}
+#+end_src
+
+#+RESULTS:
+
+
+
+My first thought was to generate all possible rules starting with 0 and then match the messages.
+
+The process of generating them is recursive: go through the rule element by element and replace any number by it's corresponding sub-rule.
+
++ base case: when we encounter the empty list we're done
++ simple case: when the sub-rule is 'a' or 'b' generate the rest
++ complex case: when the sub-rule is a list; replace the element with the sub-rule and generate
++ complex case with choice: generate two rules, one for each choice
+
+#+begin_src python :session aoc2020day19 :exports both :results list
+def gen(rule):
+    if rule == []:
+        yield rule
+        return
+
+    head = rule[0]
+    tail = rule[1:]
+    sub = rules[head]
+
+    if isinstance(sub, str):
+        # sub is 'a' or 'b'
+        for r in gen(tail):
+            yield [sub] + r
+
+    if isinstance(sub, list):
+        if '|' in sub:
+            idx = sub.index('|')
+            for r in gen(sub[:idx] + tail):
+                yield r
+            for r in gen(sub[idx+1:] + tail):
+                yield r
+        else:
+            for r in gen(sub + tail):
+                yield r
+
+list(''.join(r) for r in gen(rules['0']))
+#+end_src
+
+#+RESULTS:
+- aaaabb
+- aaabab
+- abbabb
+- abbbab
+- aabaab
+- aabbbb
+- abaaab
+- ababbb
+
+
+
+* Part Two
+
+We are now challenged to possible infinite rules, it is not possible to generate rule0 anymore. But we can use the same logic to create a matcher. Two modifications.
+
+1. accept message as a parameter
+2. return True/False if the message matcher or doesn't
+
+
+The process is still recursive: go through the rule element by element and replace any number by it's corresponding sub-rule. As soon as we find 'a', or 'b' match this with the head of the message (~message[0]~) and continue with mathing the rest of the message.
+
++ base case: if we matched all of the message against a complete rule, we're done and found a match
++ alternate base case: if we matched all of the massage againt a partial rule, we're done and did not find a match.
++ alternate base case: if we expanded a rule and we still have a message left, we're done and did not find a match.
+
+In the end I used the matcher for both parts because it is a lot faster.
+
+#+begin_src python :session aoc2020day19 :exports both :results value
+def match(msg, rule=rules['0']):
+    if msg == '' and rule == []:
+        return True
+    if msg == '' or rule == []:
+        return False
+
+    head = rule[0]
+    tail = rule[1:]
+    sub = rules[head]
+
+    if isinstance(sub, str):
+        # sub is 'a' or 'b'
+        return sub == msg[0] and match(msg[1:], tail)
+
+    if isinstance(sub, list):
+        if '|' in sub:
+            idx = sub.index('|')
+            if match(msg, sub[:idx] + tail):
+                return True
+            return match(msg, sub[idx+1:] + tail)
+        return match(msg, sub + tail)
+
+match('abbbab')
+#+end_src
+
+#+RESULTS:
+: True
