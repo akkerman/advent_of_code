@@ -31,7 +31,7 @@ The process of generating them is recursive: go through the rule element by elem
 + complex case: when the sub-rule is a list; replace the element with the sub-rule and generate
 + complex case with choice: generate two rules, one for each choice
 
-#+begin_src python :session aoc2020day19 :exports both :results list
+#+begin_src python :session aoc2020day19 :exports both :results verbatim
 def gen(rule):
     if rule == []:
         yield rule
@@ -61,14 +61,7 @@ list(''.join(r) for r in gen(rules['0']))
 #+end_src
 
 #+RESULTS:
-- aaaabb
-- aaabab
-- abbabb
-- abbbab
-- aabaab
-- aabbbb
-- abaaab
-- ababbb
+: ['aaaabb', 'aaabab', 'abbabb', 'abbbab', 'aabaab', 'aabbbb', 'abaaab', 'ababbb']
 
 
 
