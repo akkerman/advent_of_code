@@ -14,16 +14,15 @@ def make_matcher(rules):
         tail = rule[1:]
         sub = rules[head]
 
-        if type(sub) == str:
+        if isinstance(sub, str):
             return sub == msg[0] and match(msg[1:], tail)
 
-        if type(sub) == list:
+        if isinstance(sub, list):
             if '|' in sub:
                 idx = sub.index('|')
                 if match(msg, sub[:idx] + tail):
                     return True
                 return match(msg, sub[idx+1:] + tail)
-
             return match(msg, sub + tail)
 
         assert False
@@ -58,7 +57,7 @@ def part_two(rules, messages):
 
 def main():
     """ main """
-    rules = dict()
+    rules = {}
     messages = []
     parse_messages = False
     for line in sys.stdin:
@@ -70,7 +69,7 @@ def main():
         if parse_messages:
             messages.append(line)
         else:
-            k,v = line.split(': ')
+            k, v = line.split(': ')
             if '"' in v:
                 v = v.replace('"', '')
             else:
@@ -78,9 +77,9 @@ def main():
 
             rules[k] = v
 
-
     print('part_one', part_one(rules, messages))
 
     print('part_two', part_two(rules, messages))
+
 
 main()
