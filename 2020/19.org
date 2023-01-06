@@ -57,11 +57,12 @@ def gen(rule):
             for r in gen(sub + tail):
                 yield r
 
-list(''.join(r) for r in gen(rules['0']))
+rule0 = list(''.join(r) for r in gen(rules['0']))
+[r for r in ['ababbb', 'bababa', 'abbbab', 'aaabbb', 'aaaabbb'] if r in rule0]
 #+end_src
 
 #+RESULTS:
-: ['aaaabb', 'aaabab', 'abbabb', 'abbbab', 'aabaab', 'aabbbb', 'abaaab', 'ababbb']
+: ['ababbb', 'abbbab']
 
 
 
@@ -81,7 +82,7 @@ The process is still recursive: go through the rule element by element and repla
 
 In the end I used the matcher for both parts because it is a lot faster.
 
-#+begin_src python :session aoc2020day19 :exports both :results value
+#+begin_src python :session aoc2020day19 :exports both :results verbatim
 def match(msg, rule=rules['0']):
     if msg == '' and rule == []:
         return True
@@ -104,8 +105,8 @@ def match(msg, rule=rules['0']):
             return match(msg, sub[idx+1:] + tail)
         return match(msg, sub + tail)
 
-match('abbbab')
+[r for r in ['ababbb', 'bababa', 'abbbab', 'aaabbb', 'aaaabbb'] if match(r)]
 #+end_src
 
 #+RESULTS:
-: True
+: ['ababbb', 'abbbab']
