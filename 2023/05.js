@@ -1,3 +1,4 @@
+
 const R = require('ramda')
 const readline = require('readline')
 const rl = readline.createInterface({ input: process.stdin })
@@ -53,6 +54,20 @@ function partOne (almanac) {
   return Math.min(...seedLocations)
 }
 
-function partTwo (almanac) {
-  return 'todo'
+function partTwo (almanac) { // duurt 'slechts' 170 minuten...
+  const fns = almanac.maps
+    .map(makeCategoryMap)
+  const seedToLocation = R.pipe(...fns)
+  let min = Number.MAX_SAFE_INTEGER
+
+  for (let idx = 0; idx < almanac.seeds.length; idx += 2) {
+    const start = almanac.seeds[idx]
+    const length = almanac.seeds[idx + 1]
+
+    for (let seed = start; seed < start + length; seed += 1) {
+      min = Math.min(min, seedToLocation(seed))
+    }
+  }
+
+  return min
 }
