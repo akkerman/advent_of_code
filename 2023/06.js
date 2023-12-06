@@ -40,5 +40,9 @@ function calculateWins ([time, record]) {
 }
 
 function partTwo (lines) {
-  return 'todo'
+  const [t, r] = lines
+  const time = parseInt(t.join(''))
+  const record = parseInt(r.join(''))
+
+  return calculateWins([time, record])
 }
