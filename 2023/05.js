@@ -1,3 +1,6 @@
+const {
+  Worker, isMainThread, parentPort, workerData,
+} = require('node:worker_threads')
 
 const R = require('ramda')
 const readline = require('readline')
@@ -33,7 +36,7 @@ rl.on('line', data => {
 
 rl.on('close', () => {
   console.log('partOne', partOne(almanac))
-  console.log('partTwo', partTwo(almanac))
+  partTwo(almanac)
 })
 
 function makeCategoryMap (map) {
@@ -54,20 +57,24 @@ function partOne (almanac) {
   return Math.min(...seedLocations)
 }
 
-function partTwo (almanac) { // duurt 'slechts' 170 minuten...
-  const fns = almanac.maps
-    .map(makeCategoryMap)
-  const seedToLocation = R.pipe(...fns)
-  let min = Number.MAX_SAFE_INTEGER
-
+function partTwo (almanac) {
+  const workers = []
+  const minima = []
   for (let idx = 0; idx < almanac.seeds.length; idx += 2) {
     const start = almanac.seeds[idx]
     const length = almanac.seeds[idx + 1]
 
-    for (let seed = start; seed < start + length; seed += 1) {
-      min = Math.min(min, seedToLocation(seed))
-    }
+    const worker = new Worker(
+      './05-worker.js',
+      { workerData: { maps: almanac.maps, start, length } },
+    )
+    workers.push(worker)
+    worker.on('message', min => {
+      console.log({ start, length, min })
+      minima.push(min)
+      if (minima.length === workers.length) {
+        console.log('partTwo', Math.min(...minima))
+      }
+    })
   }
-
-  return min
 }
