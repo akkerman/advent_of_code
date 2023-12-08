@@ -3,6 +3,7 @@ const rl = readline.createInterface({ input: process.stdin })
 const tap = fn => args => { fn(args); return args } // eslint-disable-line 
 const log = console.log // eslint-disable-line
 const sum = (a, b) => a + b // eslint-disable-line
+const { lcm } = require('../utils.js')
 
 let instructions
 const direction = { L: 0, R: 1 }
@@ -69,5 +70,5 @@ function partTwo (network, instructions) {
       }
     }
   }
-  return ['calculate lcm from', Object.values(nums).map(a => a[0]), '@ https://www.calculatorsoup.com/calculators/math/lcm.php']
+  return Object.values(nums).map(a => a[0]).reduce(lcm)
 }
