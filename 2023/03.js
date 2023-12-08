@@ -43,6 +43,7 @@ function partOne (lines) {
       }
     }
   }
+  Object.entries(partNumbers).forEach(s => console.log(s))
   return Object.values(partNumbers).reduce(sum)
 }
 
@@ -63,7 +64,7 @@ function getPartnumberAt (r, c) {
     }
     partNr += lines[r][dc]
   }
-  return [`${r},${start}`, parseInt(partNr)]
+  return [`${r + 1},${start + 1}`, parseInt(partNr)]
 }
 
 function partTwo (lines) {
