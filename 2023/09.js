@@ -1,10 +1,7 @@
 const R = require('ramda')
 const readline = require('readline')
 const rl = readline.createInterface({ input: process.stdin })
-const tap = R.tap
-const log = console.log // eslint-disable-line
 const sum = (a,b) => a+b // eslint-disable-line
-const mul = (a,b) => a*b // eslint-disable-line
 const int = R.pipe(R.trim, parseInt) // eslint-disable-line
 
 function main () {
@@ -41,11 +38,31 @@ function sequencer (history) {
 }
 
 function partOne (lines) {
-  return lines
-    // .map(tap(log))
-    .map(sequencer).reduce(sum)
+  return lines.map(sequencer).reduce(sum)
+}
+
+function sequencer2 (history) {
+  const fst = []
+  let h = [...history]
+  while (true) {
+    fst.push(h[0])
+
+    const nh = []
+    for (let i = 1; i < h.length; i += 1) {
+      nh.push(h[i] - h[i - 1])
+    }
+    h = nh
+    if (h.every(n => n === 0)) break
+  }
+
+  const zero = [0]
+  for (let i = fst.length - 1; i >= 0; i -= 1) {
+    zero.push(fst[i] - zero[zero.length - 1])
+  }
+
+  return zero[zero.length - 1]
 }
 
 function partTwo (lines) {
-  return 'todo'
+  return lines.map(sequencer2).reduce(sum)
 }
