@@ -1,0 +1,78 @@
+#+title: Day 10: Pipe Maze
+#+options: toc:nil num:nil
+
+
+* Part One
+
+Breath first search with cost calculation. Hierbij de maximale kosten bijhouden
+en teruggeven.
+
+Omdat het een ronde zou zijn, zijn er, bij elk punt, altijd maar 2 buren. Beide
+richtingen vanaf S worden tegelijk bewandeld en de te bezoeken nodes zijn op
+zodra het maximum is bereikt.
+
+Een alternatief zou depth first search zijn van start (S) naar start en dan de
+kosten delen door twee.
+
+* Part Two
+
+Eerste gedachte was een fload fill, maar dan zou ik werkelijk niet weten hoe ik
+tussen de pijpen door moet navigeren. Diagonaal zou nog wel gaan maar
+horizontaal en vertikaal?
+
+Een andere aanpak is realiseren dat, als je over de pijpen heen zou kunnen
+stappen, je een oneven aantal pijpen tegenkomt als je in de lus bent en een even
+aantal (evt 0) als je er buiten zit.
+
+In princiepe zou je dan gewoon de puntjes  in het veld af moeten gaan en dan de kruispunten tellen.
+
+#+begin_quote
+~.~ is ground; there is no pipe in this tile
+#+end_quote
+
+Omdat ik vermoedde dat er wel wat addertjes onder het gras zouden zitten schreef
+ik de functie voor kruisputen zowel horizontaal als vertikaal en het antwoord
+zou voor beide hetzelfde moeten zijn. Als dit niet het geval was: ~throw Error~
+
+
+En, inderdaad, er kwamen al gauw een aantal probleempje
+s naar voren.
+
+** Probleem 1 - De vloer is een rommeltje
+
+Hoewel het eigenlijk wel in te tekst staat realiseerde ik mij lange tijd niet
+dat er willekeurig pijpjes waren die als vloer geteld moeten worden en niet deel
+uit maakten van de lus.
+
+*Oplossing*: maak bij het bepalen van vloertegel of pijp-in-de-lus gebruik van de
+set met bezochte knoppunten uit de oplossing van deel één.
+
+** Probleem 2 - Niet elke buis is een kruispunt
+
+Als je één richting op gaat zijn er configuraties van pijpjes die je eigenlijk
+niet kruist maar bij langs loopt. Hierin is altijd een stuk in dezelfde richting
+als je zelf op wilt gaan. voor horizontaal is dat uiteraard ~---~ maar er zijn een
+aantal configuraties die roet in het eten gooien:
+
+#+BEGIN_EXAMPLE
+
+                         |   |                 |  |
+loop richting ->      F--J   L--7       F--7   L--J
+                      |         |       |  |
+
+kruisingen              1     1         2of0   2of0
+#+END_EXAMPLE
+
+
+Zodra je dus een stuk pijp tegenkomt wat in dezelfde richting gaat als je
+looprichting zou je een 0.5 tegel opschuiven en er langs lopen. Bij de rechter
+twee betekend dit dat je er maar één maal overheen stapt en bij de linker twee
+dus twee keer, of helemaal niet.
+
+Bovenstaande is de eenvoudigste illustratie, de regel erboven en onder kunnen er
+veel ingewikkelder uit zien maar is niet relevant omdat daar niet naargekeken
+hoeft te worden.
+
+*Oplossing*: houd het voorgaande bochtje bij. Als je 1 van de linker twee
+ situaties tegenkomt moet je het tweede bochtje negeren. In de huidige oplossing
+ tel ik de rechter twee situatie dus wel als twee kruisingen.
