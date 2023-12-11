@@ -26,6 +26,7 @@ function main () {
 
   rl.on('close', () => {
     console.log('partOne', partOne(lines))
+    console.log('partOneAlt', partOneAlt(lines))
     console.log('partTwo', partTwo(lines))
   })
 }
@@ -101,6 +102,46 @@ function partOne (lines) {
   return distances.reduce(sum)
 }
 
+function solve (lines, factor) {
+  const shift = factor - 1
+  const emptyRows = lines.reduce((rows, line, idx) =>
+    (line.includes(GALAXY)) ? rows : [...rows, idx]
+  , [])
+  const emptyCols = []
+  for (let c = 0; c < lines[0].length; c += 1) {
+    let isEmpty = true
+    for (let r = 0; r < lines.length; r += 1) {
+      if (lines[r][c] === GALAXY) {
+        isEmpty = false
+        break
+      }
+    }
+    if (isEmpty) {
+      emptyCols.push(c)
+    }
+  }
+
+  const coords = extractGalaxyCoords(lines)
+    .map(([r, c]) => [
+      r + emptyRows.filter(id => id < r).length * shift,
+      c + emptyCols.filter(id => id < c).length * shift,
+    ])
+
+  const distances = []
+  for (let i = 0; i < coords.length; i += 1) {
+    const start = coords[i]
+    for (const end of coords.slice(i + 1)) {
+      distances.push(manhattanDistance(start, end))
+    }
+  }
+
+  return distances.reduce(sum)
+}
+
+function partOneAlt (lines) {
+  return solve(lines, 2)
+}
+
 function partTwo (lines) {
-  return 'todo'
+  return solve(lines, 1_000_000)
 }
