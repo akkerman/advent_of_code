@@ -1,117 +1,55 @@
-const U = require('../utils')
-const R = require('ramda')
+const { findOccurences, manhattanDistance } = require('../utils.js')
+
+/**
+ * @typedef {string[]} Universe
+ * @typedef {import('../utils.js').Coord} Coord
+ */
+
 const readline = require('readline')
 const rl = readline.createInterface({ input: process.stdin })
-const tap = R.tap
-const log = console.log // eslint-disable-line
-const sum = (a,b) => a+b // eslint-disable-line
-const mul = (a,b) => a*b // eslint-disable-line
-const int = R.pipe(R.trim, parseInt) // eslint-disable-line
+const sum = (a, b) => a + b
 
-const logField = lines => {
-  for (const line of lines) {
-    log(line)
-  }
-}
-
-const EMPTY_SPACE = '.'
 const GALAXY = '#'
 
 function main () {
-  const lines = []
+  const universe = []
 
   rl.on('line', line => {
-    lines.push(line)
+    universe.push(line)
   })
 
   rl.on('close', () => {
-    console.log('partOne', partOne(lines))
-    console.log('partOneAlt', partOneAlt(lines))
-    console.log('partTwo', partTwo(lines))
+    console.log('partOne', partOne(universe))
+    console.log('partTwo', partTwo(universe))
   })
 }
 
 main()
 
-function expand (lines) {
-  const expanded = []
-
-  for (const line of lines) {
-    expanded.push(line)
-
-    if (!line.includes(GALAXY)) {
-      expanded.push(line)
-    }
-  }
-
-  let c = 0
-  while (true) {
-    if (!expanded[0][c]) break
-    let expand = true
-    for (let r = 0; r < expanded.length; r += 1) {
-      if (expanded[r][c] === GALAXY) {
-        expand = false
-        break
-      }
-    }
-    if (expand) {
-      for (let r = 0; r < expanded.length; r += 1) {
-        expanded[r] = `${expanded[r].slice(0, c)}${EMPTY_SPACE}${expanded[r].slice(c)}`
-      }
-      c += 1
-    }
-
-    c += 1
-  }
-  return expanded
-}
-
-function extractGalaxyCoords (lines) {
+/** @type {(universe: Universe) => Coord[]} */
+function extractGalaxyCoords (universe) {
   const coords = []
-  for (let r = 0; r < lines.length; r += 1) {
-    coords.push(...findOccurences(GALAXY, lines[r])
-      .map(c => [r, c]),
+  for (let r = 0; r < universe.length; r += 1) {
+    coords.push(
+      ...findOccurences(universe[r], GALAXY).map(c => [r, c]),
     )
   }
   return coords
 }
 
-function findOccurences (str, line) {
-  const rgx = new RegExp(str, 'gi')
-  const indices = []
-  let result = {}
-  while ((result = rgx.exec(line))) {
-    indices.push(result.index)
-  }
-  return indices
-}
+/** @type {(universe: Universe) => number[]} */
+const determineEmptyRowIds = universe => universe.reduce(
+  (rows, line, idx) => (line.includes(GALAXY)) ? rows : [...rows, idx],
+  [],
+)
 
-const manhattanDistance = ([x1, y1], [x2, y2]) =>
-  Math.abs(x1 - x2) + Math.abs(y1 - y2)
-
-function partOne (lines) {
-  const coords = extractGalaxyCoords(expand(lines))
-  const distances = []
-  for (let i = 0; i < coords.length; i += 1) {
-    const start = coords[i]
-    for (const end of coords.slice(i + 1)) {
-      distances.push(manhattanDistance(start, end))
-    }
-  }
-
-  return distances.reduce(sum)
-}
-
-function solve (lines, factor) {
-  const shift = factor - 1
-  const emptyRows = lines.reduce((rows, line, idx) =>
-    (line.includes(GALAXY)) ? rows : [...rows, idx]
-  , [])
+/** @type {(universe: Universe) => number[]} */
+const determineEmptyColumnIds = universe => {
   const emptyCols = []
-  for (let c = 0; c < lines[0].length; c += 1) {
+  for (let c = 0; c < universe[0].length; c += 1) {
     let isEmpty = true
-    for (let r = 0; r < lines.length; r += 1) {
-      if (lines[r][c] === GALAXY) {
+    for (let r = 0; r < universe.length; r += 1) {
+      if (universe[r][c] === GALAXY) {
         isEmpty = false
         break
       }
@@ -120,12 +58,22 @@ function solve (lines, factor) {
       emptyCols.push(c)
     }
   }
+  return emptyCols
+}
 
-  const coords = extractGalaxyCoords(lines)
-    .map(([r, c]) => [
-      r + emptyRows.filter(id => id < r).length * shift,
-      c + emptyCols.filter(id => id < c).length * shift,
-    ])
+/** @type {(universe: Universe, factor:number) => number} */
+function solve (universe, factor) {
+  const shift = factor - 1
+
+  const emptyRows = determineEmptyRowIds(universe)
+  const emptyCols = determineEmptyColumnIds(universe)
+
+  const shiftGalaxy = ([r, c]) => [
+    r + emptyRows.filter(id => id < r).length * shift,
+    c + emptyCols.filter(id => id < c).length * shift,
+  ]
+
+  const coords = extractGalaxyCoords(universe).map(shiftGalaxy)
 
   const distances = []
   for (let i = 0; i < coords.length; i += 1) {
@@ -138,10 +86,12 @@ function solve (lines, factor) {
   return distances.reduce(sum)
 }
 
-function partOneAlt (lines) {
-  return solve(lines, 2)
+/** @type {(universe: Universe) => number} */
+function partOne (universe) {
+  return solve(universe, 2)
 }
 
-function partTwo (lines) {
-  return solve(lines, 1_000_000)
+/** @type {(universe: Universe) => number} */
+function partTwo (universe) {
+  return solve(universe, 1_000_000)
 }

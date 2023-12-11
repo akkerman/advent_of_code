@@ -1,4 +1,8 @@
 /**
+ * @typedef {[number, number]} Coord
+ */
+
+/**
  * Split a list in sub lists of given length
  * @template T
  * @param {number} n
@@ -51,9 +55,36 @@ function lcm (x, y) {
   return Math.abs(x * (y / gcd(x, y)))
 }
 
+/**
+ * Find occurences of str in line
+ * @param {string} line
+ * @param {string} str
+ * @returns {number[]} indices
+ */
+function findOccurences (line, str) {
+  const rgx = new RegExp(str, 'gi')
+  const indices = []
+  let result = {}
+  while ((result = rgx.exec(line))) {
+    indices.push(result.index)
+  }
+  return indices
+}
+
+/**
+ * Calculate manhattan distance of two coordinates.
+ * @param {Coord} coord1
+ * @param {Coord} coord2
+ * @returns {number}
+ */
+const manhattanDistance = ([x1, y1], [x2, y2]) =>
+  Math.abs(x1 - x2) + Math.abs(y1 - y2)
+
 module.exports = {
   splitList,
   intersection,
   lcm,
   gcd,
+  findOccurences,
+  manhattanDistance,
 }
