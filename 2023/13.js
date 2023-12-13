@@ -37,15 +37,15 @@ function main () {
 
 main()
 
+/** @type {(pattern:Pattern) => Pattern} */
+const flipMirror = R.pipe(
+  R.map(R.split('')),
+  flip,
+  R.map(R.join('')),
+)
+
 /** @type {(patterns: Pattern[]) => number */
 function partOne (patterns) {
-  /** @type {(pattern:Pattern) => Pattern} */
-  const flipMirror = R.pipe(
-    R.map(R.split('')),
-    flip,
-    R.map(R.join('')),
-  )
-
   /** @type {(pattern: Pattern, row: number) => boolean} */
   const confirmMirror = (pattern, row) => {
     const before = pattern.slice(0, row).reverse()
@@ -71,6 +71,40 @@ function partOne (patterns) {
   return patterns.map(findBothMirrors).reduce(sum)
 }
 
-function partTwo (lines) {
-  return 'todo'
+function partTwo (patterns) {
+  const numDifferent = (reflection, line) => {
+    const eq = (a, b) => a === b ? 0 : 1
+    return R.zipWith(eq, reflection, line).reduce(sum)
+  }
+
+  const possibleEqual = (reflection, line) => {
+    return numDifferent(reflection, line) <= 1
+  }
+
+  /** @type {(pattern: Pattern, row: number) => boolean} */
+  const confirmMirror = (pattern, row) => {
+    const before = pattern.slice(0, row).reverse()
+    const after = pattern.slice(row)
+
+    const smudges = R.zipWith(numDifferent, before, after)
+
+    return smudges.reduce(sum) === 1
+  }
+
+  /** @type {(pattern: Pattern) => number} */
+  const findMirror = pattern => {
+    for (let row = 1; row < pattern.length; row += 1) {
+      if (possibleEqual(pattern[row], pattern[row - 1]) && confirmMirror(pattern, row)) {
+        return row
+      }
+    }
+    return 0
+  }
+
+  /** @type {(pattern: Pattern) => number} */
+  const findBothMirrors = pattern =>
+    100 * findMirror(pattern) + findMirror(flipMirror(pattern))
+
+  // too low: 37861
+  return patterns.map(findBothMirrors).reduce(sum)
 }
