@@ -86,18 +86,18 @@ const manhattanDistance = ([x1, y1], [x2, y2]) =>
  * Rotate matrix counter clock wise
  * @type {(matrix: Matrix) => Matrix}
  */
-const rotateL = matrix => matrix[0].map((val, index) => matrix.map(row => row[row.length - 1 - index]))
+const rotateL = matrix => matrix[0].map((_, index) => matrix.map(row => row[row.length - 1 - index]))
 /**
  * Rotate matrix clock wise
  * @type {(matrix: Matrix) => Matrix}
  */
-const rotateR = matrix => matrix[0].map((val, index) => matrix.map(row => row[index]).reverse())
+const rotateR = matrix => matrix[0].map((_, index) => matrix.map(row => row[index]).reverse())
 
 /**
- * Flip matrix over diaganal, left upper to right lower
+ * Flip matrix over diagonal, from left upper to right lower
  * @type {(matrix: Matrix) => Matrix}
  */
-const flip = matrix => matrix[0].map((val, index) => matrix.map(row => row[index]))
+const flip = matrix => matrix[0].map((_, index) => matrix.map(row => row[index]))
 
 module.exports = {
   splitList,

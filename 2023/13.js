@@ -1,12 +1,8 @@
 const R = require('ramda')
-const { flip } = require('../utils')
 const readline = require('readline')
+const { flip } = require('../utils.js')
 const rl = readline.createInterface({ input: process.stdin })
-const tap = R.tap // eslint-disable-line 
-const log = console.log // eslint-disable-line
-const sum = (a,b) => a+b // eslint-disable-line
-const mul = (a,b) => a*b // eslint-disable-line
-const int = R.pipe(R.trim, parseInt) // eslint-disable-line
+const sum = (a, b) => a + b
 
 /**
  * @typedef {string[]} Pattern
@@ -44,15 +40,14 @@ const flipMirror = R.pipe(
   R.map(R.join('')),
 )
 
-/** @type {(patterns: Pattern[]) => number */
+/** @type {(patterns: Pattern[]) => number} */
 function partOne (patterns) {
   /** @type {(pattern: Pattern, row: number) => boolean} */
-  const confirmMirror = (pattern, row) => {
-    const before = pattern.slice(0, row).reverse()
-    const after = pattern.slice(row)
-
-    return R.zipWith(R.equals, before, after).reduce(R.and)
-  }
+  const confirmMirror = (pattern, row) => R.zipWith(
+    R.equals,
+    pattern.slice(0, row).reverse(),
+    pattern.slice(row),
+  ).reduce(R.and)
 
   /** @type {(pattern: Pattern) => number} */
   const findMirror = pattern => {
@@ -71,6 +66,7 @@ function partOne (patterns) {
   return patterns.map(findBothMirrors).reduce(sum)
 }
 
+/** @type {(patterns: Pattern[]) => number} */
 function partTwo (patterns) {
   const numDifferent = (reflection, line) => {
     const eq = (a, b) => a === b ? 0 : 1
@@ -82,14 +78,11 @@ function partTwo (patterns) {
   }
 
   /** @type {(pattern: Pattern, row: number) => boolean} */
-  const confirmMirror = (pattern, row) => {
-    const before = pattern.slice(0, row).reverse()
-    const after = pattern.slice(row)
-
-    const smudges = R.zipWith(numDifferent, before, after)
-
-    return smudges.reduce(sum) === 1
-  }
+  const confirmMirror = (pattern, row) => R.zipWith(
+    numDifferent,
+    pattern.slice(0, row).reverse(),
+    pattern.slice(row),
+  ).reduce(sum) === 1
 
   /** @type {(pattern: Pattern) => number} */
   const findMirror = pattern => {
