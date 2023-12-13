@@ -80,6 +80,25 @@ function findOccurences (line, str) {
 const manhattanDistance = ([x1, y1], [x2, y2]) =>
   Math.abs(x1 - x2) + Math.abs(y1 - y2)
 
+/** @typedef {any[][]} Matrix */
+
+/**
+ * Rotate matrix counter clock wise
+ * @type {(matrix: Matrix) => Matrix}
+ */
+const rotateL = matrix => matrix[0].map((val, index) => matrix.map(row => row[row.length - 1 - index]))
+/**
+ * Rotate matrix clock wise
+ * @type {(matrix: Matrix) => Matrix}
+ */
+const rotateR = matrix => matrix[0].map((val, index) => matrix.map(row => row[index]).reverse())
+
+/**
+ * Flip matrix over diaganal, left upper to right lower
+ * @type {(matrix: Matrix) => Matrix}
+ */
+const flip = matrix => matrix[0].map((val, index) => matrix.map(row => row[index]))
+
 module.exports = {
   splitList,
   intersection,
@@ -87,4 +106,7 @@ module.exports = {
   gcd,
   findOccurences,
   manhattanDistance,
+  rotateL,
+  rotateR,
+  flip,
 }
