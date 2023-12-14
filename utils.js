@@ -99,7 +99,26 @@ const rotateR = matrix => matrix[0].map((_, index) => matrix.map(row => row[inde
  */
 const flip = matrix => matrix[0].map((_, index) => matrix.map(row => row[index]))
 
+/** @typedef {ReturnType<newCoordSet>} CoordSet */
+
+const newCoordSet = () => {
+  const coordSet = {
+  /** @type {Map<string, Coord>} */
+    coords: new Map(),
+    /** @type {(coord: Coord) => boolean} */
+    has: coord => coordSet.coords.has(coord.toString()),
+    /** @type {(coord: Coord) => void} */
+    add: coord => coordSet.coords.set(coord.toString(), coord),
+    /** @type {(coord: Coord) => boolean} */
+    delete: coord => coordSet.coords.delete(coord.toString()),
+
+    values: () => coordSet.coords.values(),
+  }
+  return coordSet
+}
+
 module.exports = {
+  newCoordSet,
   splitList,
   intersection,
   lcm,
