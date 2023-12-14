@@ -1,5 +1,6 @@
+const { reduce, pipe, map, split, join, sortBy } = require('ramda')
 const readline = require('readline')
-const { newCoordSet, findOccurences } = require('../utils.js')
+const { newCoordSet, findOccurences, rotateR } = require('../utils.js')
 const rl = readline.createInterface({ input: process.stdin })
 const sum = (a,b) => a+b // eslint-disable-line
 
@@ -39,6 +40,7 @@ function main () {
 
   rl.on('close', () => {
     console.log('partOne', partOne(index(lines)))
+    console.log('partOneAlt', partOneAlt(lines))
     console.log('partTwo', partTwo({ lines, ...index(lines) }))
   })
 }
@@ -70,6 +72,19 @@ function partOne ({ roundRocks, cubeRocks }) {
     .map(([row]) => row)
     .reduce(sum)
 }
+
+const partOneAlt = pipe(
+  map(split('')),
+  rotateR,
+  map(join('')),
+  map(split('#')),
+  map(map(pipe(sortBy((a, b) => a === 'O' ? 1 : -1)))),
+  map(map(join(''))),
+  map(join('#')),
+  map(split('')),
+  map(arr => arr.reduce((acc, curr, idx) => curr === 'O' ? acc + idx + 1 : acc, 0)),
+  reduce(sum, 0),
+)
 
 /** @param {{
  * lines: string[]
