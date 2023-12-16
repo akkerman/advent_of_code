@@ -1,11 +1,5 @@
-const R = require('ramda')
 const readline = require('readline')
 const rl = readline.createInterface({ input: process.stdin })
-const tap = R.tap
-const log = console.log // eslint-disable-line
-const sum = (a,b) => a+b // eslint-disable-line
-const mul = (a,b) => a*b // eslint-disable-line
-const int = R.pipe(R.trim, parseInt) // eslint-disable-line
 
 /**
  * @typedef {import('../utils').Coord} Coord
@@ -33,14 +27,6 @@ function main () {
 
 main()
 
-function print (beam) {
-  const [x, y] = beam.coord
-  log({
-    ...beam,
-    coord: [x + 1, y + 1],
-  })
-}
-
 const UP = [-1, 0]
 const DOWN = [1, 0]
 const LEFT = [0, -1]
@@ -51,7 +37,10 @@ const S_LEFT = LEFT.toString()
 const S_RIGHT = RIGHT.toString()
 
 /** @type {string[][]} */
-function partOne (contraption) {
+function partOne (contraption, start) {
+  if (!start) {
+    start = { coord: [0, 0], direction: RIGHT }
+  }
   /** @type {(beam:BeamHead) => string} */
   function getTile (beam) {
     const [x, y] = beam.coord
@@ -67,12 +56,6 @@ function partOne (contraption) {
 
   /** @type {(beam:BeamHead) => BeamHead[]} */
   function getNeighbours (beam) {
-    //  . = direction constant
-    //  / = switch up&right, down&left
-    //  \ = switch up&left, down&right
-    //  | = up and down when left or right
-    //  - = left and right when up or down
-
     const dir = beam.direction.toString()
     const tile = getTile(beam)
     switch (tile) {
@@ -116,8 +99,8 @@ function partOne (contraption) {
 
   const energized = new Set()
   const visited = new Set()
-  const queue = [{ coord: [0, 0], direction: RIGHT }]
-  energized.add('0,0')
+  const queue = [start]
+  energized.add(start.coord.join(','))
 
   while (queue.length > 0) {
     const beam = queue.shift()
@@ -137,5 +120,19 @@ function partOne (contraption) {
 }
 
 function partTwo (lines) {
-  return 'todo'
+  const startingPoints = []
+
+  for (let col = 0; col < lines[0].length; col += 1) {
+    startingPoints.push({ coord: [0, col], direction: DOWN })
+    startingPoints.push({ coord: [lines.length - 1, col], direction: UP })
+  }
+  for (let row = 0; row < lines[0].length; row += 1) {
+    startingPoints.push({ coord: [row, 0], direction: RIGHT })
+    startingPoints.push({ coord: [row, lines[0].length - 1], direction: RIGHT })
+  }
+
+  return startingPoints.reduce(
+    (maxEnergized, start) => Math.max(maxEnergized, partOne(lines, start)),
+    0,
+  )
 }
