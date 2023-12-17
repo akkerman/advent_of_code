@@ -46,65 +46,65 @@ const S_DOWN = DOWN.toString()
 const S_LEFT = LEFT.toString()
 const S_RIGHT = RIGHT.toString()
 
-/** @type {(cityMap:CityMap, startMovement: Movement, endCoord: Coord) => number} */
-function solve (cityMap, startMovement, endCoord) {
-  /** @type {(movement:Movement, newDirection:coord) => Movement|undefined} */
-  const step = ({ coord: [x, y], direction, steps }, newDirection) => {
-    const sameDir = direction.toString() === newDirection.toString()
-    const [dx, dy] = newDirection
-
-    return {
-      coord: [x + dx, y + dy],
-      direction: [dx, dy],
-      steps: sameDir ? steps + 1 : 1,
-    }
-  }
-
-  /** @type {(move:Movement) => Movement[]} */
-  function getAllNeighbours (move) {
-    const dir = move.direction.toString()
-    return [
-      dir !== S_UP && step(move, DOWN),
-      dir !== S_RIGHT && step(move, LEFT),
-      dir !== S_DOWN && step(move, UP),
-      dir !== S_LEFT && step(move, RIGHT),
-    ].filter(Boolean)
-  }
-
-  /** @type {(coord:Coord) => number|undefined} */
-  const getHeatLoss = ([x, y]) => cityMap[x] && cityMap[x][y]
-
-  /** @type {(move:Movement) => Movement[]} */
-  const getNeighbours = move => getAllNeighbours(move).filter(
-    nb => nb.steps <= 3 && getHeatLoss(nb.coord) !== undefined,
-  )
-
-  const endCoordStr = endCoord.toString()
-
-  const prio = new Heap((a, b) => a.heatLoss - b.heatLoss)
-
-  prio.push(startMovement)
-
-  const visited = new Set()
-
-  while (true) {
-    const movement = prio.pop()
-    const { heatLoss, ...mv } = movement
-    const str = JSON.stringify(mv)
-    if (visited.has(str)) continue
-    visited.add(str)
-
-    const nbs = getNeighbours(mv)
-
-    for (const nb of nbs) {
-      const currentHeatloss = getHeatLoss(nb.coord)
-      if (nb.coord.toString() === endCoordStr) return heatLoss + currentHeatloss
-      prio.push({ ...nb, heatLoss: heatLoss + currentHeatloss })
-    }
-  }
-}
 /** @type {(map:CityMap) => number} */
 function partOne (lines) {
+/** @type {(cityMap:CityMap, startMovement: Movement, endCoord: Coord) => number} */
+  function solve (cityMap, startMovement, endCoord) {
+  /** @type {(movement:Movement, newDirection:coord) => Movement|undefined} */
+    const step = ({ coord: [x, y], direction, steps }, newDirection) => {
+      const sameDir = direction.toString() === newDirection.toString()
+      const [dx, dy] = newDirection
+
+      return {
+        coord: [x + dx, y + dy],
+        direction: [dx, dy],
+        steps: sameDir ? steps + 1 : 1,
+      }
+    }
+
+    /** @type {(move:Movement) => Movement[]} */
+    function getAllNeighbours (move) {
+      const dir = move.direction.toString()
+      return [
+        dir !== S_UP && step(move, DOWN),
+        dir !== S_RIGHT && step(move, LEFT),
+        dir !== S_DOWN && step(move, UP),
+        dir !== S_LEFT && step(move, RIGHT),
+      ].filter(Boolean)
+    }
+
+    /** @type {(coord:Coord) => number|undefined} */
+    const getHeatLoss = ([x, y]) => cityMap[x] && cityMap[x][y]
+
+    /** @type {(move:Movement) => Movement[]} */
+    const getNeighbours = move => getAllNeighbours(move).filter(
+      nb => nb.steps <= 3 && getHeatLoss(nb.coord) !== undefined,
+    )
+
+    const endCoordStr = endCoord.toString()
+
+    const prio = new Heap((a, b) => a.heatLoss - b.heatLoss)
+
+    prio.push(startMovement)
+
+    const visited = new Set()
+
+    while (true) {
+      const movement = prio.pop()
+      const { heatLoss, ...mv } = movement
+      const str = JSON.stringify(mv)
+      if (visited.has(str)) continue
+      visited.add(str)
+
+      const nbs = getNeighbours(mv)
+
+      for (const nb of nbs) {
+        const currentHeatloss = getHeatLoss(nb.coord)
+        if (nb.coord.toString() === endCoordStr) return heatLoss + currentHeatloss
+        prio.push({ ...nb, heatLoss: heatLoss + currentHeatloss })
+      }
+    }
+  }
   const startMovement = { coord: [0, 0], direction: [0, 1], steps: 0, heatLoss: 0 }
   const endCoord = [lines.length - 1, lines[0].length - 1]
   return solve(lines, startMovement, endCoord)
@@ -112,5 +112,70 @@ function partOne (lines) {
 
 /** @type {(map:CityMap) => number} */
 function partTwo (lines) {
-  return 'todo'
+/** @type {(cityMap:CityMap, startMovement: Movement, endCoord: Coord) => number} */
+  function solve (cityMap, startMovement, endCoord) {
+  /** @type {(movement:Movement, newDirection:coord) => Movement|undefined} */
+    const step = ({ coord: [x, y], direction, steps }, newDirection) => {
+      const sameDir = direction.toString() === newDirection.toString()
+      const [dx, dy] = newDirection
+
+      return {
+        coord: [x + dx, y + dy],
+        direction: [dx, dy],
+        steps: sameDir ? steps + 1 : 1,
+      }
+    }
+
+    /** @type {(move:Movement) => Movement[]} */
+    function getAllNeighbours (move) {
+      const dir = move.direction.toString()
+      if (move.steps < 4) {
+        return [step(move, move.direction)]
+      }
+      return [
+        dir !== S_UP && step(move, DOWN),
+        dir !== S_RIGHT && step(move, LEFT),
+        dir !== S_DOWN && step(move, UP),
+        dir !== S_LEFT && step(move, RIGHT),
+      ].filter(Boolean)
+    }
+
+    /** @type {(coord:Coord) => number|undefined} */
+    const getHeatLoss = ([x, y]) => cityMap[x] && cityMap[x][y]
+
+    /** @type {(move:Movement) => Movement[]} */
+    const getNeighbours = move => getAllNeighbours(move).filter(
+      nb => nb.steps <= 10 && getHeatLoss(nb.coord) !== undefined,
+    )
+
+    const endCoordStr = endCoord.toString()
+
+    const prio = new Heap((a, b) => a.heatLoss - b.heatLoss)
+
+    prio.push({ ...startMovement, direction: [0, 1] })
+    prio.push({ ...startMovement, direction: [1, 0] })
+
+    const visited = new Set()
+
+    while (true) {
+      const movement = prio.pop()
+      const { heatLoss, ...mv } = movement
+      const str = JSON.stringify(mv)
+      if (visited.has(str)) continue
+      visited.add(str)
+
+      const nbs = getNeighbours(mv)
+
+      for (const nb of nbs) {
+        const currentHeatloss = getHeatLoss(nb.coord)
+        if (nb.coord.toString() === endCoordStr) return heatLoss + currentHeatloss
+        prio.push({ ...nb, heatLoss: heatLoss + currentHeatloss })
+      }
+    }
+  }
+  const startMovement = { coord: [0, 0], direction: [0, 1], steps: 0, heatLoss: 0 }
+  const endCoord = [lines.length - 1, lines[0].length - 1]
+
+  // too low = 930
+  return solve(lines, startMovement, endCoord)
 }
