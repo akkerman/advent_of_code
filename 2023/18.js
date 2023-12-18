@@ -115,8 +115,8 @@ function partOne (digplan) {
   drawLine()
   fill()
 
-  // const uitersten = { minRow, minCol, maxRow, maxCol }
-  // print(floor, uitersten)
+  const uitersten = { minRow, minCol, maxRow, maxCol }
+  print(floor, uitersten)
   return floor.size
 }
 
@@ -130,7 +130,6 @@ function print (floor, { minRow, minCol, maxRow, maxCol }) {
   const grid = Array.from({ length: height + 1 }, () => Array.from({ length: width + 1 }, () => ' '))
   for (const coord of floor.values()) {
     const [r, c] = coord.split(',').map(int)
-    log(r, c)
     grid[r + rowOffset][c + colOffset] = '#'
   }
 
@@ -139,7 +138,18 @@ function print (floor, { minRow, minCol, maxRow, maxCol }) {
   }
 }
 
-function partTwo (lines) {
-  // lines.map(tap(log))
-  return 'todo'
+function partTwo (digPlan) {
+  const transl = {
+    0: 'R',
+    1: 'D',
+    2: 'L',
+    3: 'U',
+  }
+  const newDigPlan = digPlan
+    .map(({ color }) => ({
+      direction: transl[color.at(-1)],
+      meters: parseInt(color.slice(0, 5), 16),
+    }))
+
+  return newDigPlan
 }
