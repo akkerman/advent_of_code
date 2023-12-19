@@ -153,34 +153,28 @@ function partTwo (flows) {
     }
 
     const [start, end] = xmas[rule.name]
+    let match, nope
+
     if (rule.operator === '<') {
       if (end < rule.value) {
         queue.push({ ...xmas, flowName: rule.next, ruleId: 0 })
       } else {
         const range = [start, rule.value - 1, rule.value, end]
-        const match = range.slice(0, 2)
-        const nope = range.slice(2)
-        queue.push({ ...xmas, [rule.name]: match, flowName: rule.next, ruleId: 0 })
-        queue.push({ ...xmas, [rule.name]: nope, flowName: flowName, ruleId: ruleId + 1 })
+        match = range.slice(0, 2)
+        nope = range.slice(2)
       }
-      continue
-    }
-
-    if (rule.operator === '>') {
+    } else { // rule.operator === '>'
       if (start > rule.value) {
         queue.push({ ...xmas, flowName: rule.next, ruleId: 0 })
       } else {
         const range = [start, rule.value, rule.value + 1, end]
-        const nope = range.slice(0, 2)
-        const match = range.slice(2)
-
-        queue.push({ ...xmas, [rule.name]: match, flowName: rule.next, ruleId: 0 })
-        queue.push({ ...xmas, [rule.name]: nope, flowName: flowName, ruleId: ruleId + 1 })
+        nope = range.slice(0, 2)
+        match = range.slice(2)
       }
-      continue
     }
 
-    throw new Error('?')
+    queue.push({ ...xmas, [rule.name]: match, flowName: rule.next, ruleId: 0 })
+    queue.push({ ...xmas, [rule.name]: nope, flowName: flowName, ruleId: ruleId + 1 })
   }
 
   return combinations
