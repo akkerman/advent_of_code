@@ -7,7 +7,7 @@ const sum = (a,b) => a+b // eslint-disable-line
 const mul = (a,b) => a*b // eslint-disable-line
 const int = R.pipe(R.trim, parseInt) // eslint-disable-line
 
-function parseInstruction (instr) {
+function parseInstructionIntoFunctions (instr) {
   if (!instr.includes(':')) return () => instr
 
   const [, name, operator, value, next] = /([xmas])([<>])(\d+):(.+)/.exec(instr)
@@ -20,8 +20,32 @@ function parseInstruction (instr) {
   return (partName, partValue) => name === partName && partValue > v ? next : undefined
 }
 
+/**
+ * @typedef {{
+ * name: string
+ * operator: string
+ * value: string
+ * next: string
+ * }|{next:string}} Rule
+ *
+ * @typedef {Rule[]} WorkFlow
+ */
+
+/** @type {(instr:string) => Rule} */
+function parseInstructionIntoValues (instr) {
+  if (!instr.includes(':')) return { next: instr }
+
+  const [, name, operator, v, next] = /([xmas])([<>])(\d+):(.+)/.exec(instr)
+
+  const value = int(v)
+
+  return { name, operator, value, next }
+}
+
 function main () {
-  const instructions = {}
+  const instructionFunctions = {}
+  /** @type {Record<string,WorkFlow> } */
+  const workflows = {}
   const parts = []
 
   let instructionParsing = true
@@ -37,7 +61,8 @@ function main () {
       const [, name, i] = /(.+){(.+)}/.exec(line)
 
       const instr = i.split(',')
-      instructions[name] = instr.map(parseInstruction)
+      instructionFunctions[name] = instr.map(parseInstructionIntoFunctions)
+      workflows[name] = instr.map(parseInstructionIntoValues)
       return
     }
 
@@ -49,8 +74,8 @@ function main () {
   })
 
   rl.on('close', () => {
-    console.log('partOne', partOne(instructions, parts))
-    console.log('partTwo', partTwo(instructions, parts))
+    console.log('partOne', partOne(instructionFunctions, parts))
+    console.log('partTwo', partTwo(workflows, parts))
   })
 }
 
@@ -61,12 +86,12 @@ main()
 // a: Aerodynamic
 // s: Shiny
 
-function partOne (instructions, parts) {
+function partOne (flows, parts) {
   function workflow (part) {
-    let instructionName = 'in'
+    let flowName = 'in'
 
-    while (!'AR'.includes(instructionName)) {
-      for (const fn of instructions[instructionName]) {
+    while (!'AR'.includes(flowName)) {
+      for (const fn of flows[flowName]) {
         let answ
         for (const [name, value] of Object.entries(part)) {
           answ = fn(name, value)
@@ -75,18 +100,88 @@ function partOne (instructions, parts) {
           }
         }
         if (answ) {
-          instructionName = answ
+          flowName = answ
           break
         }
       }
     }
 
-    return instructionName === 'A'
+    return flowName === 'A'
   }
 
   return parts.filter(workflow).map(part => Object.values(part).reduce(sum)).reduce(sum)
 }
 
-function partTwo (instructions, parts) {
-  return 'todo'
+/**
+ * @typedef {{
+ * x: [number,number]
+ * m: [number,number]
+ * a: [number,number]
+ * s: [number,number]
+ * flowName: string
+ * ruleId: number
+ * }} RangedPart
+ */
+
+/** @type {(instructions:Record<string,WorkFlow>) => number} */
+function partTwo (flows) {
+  /** @type {RangedPart[]} */
+  const queue = [{
+    x: [1, 4000],
+    m: [1, 4000],
+    a: [1, 4000],
+    s: [1, 4000],
+    flowName: 'in',
+    ruleId: 0,
+  }]
+
+  let combinations = 0
+  let instr
+  while ((instr = queue.shift())) {
+    const { flowName, ruleId, ...xmas } = instr
+    if (flowName === 'R') continue
+
+    if (flowName === 'A') {
+      combinations += Object.values(xmas).reduce((p, [start, end]) => p * (end - start + 1), 1)
+      continue
+    }
+
+    const rule = flows[flowName][ruleId]
+    if (!rule.name) {
+      queue.push({ ...xmas, flowName: rule.next, ruleId: 0 })
+      continue
+    }
+
+    const [start, end] = xmas[rule.name]
+    if (rule.operator === '<') {
+      if (end < rule.value) {
+        queue.push({ ...xmas, flowName: rule.next, ruleId: 0 })
+      } else {
+        const range = [start, rule.value - 1, rule.value, end]
+        const match = range.slice(0, 2)
+        const nope = range.slice(2)
+        queue.push({ ...xmas, [rule.name]: match, flowName: rule.next, ruleId: 0 })
+        queue.push({ ...xmas, [rule.name]: nope, flowName: flowName, ruleId: ruleId + 1 })
+      }
+      continue
+    }
+
+    if (rule.operator === '>') {
+      if (start > rule.value) {
+        queue.push({ ...xmas, flowName: rule.next, ruleId: 0 })
+      } else {
+        const range = [start, rule.value, rule.value + 1, end]
+        const nope = range.slice(0, 2)
+        const match = range.slice(2)
+
+        queue.push({ ...xmas, [rule.name]: match, flowName: rule.next, ruleId: 0 })
+        queue.push({ ...xmas, [rule.name]: nope, flowName: flowName, ruleId: ruleId + 1 })
+      }
+      continue
+    }
+
+    throw new Error('?')
+  }
+
+  return combinations
 }
