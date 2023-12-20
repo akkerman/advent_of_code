@@ -116,7 +116,7 @@ function partOne (digplan) {
   fill()
 
   const uitersten = { minRow, minCol, maxRow, maxCol }
-  print(floor, uitersten)
+  // print(floor, uitersten)
   return floor.size
 }
 
@@ -139,6 +139,32 @@ function print (floor, { minRow, minCol, maxRow, maxCol }) {
 }
 
 function partTwo (digPlan) {
+  /** @type {(coord: Coord, direction: Direction) => Coord */
+  function move ([r, c], direction, meters) {
+    const line = []
+    switch (direction) {
+      case 'U':
+        return [r + meters, c]
+      case 'D':
+        return [r - meters, c]
+      case 'L':
+        return [r, c - meters]
+      case 'R':
+        return [r, c + meters]
+    }
+
+    return line
+  }
+
+  function * pairs (dig) {
+    let current = [0, 0]
+    for (const { direction, meters } of dig) {
+      const next = move(current, direction, meters)
+      yield [current, next]
+      current = next
+    }
+  }
+
   const transl = {
     0: 'R',
     1: 'D',
@@ -151,5 +177,19 @@ function partTwo (digPlan) {
       meters: parseInt(color.slice(0, 5), 16),
     }))
 
-  return newDigPlan
+  let sum = 0
+  for (const [p1, p2] of pairs(newDigPlan)) {
+    const [x1, y1] = p1
+    const [x2, y2] = p2
+
+    // shoelace algorithm
+    sum += (x1 * y2 - y1 * x2)
+  }
+
+  sum = newDigPlan.reduce((acc, p) => acc + p.meters, sum)
+
+  // why also divide perimeter by 2?
+  // why is there a one-off error?
+
+  return sum / 2 + 1
 }
