@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "outDir": "./ts-output",
+    "target": "ES6",
+    "lib": [
+      "ES2022"
+    ],
+    "checkJs": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "strictNullChecks": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "noEmit": true
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "files": [
+  ]
+}
