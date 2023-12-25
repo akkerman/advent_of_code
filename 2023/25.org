@@ -1,2 +1,18 @@
 #+title: Day 25: Snowverload
 
+* Part One
+
+Werkelijk geen idee hoe ik die draadjes moet gaan vinden.
+Enige wat ik kan bedenken is om er een mermaid graph van te maken zoals bij dag 20.
+Helaas stikte dat programma er nogal in.
+
+Voor werk gebruik ik een programma wat depency cycles van code in een file [[https://graphviz.org/docs/layouts/dot/][.dot file]]
+zet, dat format is ook vrij eenvoudig te genereren. Het program wat ik
+normaal gebruikte ([[https://graphviz.org/docs/layouts/dot/][dot]]) is voor directed graphs en die stikte er helaas ook in.
+Gelukkig zit er in dezelfde [[https://wiki.archlinux.org/title/Graphviz][Graphviz]] package nog een ander programma, of zoals
+ze het zelf noemen een layout engine, genaamd [[https://graphviz.org/docs/layouts/neato/][neato]]. Die geeft vrij snel een
+afbeelding en daarop is heel eenvoudig af te lezen welke draadjes doorgeknipt moeten.
+
+Na deze draadjes uit het kluwen verwijderd te hebben neem dan een startpunt en
+bepaal alle componenten die van daaruit te benaderen zijn. Dat is de grootte van één
+van de netwerken. Omdat er twee zijn is de grootte van die andere snel gevonden.
