@@ -3,7 +3,7 @@
 * Part One
 
 Werkelijk geen idee hoe ik die draadjes moet gaan vinden.
-Enige wat ik kan bedenken is om er een mermaid graph van te maken zoals bij dag 20.
+Enige wat ik kan bedenken is om er een mermaid graph van te maken zoals bij [[./20.org][dag 20]].
 Helaas stikte dat programma er nogal in.
 
 Voor werk gebruik ik een programma wat depency cycles van code in een file [[https://graphviz.org/docs/layouts/dot/][.dot file]]

@@ -1,0 +1,57 @@
+#+title: Day 20: Pulse Propagation
+
+* Part One
+
+Dit soort dingen mag ik altijd heel graag.
+Genereer, obv de tekst, een programma die alle regels precies zo afspeelt als aangegeven.
+
+* Part Two
+
+Geen idee hoe dit te programmeren.
+Ik wilde eerst wel eens een beeld van het geheel en genereerde daarom maar een [[https://github.com/mermaid-js/mermaid/blob/develop/README.md][Mermaid diagram]].
+
+Daaruit was redelijk eenvoudig te zien dat er 4 afzonderlijke netwerken van modules zijn die hun uitput voeren aan een specifieke node. En elk van die 4 nodes waren input voor ~&zg~, een *conjunction*, dus pas als alle 4 de netwerken een *high* pulse geven krijgt ~rx~ een *low* pulse.
+
+
+#+begin_src mermaid :file 20.png
+graph TD
+
+    fv((&fv))
+    jd((&jd))
+    lm((&lm))
+    vm((&vm))
+    zg((&zg))
+
+    n1[[network 1]]
+    n2[[network 2]]
+    n3[[network 3]]
+    n4[[network 4]]
+
+
+    broadcaster --> n1
+    broadcaster --> n2
+    broadcaster --> n3
+    broadcaster --> n4
+
+    n1 --> fv
+    n2 --> jd
+    n3 --> lm
+    n4 --> vm
+
+    fv --> zg
+    jd --> zg
+    lm --> zg
+    vm --> zg
+    zg --> rx
+#+end_src
+
+#+RESULTS:
+[[file:20.png]]
+
+
+Mijn idee nu was om gewoon het netwerk af te spelen en bij te houden op welke
+iteratie elk van die 4 nodes een *high* pulse geven en zodra ik bij elk dit twee
+keer gezien heb heb ik een cycle en kan ik doorgaan met een berekening. Het
+bleek overigens dat de cycles van elk van die netwerken begonnen bij 0 dus
+hoef ik geen offset enzo uit te rekenen. Neem nu het kleinste gemene veelvoud van
+die 4 en geef dat als antwoord.
