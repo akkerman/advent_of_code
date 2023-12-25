@@ -4,14 +4,24 @@
 
 Begonnen door een BFS op te zetten, dit leek wel te werken voor het voorbeeld maar gaf niet juiste antwoord voor de input.
 
-Een aantal observaties die belangrijk zijn maar mij niet vanaf het begin 1%0% duidelijk
+Een aantal observaties die belangrijk zijn maar mij niet vanaf het begin 100% duidelijk
 
-1. Niet zoeken naar buren door een '.' te zoeken, maar naar alles wat geen '#' is. Het 'S' punt moet je nl ook naartoe kunnen.
-2. Het gaat niet om hoe ver je komen kan, maar waar kun je komen. Hiermee bedoel ik als je twee stapen zou mogen zetten je dus ook weer terug kunt stappen. Dat kan op 4 manieren (Noord, Zuid, Oost, West) maar dat maakt niet uit.
-3. Er zijn altijd een aantal vakken nooit te bereiken. Stel je zet een steen/pion op een wit vak op een schaakbord, bij een oneven aantal stappen kom je dan *altijd* uit op een zwart vakje en bij een even aantal *altijd* op een wit vakje.
+1. Niet zoeken naar buren door een '.' te zoeken, maar naar alles wat geen '#'
+   is. Het 'S' punt moet je nl ook naartoe kunnen.
+2. Het gaat niet om hoe ver je komen kan, maar waar kun je komen. Hiermee bedoel
+   ik als je twee stapen zou mogen zetten je dus ook weer terug kunt stappen.
+   Dat kan op 4 manieren (Noord, Zuid, Oost, West) maar dat maakt niet uit.
+3. Er zijn altijd een aantal vakken nooit te bereiken. Stel je zet een
+   steen/pion op een wit vak op een schaakbord, bij een oneven aantal stappen
+   kom je dan *altijd* uit op een zwart vakje en bij een even aantal *altijd* op een
+   wit vakje.
 
-Uit eindelijk op gelost door de gehele state in 2 Sets te zetten. De ene bevat de stenen en veranderd niet. De andere bevat de huidige locaties die bereikbaar zijn.
+Uiteindelijk opgelost door de gehele state in twee Sets te zetten. De ene bevat de
+stenen en veranderd niet. De andere bevat de huidige locaties die bereikbaar
+zijn.
 
-In elke iteratie bouw ik een nieuwe set met lokaties, mogelijk wordt dezelfde locatie meerdere keren gevonden, omdat deze vanuit meerdere plekken bereikbaar is maar dat maakt niet uit want de Set telt em maar 1x.
+In elke iteratie bouw ik een derde nieuwe set met lokaties. Mogelijk wordt dezelfde
+locatie meerdere keren gevonden omdat deze vanuit meerdere plekken bereikbaar
+is, maar dat maakt niet uit want de Set telt deze maar 1x.
 
 * Part Two
