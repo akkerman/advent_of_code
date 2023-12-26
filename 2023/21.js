@@ -32,12 +32,14 @@ function main () {
   rl.on('close', () => {
     console.log('partOne', partOne(garden, start))
     console.log('partTwo', partTwo(garden, start))
+
+    partTwoAnalysis(garden, start)
   })
 }
 
 main()
 
-function partOne (garden, start) {
+function solver (garden, start, limit) {
   function makeCoordMap () {
     const p = {
       /** @type {Map<string,Coord>} */
@@ -65,8 +67,6 @@ function partOne (garden, start) {
     [row, col + 1],
   ].filter(c => !rocks.has(c))
 
-  const limit = (garden.length < 20) ? 6 : 64
-
   let current = makeCoordMap()
   let next = makeCoordMap()
   current.add(start)
@@ -78,7 +78,59 @@ function partOne (garden, start) {
     next = makeCoordMap()
   }
 
-  return current.coords.size
+  return {
+    rocks: rocks.coords,
+    reachable: current.coords,
+  }
+}
+
+function partOne (garden, start) {
+  const limit = (garden.length < 20) ? 6 : 64
+  return solver(garden, start, limit).reachable.size
+}
+
+function partTwoAnalysis (garden, start) {
+/**
+ * @param {Set<string>} rocks
+ * @param {Set<string>} reachable
+ * @param {number} width
+ */
+  const draw = (rocks, reachable, width) => {
+    const garden = Array.from(
+      { length: width },
+      () => Array.from(
+        { length: width },
+        () => '.'))
+
+    const plot = (positions, char) => {
+      for (const [x, y] of positions.values()) {
+        garden[x][y] = char
+      }
+    }
+
+    plot(reachable, 'O')
+    plot(rocks, '#')
+
+    for (const row of garden) {
+      log(row.join(''))
+    }
+  }
+
+  garden = garden.map(line => line + line + line + line + line)
+
+  const m = garden.length
+  for (let r = 1; r < 5; r += 1) {
+    for (let i = 0; i < m; i += 1) {
+      garden.push(garden[i])
+    }
+  }
+
+  const [r, c] = start
+
+  const { reachable, rocks } = solver(garden, [r + 2 * m, c + 2 * m], r + 2 * m)
+
+  draw(rocks, reachable, garden.length)
+  return log('rechable on 5x5 garden map', reachable.size)
 }
 
 function partTwo (garden) {

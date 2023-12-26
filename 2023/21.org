@@ -1,27 +1,129 @@
 #+title: Day 21: Step Counter
+#+options: toc:nil num:nil
 
 * Part One
 
-Begonnen door een BFS op te zetten, dit leek wel te werken voor het voorbeeld maar gaf niet juiste antwoord voor de input.
+Begonnen door een BFS op te zeten, dit leek wel te werken voor het voorbeeld
+maar gaf niet juiste antwoord voor de input.
 
 Een aantal observaties die belangrijk zijn maar mij niet vanaf het begin 100% duidelijk
 
-1. Niet zoeken naar buren door een '.' te zoeken, maar naar alles wat geen '#'
-   is. Het 'S' punt moet je nl ook naartoe kunnen.
-2. Het gaat niet om hoe ver je komen kan, maar waar kun je komen. Hiermee bedoel
-   ik als je twee stapen zou mogen zetten je dus ook weer terug kunt stappen.
+1. Niet zoeken naar buren door een ~'.'~ te zoeken, maar naar alles wat geen ~'#'~
+   is. Het ~'S'~ punt moet je namelijk ook naartoe kunnen.
+2. Het gaat er niet om hoe ver je komen kan, maar waar kun je komen. Hiermee bedoel
+   ik als je twee stappen zou mogen zetten je dus ook weer terug kunt stappen.
    Dat kan op 4 manieren (Noord, Zuid, Oost, West) maar dat maakt niet uit.
 3. Er zijn altijd een aantal vakken nooit te bereiken. Stel je zet een
    steen/pion op een wit vak op een schaakbord, bij een oneven aantal stappen
-   kom je dan *altijd* uit op een zwart vakje en bij een even aantal *altijd* op een
-   wit vakje.
+   kom je dan /altijd/ uit op een *zwart* vakje en bij een even aantal /altijd/ op een
+   *wit* vakje.
 
 Uiteindelijk opgelost door de gehele state in twee Sets te zetten. De ene bevat de
 stenen en veranderd niet. De andere bevat de huidige locaties die bereikbaar
 zijn.
 
-In elke iteratie bouw ik een derde nieuwe set met lokaties. Mogelijk wordt dezelfde
+In elke iteratie bouw ik een derde nieuwe set met locaties. Mogelijk wordt dezelfde
 locatie meerdere keren gevonden omdat deze vanuit meerdere plekken bereikbaar
 is, maar dat maakt niet uit want de Set telt deze maar 1x.
 
 * Part Two
+
+** Patroon van bereikbare percelen
+
+Het patroon van /bereikbare/ percelen (garden plots) blijkt zich zoals hier onder
+uit te breiden. Hierbij negeren we, voor nu dat sommige percelen niet bereikbaar
+zijn vanwege stenen.
+
+
+#+begin_src
+stap     0    1        2        3
+
+                                ■
+                       ■       ■ ■
+              ■       ■ ■     ■ ■ ■
+         ■   ■ ■     ■ ■ ■   ■ ■ ■ ■
+              ■       ■ ■     ■ ■ ■
+                       ■       ■ ■
+                                ■
+
+posities  1   4        9        16
+#+end_src
+
+a_{n} = (n+1)^2  · met n aantal stappen
+
+** Patroon van gehele tuinen
+
+De tuin is 131x131 karakter, en het wordt tot in het oneindige herhaald in
+alle richtingen. Als we dit, in gedachten, als een schaakbord zien, met
+afwisselend witte en zwarte vakken, en je plakt ze tegen elkaar dan zitten er nu
+ineens twee dezelfde kleuren tegen elkaar. Bij een normaal schaakbord van 8x8
+(een even aantal) kan dit niet, dat zou zich als zwart,wit,zwart blijven
+herhalen.
+
+Je zou kunnen zeggen dat het bovenstaande patroon zich niet alleen op elk veld,
+tegenovergesteld herhaald, maar dat de schaakborden zich naar hetzelfde patroon
+gedragen.
+
+Dus bijvoorbeeld het middelste schaakbord alleen de witte velden, de 4 tuintjes
+er direct naast, boven en onder, alleen zwarte velden en zo verder.
+
+Het startpunt staat op positie 66,66 dit betekend dat er boven, links, rechts en
+onder zich precies 65 velden bevinden en dat we dan dus in 130 stappen op elke
+positie op in de tuin kunnen komen (stenen negeren).
+
+Het totaal aantal stappen dat we moeten zetten is 26501365 dat zijn 202300
+tuintjes en we houden nog 65 (een halve tuin) over:
+
+#+begin_src js :results verbatim :wrap results js :exports both
+const steps = 26501365
+const width = 131
+const gardens = Math.floor(steps / width)
+const rest = steps % width
+
+return { gardens, rest }
+#+end_src
+
+
+Dus we kunnen uiterlijk, nadat we de start tuin verlaten hebben, precies 202300
+tuintjes omhoog, links, rechts, naar beneden.
+
+#+begin_src
+stap     0    1        2        3
+
+                                ■
+                       ■       ■■■
+              ■       ■■■     ■■■■■
+         ■   ■■■     ■■■■■   ■■■■■■■
+              ■       ■■■     ■■■■■
+                       ■       ■■■
+                                ■
+
+posities  1   5        13       25     41
+#+end_src
+
+a_{n} = 2n^2 - 2n + 1 · n = steps % 131 - 65
+
+
+Dus bij 3x131+65 stappen zijn er 25 tuinen bereikt, de tuinen op de randen overigens maar ten dele.
+
+** Delen van tuinen
+
+Als het stappen altijd uit te drukken is de breedte van het tuintje halen we, op
+horizontale en verticale as, altijd precies het einde van meest verre tuin maar
+dan dus niet de uithoeken hiervan. Verder halen we altijd maar een klein stukje
+van de tuinen daar direct boven en onder. Voor ~steps = 65+2*131~ is dat goed te
+zien aan onderstaande diamant.
+
+#+CAPTION: Bereikbare percelen in tuinen
+#+NAME:    fig:bereikbare-percelen
+[[./21.org_scrot-20231226072512.png]]
+
+We komen in 13 tuinen maar kunnen niet alles bereiken en we komen ook in een
+heleboel additionele tuinen maar een heel klein beetje.
+
+Deze situatie is nog uit te rekenen en te plotten met de logica van part one.
+Aantal bereikbare percelen is 93223
+
+#+CAPTION: plot van 5x5 tuinen
+#+NAME:    fig:plot-tuinen
+[[./21.org_scrot-20231226090410.png]]
