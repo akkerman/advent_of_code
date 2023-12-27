@@ -49,3 +49,10 @@ return a - parseInt(b) // 0, maar niet bij grote getallen
 #+begin_results js
 -2199023255552
 #+end_results
+
+** Part Two
+
+TIL z3-solver...
+
+Duurt wel lang om al die lijnen te kruisen.
+Blijkt dat, als je de eerste 3 alleen neemt het antwoord al klopt.

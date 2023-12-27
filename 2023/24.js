@@ -1,3 +1,4 @@
+const { init } = require('z3-solver')
 const R = require('ramda')
 const readline = require('readline')
 const rl = readline.createInterface({ input: process.stdin })
@@ -129,6 +130,36 @@ function partOne (stones, [min, max]) {
   return sum
 }
 
-function partTwo (storms, [min, max]) {
-  return 'todo'
+async function solve (stones) {
+  const { Context, em } = await init()
+  const { Solver, Int } = new Context('main')
+  const solver = new Solver()
+  const rockPos = [Int.const('x'), Int.const('y'), Int.const('z')]
+  const rockVel = [Int.const('dx'), Int.const('dy'), Int.const('dz')]
+
+  for (const { id, pos, vel } of stones) {
+    const idn = Int.const('id' + id)
+
+    for (let i = 0; i <= 2; i += 1) {
+      solver.add(
+        Int.val(pos[i])
+          .add(idn.mul(vel[i]))
+          .sub(rockPos[i])
+          .sub(idn.mul(rockVel[i]))
+          .eq(0),
+      )
+    }
+  }
+
+  await solver.check()
+  em.PThread.terminateAllThreads()
+  const answer = rockPos.map(c => solver.model().eval(c)).map(Number).reduce(sum)
+
+  log(answer)
+}
+
+/** @type {(stones:Stone[], [min,max]:[number,number]) => ''} */
+function partTwo (stones, [min, max]) {
+  solve(R.take(3, stones))
+  return ''
 }
