@@ -1,0 +1,51 @@
+#+title: Day 24: Never Tell Me The Odds
+
+* Part One
+
+** Kruisende lijnen
+
+Ik wist, eerlijk gezegd, zo niet hoe je het snijpunt van twee lijnen moest
+uitprogrammeren. [[https://stackoverflow.com/a/20677983/3889449][Stackoverflow]] wist dat wel 😉.
+
+** Binnen de perken
+
+Zodra we van elke combinatie van hagelstenen het kruispunt weten moeten we
+controleren of het binnen het testveld ligt en in de toekomst. Voor die 'in de
+toekomst' berekening dacht ik eerst om de richting van het startpunt tot het
+kruispunt exact terug te herleiden naar de gegeven snelheid. Daarbij zat ik wat
+te prutsen met modulo enzo (~[21,7]~ terugbrengen naar ~[3,1]~ bv) totdat ik me
+realiseerde dat /als/ er al een kruispunt berekend was het zowiezo modulo
+hetzelfde zou zijn en dat ik alleen maar naar de globale richting hoef te
+kijken. Dat is dus als het [[https://nl.wikipedia.org/wiki/Signum_(wiskunde)][signum]] op elke positie in de coordinaten overeenkomt.
+
+#+begin_src js
+const sameDirection = ([x1, y1], [x2, y2]) =>
+  Math.sign(x1) === Math.sign(x2) &&
+  Math.sign(y1) === Math.sign(y2)
+#+end_src
+
+** Overflow
+
+Na herhaaldelijk een verkeerd antwoord te hebben ingevuld, en veel debug
+informatie etc etc te hebben toegevoegd. Ben ik maar eens iemand anders zijn
+programma erbij gaan halen en de kruisende de lijnen van dat programma
+vergeleken met de mijne. (print alles, beetje text bewerken en dan een diff). Zo
+kwam ik er achter dat de functie van stackoverflow (origineel python) bij deze
+grote getallen allemaal afrondingsfouten gaf bij de [[https://nl.wikipedia.org/wiki/Determinant][determinant]] berekening.
+
+
+#+begin_src js :results verbatim :wrap results js :exports both
+const det = (a, b) => a[0] * b[1] - a[1] * b[0]
+const bigDet = (a, b) => BigInt(a[0]) * BigInt(b[1]) - BigInt(a[1]) * BigInt(b[0])
+
+
+const a = det([386183914429810, 203234597957945], [517557775415046, 258029729778873])
+const b = bigDet([386183914429810, 203234597957945], [517557775415046, 258029729778873])
+
+return a - parseInt(b) // 0, maar niet bij grote getallen
+#+end_src
+
+#+RESULTS:
+#+begin_results js
+-2199023255552
+#+end_results
