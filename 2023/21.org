@@ -101,12 +101,27 @@ stap     0    1        2        3
 posities  1   5        13       25     41
 #+end_src
 
-a_{n} = 2n^2 - 2n + 1 · n = steps % 131 - 65
+a_{n} = 2n^2 - 2n + 1 · n = (steps - 65) / 131
 
 
 Dus bij 3x131+65 stappen zijn er 25 tuinen bereikt, de tuinen op de randen overigens maar ten dele.
 
-** Delen van tuinen
+Echter we moeten het zwart/wit patroon gebruiken. Omdat het totaal aantal stappen oneven is, kunnen we in het eerste tuintje altijd alleen maar de oneven percelen bereiken. De 4 omringende alleen de even en zo verder.
+
+Dat was de formule a_{n} = (n+1)^2 maar dan is het dus om en om voor tuinen waarbij percelen bereikbaar zijn o.b.v. oneven en even aantal stappen.
+
+#+begin_src
+    O
+   OEO
+  OEOEO
+   OEO
+    O
+#+end_src
+
+Dus (n+1)^2 oneven en n^2 even.
+
+
+** Deels bereikbare tuinen
 
 Als het stappen altijd uit te drukken is de breedte van het tuintje halen we, op
 horizontale en verticale as, altijd precies het einde van meest verre tuin maar
@@ -119,7 +134,12 @@ zien aan onderstaande diamant.
 [[./21.org_scrot-20231226072512.png]]
 
 We komen in 13 tuinen maar kunnen niet alles bereiken en we komen ook in een
-heleboel additionele tuinen maar een heel klein beetje.
+heleboel additionele tuinen maar een heel klein beetje. Die 1/8 tuin extra of minder is hetzelfde als het volledige tuintje minus een diamant, zoals de diamant die we bij Part One hebben moeten uitrekenen.
+
+Het aantal hoekjes dat we er af moeten halen zijn alleen oneven. Het aantal hoekjes dat erbij moet is allemaal even.
+
++ Even 4-tal hoekjes = n
++ Onven 4-tal hoekjes = n + 1
 
 Deze situatie is nog uit te rekenen en te plotten met de logica van part one.
 Aantal bereikbare percelen is 93223
@@ -127,3 +147,28 @@ Aantal bereikbare percelen is 93223
 #+CAPTION: plot van 5x5 tuinen
 #+NAME:    fig:plot-tuinen
 [[./21.org_scrot-20231226090410.png]]
+
+** Formule
+
+Onderstaande uitgewerkt voor steps = 65+131+131
+
+#+begin_src js :results verbatim :wrap results js :exports both
+
+// const steps = 26501365
+const steps = 65 + 131 + 131
+const width = 131
+const n = Math.floor(steps / width)
+
+const evenGarden  = 7427 // partOne @ 130 steps
+const oddGarden   = 7434 // partOne @ 131 steps
+const evenDiamant = 3658 // partOne @ 64 steps
+const oddDiamnant = 3791 // partOne @ 65 steps
+
+const evenCorners = evenGarden - evenDiamant
+const oddCorners = oddGarden - oddDiamnant
+
+const answer = (n+1)**2 * oddGarden + n**2 * evenGarden - (n+1) * oddCorners + n * evenCorners
+
+
+return answer
+#+end_src

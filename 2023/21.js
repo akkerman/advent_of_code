@@ -33,13 +33,13 @@ function main () {
     console.log('partOne', partOne(garden, start))
     console.log('partTwo', partTwo(garden, start))
 
-    partTwoAnalysis(garden, start)
+    // partTwoAnalysis(garden, start)
   })
 }
 
 main()
 
-function solver (garden, start, limit) {
+function solver (garden, start, limit, stayWithinGarden) {
   function makeCoordMap () {
     const p = {
       /** @type {Map<string,Coord>} */
@@ -66,6 +66,7 @@ function solver (garden, start, limit) {
     [row, col - 1],
     [row, col + 1],
   ].filter(c => !rocks.has(c))
+    .filter(([r, c]) => garden[r] && garden[r][c])
 
   let current = makeCoordMap()
   let next = makeCoordMap()
@@ -89,33 +90,33 @@ function partOne (garden, start) {
   return solver(garden, start, limit).reachable.size
 }
 
-function partTwoAnalysis (garden, start) {
 /**
  * @param {Set<string>} rocks
  * @param {Set<string>} reachable
  * @param {number} width
  */
-  const draw = (rocks, reachable, width) => {
-    const garden = Array.from(
+const draw = (rocks, reachable, width) => {
+  const garden = Array.from(
+    { length: width },
+    () => Array.from(
       { length: width },
-      () => Array.from(
-        { length: width },
-        () => '.'))
+      () => '.'))
 
-    const plot = (positions, char) => {
-      for (const [x, y] of positions.values()) {
-        garden[x][y] = char
-      }
-    }
-
-    plot(reachable, 'O')
-    plot(rocks, '#')
-
-    for (const row of garden) {
-      log(row.join(''))
+  const plot = (positions, char) => {
+    for (const [x, y] of positions.values()) {
+      garden[x][y] = char
     }
   }
 
+  plot(reachable, 'O')
+  plot(rocks, '#')
+
+  for (const row of garden) {
+    log(row.join(''))
+  }
+}
+
+function partTwoAnalysis (garden, start) {
   garden = garden.map(line => line + line + line + line + line)
 
   const m = garden.length
@@ -130,9 +131,25 @@ function partTwoAnalysis (garden, start) {
   const { reachable, rocks } = solver(garden, [r + 2 * m, c + 2 * m], r + 2 * m)
 
   draw(rocks, reachable, garden.length)
-  return log('rechable on 5x5 garden map', reachable.size)
+  return log('reachable on 5x5 garden map', reachable.size)
 }
 
-function partTwo (garden) {
-  return 'todo'
+function partTwo (garden, start) {
+  // const steps = 65 + 131 + 131
+  const steps = 26501365
+
+  const width = garden.length
+  const n = Math.floor(steps / width)
+
+  const evenGarden = solver(garden, start, 130).reachable.size
+  const oddGarden = solver(garden, start, 131).reachable.size
+  const evenDiamant = solver(garden, start, 64).reachable.size
+  const oddDiamant = solver(garden, start, 65).reachable.size
+
+  const evenCorners = evenGarden - evenDiamant
+  const oddCorners = oddGarden - oddDiamant
+
+  const answer = (n + 1) ** 2 * oddGarden + (n ** 2) * evenGarden - (n + 1) * oddCorners + n * evenCorners
+
+  return answer
 }
