@@ -11,7 +11,6 @@ const int = R.pipe(R.trim, parseInt) // eslint-disable-line
  * @typedef {[number,number,number]} Coord
  *
  * @typedef {{
- *  id: number
  *  from:Coord
  *  to:Coord
  *  coords:Coords
@@ -47,18 +46,15 @@ const fill = (from, to) => {
 }
 
 function main () {
-  /** @type {Map<number, Brick>} */
-  const bricks = new Map()
+  /** @type {Brick[]} */
+  const bricks = []
 
-  let id = 0
   rl.on('line', line => {
-    id += 1
     const [f, t] = line.split('~')
 
     const from = f.split(',').map(int)
     const to = t.split(',').map(int)
-    bricks.set(id, {
-      id,
+    bricks.push({
       from,
       to,
       coords: fill(from, to),
@@ -68,8 +64,7 @@ function main () {
   })
 
   rl.on('close', () => {
-    console.log('partOne', partOne(bricks))
-    console.log('partTwo', partTwo(bricks))
+    solve(bricks)
   })
 }
 
@@ -89,9 +84,10 @@ const lowestFirst = (c1, c2) => c1.coords[0][2] - c2.coords[0][2]
 const drop = cs => cs.map(coord => move(coord, [0, 0, -1]))
 
 /** @type {(bricks: Map<number,Brick>) => number} */
-function partOne (bricks) {
+function solve (bricks) {
   /** @type {Brick[]} */
-  const sorted = [...bricks.values()].sort(lowestFirst)
+  const sorted = bricks.sort(lowestFirst).map((b, id) => ({ ...b, id }))
+  sorted.forEach((b, i) => { b.id = i })
   const landed = []
   for (const brick of sorted) {
     while (true) {
@@ -114,21 +110,33 @@ function partOne (bricks) {
     }
   }
 
-  for (const brick of bricks.values()) {
+  for (const brick of sorted) {
     brick.canDisintegrate = true
     if (brick.supports.length === 0) {
       continue
     }
     for (const id of brick.supports) {
-      if (bricks.get(id).supportedBy.length === 1) {
+      if (sorted[id].supportedBy.length === 1) {
         brick.canDisintegrate = false
       }
     }
   }
 
-  return [...bricks.values()].filter(b => b.canDisintegrate).length
-}
+  log('partOne', sorted.filter(b => b.canDisintegrate).length)
 
-function partTwo (lines) {
-  return 'todo'
+  for (let i = 0; i < sorted.length; i += 1) {
+    const fallen = new Set()
+    fallen.add(sorted[i].id)
+    for (let j = i + 1; j < sorted.length; j += 1) {
+      const supportersHaveFallen = sorted[j].supportedBy.length > 0 &&
+        sorted[j].supportedBy.reduce((acc, curr) => acc && fallen.has(curr), true)
+      if (supportersHaveFallen) {
+        fallen.add(sorted[j].id)
+      }
+    }
+    sorted[i].cascade = fallen.size - 1 // count only other bricks
+  }
+
+  log('partTwo', sorted.map(b => b.cascade)
+    .reduce(sum))
 }
