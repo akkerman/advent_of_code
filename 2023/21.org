@@ -134,12 +134,15 @@ zien aan onderstaande diamant.
 [[./21.org_scrot-20231226072512.png]]
 
 We komen in 13 tuinen maar kunnen niet alles bereiken en we komen ook in een
-heleboel additionele tuinen maar een heel klein beetje. Die 1/8 tuin extra of minder is hetzelfde als het volledige tuintje minus een diamant, zoals de diamant die we bij Part One hebben moeten uitrekenen.
+heleboel additionele tuinen maar een heel klein beetje. Die 1/8 tuin extra of
+minder is hetzelfde als het volledige tuintje minus een diamant, zoals de
+diamant die we bij Part One hebben moeten uitrekenen.
 
-Het aantal hoekjes dat we er af moeten halen zijn alleen oneven. Het aantal hoekjes dat erbij moet is allemaal even.
+Het aantal hoekjes dat we er af moeten halen zijn alleen oneven. Het aantal
+hoekjes dat erbij moet is allemaal even.
 
 + Even 4-tal hoekjes = n
-+ Onven 4-tal hoekjes = n + 1
++ Oneven 4-tal hoekjes = n + 1
 
 Deze situatie is nog uit te rekenen en te plotten met de logica van part one.
 Aantal bereikbare percelen is 93223
