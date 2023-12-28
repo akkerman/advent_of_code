@@ -83,8 +83,18 @@ function partOneOrig (springField) {
 }
 
 function solve (springField) {
+  const memo = new Map()
+
+  function numArrangements (cr, dg, inGroup) {
+    const str = JSON.stringify({ cr, dg, inGroup })
+    if (!memo.has(str)) {
+      memo.set(str, numArrangements_(cr, dg, inGroup))
+    }
+    return memo.get(str)
+  }
+
   /** @type {(cr:ConditionRecord, dg: DamagedGroups, inGroup:boolean) => number } */
-  function numArrangements (cr, dg, inGroup = false) {
+  function numArrangements_ (cr, dg, inGroup = false) {
     if (cr.length === 0) {
       // alle springs verwerkt, dan moeten alle damaged springs gematched zijn
       return (dg.reduce(sum, 0) === 0) ? 1 : 0
