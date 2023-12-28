@@ -101,10 +101,11 @@ const flip = matrix => matrix[0].map((_, index) => matrix.map(row => row[index])
 
 /** @typedef {ReturnType<newCoordSet>} CoordSet */
 
-const newCoordSet = () => {
+/** @param {Map<string, Coord>} coords */
+const newCoordSet = (coords) => {
   const coordSet = {
   /** @type {Map<string, Coord>} */
-    coords: new Map(),
+    coords: coords || new Map(),
     /** @type {(coord: Coord) => boolean} */
     has: coord => coordSet.coords.has(coord.toString()),
     /** @type {(coord: Coord) => void} */
@@ -113,6 +114,8 @@ const newCoordSet = () => {
     delete: coord => coordSet.coords.delete(coord.toString()),
 
     values: () => coordSet.coords.values(),
+
+    clone: () => newCoordSet(new Map(coordSet.coords)),
   }
   return coordSet
 }

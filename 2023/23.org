@@ -1,0 +1,51 @@
+#+title: Day 23: A Long Walk
+#+options: toc:nil num:nil
+
+* Part One
+
+Idee was om een BFS op te zetten en dan, als we bij het eindpoint zijn niet
+direct te stoppen maar het aantal stappen te noteren en kijken of er nog
+oplossingen zijn die langer zijn.
+
+Volgens mij heb ik wat mazzel gehad met de bepaling van de buren, de bepaling is
+namelijk niet "wanneer op een helling neem dan het pad naarbeneden" maar "als op
+een pad en ik zie een helling op welke mag ik dan gaan staan". Dit werkt alleen
+omdat er vanaf een helling altijd maar twee kanten zijn:
+
+#+begin_src
+#.##############
+#.......#.>.>.##
+###v#####.#v#.##
+#+end_src
+
+Volgens mij wordt het heel anders als je bv vanaf een ~>~ ook naar boven of beneden zou kunnen gaan:
+
+#+begin_src
+#.##############
+#.........>...##
+###v######.##.##
+#+end_src
+
+Verder blijkt het dat er helemaal geen lussen in de graaf zitten, waardoor je
+niet via een bepaald pad weer op hetzelfde punt terecht kwam. Het enige wat je
+dan hoeft te doen is, bij bepalen van je volgende stappen (buren), de stap terug
+niet te nemen.
+
+* Part Two
+
+** DFS DNF
+
+Idee hier was om een DFS op te zetten en dan, omdat je vaak maar 1 kant op kan
+(het pad is zoals bij een doolhof, muren aan weerszijden), pas de recursie te
+beginnen als er een splitsing is in het pad. Hierbij geven we recursieve
+functies een kopie mee van de reeds bezochte paden zodat deze stopt als er een
+lus is.
+
+Van de gespleten paden nemen we dan het maximum en klaar. Dit werkte prima voor
+de voorbeeld invoer maar bleef maar draaien op de werkelijke invoer.
+
+** Gewogen graaf
+
+Idee nu is om een gewogen graaf te maken tussen de splitsingen, zodat we in 1
+keer van de ene spliting naar de andere kunnen gaan zonder door alle andere
+punten te hoeven gaan.
