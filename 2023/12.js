@@ -9,8 +9,8 @@ const int = R.pipe(R.trim, parseInt) // eslint-disable-line
 
 /** Possible conditions */
 const COND = {
-  damaged: '.',
-  operational: '#',
+  damaged: '#',
+  operational: '.',
   unknown: '?',
 }
 
@@ -43,7 +43,7 @@ main()
 
 /** @type {(cr:ConditionRecord) => DamagedGroups} */
 function analyze (cr) {
-  return cr.split(COND.damaged).map(l => l.length).filter(v => v !== 0)
+  return cr.split(COND.operational).map(l => l.length).filter(v => v !== 0)
 }
 
 /**
@@ -55,8 +55,8 @@ function * permutate (cr) {
   if (id === -1) {
     yield cr
   } else {
-    yield * permutate(cr.replace(COND.unknown, COND.damaged))
     yield * permutate(cr.replace(COND.unknown, COND.operational))
+    yield * permutate(cr.replace(COND.unknown, COND.damaged))
   }
 }
 
