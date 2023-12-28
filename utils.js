@@ -1,3 +1,4 @@
+const R = require('ramda')
 /**
  * @typedef {[number, number]} Coord
  */
@@ -120,6 +121,16 @@ const newCoordSet = (coords) => {
   return coordSet
 }
 
+function counter (input) {
+  const C = {}
+
+  const grouped = R.groupBy(R.identity, input)
+  for (const [k, v] of Object.entries(grouped)) {
+    C[k] = v.length
+  }
+  return C
+}
+
 module.exports = {
   newCoordSet,
   splitList,
@@ -131,4 +142,5 @@ module.exports = {
   rotateL,
   rotateR,
   flip,
+  counter,
 }
