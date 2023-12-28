@@ -27,27 +27,27 @@ function main () {
 
 main()
 
-function partOne (lines) {
-  function isReal ({ name, checksum }) {
-    const arr = name.replaceAll('-', '')
-    const counted = counter(arr)
+function isReal ({ name, checksum }) {
+  const arr = name.replaceAll('-', '')
+  const counted = counter(arr)
 
-    const sorter = (a, b) => {
-      const diff = b[1] - a[1]
-      if (diff !== 0) return diff
-      return a[0] < b[0] ? -1 : 1
-    }
-
-    return R.pipe(
-      Object.entries,
-      R.sort(sorter),
-      R.map(R.head),
-      R.join(''),
-      R.take(5),
-      R.equals(checksum),
-    )(counted)
+  const sorter = (a, b) => {
+    const diff = b[1] - a[1]
+    if (diff !== 0) return diff
+    return a[0] < b[0] ? -1 : 1
   }
 
+  return R.pipe(
+    Object.entries,
+    R.sort(sorter),
+    R.map(R.head),
+    R.join(''),
+    R.take(5),
+    R.equals(checksum),
+  )(counted)
+}
+
+function partOne (lines) {
   return R.zipWith(
     (real, id) => real ? id : 0,
     R.map(isReal, lines),
@@ -56,5 +56,29 @@ function partOne (lines) {
 }
 
 function partTwo (lines) {
-  return 'todo'
+  const lowerA = 'a'.charCodeAt(0)
+  const rotateLetter = shift => letter => {
+    if (letter === '-') return ' '
+
+    let n = letter.charCodeAt(0) - lowerA
+    n = (n + shift) % 26 + lowerA
+
+    return String.fromCharCode(n)
+  }
+
+  function decrypt (room) {
+    const { name, id } = room
+    const decrypted = name.split('').map(rotateLetter(id)).join('')
+    return {
+      ...room,
+      name: decrypted,
+    }
+  }
+
+  return R.pipe(
+    R.filter(isReal),
+    R.map(decrypt),
+    R.find(r => r.name.includes('northpole')),
+    R.prop('id'),
+  )(lines)
 }
