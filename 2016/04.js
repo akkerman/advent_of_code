@@ -1,11 +1,6 @@
 const R = require('ramda')
 const readline = require('readline')
 const rl = readline.createInterface({ input: process.stdin })
-const tap = R.tap
-const log = console.log // eslint-disable-line
-const sum = (a,b) => a+b // eslint-disable-line
-const mul = (a,b) => a*b // eslint-disable-line
-const int = R.pipe(R.trim, parseInt) // eslint-disable-line
 
 const { counter } = require('../utils')
 
@@ -48,11 +43,11 @@ function isReal ({ name, checksum }) {
 }
 
 function partOne (lines) {
-  return R.zipWith(
+  return R.sum(R.zipWith(
     (real, id) => real ? id : 0,
     R.map(isReal, lines),
     R.map(R.prop('id'), lines),
-  ).reduce(sum)
+  ))
 }
 
 function partTwo (lines) {
