@@ -136,3 +136,5 @@ dist
 *.html
 *-input.txt
 *-example.txt
+
+venv
