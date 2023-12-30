@@ -103,8 +103,8 @@ class Image:
 
     def print(self):
         for row in self.image:
-            # content = [t.get_without_border() for t in row]
-            content = [t.get_with_empty_border() for t in row]
+            content = [t.get_without_border() for t in row]
+            # content = [t.get_with_empty_border() for t in row]
             st = list([list(chain(*l)) for l in zip(*content)])
             for line in ["".join(l) for l in st]:
                 print(line)
@@ -156,7 +156,7 @@ class Image:
             side = tile.sides_matching(self.image[1][idx])
             assert side == B
 
-    def orient_middle_rows(self):
+    def orient_rows(self):
         for r, row in enumerate(self.image):
             if r == 0:
                 continue
@@ -191,10 +191,16 @@ class Image:
                 assert tile.sides_matching(self.image[r-1][idx]) == T
 
 
+                side = tile.sides_matching(self.image[r][idx-1])
+                if side == R:
+                    tile.fliplr()
+                assert  tile.sides_matching(self.image[r][idx-1]) == L
+
+
     def orient(self):
         self.orient_corner()
         self.orient_first_row()
-        self.orient_middle_rows()
+        self.orient_rows()
 
 def part_one(tiles):
     """ part one """
