@@ -1,8 +1,8 @@
 # pylint: disable=missing-module-docstring,missing-function-docstring,missing-class-docstring
 # pylint: disable=invalid-name
 import sys
-import numpy as np
 from itertools import chain
+import numpy as np
 
 R = 1
 L = 2
@@ -44,6 +44,14 @@ class Tile:
             self.left += line[0]
             self.right += line[-1]
 
+    def get_with_empty_border(self):
+        arr = [[" ", *l] for l in self.content]
+        return [
+                [" "] * len(arr[0]),
+                *arr,
+                ]
+
+
     def get_without_border(self):
         return [l[1:-1] for l in self.content[1:-1]]
 
@@ -70,13 +78,20 @@ class Tile:
                     return s+1
         return None
 
-    def rot90(self, k=1):
-        self.set_content(np.rot90(self.content, k))
+    def rotR(self):
+        """ positive k turns counter clockwise """
+        self.set_content(np.rot90(self.content, -1))
+
+    def rotL(self):
+        """ positive k turns counter clockwise """
+        self.set_content(np.rot90(self.content))
 
     def fliplr(self):
+        """ flip left right """
         self.set_content(np.fliplr(self.content))
 
     def flipud(self):
+        """ flip up down """
         self.set_content(np.flipud(self.content))
 
 class Image:
@@ -88,7 +103,8 @@ class Image:
 
     def print(self):
         for row in self.image:
-            content = [t.get_without_border() for t in row]
+            # content = [t.get_without_border() for t in row]
+            content = [t.get_with_empty_border() for t in row]
             st = list([list(chain(*l)) for l in zip(*content)])
             for line in ["".join(l) for l in st]:
                 print(line)
@@ -99,11 +115,11 @@ class Image:
         corner_side = corner.sides_matching(self.image[0][1])
 
         if corner_side == T:
-            corner.rot90(-1)
+            corner.rotR()
         if corner_side == B:
-            corner.rot90()
+            corner.rotL()
         if corner_side == L:
-            corner.rot90(2)
+            corner.fliplr()
 
         corner_side = corner.sides_matching(self.image[0][1])
         assert corner_side == R
@@ -123,11 +139,11 @@ class Image:
             side = tile.sides_matching(self.image[0][idx-1])
 
             if side == T:
-                tile.rot90()
+                tile.rotL()
             if side == B:
-                tile.rot90(-1)
+                tile.rotR()
             if side == R:
-                tile.rot90(2)
+                tile.fliplr()
 
             side = tile.sides_matching(self.image[0][idx-1])
             assert side == L
@@ -141,17 +157,44 @@ class Image:
             assert side == B
 
     def orient_middle_rows(self):
-        for row in self.image[1:-1]:
-           pass
+        for r, row in enumerate(self.image):
+            if r == 0:
+                continue
 
-    def orient_last_row(self):
-        pass
+            # first tile
+            tile = self.image[r][0]
+            side = tile.sides_matching(self.image[r-1][0])
+            if side == B:
+                tile.flipud()
+            if side == R:
+                tile.rotL()
+            if side == L:
+                tile.rotR()
+            assert tile.sides_matching(self.image[r-1][0]) == T
+
+            side = tile.sides_matching(self.image[r][1])
+            if side == L:
+                tile.fliplr()
+            assert tile.sides_matching(self.image[r][1]) == R
+
+            # other tiles
+            for idx, tile in enumerate(row):
+                if idx == 0:
+                    continue
+                side = tile.sides_matching(self.image[r-1][idx])
+                if side == B:
+                    tile.flipud()
+                if side == R:
+                    tile.rotL()
+                if side == L:
+                    tile.rotR()
+                assert tile.sides_matching(self.image[r-1][idx]) == T
+
 
     def orient(self):
         self.orient_corner()
         self.orient_first_row()
         self.orient_middle_rows()
-        self.orient_last_row()
 
 def part_one(tiles):
     """ part one """
@@ -230,9 +273,6 @@ def part_two(tiles):
 
     image.print()
     ########################################################################
-
-
-
 
     return 'todo'
 
