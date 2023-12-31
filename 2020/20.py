@@ -1,7 +1,9 @@
 # pylint: disable=missing-module-docstring,missing-function-docstring,missing-class-docstring
 # pylint: disable=invalid-name
-import sys
 from itertools import chain
+import re
+import sys
+
 import numpy as np
 
 R = 1
@@ -101,16 +103,23 @@ class Image:
     def append(self, row):
         self.image.append(row)
 
-    def print(self):
+
+    def text(self):
+        text = []
         for row in self.image:
             content = [t.get_without_border() for t in row]
-            # content = [t.get_with_empty_border() for t in row]
             st = list([list(chain(*l)) for l in zip(*content)])
             for line in ["".join(l) for l in st]:
-                print(line)
+                text.append(line)
+        return text
 
 
-    def orient_corner(self):
+    def print(self):
+        for line in self.text():
+            print(line)
+
+
+    def align_corner(self):
         corner = self.image[0][0]
         corner_side = corner.sides_matching(self.image[0][1])
 
@@ -131,7 +140,7 @@ class Image:
         other_side = corner.sides_matching(self.image[1][0])
         assert other_side == B
 
-    def orient_first_row(self):
+    def align_first_row(self):
         for idx, tile in enumerate(self.image[0]):
             if idx == 0:
                 continue
@@ -156,7 +165,7 @@ class Image:
             side = tile.sides_matching(self.image[1][idx])
             assert side == B
 
-    def orient_rows(self):
+    def align_rows(self):
         for r, row in enumerate(self.image):
             if r == 0:
                 continue
@@ -197,10 +206,10 @@ class Image:
                 assert  tile.sides_matching(self.image[r][idx-1]) == L
 
 
-    def orient(self):
-        self.orient_corner()
-        self.orient_first_row()
-        self.orient_rows()
+    def align(self):
+        self.align_corner()
+        self.align_first_row()
+        self.align_rows()
 
 def part_one(tiles):
     """ part one """
@@ -228,7 +237,7 @@ def part_two(tiles):
         placed.add(topleft.tile_id)
         current = topleft
         while True:
-            for tile_id in current.matches_with:
+            for tile_id in list(current.matches_with):
                 nxt = tiles[str(tile_id)]
                 if not nxt.is_edge():
                     continue
@@ -275,9 +284,45 @@ def part_two(tiles):
         row = place_next_row(row)
         image.append(row)
 
-    image.orient()
+    image.align()
 
-    image.print()
+
+    monster = [
+        re.compile('..................#.'),
+        re.compile('#....##....##....###'),
+        re.compile('.#..#..#..#..#..#...'),
+    ]
+
+
+    # arr = [list(s) for s in image.text()]
+    # text = ["".join(a) for a in  np.rot90(np.fliplr(arr))]
+
+
+    text = image.text()
+    for line in text:
+        print(line)
+
+    def match_monster_at(row):
+        m0 = [m.start() for m in monster[0].finditer(text[row])]
+        m1 = [m.start() for m in monster[1].finditer(text[row+1])]
+        m2 = [m.start() for m in monster[2].finditer(text[row+2])]
+
+        print(m0, m1, m2)
+
+        
+
+        return 0
+
+    monsters_found = 0
+    for i, line in enumerate(text[:-2]):
+        found = all(monster[j].findall(text[i+j]) for j in range(1,3))
+
+        if not found:
+           continue
+
+        monsters_found = monsters_found + match_monster_at(i)
+
+    
     ########################################################################
 
     return 'todo'
