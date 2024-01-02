@@ -6,6 +6,8 @@ import sys
 
 import numpy as np
 
+from utils import find_occurences
+
 R = 1
 L = 2
 B = 3
@@ -273,6 +275,41 @@ def part_two(tiles):
 
         return below
 
+    monster = [
+        '..................#.',
+        '#....##....##....###',
+        '.#..#..#..#..#..#...',
+    ]
+
+    def count_hashes(text):
+        return sum(s.count('#') for s in text)
+
+    def count_monsters(text):
+        monsters_found = 0
+        for i, line in enumerate(text[:-1]):
+            id1=i+1
+            id2=i+2
+            if not re.findall(monster[1], text[id1]):
+                continue
+            if not re.findall(monster[2], text[id2]):
+                continue
+
+            m1=find_occurences(monster[1], text[id1])
+            m2=find_occurences(monster[2], text[id2])
+
+            if len(m1) != len(m2):
+                continue
+
+            if not all(a==b for (a,b) in zip(m1, m2)):
+                continue
+
+            for s in set(m1) & set(m2):
+                # if text[i][s+len(monster[0])] == '#':
+                monsters_found += 1
+
+
+        return monsters_found
+
 
     ########################################################################
     image = Image()
@@ -287,45 +324,24 @@ def part_two(tiles):
     image.align()
 
 
-    monster = [
-        re.compile('..................#.'),
-        re.compile('#....##....##....###'),
-        re.compile('.#..#..#..#..#..#...'),
-    ]
+    max_monsters = 0
+
+    img = [list(line) for line in image.text()]
+
+    for _ in range(0,2):
+        for _ in range(0,4):
+            m = count_monsters(["".join(arr) for arr in img])
+            max_monsters = max(max_monsters, m)
+            img = np.rot90(img)
+
+        img = np.fliplr([list(line) for line in image.text()])
+
+    # too high: 2603
+    return count_hashes(image.text()) - max_monsters * count_hashes(monster)
 
 
-    # arr = [list(s) for s in image.text()]
-    # text = ["".join(a) for a in  np.rot90(np.fliplr(arr))]
-
-
-    text = image.text()
-    for line in text:
-        print(line)
-
-    def match_monster_at(row):
-        m0 = [m.start() for m in monster[0].finditer(text[row])]
-        m1 = [m.start() for m in monster[1].finditer(text[row+1])]
-        m2 = [m.start() for m in monster[2].finditer(text[row+2])]
-
-        print(m0, m1, m2)
-
-        
-
-        return 0
-
-    monsters_found = 0
-    for i, line in enumerate(text[:-2]):
-        found = all(monster[j].findall(text[i+j]) for j in range(1,3))
-
-        if not found:
-           continue
-
-        monsters_found = monsters_found + match_monster_at(i)
-
-    
     ########################################################################
 
-    return 'todo'
 
 
 def main():
