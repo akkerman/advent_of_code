@@ -110,7 +110,7 @@ class Image:
         text = []
         for row in self.image:
             content = [t.get_without_border() for t in row]
-            st = list([list(chain(*l)) for l in zip(*content)])
+            st = list(list(chain(*l)) for l in zip(*content))
             for line in ["".join(l) for l in st]:
                 text.append(line)
         return text
@@ -286,7 +286,7 @@ def part_two(tiles):
 
     def count_monsters(text):
         monsters_found = 0
-        for i, line in enumerate(text[:-1]):
+        for i in range(len(text[:-1])):
             id1=i+1
             id2=i+2
             if not re.findall(monster[1], text[id1]):
@@ -294,18 +294,10 @@ def part_two(tiles):
             if not re.findall(monster[2], text[id2]):
                 continue
 
-            m1=find_occurences(monster[1], text[id1])
-            m2=find_occurences(monster[2], text[id2])
+            m1=find_occurences(pattern=monster[1], line=text[id1], overlap=True)
+            m2=find_occurences(pattern=monster[2], line=text[id2], overlap=True)
 
-            if len(m1) != len(m2):
-                continue
-
-            if not all(a==b for (a,b) in zip(m1, m2)):
-                continue
-
-            for s in set(m1) & set(m2):
-                # if text[i][s+len(monster[0])] == '#':
-                monsters_found += 1
+            monsters_found += len(set(m1) & set(m2))
 
 
         return monsters_found
@@ -336,10 +328,7 @@ def part_two(tiles):
 
         img = np.fliplr([list(line) for line in image.text()])
 
-    # too high: 2603
     return count_hashes(image.text()) - max_monsters * count_hashes(monster)
-
-
     ########################################################################
 
 

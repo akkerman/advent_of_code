@@ -1,9 +1,14 @@
 import re
 
-def find_occurences (pattern, line):
+def find_occurences (pattern, line, overlap=False):
     """ find occurences of str in line """
     indices = []
-    for m in re.finditer(pattern, line):
-        indices.append(m.start())
+
+    regex = re.compile(pattern)
+    if overlap:
+        regex = re.compile(f'(?=({pattern}))')
+
+    for match in regex.finditer(line):
+        indices.append(match.start())
 
     return indices
