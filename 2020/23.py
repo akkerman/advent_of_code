@@ -56,54 +56,57 @@ def part_one(cups):
 
 class Cup:
     """ representation of a Cup """
-    def __init__(self, value:str):
+    def __init__(self, value:int):
         self.value=value
         self.next=self
-        self.prev=self
 
     def __repr__(self):
-        return f"{self.prev.value}-({self.value})-{self.next.value}"
+        return f"({self.value})-{self.next.value}"
 
 def part_two(cupValues):
     """ part two """
 
-    maxValue = 1000000
+    ONE_MILLION = 1000000
+    TEN_MILLION = 10000000
+
+    maxValue = ONE_MILLION
 
     lookup = {}
+    nums = set()
+    nums.update(cupValues)
 
-    def init():
-        cups = [Cup(v) for v in cupValues]
+    def init()->Cup:
+        """ Create circle of 1M cups, return first """
+        cups = [Cup(int(v)) for v in cupValues]
 
         first = cups[0]
         last = cups[-1]
         for i,c in enumerate(cups):
             lookup[c.value] = c
-            if i > 0:
-                c.prev = cups[i-1]
             if i < len(cups)-1:
                 c.next = cups[i+1]
 
         if maxValue > 10:
             for i in range(10, maxValue+1):
-                s = str(i)
-                c = Cup(s)
-                lookup[s] = c
+                nums.add(i)
+                c = Cup(i)
+                lookup[i] = c
                 if i == 10:
                     continue
-                prev = lookup[str(i-1)]
-                c.prev = prev
-                prev.next = c
+                lookup[i-1].next = c
 
-            last.next = lookup['10']
-            lookup['10'] = last
-            last = lookup['1000000']
+            lookup[int(cupValues[-1])].next = lookup[10]
+            last = lookup[1000000]
 
-        first.prev = last
         last.next = first
 
         return first
 
-    def pick_three(current:Cup)->Cup:
+    def pickup_three(current:Cup)->Cup:
+        """ pick three Cups up from out of the circle
+            modifying the circle, returning the first of the 
+            picked up cups """
+
         t1 = current.next
         t2 = t1.next
         t3 = t2.next
@@ -111,72 +114,57 @@ def part_two(cupValues):
         after = t3.next
 
         current.next = after
-        after.prev = current
-
-        t1.prev = t1
         t3.next = t3
 
         return t1
 
-    def select_destination(current, three):
+    def select_destination(current:Cup, three:Cup)->Cup:
+        """ Select the destination to place the, previously picked up cups
+            wil not select one of the three cups
+            """
         vals = [three.value, three.next.value, three.next.next.value]
-        i = int(current.value) - 1
+        i = current.value - 1
 
         while True:
             if i <= 0:
                 i = maxValue
-            if str(i) in vals:
+            if i in vals:
                 i-=1
                 continue
 
-            return lookup[str(i)]
+            return lookup[i]
 
-    def place(dest, three):
+    def place(dest:Cup, three:Cup)->None:
+        """ Place the three cups after the destination """
         t1 = three
         t2 = t1.next
         t3 = t2.next
-
         t3.next = dest.next
-        t1.prev = dest
         dest.next = t1
 
-
-
     def move(current:Cup)->Cup:
-        print("current:", current.value)
-        print("cups    ", values_from(current))
-        three = pick_three(current)
-
-        print("pick up:", three.value, three.next.value, three.next.next.value)
+        """ execute one move i.e:
+            - pick three cups that are clockwise to current
+            - select destination cup
+            - place three cups clockwise of destination
+            - select new current cup
+            """
+        three = pickup_three(current)
         dest = select_destination(current, three)
-        print('destination: ', dest.value)
-        print("place before", values_from(current))
         place(dest, three)
-        print("place after ", values_from(current))
-        print("place after ", values_from(dest))
-        print("")
-
         return current.next
 
-
-    def values_from(current):
-        c = current
-        nums = []
-        for _ in range(0,20):
-            nums.append(c.value)
-            c = c.next
-        return " ".join(nums)
-
-
-
+    ########
     current = init()
+    if maxValue > 10:
+        for _ in range(0, TEN_MILLION):
+            current = move(current)
+    else:
+        for _ in range(0, 100):
+            current = move(current)
 
-
-    # print(values_from(current))
-    for _ in range(0, 10): # 10000000):
-        current = move(current)
-
-    return values_from(lookup['1'])
+    one = lookup[1]
+    return one.next.value * one.next.next.value
 
 
 def main():
