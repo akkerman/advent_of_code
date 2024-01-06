@@ -26,12 +26,14 @@ def part_one(sequence):
     """ part one """
     for _ in range(0,40):
         sequence = play(sequence)
-    return len(sequence)
+    return len(sequence), sequence
 
 
-def part_two(lines):
+def part_two(sequence): # input from part_one
     """ part two """
-    return 'todo'
+    for _ in range(0,10):
+        sequence = play(sequence)
+    return len(sequence)
 
 
 def main():
@@ -42,9 +44,10 @@ def main():
     
         lines.append(line)
 
-    print('part_one', part_one(list(lines[0])))
+    p1, seq = part_one(list(lines[0]))
+    print('part_one', p1)
 
-    print('part_two', part_two(lines))
+    print('part_two', part_two(seq))
 
 
 main()
