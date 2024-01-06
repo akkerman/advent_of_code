@@ -35,10 +35,48 @@ def part_one(lines):
     """ part one """
     return len(initial_state(lines))
 
+def neighbours(tile):
+    nbs = set()
+    for d in dirs.values():
+        nbs.add(tuple(map(add, tile, d)))
+    return nbs
+
+
+def day(black_tiles):
+
+    def flip_black():
+        flip = set()
+        for tile in black_tiles:
+            black_neigbours = neighbours(tile) & black_tiles
+            count = len(black_neigbours)
+            if count == 0 or count > 2:
+                flip.add(tile)
+        return flip
+
+
+    def flip_white():
+        white_tiles = set()
+        for tile in black_tiles:
+            white_neigbours = neighbours(tile) - black_tiles
+            white_tiles = white_tiles | white_neigbours
+
+        flip = set()
+        for tile in white_tiles:
+            black_neigbours = neighbours(tile) & black_tiles
+            if len(black_neigbours) == 2:
+                flip.add(tile)
+        return flip
+
+    return (black_tiles - flip_black()) | flip_white()
 
 def part_two(lines):
     """ part two """
-    return "todo"
+
+    black_tiles = initial_state(lines)
+
+    for i in range(1,101):
+        black_tiles = day(black_tiles)
+    return len(black_tiles)
 
 def parse_directions(line):
     dirs = []
