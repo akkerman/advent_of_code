@@ -4,7 +4,6 @@ import sys
 import string
 from collections import deque
 
-
 class Operation:
     def __init__(self, wire, needs=None):
         self.wire = wire
@@ -42,11 +41,10 @@ def unique_rhs(lines):
     return len(ends) == len(set(ends))
 
 
-def part_one(wires:dict[string,Operation]):
+def part_one(wires:dict[string,Operation], values={}):
     """ part one """
     q = deque()
     op = wires['a']
-    values = {}
 
     while op:
         needs = [values[n] for n in op.needs if n in values]
@@ -72,9 +70,10 @@ def part_one(wires:dict[string,Operation]):
     return 'todo'
 
 
-def part_two(lines):
+def part_two(wires):
     """ part two """
-    return 'todo'
+    a = part_one(wires)
+    return part_one(wires,{'b':a})
 
 operations = {
         'AND': '&',
@@ -86,16 +85,13 @@ operations = {
 def parse_operation(wire, operation):
     parts =  operation.split(' ')
     if len(parts) == 3:
-        # binary
         op = operations[parts[1]]
         return Binary(wire, [parts[0], parts[2]], op)
     elif len(parts) == 2:
-        # unary
         assert parts[0] == 'NOT'
         return Not(wire, [parts[1]])
     else:
         assert len(parts) == 1
-        # constant
         return Constant(wire, parts)
     return parts
 
@@ -112,7 +108,7 @@ def main():
     
         lines.append(line)
 
-    # observation the rhs of each connection is unique
+    # observation: the rhs of each connection is unique
     assert unique_rhs(lines) == True
 
     print('part_one', part_one(wires))
