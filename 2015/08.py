@@ -2,6 +2,7 @@
 # pylint: disable=invalid-name
 import sys
 import string
+import simplejson as json
 
 
 def part_one(lines):
@@ -10,8 +11,7 @@ def part_one(lines):
 
 def part_two(lines):
     """ part two """
-    return 'todo'
-
+    return sum(len(json.dumps(line)) - len(line) for line in lines)
 
 def main():
     """ main """
