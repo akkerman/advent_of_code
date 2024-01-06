@@ -15,8 +15,7 @@ dirs = {
     "nw": ( 0, 1,-1),
 }
 
-def part_one(lines):
-    """ part one """
+def initial_state(lines):
     black_tiles = set()
 
     for line in lines:
@@ -30,7 +29,11 @@ def part_one(lines):
         else:
             black_tiles.add(tile)
 
-    return len(black_tiles)
+    return black_tiles
+
+def part_one(lines):
+    """ part one """
+    return len(initial_state(lines))
 
 
 def part_two(lines):
