@@ -1,0 +1,42 @@
+#+title: Day 24: Lobby Layout
+
+* Part One
+
+** Parse Instructions
+
+Eerste gedachte was dat ik, bij het uitlezen van de instructies, rekening moest
+houden met abigue interpretaties maar als je alles gretig doorleest, dus /als/ het
+kan nemen we 2 letters ipv 1, dan blijkt alles goed te gaan.
+
+** TIL Coordinate encodig of an hex layout!.
+
+Begonnen met een class die windrichtingen had en waaraan je dan een tile kon toevoegen.
+Deze toevoeg actie zou dan buren moeten triggeren om de tile ook toe te voegen.
+Nadeeltje is dat je dus op dezelfde tegel terecht kan komen via een ander pad
+dan ooit eerder bewandeld en dan zou je dubbelen krijgen. Ik realiseerde mij dit
+halverwege het bouwen en ben toen maar gaan googlen naar.  "code hex grid".
+
+Dan kom je al gauw op [[https://www.redblobgames.com/grids/hexagons/][Hexagonal Grids]].
+De blijkbaar zou je het met een (x,y) coordinaten stelsel moeten kunnen doen
+door een (even of oneven) rij of kolom als verschoven te beschouwen maar cube
+coordinaten sprak mij meer aan.
+
+** Oplossing
+
+loop het pad af en markeer de laatste tegel als zwart (stop in een set). Als
+deze al zwart is markeer als wit (haal uit de set).
+
+* Part Two
+
+** Oplossing - set mutaties (handig in python)
+
+Gebruik de set van part one als startpunt.
+Maak, voor elke dag, een nieuwe set zwarte tegels obv de bestaande door de regels toe te passen.
+
+~(black_tiles - flip_black()) | flip_white()~
+
+implementatie voor flip_black is over alle zwarte tegels heen gaan en per tegel
+kijken hoeveel zwarte buur tegels er zijn.
+
+implementatie voor flip_white is min of meer hetzelfde alleen maken we eerst een
+nieuwe set met witte tegels obv de zwarte.
