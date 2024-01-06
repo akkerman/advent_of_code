@@ -12,8 +12,7 @@ import string
 # Public key : 17807724
 # Loop size  : 11
 
-def transform(loop):
-    subj = 7
+def transform(loop, subj = 7):
     pub = 1
     for _ in range(0,loop):
         pub = pub * subj 
@@ -39,30 +38,28 @@ def crack_loops(pub_keys):
 
     return loops
 
-def part_one(lines):
+def part_one(keys):
     """ part one """
 
-    print(crack_loops(lines))
+    
+    loops  = crack_loops(keys)
 
-    return 'todo'
+    enc_key=transform(loops[0], keys[1])
+    print(f'transform({loops[0]}, {keys[1]})={enc_key}')
+    enc_key=transform(loops[1], keys[0])
+    print(f'transform({loops[1]}, {keys[0]})={enc_key}')
 
-
-def part_two(lines):
-    """ part two """
-    return 'todo'
 
 
 def main():
     """ main """
-    lines = []
+    keys = []
     for line in sys.stdin:
         line = line.replace('\n', '')
     
-        lines.append(int(line))
+        keys.append(int(line))
 
-    print('part_one', part_one(lines))
-
-    print('part_two', part_two(lines))
+    part_one(keys)
 
 
 main()
