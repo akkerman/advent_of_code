@@ -57,16 +57,6 @@ assert is_valid('ghjaabcc') == True
 # assert next_valid_password('abcdefgh') == 'abcdffaa'
 # assert next_valid_password('ghijklmn') == 'ghjaabcc'
 
-def part_one(password):
-    """ part one """
-    return next_valid_password(password)
-
-
-def part_two(lines):
-    """ part two """
-    return 'todo'
-
-
 def main():
     """ main """
     lines = []
@@ -75,9 +65,10 @@ def main():
     
         lines.append(line)
 
-    print('part_one', part_one(lines[0]))
+    password = next_valid_password(lines[0])
+    print('part_one', password)
 
-    print('part_two', part_two(lines))
+    print('part_two', next_valid_password(password))
 
 
 main()
