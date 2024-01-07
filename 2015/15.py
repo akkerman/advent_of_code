@@ -12,18 +12,21 @@ def score_cookie(cookie):
     return reduce(lambda a, b: a*max(0,b), total[:-1], 1)
     # Caveat, ignore calories which is last in total
 
+def calories_cookie(cookie):
+    return sum(c for (_,_,_,_,c) in cookie)
+
+B = (-1, -2, 6, 3, 8)
+C = (2, 3, -2, -1, 3)
+
+cookie_part1 = [measure(44,B), measure(56, C)]
+assert score_cookie(cookie_part1) == 62842880
+
+cookie_part2 = [measure(40,B), measure(60, C)]
+assert score_cookie(cookie_part2) == 57600000
+assert calories_cookie(cookie_part2) == 500
 
 
-def test():
-    B = (-1, -2, 6, 3, 8)
-    C = (2, 3, -2, -1, 3)
-
-    return score_cookie([measure(44,B), measure(56, C)])
-
-assert test() == 62842880
-
-
-def part_one(lines):
+def best_score(lines, calories=0):
     """ part one """
 
     best = 0
@@ -34,12 +37,16 @@ def part_one(lines):
                 if sugar < 0:
                     continue
 
-                score = score_cookie([
+                cookie = [
                       measure(frosting, lines[0]),
                       measure(candy, lines[1]),
                       measure(bscotch, lines[2]),
                       measure(sugar, lines[3]),
-                ])
+                ]
+
+                if calories and calories_cookie(cookie) != calories:
+                    continue
+                score = score_cookie(cookie)
 
 
                 best=max(best,score)
@@ -47,11 +54,13 @@ def part_one(lines):
     return best
 
 
+def part_one(lines):
+    """ part one """
+    return best_score(lines)
 
 def part_two(lines):
     """ part two """
-    return 'todo'
-
+    return best_score(lines, 500)
 
 def main():
     """ main """
