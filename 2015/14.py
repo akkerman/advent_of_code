@@ -26,7 +26,15 @@ def part_one(lines):
 
 def part_two(lines):
     """ part two """
-    return 'todo'
+    points = [0] * len(lines)
+    for seconds in range(1, 2503+1):
+        calc = create_calc_kms(seconds)
+        dist = [calc(*t) for t in lines]
+        m = max(dist)
+        for i,n in enumerate(dist):
+            if n == m:
+                points[i]+=1
+    return max(points)
 
 
 def main():
