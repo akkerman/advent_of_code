@@ -25,13 +25,13 @@ def next_password(password):
     else:
         char = alpha[1+alpha.index(last)]
 
-    return init + char 
+    return init + char
 
 def is_valid(password):
     for c in forbidden:
         if c in password:
             return False
-    
+
     triples = { a+b+c for a,b,c in zip(password, password[1:], password[2:]) }
     if len(triples & valid_triples) == 0:
         return False
@@ -49,11 +49,11 @@ def next_valid_password(password):
     return p
 
 
-assert is_valid('hijklmmn') == False
-assert is_valid('abbceffg') == False
-assert is_valid('abbcegjk') == False
-assert is_valid('abcdffaa') == True
-assert is_valid('ghjaabcc') == True
+assert is_valid('hijklmmn') is False
+assert is_valid('abbceffg') is False
+assert is_valid('abbcegjk') is False
+assert is_valid('abcdffaa') is True
+assert is_valid('ghjaabcc') is True
 # assert next_valid_password('abcdefgh') == 'abcdffaa'
 # assert next_valid_password('ghijklmn') == 'ghjaabcc'
 
@@ -62,7 +62,6 @@ def main():
     lines = []
     for line in sys.stdin:
         line = line.replace('\n', '')
-    
         lines.append(line)
 
     password = next_valid_password(lines[0])

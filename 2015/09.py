@@ -1,14 +1,10 @@
 # pylint: disable=missing-module-docstring,missing-function-docstring
 # pylint: disable=invalid-name
 import sys
-import string
 import re
 from itertools import permutations
 
-def lengths(vertices, edges):
-    l = []
-
-reg = re.compile('(.+) to (.+) = (\d+)')
+reg = re.compile(r'(.+) to (.+) = (\d+)')
 def main():
     """ main """
     vertices=set()
@@ -24,7 +20,7 @@ def main():
 
     lengths = []
     for perm in permutations(vertices):
-        lengths.append(sum([edges[ft] for ft in zip(perm, perm[1:])]))
+        lengths.append(sum(( edges[ft] for ft in zip(perm, perm[1:]) )))
 
     print('part_one', min(lengths))
     print('part_two', max(lengths))

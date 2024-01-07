@@ -1,9 +1,7 @@
 # pylint: disable=missing-module-docstring,missing-function-docstring
 # pylint: disable=invalid-name
 import sys
-import string
 import simplejson as json
-
 
 def part_one(lines):
     """ part one """

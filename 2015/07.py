@@ -1,14 +1,13 @@
 # pylint: disable=missing-module-docstring,missing-function-docstring
 # pylint: disable=invalid-name
 import sys
-import string
 from collections import deque
 
 class Operation:
     def __init__(self, wire, needs=None):
         self.wire = wire
         self.needs = needs
-    def calc(self, values=None):
+    def calc(self, values):
         pass
 
 class Constant(Operation):
@@ -41,10 +40,12 @@ def unique_rhs(lines):
     return len(ends) == len(set(ends))
 
 
-def part_one(wires:dict[string,Operation], values={}):
+def part_one(wires:dict[string,Operation], values=None):
     """ part one """
     q = deque()
     op = wires['a']
+    if not values:
+        values = {}
 
     while op:
         needs = [values[n] for n in op.needs if n in values]
@@ -87,32 +88,28 @@ def parse_operation(wire, operation):
     if len(parts) == 3:
         op = operations[parts[1]]
         return Binary(wire, [parts[0], parts[2]], op)
-    elif len(parts) == 2:
+    if len(parts) == 2:
         assert parts[0] == 'NOT'
         return Not(wire, [parts[1]])
-    else:
-        assert len(parts) == 1
+    if len(parts) == 1:
         return Constant(wire, parts)
-    return parts
+    assert False
 
 
 def main():
     """ main """
     lines = []
-    wires = dict()
+    wires = {}
     for line in sys.stdin:
         line = line.replace('\n', '')
-
         o, w = line.split(' -> ')
         wires[w]=parse_operation(w, o)
-    
         lines.append(line)
 
     # observation: the rhs of each connection is unique
-    assert unique_rhs(lines) == True
+    assert unique_rhs(lines) is True
 
     print('part_one', part_one(wires))
-
     print('part_two', part_two(wires))
 
 

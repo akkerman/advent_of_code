@@ -1,8 +1,6 @@
 # pylint: disable=missing-module-docstring,missing-function-docstring
 # pylint: disable=invalid-name
 import sys
-import string
-
 
 def play(sequence):
     cur = sequence[0]
@@ -20,7 +18,6 @@ def play(sequence):
     new.append(str(c))
     new.append(cur)
     return new
-            
 
 def part_one(sequence):
     """ part one """
@@ -41,7 +38,6 @@ def main():
     lines = []
     for line in sys.stdin:
         line = line.replace('\n', '')
-    
         lines.append(line)
 
     p1, seq = part_one(list(lines[0]))
