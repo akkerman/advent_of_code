@@ -77,6 +77,9 @@ def main():
 
             rules[k] = v
 
+    for rule in rules.items():
+        print(rule)
+
     print('part_one', part_one(rules, messages))
 
     print('part_two', part_two(rules, messages))
