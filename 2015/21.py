@@ -5,7 +5,6 @@ from  math import ceil
 
 # Weapons:    Cost  Damage  armour
 WEAPONS = [
-('Bare Hands' ,   0,  0,  0),
 ('Dagger'     ,   8,  4,  0),
 ('Shortsword' ,  10,  5,  0),
 ('Warhammer'  ,  25,  6,  0),
@@ -25,8 +24,8 @@ ARMOUR = [
 
 # Rings:      Cost  Damage  armour
 RINGS = [
-('karate 1'   ,   0,  0 , 0),
-('karate 2'   ,   0,  0 , 0),
+('Karate 1'   ,   0,  0 , 0),
+('Karate 2'   ,   0,  0 , 0),
 ('Damage +1'  ,  25,  1 , 0),
 ('Damage +2'  ,  50,  2 , 0),
 ('Damage +3'  , 100,  3 , 0),
@@ -53,38 +52,27 @@ def stats():
                 for r2 in RINGS:
                     if r1 == r2:
                         continue
-                    yield (sum(a) for a in list(zip(w,a,r1,r2))[1:])
-
-# incorrect 51 and 81
-def part_one(boss):
-    """ part one """
-    result = []
-
-    for cost, damage, armour in stats():
-        result.append((cost, fight([100, damage, armour], boss)))
-
-    for r in result:
-        print(r)
-
-    return min(cost for cost, winner in result if winner == 'player')
-
-
-def part_two(lines):
-    """ part two """
-    return 'todo'
+                    s = (sum(a) for a in list(zip(w,a,r1,r2))[1:])
+                    n = list(zip(w,a,r1,r2))[0]
+                    yield *s, n
 
 
 def main():
     """ main """
-    lines = []
+    boss = []
     for line in sys.stdin:
         line = line.replace('\n', '')
         line = int(line.split(': ')[1])
-        lines.append(line)
+        boss.append(line)
 
-    print('part_one', part_one(lines))
+    result = []
+    for cost, damage, armour, n in stats():
+        result.append((cost, fight([100, damage, armour], boss), n))
 
-    print('part_two', part_two(lines))
+    part_one = min(cost for cost, winner, n in result if winner == 'player')
+    print('part_one', part_one)
 
+    part_two = max(cost for cost, winner, n in result if winner == 'boss')
+    print('part_two', part_two)
 
 main()
