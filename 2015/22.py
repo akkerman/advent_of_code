@@ -5,7 +5,7 @@ import logging
 
 log = logging.getLogger('Wizard Simulator 20XX')
 log.addHandler(logging.StreamHandler(sys.stdout))
-log.setLevel(logging.DEBUG)
+# log.setLevel(logging.DEBUG)
 
 
 class Fighter:
@@ -21,6 +21,11 @@ class Fighter:
             # pylint: disable=line-too-long
             return f'- {self.name} has {self.hp} hit point{"s" if self.hp>1 else ""}, {self.armor} armor, {self.mana} mana'
         return f'- {self.name} has {self.hp} hit points'
+
+    def clone(self):
+        f = Fighter(self.name, self.hp, self.damage, self.mana)
+        f.armor = self.armor
+        return f
 
 
     def is_alive(self):
@@ -38,8 +43,13 @@ class Spell:
         self.duration = duration
         self.timer = 0
 
+    def clone(self):
+        sp = Spell(self.name, self.cost, self.damage, self.armor, self.heal, self.mana, self.duration)
+        sp.timer = self.timer
+        return sp
+
     def __repr__(self):
-        return f'{self.name} costs {self.cost}'
+        return f'{self.name} costs {self.cost}, timer {self.timer}'
 
 
     def is_active(self):
@@ -88,23 +98,23 @@ class Spell:
         else:
             log.debug('%s\'s timer is now %s.', self.name, self.timer)
 
-        if  not self.is_active():
+        if not self.is_active():
             if self.armor:
                 log.debug('%s wears off, decreasing armor by %s.', self.name, self.armor)
                 player.armor -= self.armor
             else:
                 log.debug('%s wears off.', self.name)
 
-
-spells = {
+def init_spells():
+    return {
     'Magic Missile': Spell('Magic Missile', cost=53, damage=4),
     'Drain': Spell('Drain', cost=73, damage=2, heal=2),
     'Shield': Spell('Shield', cost=113, armor=7, duration=6),
     'Poison': Spell('Poison', cost=173, damage=3, duration=6),
     'Recharge': Spell('Recharge', cost=229, mana=101, duration=5),
-}
+    }
 
-def turn(player, boss, cast_spell):
+def turn(spells, player, boss, spell_name):
     log.debug('\n-- Player turn --')
     log.debug(player)
     log.debug(boss)
@@ -113,13 +123,17 @@ def turn(player, boss, cast_spell):
         spell.apply(player, boss)
         if not boss.is_alive():
             log.info('Boss dies')
-            return
+            return 0
 
-    cast_spell.cast(player, boss)
+    cost = spells[spell_name].cast(player, boss)
+    if cost == 0: # failed
+        log.info('Player dies due to failed cast of %s', spell_name)
+        player.hp = 0
+        return cost
 
     if boss.hp <= 0:
         log.info('Boss dies')
-        return
+        return cost
 
 
     log.debug('\n-- Boss turn --')
@@ -129,7 +143,7 @@ def turn(player, boss, cast_spell):
         spell.apply(player, boss)
         if not boss.is_alive():
             log.info('Boss dies')
-            return
+            return cost
 
     damage = boss.damage - player.armor
     if player.armor:
@@ -137,34 +151,77 @@ def turn(player, boss, cast_spell):
     else:
         log.debug('Boss attacks for %s damage!', damage)
     player.hp -= max(1, damage)
+
     if not player.is_alive():
         log.info('Player dies')
-        return
+
+    return cost
+
+def state(spells, player, boss, spell_name):
+    timers = [spells[spell_name].timer for spell_name in sorted(spells.keys())]
+    return tuple(timers+[player.hp, player.mana, boss.hp, spell_name])
+
+
+def min_cost_game(spells, player, boss):
+    cache = {}
+
+    def game(spells, player, boss, cost = 0, spell_name=None):
+        st =  state(spells, player, boss, spell_name)
+        if st in cache:
+            return cache[st]
+
+        if spell_name:
+            turn_cost = turn(spells, player, boss, spell_name)
+        else:
+            turn_cost = 0
+
+        if not player.is_alive():
+            return sys.maxsize
+        if not boss.is_alive():
+            return cost + turn_cost
+
+        min_cost = sys.maxsize
+        for name in spells.keys():
+            cast = spells[name]
+            if cast.is_active() or cast.cost > player.mana:
+                continue
+            s = { k:v.clone() for k,v in spells.items() }
+            p = player.clone()
+            b = boss.clone()
+            new_cost = game(s, p, b, cost + turn_cost, name)
+            min_cost = min(min_cost, new_cost)
+
+        cache[st] = min_cost
+        return min_cost
+
+    return game(spells, player, boss)
 
 
 def example_game1():
     player = Fighter('Player', hp=10, mana=250)
     boss = Fighter('Boss', hp=13, damage=8)
-    turn(player, boss, spells['Poison'])
-    turn(player, boss, spells['Magic Missile'])
+    spells = init_spells()
+    turn(spells.values(), player, boss, 'Poison')
+    turn(spells.values(), player, boss, 'Magic Missile')
 
 def example_game2():
     player = Fighter('Player', hp=10, mana=250)
     boss = Fighter('Boss', hp=14, damage=8)
-    turn(player, boss, spells['Recharge'])
-    turn(player, boss, spells['Shield'])
-    turn(player, boss, spells['Drain'])
-    turn(player, boss, spells['Poison'])
-    turn(player, boss, spells['Magic Missile'])
+    spells = init_spells()
+    turn(spells, player, boss, 'Recharge')
+    turn(spells, player, boss, 'Shield')
+    turn(spells, player, boss, 'Drain')
+    turn(spells, player, boss, 'Poison')
+    turn(spells, player, boss, 'Magic Missile')
+
+
 
 def part_one(boss_stats):
     """ part one """
-    # boss = Fighter(*boss_stats)
-    # player = Fighter(hp=50, mana=500)
+    boss = Fighter('Boss', *boss_stats)
+    player = Fighter('Player', hp=50, mana=500)
 
-    example_game2()
-
-    return 'todo'
+    return min_cost_game(init_spells(), player, boss)
 
 
 def part_two(boss_stats):
