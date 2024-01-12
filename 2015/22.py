@@ -6,6 +6,7 @@ import logging
 log = logging.getLogger('Wizard Simulator 20XX')
 log.addHandler(logging.StreamHandler(sys.stdout))
 # log.setLevel(logging.DEBUG)
+# log.setLevel(logging.INFO)
 
 
 class Fighter:
@@ -114,10 +115,17 @@ def init_spells():
     'Recharge': Spell('Recharge', cost=229, mana=101, duration=5),
     }
 
-def turn(spells, player, boss, spell_name):
+def turn(spells, player, boss, spell_name, hard=False):
     log.debug('\n-- Player turn --')
     log.debug(player)
     log.debug(boss)
+
+    if hard:
+        player.hp -= 1
+        if not player.is_alive():
+            log.info('Player dies due to hard setting')
+            return 0
+
 
     for spell in spells.values():
         spell.apply(player, boss)
@@ -162,7 +170,7 @@ def state(spells, player, boss, spell_name):
     return tuple(timers+[player.hp, player.mana, boss.hp, spell_name])
 
 
-def min_cost_game(spells, player, boss):
+def min_cost_game(spells, player, boss, hard=False):
     cache = {}
 
     def game(spells, player, boss, cost = 0, spell_name=None):
@@ -171,7 +179,7 @@ def min_cost_game(spells, player, boss):
             return cache[st]
 
         if spell_name:
-            turn_cost = turn(spells, player, boss, spell_name)
+            turn_cost = turn(spells, player, boss, spell_name, hard)
         else:
             turn_cost = 0
 
@@ -224,9 +232,13 @@ def part_one(boss_stats):
     return min_cost_game(init_spells(), player, boss)
 
 
+# expected: 1216
 def part_two(boss_stats):
     """ part two """
-    return 'todo'
+    boss = Fighter('Boss', *boss_stats)
+    player = Fighter('Player', hp=50, mana=500)
+
+    return min_cost_game(init_spells(), player, boss, hard = True)
 
 
 def main():
