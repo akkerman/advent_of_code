@@ -3,9 +3,9 @@
 import sys
 import re
 
-def compute(instructions):
+def compute(instructions, a=0):
     registers = {
-        'a' : 0,
+        'a' : a,
         'b' : 0,
     }
 
@@ -59,7 +59,8 @@ def part_one(instructions):
 
 def part_two(instructions):
     """ part two """
-    return 'todo'
+    _,b = compute(instructions, a=1)
+    return b
 
 
 def main():
