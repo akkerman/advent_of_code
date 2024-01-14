@@ -4,7 +4,7 @@ import sys
 from collections import Counter
 
 
-def part_one(lines):
+def solve(lines, most=True):
     """ part one """
     rotated = []
     for _ in range(len(lines[0])):
@@ -16,14 +16,15 @@ def part_one(lines):
     word=""
     for r in rotated:
         c = Counter(r)
-        word += c.most_common(1)[0][0]
+        if most:
+            word += c.most_common()[0][0]
+        else:
+            word += list(reversed(c.most_common()))[0][0]
+
 
     return word
 
 
-def part_two(lines):
-    """ part two """
-    return 'todo'
 
 
 def main():
@@ -33,9 +34,8 @@ def main():
         line = line.replace('\n', '')
         lines.append(line)
 
-    print('part_one', part_one(lines))
+    print('part_one', solve(lines))
 
-    print('part_two', part_two(lines))
-
+    print('part_two', solve(lines, most=False))
 
 main()
