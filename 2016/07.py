@@ -2,6 +2,7 @@
 # pylint: disable=invalid-name
 import sys
 import re
+from itertools import chain
 
 def has_abba(s):
     for i in range(len(s) - 3):
@@ -27,21 +28,44 @@ def supports_tls(ip):
 
     return supported
 
+def aba2bab(s):
+    return s[1]+s[0]+s[1]
+
+def extract_aba(s):
+    aba = []
+    for i in range(len(s) - 2):
+        if s[i] != s[i+1] and s[i] == s[i+2]:
+            aba.append(s[i]+s[i+1]+s[i+2])
+    return aba
 
 
-# too high: 151
+
+def supports_ssl(ip):
+    aba = set()
+    for part in ip[::2]: # only even parts
+        aba.update(extract_aba(part))
+    bab = [aba2bab(s) for s in aba]
+
+    for part in ip[1::2]: # only odd parts
+        for s in bab:
+            if s in part:
+                return True
+
+    return False
+
+
+
 def part_one(ips):
     """ part one """
     with_tls = [ip for ip in ips if supports_tls(ip)]
-    print(with_tls)
     return len(with_tls)
 
 
+# too low: 215
 def part_two(ips):
     """ part two """
-    return 'todo'
-
-
+    with_ssl = [ip for ip in ips if supports_ssl(ip)]
+    return len(with_ssl)
 
 def main():
     """ main """
