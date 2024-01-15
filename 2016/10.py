@@ -47,9 +47,9 @@ def part_one(values):
     return 'todo'
 
 
-def part_two(lines):
+def part_two():
     """ part two """
-    return 'todo'
+    return outputs['0'] * outputs['1'] * outputs['2']
 
 
 def main():
@@ -78,7 +78,7 @@ def main():
     print('\npart_one')
     part_one(values)
 
-    print('\npart_two', part_two(values))
+    print('\npart_two', part_two())
 
 
 main()
