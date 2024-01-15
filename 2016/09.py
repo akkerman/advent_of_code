@@ -36,9 +36,28 @@ def part_one(compressed_file):
     return len(dec)
 
 
+def decompress_v2(line):
+    if not '(' in line:
+        return len(line)
+
+    f = line.index('(')
+    t = line.index(')')
+    m = x.match(line[f+1:t])
+    assert m
+    lng, reps = [int(n) for n in m.groups()]
+
+    part = line[t+1:t+1+lng]
+
+    init = f # all chars before first (
+    marked = reps * decompress_v2(part)
+    rest = decompress_v2(line[t+1+lng:])
+
+    return init + marked + rest
+
+
 def part_two(compressed_file):
     """ part two """
-    return 'todo'
+    return decompress_v2(compressed_file)
 
 
 def main():
