@@ -18,7 +18,14 @@ def part_one(box_ids):
 
 def part_two(box_ids):
     """ part two """
-    return 'todo'
+    for idx, xs in enumerate(box_ids):
+        for idy in range(idx+1, len(box_ids)):
+            ys=box_ids[idy]
+            check = [i for i,(x,y) in enumerate(zip(xs, ys)) if x!=y]
+            if len(check) == 1:
+                i=check[0]
+                return xs[0:i]+xs[i+1:]
+    return 'error'
 
 
 def main():
