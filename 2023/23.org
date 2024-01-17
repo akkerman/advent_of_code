@@ -1,9 +1,14 @@
-#+title: Day 23: A Long Walk
+:PROPERTIES:
+:ID:       aa4bdbe4-9ba4-4c3a-9867-9ebedf288064
+:END:
+#+title: 2023 Day 23: A Long Walk
 #+options: toc:nil num:nil
+
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
 
 * Part One
 
-Idee was om een BFS op te zetten en dan, als we bij het eindpoint zijn niet
+Idee was om een [[id:ccd23e17-bc3e-486c-8127-331517a7dc95][BFS]] op te zetten en dan, als we bij het eindpoint zijn niet
 direct te stoppen maar het aantal stappen te noteren en kijken of er nog
 oplossingen zijn die langer zijn.
 
@@ -26,14 +31,14 @@ Volgens mij wordt het heel anders als je bv vanaf een ~>~ ook naar boven of bene
 ###v######.##.##
 #+end_src
 
-Verder blijkt het dat er helemaal geen lussen in de graaf zitten, waardoor je
+Verder blijkt het dat er helemaal geen lussen in de [[id:d635f8a9-8327-414a-9a77-61499af29485][graaf]] zitten, waardoor je
 niet via een bepaald pad weer op hetzelfde punt terecht kwam. Het enige wat je
 dan hoeft te doen is, bij bepalen van je volgende stappen (buren), de stap terug
 niet te nemen.
 
 * Part Two
 
-** DFS DNF
+** [[id:ea19be69-54e4-4d9d-a3bc-3b64c3b0dde1][DFS]] [[https://en.wikipedia.org/wiki/Did_not_finish][DNF]]
 
 Idee hier was om een DFS op te zetten en dan, omdat je vaak maar 1 kant op kan
 (het pad is zoals bij een doolhof, muren aan weerszijden), pas de recursie te
@@ -44,7 +49,7 @@ lus is.
 Van de gespleten paden nemen we dan het maximum en klaar. Dit werkte prima voor
 de voorbeeld invoer maar bleef maar draaien op de werkelijke invoer.
 
-** Gewogen graaf
+** Gewogen [[id:d635f8a9-8327-414a-9a77-61499af29485][graaf]]
 
 Idee nu is om een gewogen graaf te maken tussen de splitsingen, zodat we in 1
 keer van de ene spliting naar de andere kunnen gaan zonder door alle andere

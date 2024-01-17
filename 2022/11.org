@@ -1,5 +1,10 @@
-#+title: Day 11: Monkey in the Middle
+:PROPERTIES:
+:ID:       fabbe98e-619b-4b90-a3c7-c4ed112fd4d8
+:END:
+#+title: 2022 Day 11: Monkey in the Middle
 #+options: toc:nil num:nil
+
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
 
 * Solve in javascript
 

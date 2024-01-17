@@ -1,4 +1,9 @@
-#+title: Day 24: Never Tell Me The Odds
+:PROPERTIES:
+:ID:       97478f21-653e-44cd-8de8-c013fab66f81
+:END:
+#+title: 2023 Day 24: Never Tell Me The Odds
+
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
 
 * Part One
 

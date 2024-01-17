@@ -1,5 +1,9 @@
-#+title: Day 19: Not Enough Minerals
+:PROPERTIES:
+:ID:       cd1846c8-2981-47b3-8cad-d131e5f03440
+:END:
+#+title: 2022 Day 19: Not Enough Minerals
 
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
 
 - pruning paths that lead to later geode robot
   example from 1m40 to 5.5s

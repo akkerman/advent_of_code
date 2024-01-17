@@ -1,5 +1,10 @@
-#+title: Day 10: Cathode-Ray Tube
+:PROPERTIES:
+:ID:       8dec769b-49eb-430c-af93-3eb9dca6dfe8
+:END:
+#+title: 2022 Day 10: Cathode-Ray Tube
 #+options: toc:nil num:nil
+
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
 
 * Solve in JavaScript
 

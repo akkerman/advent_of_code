@@ -1,5 +1,10 @@
-#+title: Day 3: Rucksack Reorganization
+:PROPERTIES:
+:ID:       3ca66179-0206-4b3b-be34-4a764f43e482
+:END:
+#+title: 2022 Day 3: Rucksack Reorganization
 #+options: toc:nil num:nil
+
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
 
 * Solve in javascript
 

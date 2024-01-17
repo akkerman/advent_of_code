@@ -1,9 +1,14 @@
-#+title: Day 25: Snowverload
+:PROPERTIES:
+:ID:       ba95fba2-55f6-404a-8d72-ff3e0b050010
+:END:
+#+title: 2023 Day 25: Snowverload
+
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
 
 * Part One
 
 Werkelijk geen idee hoe ik die draadjes moet gaan vinden.
-Enige wat ik kan bedenken is om er een mermaid graph van te maken zoals bij [[./20.org][dag 20]].
+Enige wat ik kan bedenken is om er een mermaid graph van te maken zoals bij [[id:11a0eaea-98da-4171-9384-ad54267536a0][dag 20]].
 Helaas stikte dat programma er nogal in.
 
 Voor werk gebruik ik een programma wat depency cycles van code in een file [[https://graphviz.org/docs/layouts/dot/][.dot file]]

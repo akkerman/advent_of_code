@@ -1,4 +1,9 @@
-#+title: Day 9: Rope Bridge
+:PROPERTIES:
+:ID:       1282144d-3982-4f70-b2fb-9f780fd17e8d
+:END:
+#+title: 2022 Day 9: Rope Bridge
+
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
 
 * Solve in JavaScript
 

@@ -1,4 +1,9 @@
-#+title: Day 17: Pyroclastic Flow
+:PROPERTIES:
+:ID:       ba4634de-2109-42b4-981b-4e4f3d44d587
+:END:
+#+title: 2022 Day 17: Pyroclastic Flow
 #+options: toc:nil num:nil
+
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
 
 * Solve in Python

@@ -1,5 +1,10 @@
-#+title: Day 18: Boiling Boulders
+:PROPERTIES:
+:ID:       cc996351-1b15-48ce-ae37-8b401beeed4a
+:END:
+#+title: 2022 Day 18: Boiling Boulders
 #+options: toc:nil num:nil
+
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
 
 * Solve in javascript
 
@@ -14,7 +19,7 @@ JavaScript not supporting [[https://mathworld.wolfram.com/n-Tuple.html][n-tuples
 
 ** Part two
 
-I am glad I learned [[https://en.wikipedia.org/wiki/Breadth-first_search][Breadth-first search]] (again) last year!
+I am glad I learned [[id:ccd23e17-bc3e-486c-8127-331517a7dc95][Breadth-first search]] (again) last year!
 
 I did start witch approaching this the wrong way. I searched for air within the rock
 but that only yielded boxes of 1x1x1 touching rock on all 6 sides. This would

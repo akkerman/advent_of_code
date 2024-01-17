@@ -1,5 +1,10 @@
-#+title: Day 8: Treetop Tree House
+:PROPERTIES:
+:ID:       a60ef8c1-a695-499b-97f5-f1d1e8224c53
+:END:
+#+title: 2022 Day 8: Treetop Tree House
 #+options: toc:nil num:nil
+
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
 
 * Solve in javascript
 

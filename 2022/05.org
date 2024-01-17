@@ -1,5 +1,7 @@
-#+title: Day 5: Supply Stacks
+#+title: 2022 Day 5: Supply Stacks
 #+options: toc:nil num:nil
+
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
 
 * Solve in Javascript
 
@@ -13,10 +15,10 @@ Then pop all stackt to get the top elements.
 
 ** Index mismatch
 
-Since arrays start at zero in javascript the stacks would naturally endup on index-1.
+Since arrays start at zero in javascript the stacks would naturally end up on index-1.
 I could have accounted for that by substracting 1 from each instruction but I've
 choosen to just put an empty array at the start effectively eliminating the
-of-by-one errors.
+[[id:606cc95b-173d-426a-ba7e-7160e9c120ea][off-by-one errors]].
 
 ** Part Two
 
@@ -54,7 +56,7 @@ const parseStack = stack => [[], ...R.pipe(
 
 The one I'm going to stick with isn't that clever at all but pretty easy to follow.
 
-Go throught the ascii art line by line, character by character and keep a record of it's index. \\
+Go through the ascii art line by line, character by character and keep a record of it's index. \\
 If it's a character we want, add it, in front of a nested array, effectively rotating the stacks 90° clockwise. \\
 At the end we remove all empty arrays (the ones that only contained spaces and square brackets) \\
 

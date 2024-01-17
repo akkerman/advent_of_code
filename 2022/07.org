@@ -1,5 +1,10 @@
-#+title: Day 7: No Space Left On Device
+:PROPERTIES:
+:ID:       f563df31-e5cc-4b8a-be03-4f4c649cb26e
+:END:
+#+title: 2022 Day 7: No Space Left On Device
 #+options: toc:nil num:nil
+
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
 
 * Solve in javascript
 

@@ -1,9 +1,9 @@
 :PROPERTIES:
-:ID:       bc9a3cbe-ed92-4962-ab80-f3f645d88118
+:ID:       11a0eaea-98da-4171-9384-ad54267536a0
 :END:
 #+title: 2023 Day 20: Pulse Propagation
 
-- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]] · [[id:604461ec-828d-4085-8670-9df3ef2b191e][mermaid.js]]
 
 * Part One
 
@@ -13,7 +13,7 @@ Genereer, obv de tekst, een programma die alle regels precies zo afspeelt als aa
 * Part Two
 
 Geen idee hoe dit te programmeren.
-Ik wilde eerst wel eens een beeld van het geheel en genereerde daarom maar een [[https://mermaid.js.org][Mermaid diagram]].
+Ik wilde eerst wel eens een beeld van het geheel en genereerde daarom maar een [[https://github.com/mermaid-js/mermaid/blob/develop/README.md][Mermaid diagram]].
 
 Daaruit was redelijk eenvoudig te zien dat er 4 afzonderlijke netwerken van modules zijn die hun uitput voeren aan een specifieke node. En elk van die 4 nodes waren input voor ~&zg~, een *conjunction*, dus pas als alle 4 de netwerken een *high* pulse geven krijgt ~rx~ een *low* pulse.
 

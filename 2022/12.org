@@ -1,12 +1,17 @@
-#+title: Day 12: Hill Climbing Algorithm
+:PROPERTIES:
+:ID:       2f7782f9-6940-4c06-9eea-c690a338ccfd
+:END:
+#+title: 2022 Day 12: Hill Climbing Algorithm
 #+options: toc:nil num:nil
+
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
 
 * Solve in javascript
 Ok so this is a path finding algorithm I remembered I had a lot of trouble
 figuring this out last year so I went back to that puzzle and borrowed some
 code.
 
-I created a BFS with a priority queue sorted on steps from starting point.
+I created a [[id:ccd23e17-bc3e-486c-8127-331517a7dc95][BFS]] with a [[id:6b1d267b-d03f-4ae1-b98a-62900990d669][priority queue]] sorted on steps from starting point.
 
 The algorithm for finding the neigbours is as follows.
 1. take the cells up, down, left, and right of the visiting node

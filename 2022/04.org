@@ -1,4 +1,9 @@
-#+title: Day 4: Camp Cleanup
+:PROPERTIES:
+:ID:       a416b571-b91c-4540-a518-5669a111f288
+:END:
+#+title: 2022 Day 4: Camp Cleanup
+
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
 
 * Solve in javascript
 
