@@ -1,0 +1,50 @@
+:PROPERTIES:
+:ID:       80c6bce4-b46e-4496-bc65-c24f2fd1dad8
+:END:
+#+title: 2015 Day 22: Wizard Simulator 20XX
+
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+
+Ik begon met het maken van een class voor elke spreuk. Ik had ook een signal
+voor start van de ronde en einde van de ronde omdat ik dacht dat de spreuk
+anders reageerde aan het begin en aan het einde. (apply effect en timer
+uitzetten.)
+
+Uiteindelijk heb ik 1 class gemaakt die alle effecten kan afhandelen en, obv timer
+1 of groter resp. het effect direct toepast (tijdens cast) of later een aantal keer.
+
+Ik heb een logging framework ingezet om dezelfde texten te genereren als het
+voorbeeld zodat het (met een diff) snel te zien was waar mijn volgorde verkeerd
+(anders) was.
+
+Naast de ~Spell~ en ~Character~ class is de ~turn~ functie heel belangrijk omdat deze
+alle regels van volgorde bevat die te maken hebben met de turn-based-gameplay.
+
+** Cache
+Omdat eea nogal lang duurt want alle states worden nagelopen met een [[id:ea19be69-54e4-4d9d-a3bc-3b64c3b0dde1][DFS]] heb ik
+een functie gemaakt die alle bewegende delen in een state tuple kan zetten zodat
+het antwoord van een beurt gecached kan worden.
+
+Voor de ~Spell~ classes is nl het enige wat relevant is voor een state de stand van de timer.
+Armor van de Player bv is helemaal niet relevant want het is een afgeleide van de stand van 1 vd timers.
+
+Wat de state uniek maakt is de spell die gecast gaat worden vanuit de combinatie van hp en spel timers.
+
+#+begin_src python
+def state(spells, player, boss, spell_name):
+    timers = [spells[spell_name].timer for spell_name in sorted(spells.keys())]
+    return tuple(timers+[player.hp, player.mana, boss.hp, spell_name])
+#+end_src
+
+* Part Two
+
+Ik dacht dat deze eenvoudig zou zijn; voeg ~player.hp -= 1~ op de juiste plek. Controleer of player nog leeft en klaar.
+Het antwoord was echter altijd te hoog.
+
+Na een tijd kwam ik er achter dat ik een optimalisatie had ingebouwd met het doel te versnellen. Er werd geen state gemaakt wat zou leiden tot `If you cannot afford to cast any spell, you lose.` vrij vertaald. Als je cast en je heb onvoldoende mana dan ga je dood.
+
+Echter deze controle kun je eigenlijk niet doen voordat de ronde begint. Er kan immers een recharge effect actief zijn waardoor je, nadat de effecten toegepast zijn, juist wel voldoende mana hebt voor de cast.
+
+Ik heb de regels, ter lering en vermaak, laten staan met het comment 'premature optimization!'

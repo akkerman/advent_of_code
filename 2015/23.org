@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       2584841a-1083-4c62-963d-9ac49ded8ae8
+:END:
+#+title: 2015 Day 23: Opening the Turing Lock
+
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+
+Leuk! Gewoon de  instructies uitschrijven. De registers in een dictionary gestopt zodat deze dynamisch te benaderen zijn.
+
+CAVEAT: ~jio~ --> '"jump if one", not odd' omdat precies daarvoor ~jie~ geimplementeerd ga je snel t schip in
+CAVEAT2: als je conditie niet matched (dus instructie is jio of jie en het register matched niet) dan moet je nog wel steeds de volgende instructie pakken
+
+* Part Two
+
+Voeg de initiele waarde voor register a toe aan de parameter lijst van de solve functie, vul 1 in.

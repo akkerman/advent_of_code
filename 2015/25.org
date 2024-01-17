@@ -1,0 +1,25 @@
+:PROPERTIES:
+:ID:       5caea7fd-dc63-4de8-ac8e-4f95869da277
+:END:
+#+title: 2015 Day 25: Let It Snow
+
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part one
+
+De formule was niet zo lastig:
+
+#+begin_src python
+def next_code(previous):
+    return (previous * 252533) %  33554393
+#+end_src
+
+Wat lastiger was is om te bepalen hoeveel iteraties gedaan moeten worden om
+het getal in de gevraagde rij en kolom te krijgen.
+
+Ik heb nog een tijdje gedacht over of ik obv de combinatie het aantal iteraties
+kon achterhalen maar ben uiteindelijk maar voor een algorithme gegaan die alle
+cellen invult zoals de beschrijving aangeeft.
+
+Het is steeds 1 naar rechts en 1 omhoog en als je bovenaan bent begin je in
+de eerste kolom helemaal onderaan.
