@@ -9,7 +9,7 @@ log.addHandler(logging.StreamHandler(sys.stdout))
 # log.setLevel(logging.INFO)
 
 
-class Fighter:
+class Character:
     def __init__(self, name:str, hp:int, damage:int=0, mana:int=0):
         self.name = name
         self.hp=hp
@@ -24,7 +24,7 @@ class Fighter:
         return f'- {self.name} has {self.hp} hit points'
 
     def clone(self):
-        f = Fighter(self.name, self.hp, self.damage, self.mana)
+        f = Character(self.name, self.hp, self.damage, self.mana)
         f.armor = self.armor
         return f
 
@@ -89,7 +89,6 @@ class Spell:
 
         self.timer -= 1
 
-
         if self.damage:
             log.debug('%s deals %s damage; its timer is now %s.', self.name, self.damage, self.timer)
             boss.hp -= self.damage
@@ -139,7 +138,7 @@ def turn(spells, player, boss, spell_name, hard=False):
         player.hp = 0
         return cost
 
-    if boss.hp <= 0:
+    if not boss.is_alive():
         log.info('Boss dies')
         return cost
 
@@ -190,9 +189,10 @@ def min_cost_game(spells, player, boss, hard=False):
 
         min_cost = sys.maxsize
         for name in spells.keys():
-            cast = spells[name]
-            if cast.is_active() or cast.cost > player.mana:
-                continue
+            # premature optimization!
+            # cast = spells[name]
+            # if cast.is_active() or cast.cost > player.mana:
+            #     continue
             s = { k:v.clone() for k,v in spells.items() }
             p = player.clone()
             b = boss.clone()
@@ -206,15 +206,15 @@ def min_cost_game(spells, player, boss, hard=False):
 
 
 def example_game1():
-    player = Fighter('Player', hp=10, mana=250)
-    boss = Fighter('Boss', hp=13, damage=8)
+    player = Character('Player', hp=10, mana=250)
+    boss = Character('Boss', hp=13, damage=8)
     spells = init_spells()
     turn(spells.values(), player, boss, 'Poison')
     turn(spells.values(), player, boss, 'Magic Missile')
 
 def example_game2():
-    player = Fighter('Player', hp=10, mana=250)
-    boss = Fighter('Boss', hp=14, damage=8)
+    player = Character('Player', hp=10, mana=250)
+    boss = Character('Boss', hp=14, damage=8)
     spells = init_spells()
     turn(spells, player, boss, 'Recharge')
     turn(spells, player, boss, 'Shield')
@@ -226,8 +226,8 @@ def example_game2():
 
 def part_one(boss_stats):
     """ part one """
-    boss = Fighter('Boss', *boss_stats)
-    player = Fighter('Player', hp=50, mana=500)
+    boss = Character('Boss', *boss_stats)
+    player = Character('Player', hp=50, mana=500)
 
     return min_cost_game(init_spells(), player, boss)
 
@@ -235,8 +235,8 @@ def part_one(boss_stats):
 # expected: 1216
 def part_two(boss_stats):
     """ part two """
-    boss = Fighter('Boss', *boss_stats)
-    player = Fighter('Player', hp=50, mana=500)
+    boss = Character('Boss', *boss_stats)
+    player = Character('Player', hp=50, mana=500)
 
     return min_cost_game(init_spells(), player, boss, hard = True)
 
