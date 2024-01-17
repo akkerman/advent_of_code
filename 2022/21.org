@@ -1,3 +1,6 @@
+:PROPERTIES:
+:ID:       9de0ec51-328c-4b3b-90f5-221d2fff0a24
+:END:
 #+title: 2022 Day 21: Monkey Math
 #+options: toc:nil num:nil
 

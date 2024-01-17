@@ -5,6 +5,7 @@
 
 - tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
 
+* Notes
 - pruning paths that lead to later geode robot
   example from 1m40 to 5.5s
   input from 6:05.79 to 1:51.79

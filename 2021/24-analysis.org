@@ -1,4 +1,12 @@
+:PROPERTIES:
+:ID:       a7538459-70cc-4921-aa6a-623ec367ffe4
+:END:
+#+title: 2021 Day 24: Arithmetic Logic Unit
+#+options: toc:nil num:nil
 
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Notes
 #+begin_src
       inp w     inp w     inp w      inp w      inp w      inp w      inp w      inp w       inp w      inp w      inp w     inp w     inp w      inp w
       mul x 0   mul x 0   mul x 0    mul x 0    mul x 0    mul x 0    mul x 0    mul x 0     mul x 0    mul x 0    mul x 0   mul x 0   mul x 0    mul x 0
