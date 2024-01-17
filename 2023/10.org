@@ -1,10 +1,14 @@
-#+title: Day 10: Pipe Maze
+:PROPERTIES:
+:ID:       edb6e244-0975-4cc0-84cd-8a458021b46c
+:END:
+#+title: 2023 Day 10: Pipe Maze
 #+options: toc:nil num:nil
 
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
 
 * Part One
 
-Breath first search with cost calculation. Hierbij de maximale kosten bijhouden
+[[id:ccd23e17-bc3e-486c-8127-331517a7dc95][Breadth-first search]] with cost calculation. Hierbij de maximale kosten bijhouden
 en teruggeven.
 
 Omdat het een ronde zou zijn, zijn er, bij elk punt, altijd maar 2 buren. Beide

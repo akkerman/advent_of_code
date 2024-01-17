@@ -1,9 +1,14 @@
-#+title: Day 21: Step Counter
+:PROPERTIES:
+:ID:       e19d21af-f4a0-4c5c-a50d-c0f9c1471163
+:END:
+#+title: 2023 Day 21: Step Counter
 #+options: toc:nil num:nil
+
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
 
 * Part One
 
-Begonnen door een BFS op te zeten, dit leek wel te werken voor het voorbeeld
+Begonnen door een [[id:ccd23e17-bc3e-486c-8127-331517a7dc95][BFS]] op te zeten, dit leek wel te werken voor het voorbeeld
 maar gaf niet juiste antwoord voor de input.
 
 Een aantal observaties die belangrijk zijn maar mij niet vanaf het begin 100% duidelijk
