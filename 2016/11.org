@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       fe41248e-fb7e-4d5a-8cd2-3df967f323b9
+:END:
+#+title: 2016 Day 11: Radioisotope Thermoelectric Generators
+#+options: toc:nil num:nil
+
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Notes
++ chip is powered by generator with same name
++ unpowerd chip is fried by other generator
++ powered chip has shield
++ elevator holds 1 or 2 chips/generators
++ elevator stops on each floor
+
+- So move either a generator or a chip, or both one floor up or down.
+- check state
