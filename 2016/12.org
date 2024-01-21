@@ -4,3 +4,13 @@
 #+title: 2016 Day 12: Leonardo's Monorail
 
 - tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+
+Just implement instructions.
+
+Caveat if you only expect one element in a matching group do not get to it with
+destructuring, but take the last element (othewise you get a pair with one value
+instead of the value)
+
+* Part Two

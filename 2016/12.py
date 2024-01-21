@@ -10,10 +10,9 @@ re_inc = re.compile('inc (.+)')
 re_dec = re.compile('dec (.+)')
 re_jnz = re.compile('jnz (.+) (.+)')
 
-
-def part_one(lines):
-    """ part one """
+def solve(lines, c = 0):
     registers = defaultdict(int)
+    registers['c'] = c
     idx = 0
     while 0 <= idx < len(lines):
         line = lines[idx]
@@ -57,15 +56,17 @@ def part_one(lines):
             else:
                 idx += 1
 
-        
-
-
     return registers['a']
+
+
+def part_one(lines):
+    """ part one """
+    return solve(lines)
 
 
 def part_two(lines):
     """ part two """
-    return 'todo'
+    return solve(lines, c=1)
 
 
 def main():
