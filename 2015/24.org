@@ -8,7 +8,7 @@
 
 * part one
 
-Deze begon met het genereren van de permutaties en dan daar groepjes van maken en kijken of eea klopt. Dit werkte wel voor het voorbeeld maar liep super lang voor de werkelijke input en heb ik afgebroken.
+Deze begon met het genereren van de [[id:0791fcdf-440d-4836-8426-cd93bb9a9587][permutaties]] en dan daar groepjes van maken en kijken of eea klopt. Dit werkte wel voor het voorbeeld maar liep super lang voor de werkelijke input en heb ik afgebroken.
 
 Een paar waarnemingen.
 
@@ -20,12 +20,12 @@ Een paar waarnemingen.
    negeren dan moet er, op een gegeven moment, een match komen met de kortste
    lengte en beste qa op de eerste positie.
 3. de volgorde van de gewichten (permutaties) maakt niets uit voor het antwoord
-   en dus nemen we combinaties.
+   en dus nemen we [[id:0791fcdf-440d-4836-8426-cd93bb9a9587][combinaties]].
 
 Uiteindelijk leek eea nogsteeds niet te stoppen, met een print zag ik dat er voornamelijk dezelfde groep voorbij kwam. Toen ik die probeerde was dat het antwoord! Dus de eerste die ik vind geef ik terug en dat wassum.
 
-Dit komt waarschijnlijk omdat de groepjes van kortste lengte eerst worden gegenereerd. dus de eerste de beste combinatie die alle groepjes weet te berekeninen is de korste met de laagste qa.
+Dit komt waarschijnlijk omdat de groepjes van kortste lengte eerst worden gegenereerd. dus de eerste de beste [[id:0791fcdf-440d-4836-8426-cd93bb9a9587][combinatie]] die alle groepjes weet te bereken is de korste met de laagste qa.
 
 * part two
 
-dezelfde loop in een loop in een loop maar dan 4x
+Dezelfde loop in een loop in een loop maar dan 4x

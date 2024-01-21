@@ -1,0 +1,10 @@
+:PROPERTIES:
+:ID:       9415628a-c483-408c-8d30-a0d9467d0504
+:END:
+#+title: 2015 Day 9: All in a Single Night
+
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+
+* Part Two
