@@ -5,4 +5,4 @@
 * Part One
 [[id:ccd23e17-bc3e-486c-8127-331517a7dc95][Breadth-first search]] add steps to neighbours, return steps when endpoint reached.
 * Part Two
-[[id:ccd23e17-bc3e-486c-8127-331517a7dc95][Breadth-first search]] add steps to neighbours, number of visited nodes when 50 steps reached
+[[id:ccd23e17-bc3e-486c-8127-331517a7dc95][Breadth-first search]] add steps to neighbours, return number of visited nodes when 50 steps reached
