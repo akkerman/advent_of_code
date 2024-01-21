@@ -3,7 +3,7 @@
 import sys
 import re
 from itertools import combinations
-import heapq
+from collections import deque
 
 def valid_floor(floor):
     # suppose type = 'chip'
@@ -58,11 +58,11 @@ empty = [set(), set(), set()]
 
 def solve(starting_floors):
     visited = set()
-    q = []
-    heapq.heappush(q, (0, starting_floors.copy(), 0))
+    q = deque()
+    q.append((0, starting_floors.copy(), 0))
 
     while True:
-        steps, floors, elevator = heapq.heappop(q)
+        steps, floors, elevator = q.popleft()
 
         if floors[:3] == empty:
             return steps
@@ -84,7 +84,7 @@ def solve(starting_floors):
                     # print('moving pair', pair, 'up to floor', next_floor)
                     fs[elevator] = fs[elevator] - pair
                     fs[elevator+1] = fs[next_floor] | pair
-                    heapq.heappush(q, (steps + 1, fs, next_floor))
+                    q.append((steps + 1, fs, next_floor))
 
 
             for single in singles:
@@ -94,7 +94,7 @@ def solve(starting_floors):
                     # print('moving single', single, 'up to floor', next_floor)
                     fs[elevator] = fs[elevator] - single
                     fs[next_floor] = fs[next_floor] | single
-                    heapq.heappush(q, (steps + 1, fs, next_floor))
+                    q.append((steps + 1, fs, next_floor))
 
         if elevator > 0 and floors[:elevator] != empty[:elevator]:
 
@@ -106,7 +106,7 @@ def solve(starting_floors):
                     # print('moving', single, 'down to floor', next_floor)
                     fs[elevator] = fs[elevator] - single
                     fs[next_floor] = fs[next_floor] | single
-                    heapq.heappush(q, (steps + 1, fs, next_floor))
+                    q.append((steps + 1, fs, next_floor))
 
 def part_one(floors):
     """ part one """
