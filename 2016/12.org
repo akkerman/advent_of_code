@@ -1,0 +1,6 @@
+:PROPERTIES:
+:ID:       8bf34638-57f8-48b2-bd59-ed5424cbbc4a
+:END:
+#+title: 2016 Day 12: Leonardo's Monorail
+
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
