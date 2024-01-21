@@ -14,3 +14,6 @@ destructuring, but take the last element (othewise you get a pair with one value
 instead of the value)
 
 * Part Two
+
+Parameterize solve function to receive initial value of c.
+Solve.
