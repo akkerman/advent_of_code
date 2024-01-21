@@ -15,3 +15,39 @@
 
 - So move either a generator or a chip, or both one floor up or down.
 - check state
+
+* Part One
+
+Ik vond het heel moeilijk om te bedenken hoe de stappen gezet moesten gaan worden.
+Ben toen maar deel problemen gaan oplossen.
+
++ Wanneer is een verdieping in een toestand zodat er geen microchips kapot gaan.
++ hoe te bepalen welke paren verplaatst kunnen worden.
++ Hoe te bepalen welke chip/generator verplaatst kan worden.
+
+Begonnen met een [[id:ea19be69-54e4-4d9d-a3bc-3b64c3b0dde1][depth-first search]] maar daar was steeds een wisselende state
+(lift ging op en neer) en kwam zodoende in een oneindige lus.
+
+Geswitched naar [[id:ccd23e17-bc3e-486c-8127-331517a7dc95][Breadth-first search]] het voorbeeld was zo klaar maar de
+werkelijke input bleef maar draaien en draaien dus moest er een visited set bij
+van een handige state.
+
+Elke vloerd heb ik gecodeerd op zo'n manier dat het aantal chip/generator paren
+genoteerd werden en het aantal chips en generators apart. Ik had die paren eraf
+kunnen halen maar dat maakt eigenlijk niet uit. Ik heb de aantallen op 1 hoop gegooit omdat dit het meest bepalende is.
+
+Als er een paar is, dan maakt het, voor de state niet uit welke type(s) het zijn omdat de vervolg stappen hetzelfde zijn. vgl
+
+
+#+begin_src
+F4 .  .  .  .  HM     F4 .  .  .  .  LM
+F3 E  LG LM HG .      F3 E  HG HM LG .
+F2 .  .  .  .  .      F2 .  .  .  .  .
+F1 .  .  .  .  .      F1 .  .  .  .  .
+#+end_src
+
+De stap hier zal zal hetzelfde zijn; breng de twee generator omhoog.
+
+* Part Two
+
+Erh ja voeg de extra componenten toe op floor 1 en klaar.

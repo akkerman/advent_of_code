@@ -116,7 +116,13 @@ def part_one(floors):
 
 def part_two(floors):
     """ part two """
-    return 'todo'
+    f1 = floors[0]
+    f1.add(('elerium','generator'))
+    f1.add(('elerium','chip'))
+    f1.add(('dilithium','generator'))
+    f1.add(('dilithium','chip'))
+
+    return solve(floors)
 
 re_chip = re.compile('([^ ]+)-compatible')
 re_rtg = re.compile('([^ ]+) generator')
