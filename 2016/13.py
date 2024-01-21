@@ -46,8 +46,28 @@ def part_one(favo, end):
 
 def part_two(favo):
     """ part two """
-    return 'todo'
+    office = Office(favo)
 
+    q = deque()
+    q.append((1,1,0))
+    visited = set()
+
+    while True:
+        if len(q) == 0:
+            break
+
+        x,y,steps = q.popleft()
+        if (x,y) in visited:
+            continue
+        if steps > 50:
+            continue
+
+        visited.add((x,y))
+
+        for nx, ny in office.neighbours(x,y):
+            q.append((nx,ny,steps+1))
+
+    return len(visited)
 
 def main():
     """ main """

@@ -3,4 +3,6 @@
 - tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
 
 * Part One
+[[id:ccd23e17-bc3e-486c-8127-331517a7dc95][Breadth-first search]] add steps to neighbours, return steps when endpoint reached.
 * Part Two
+[[id:ccd23e17-bc3e-486c-8127-331517a7dc95][Breadth-first search]] add steps to neighbours, number of visited nodes when 50 steps reached
