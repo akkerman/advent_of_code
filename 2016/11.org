@@ -29,12 +29,16 @@ Begonnen met een [[id:ea19be69-54e4-4d9d-a3bc-3b64c3b0dde1][depth-first search]]
 (lift ging op en neer) en kwam zodoende in een oneindige lus.
 
 Geswitched naar [[id:ccd23e17-bc3e-486c-8127-331517a7dc95][Breadth-first search]] het voorbeeld was zo klaar maar de
-werkelijke input bleef maar draaien en draaien dus moest er een visited set bij
-van een handige state.
+werkelijke input bleef maar draaien en draaien.
+Ik had nog het idee om een priority queue in te zetten maar dat haalde niets
+uit. (later omgebouwd naar een deque)
 
-Elke vloerd heb ik gecodeerd op zo'n manier dat het aantal chip/generator paren
-genoteerd werden en het aantal chips en generators apart. Ik had die paren eraf
-kunnen halen maar dat maakt eigenlijk niet uit. Ik heb de aantallen op 1 hoop gegooit omdat dit het meest bepalende is.
+Dus moest er, zoals meestal, een visited set bij van een handige (te serializeren) state.
+
+Elke vloer heb ik gecodeerd op zo'n manier dat het aantal chip/generator paren
+genoteerd werden en het aantal chips en generators apart. Ik had die paren van
+totaal chips/generatoren eraf kunnen halen maar dat maakt eigenlijk niet uit. Ik
+heb de aantallen op 1 hoop gegooit omdat dit het meest bepalende is.
 
 Als er een paar is, dan maakt het, voor de state niet uit welke type(s) het zijn omdat de vervolg stappen hetzelfde zijn. vgl
 
