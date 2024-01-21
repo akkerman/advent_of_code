@@ -26,10 +26,9 @@ def part_one(salt):
     while True:
 
 
-        lookup = {tup for tup in lookup if tup[1] > (idx-1000)}
 
         md5hash = md5(salt+ str(idx))
-        matches = [i for t, i in lookup if t in md5hash]
+        matches = [i for t, i in lookup if i > (idx-1000) and t in md5hash]
         for m in matches:
             key_idx.add(m)
 
