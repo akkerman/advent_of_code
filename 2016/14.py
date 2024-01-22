@@ -3,10 +3,16 @@
 import sys
 import hashlib
 
-def md5(s:str)->str:
+def md5_normal(s:str)->str:
     m = hashlib.md5()
     m.update(s.encode())
     return m.hexdigest()
+
+def md5_stretched(s:str)->str:
+    for _ in range(2017):
+        s = md5_normal(s)
+    return s
+
 
 def quint_from_triplet(h):
     for i in range(len(h)-2):
@@ -15,18 +21,15 @@ def quint_from_triplet(h):
     return None
 
 
-
-def part_one(salt):
-    """ part one """
-    print('salt', salt)
+def solve(salt, stretch=False):
     lookup = set()
     key_idx = set()
 
     idx = 0
+
+    md5 = md5_stretched if stretch else md5_normal
+
     while True:
-
-
-
         md5hash = md5(salt+ str(idx))
         matches = [i for t, i in lookup if i > (idx-1000) and t in md5hash]
         for m in matches:
@@ -40,10 +43,17 @@ def part_one(salt):
             lookup.add((quint, idx))
 
         idx+=1
+        if idx > 25000:
+            print('too many for example')
+            break
 
-def part_two(lines):
+def part_one(salt):
+    """ part one """
+    return solve(salt)
+
+def part_two(salt):
     """ part two """
-    return 'todo'
+    return solve(salt, stretch=True)
 
 
 def main():
@@ -51,12 +61,11 @@ def main():
     lines = []
     for line in sys.stdin:
         line = line.replace('\n', '')
-    
         lines.append(line)
 
+    salt = lines[0]
+    print('salt', salt)
     print('part_one', part_one(lines[0]))
-
     print('part_two', part_two(lines[0]))
-
 
 main()

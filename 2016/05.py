@@ -14,7 +14,7 @@ def part_one(door_id):
     """ part one """
     password = []
 
-    print('generatating password for door 1...')
+    print('generating password for door 1...')
 
     i = 0
     while len(password) < 8:
@@ -33,7 +33,7 @@ def part_one(door_id):
 def part_two(door_id):
     """ part two """
     password = ["_"] * 8
-    print('generatating password for door 2...')
+    print('generating password for door 2...')
 
     i = 0
     while "_" in password:

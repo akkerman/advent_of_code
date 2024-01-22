@@ -1,0 +1,11 @@
+:PROPERTIES:
+:ID:       dfa432f1-672a-4326-8546-99fe8e7be152
+:END:
+#+title: 2016 Day 5: How About a Nice Game of Chess?
+
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]] · [[id:4aba9ab9-65c1-42bc-ba0a-19bcccb378d0][md5]]
+
+* Part One
+
+
+* Part Two

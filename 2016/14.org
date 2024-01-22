@@ -3,7 +3,44 @@
 :END:
 #+title: 2016 Day 14: One-Time Pad
 
-- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]] · [[id:4aba9ab9-65c1-42bc-ba0a-19bcccb378d0][md5]]
 
 * Part One
+
+Hmm, hash with increasing index, dit is heel erg zoals jk
+
+Mijn idee hier was als volgt.
+
+1. maak md5 hash zoals beschreven
+2. check of er een triple in zit
+3. bewaar een quitnuple van die char incl de index waarop deze gevonden is
+4. controleer of er in huidige hash quintuples voorkomen in de voorgaande (index minimaal 1000 kleiner)
+5. sla de indices waarvoor we een key gevonden hebben op (niet de keys zelf)
+
+Zodra we 64 key indices hebben geef dan de grootste index terug.
+
+*NB*: Bovenstaande werkte voor het voorbeeld maar niet voor de input.
+    De reden was dat bij de hash die de 64ste key opleverde er meer werden
+    gevonden. hierdoor was mijn lijstje met key indices dus > 64 en bleef het
+    programma oneindig door stampen.
+
+
 * Part Two
+
+Ik vond dit allemaal maar moeilijk omschreven, m.n. veel text om aan te geven
+dat de md5 hash 2017 keer gedaan moest worden alvorens de rest van het
+algorithme te doen.
+
+*NB*: [[id:126a1e03-1dcd-4fa3-80dd-59fd6e07ab56][Python]] range indices zijn zero-based en exclusief de rechter grenswaarde!
+
+#+begin_src python
+
+l1 = len(range(2017))  # 2017 getallen maar dan wel [0,2017>
+
+l2 = len(range(2,12))  # 12-2=10 getallen [2,12>
+
+return l1, l2
+#+end_src
+
+#+RESULTS:
+| 2017 | 10 |
