@@ -7,7 +7,7 @@
 
 * Part One
 
-Hmm, hash with increasing index, dit is heel erg zoals jk
+Hmm, hash with increasing index, dit is heel erg zoals [[id:dfa432f1-672a-4326-8546-99fe8e7be152][dag 5]].
 
 Mijn idee hier was als volgt.
 
@@ -36,7 +36,6 @@ algorithme te doen.
 #+begin_src python
 
 l1 = len(range(2017))  # 2017 getallen maar dan wel [0,2017>
-
 l2 = len(range(2,12))  # 12-2=10 getallen [2,12>
 
 return l1, l2

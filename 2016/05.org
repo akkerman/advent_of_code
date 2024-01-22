@@ -7,5 +7,14 @@
 
 * Part One
 
+Recht toe recht aan implementeren.
+
 
 * Part Two
+
+Twee toevoegingen
+
+1. het 5e character moet een int in range [0,7] zijn
+2. om dubbelen te voorkomen, password initializeren als ~________~ en alleen vervangen als er nog een underscore staat.
+
+Het tweede punt deed ik eerst niet en dan krijg je idd een ander password.
