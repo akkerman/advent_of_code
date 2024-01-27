@@ -14,7 +14,7 @@ uitprogrammeren. [[https://stackoverflow.com/a/20677983/3889449][Stackoverflow]]
 
 ** Binnen de perken
 
-Zodra we van elke combinatie van hagelstenen het kruispunt weten moeten we
+Zodra we van elke [[id:0791fcdf-440d-4836-8426-cd93bb9a9587][combinatie]] van hagelstenen het kruispunt weten moeten we
 controleren of het binnen het testveld ligt en in de toekomst. Voor die 'in de
 toekomst' berekening dacht ik eerst om de richting van het startpunt tot het
 kruispunt exact terug te herleiden naar de gegeven snelheid. Daarbij zat ik wat

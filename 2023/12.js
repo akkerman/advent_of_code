@@ -1,5 +1,6 @@
 const R = require('ramda')
 const readline = require('readline')
+const assert = require('assert')
 const rl = readline.createInterface({ input: process.stdin })
 const tap = R.tap
 const log = console.log // eslint-disable-line
@@ -49,9 +50,9 @@ function partOneOrig (springField) {
   }
 
   /**
- * Generate a possible fixed ConditionRecord from a damaged one
- * @type {(cr:ConditionRecord) => ConditionRecord }
-*/
+   * Generate a possible fixed ConditionRecord from a damaged one
+   * @type {(cr:ConditionRecord) => ConditionRecord }
+   */
   function * permutate (cr) {
     const id = cr.indexOf(COND.unknown)
     if (id === -1) {
@@ -134,7 +135,7 @@ function solve (springField) {
       return numArrangements(cr.slice(1), newDG, false)
     }
 
-    // assert currentSpring === COND.unknown
+    assert(currentSpring === COND.unknown)
 
     if (inGroup) {
       if (group === 0) {

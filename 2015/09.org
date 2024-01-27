@@ -7,4 +7,9 @@
 
 * Part One
 
+Create a [[id:d635f8a9-8327-414a-9a77-61499af29485][Graph]], calculate the lengths of a traversal of each [[id:0791fcdf-440d-4836-8426-cd93bb9a9587][permutation]] of the
+vertics (nodes) and take the minimum.
+
 * Part Two
+
+Part one, take maximum

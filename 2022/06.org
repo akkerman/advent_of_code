@@ -51,7 +51,7 @@ Caveat: dumps when there is no such set in the stream
 * Haskell
 
 For the Haskell version I went the 'one solution way'.
-In a solution of [[https://github.com/iroghair/aoc2022/blob/main/Day06/day06.py#L20][iroghair]] I saw an optimization which got me intrigued.
+In a [[https://github.com/iroghair/aoc2022/blob/main/Day06/day06.py#L20][solution]] of [[id:63f544fc-7e77-4358-b996-4eeb431334bf][Ivo Roghair]] I saw an optimization which got me intrigued.
 
 In stead of walking through the characters one-by-one you can skip the amount of
 duplicate characters instead. The idea is dat, although these duplicate could be

@@ -1,0 +1,50 @@
+:PROPERTIES:
+:ID:       9220d8b1-7700-4622-8608-801e357a1358
+:END:
+#+title: 2021 Day 21: Dirac Dice
+
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+
+
+* Part One
+easily done
+
+since I became somewhat facinated with generator functions
+that was used in the solution
+
+* Part Two
+a few missteps in the thinking process
+
+ 1. lets determine all [[id:0791fcdf-440d-4836-8426-cd93bb9a9587][permutations]] of summing 1,2,3 up to 21 minus the current position
+    there are countless examples on the internet how to do this
+    then lets just use that as a power of 3 (3 possibilities for 1,2,3)
+    WRONG: score is NOT calculated based on the dice, but on position
+
+ 2. how to play the game for each possible value of the dice
+    WRONG: score is determined on 3 dice throws
+
+ 3. lets generate all solutions based on the sum of the dice
+    GOOD: score is calculated based on next step based on 3 dice throws
+    WRONG: universes split on dice throw not on sum so each sum has has 3 throws
+    times 3 -> still wrong.. ?
+
+ 4. current solution
+    realisation struck that there are multiple possible ways to get to the sum of the dice
+    this are the possible sums: 3,4,5,6,7,8,9
+    several of them can be received by different throws, e.g. 5:
+    1,1,3
+    1,2,2
+    1,3,1
+    etc...
+
+    If the solution requires me to calculate all universes where someone wins
+    it will result in an addititional 3*3*3 = 27 possible universes for each existing one
+
+    CAVEAT: these universes exist because the dice created them, not because they are different.
+    CAVEAT2: do not count a throw of 1,1,1 as 3 universes, because there is only 1 die
+             the first of that universe is also in a throw like 1,2,3 and 1,1,2 and 1,3,1.
+
+    - determine the total of universes after a throw (current universes * combination of dice outcome)
+    - pass it along to the next turn
+    - if a player wins return the number of universes that he won in
