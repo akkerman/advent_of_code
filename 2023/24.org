@@ -38,6 +38,8 @@ vergeleken met de mijne. (print alles, beetje text bewerken en dan een diff). Zo
 kwam ik er achter dat de functie van stackoverflow (origineel python) bij deze
 grote getallen allemaal afrondingsfouten gaf bij de [[https://nl.wikipedia.org/wiki/Determinant][determinant]] berekening.
 
+Dus overschakelen naar [[id:92d24b2d-f846-4655-9994-66007233c2ff][BigInt]].
+
 
 #+begin_src js :results verbatim :wrap results js :exports both
 const det = (a, b) => a[0] * b[1] - a[1] * b[0]
