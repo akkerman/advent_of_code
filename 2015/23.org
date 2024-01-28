@@ -1,9 +1,10 @@
 :PROPERTIES:
 :ID:       2584841a-1083-4c62-963d-9ac49ded8ae8
+:ROAM_REFS: https://adventofcode.com/2015/day/23
 :END:
 #+title: 2015 Day 23: Opening the Turing Lock
 
-- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]] · [[id:4a79991d-d2c3-437d-b284-2d5c47d1977e][Assembly Languge Puzzle]]
 
 * Part One
 

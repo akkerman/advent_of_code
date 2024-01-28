@@ -22,11 +22,12 @@ Change nr 3. to: figure out if the tree is visible from any of those directions
 
 Ideas
 1. copy paste part one
-2. make sure the up, left, down, right tree sequences are in the order from the perspective of the tree
-3. Take the visible trees from the directions
+2. make sure the up, left, down, right tree sequences are in the order from the
+   perspective of the tree 3. Take the visible trees from the directions
 4. apply the the given formula on the viewing distances
 
-After a lot of tries, re-read the text again and come to the conclusion that the intended mental model was not at all what I was going with.
+After a lot of tries, re-read the text again and come to the conclusion that
+   the intended mental model was not at all what I was going with.
 
 
 i.e. the solution is the below function ~takeVisible~
@@ -52,5 +53,6 @@ For some reason I figured that all of those tree lengths should be visible from 
 But the assignment clearly states
 
 #+begin_quote
-stop if you reach an edge or at the first tree that is the same height or taller than the tree under consideration
+stop if you reach an edge or at the first tree that is the same height or
+taller than the tree under consideration 
 #+end_quote

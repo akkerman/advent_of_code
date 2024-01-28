@@ -4,7 +4,7 @@
 #+title: 2022 Day 10: Cathode-Ray Tube
 #+options: toc:nil num:nil
 
-- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]] · [[id:4a79991d-d2c3-437d-b284-2d5c47d1977e][Assembly Languge Puzzle]]
 
 * Solve in JavaScript
 

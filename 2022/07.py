@@ -1,3 +1,5 @@
+# pylint: disable=missing-module-docstring,missing-function-docstring
+# pylint: disable=invalid-name
 import sys
 from typing import DefaultDict
 
@@ -33,12 +35,12 @@ def parse(lines):
 
 def part_one(dirs):
     dirs[''] = 0
-    return sum([size for size in dirs.values() if size < 100000])
+    return sum(size for size in dirs.values() if size < 100000)
 
 def part_two(dirs):
     unused = 70000000 - dirs['']
     freeup = 30000000 - unused
-    return min([size for size in dirs.values() if size >= freeup])
+    return min(size for size in dirs.values() if size >= freeup)
 
 
 def main():
@@ -50,6 +52,5 @@ def main():
     print('part_one', part_one(parse(lines)))
 
     print('part_two', part_two(parse(lines)))
-
 
 main()
