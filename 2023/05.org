@@ -1,0 +1,20 @@
+:PROPERTIES:
+:ID:       bdace667-0f38-439d-a3b5-dcea7611b69f
+:END:
+#+title: 2023 Day 5: If You Give A Seed A Fertilizer
+#+filetags: :javascript:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+
+
+* Part Two Bruteforce
+
+Bruteforce 170mins op i7 PC van 2013 en 69mins op m'n nieuwe AMD Ryzen 9.
+
+Omdat ik me altijd al eens wilde verdiepen in [[https://nodejs.org/api/worker_threads.html][worker_threads]] heb ik de
+berekening van elke seed range in een aparte thread gedaan. Totale tijd 3:30.
+
+* TODO Part Two Backwards
+
+Je kan ook vanaf de destination terug gaan rekenen...
