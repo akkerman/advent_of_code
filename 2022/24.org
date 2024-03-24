@@ -1,0 +1,30 @@
+:PROPERTIES:
+:ID:       3bda4a4e-06c7-4bcc-a311-0e132e29b05e
+:END:
+#+title: 2022 Day 24: Blizzard Basin
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+
+heel dom ik was de set waarmee ik controleerde aan het wijzigen.
+
+#+begin_src python
+
+for elf in elves:
+    if not elves & moves_to_check(elf, 'A'):   # controle met elves
+        # wants to stay
+        continue
+
+    for direction in directions:
+        if not elves & moves_to_check(elf, direction): # controle met elves
+            prop = move_direction(elf, direction)
+            if prop not in collisions:
+                moved_elves.remove(elf) # modify elves
+                moved_elves.add(prop)   # modify elves
+            break
+
+#+end_src
+
+
+* Part Two
