@@ -1,0 +1,23 @@
+:PROPERTIES:
+:ID:       7153c1e3-c016-46c3-8496-223545c1a19d
+:END:
+#+title: 2024 Day 1: Historian Hysteria
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+
+De input is twee lijsten! Dus elke regel opsplitsen en apart opslaan.
+
+De omschrijving is een omslachtige manier om te zeggen de twee lijsten te
+sorteren en dan een bewerking te doen met de getallen op dezelfde positie in de
+lijst.
+
+Verschil is =abs(a-b)=
+
+* Part Two
+
+Python heeft een counter object zodat het bepalen van hoe vaak iets in een lijst
+voorkomt eenvoudig =counts=Counter(list)=.
+
+Maar 't kan uiteraard ook met een filter (javascript) ~list2.filter(i => i === list1item).length~
