@@ -2,6 +2,7 @@
 # pylint: disable=invalid-name
 import sys
 from typing import List
+from collections import Counter
 
 
 def part_one(list1: List[int], list2: List[int]):
@@ -17,7 +18,15 @@ def part_one(list1: List[int], list2: List[int]):
 
 def part_two(list1: List[int], list2: List[int]):
     """ part two """
-    return 'todo'
+
+    counts = Counter(list2)
+
+    sum = 0
+    for one in list1:
+        similarity = one * counts[one]
+        sum = sum + similarity
+
+    return sum
 
 
 def main():
