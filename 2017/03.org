@@ -3,6 +3,8 @@
 :END:
 #+title: 2017 Day 3: Spiral Memory
 #+filetags: :python:
+#+options: num:nil toc:nil
+
 - tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
 
 * Part One
@@ -88,6 +90,10 @@ return minimum
 : 1
 
 
-
-
 * Part Two
+
+Ben wat gaan googlen.
+
+Uiteindelijk een [[https://oeis.org][website]] tegengekomen waarop de [[https://oeis.org/A151581][sequence]] staat, dus daarmee was
+code niet eens perse nodig. Met [[https://chatgpt.com][chatgpt]] de code vertaald naar python en het
+verwerkt in een oplossing.
