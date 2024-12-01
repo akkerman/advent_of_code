@@ -1,0 +1,93 @@
+:PROPERTIES:
+:ID:       2b913c95-bc51-42c2-bddc-80d8cd6b2f46
+:END:
+#+title: 2017 Day 3: Spiral Memory
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+
+Es kijken of we een beeld kunnen krijgven van die spiraal.
+
+#+begin_src quote
+1x1 -> 1
+3x3 -> 9
+5x5 -> 25
+7x7 -> 49
+9x9 -> 81
+#+end_src
+
+Dus rechtsonder is altijd een kwadraat met oneven factoren.
+Kijken of het te bepalen is wat het eerste kwadraat, met oneven basis, is boven mijn puzzel input.
+Want in die ribben moet het getal ergens zitten.
+
+#+begin_src python :results verbatim
+def eerste_kwadraat_met_oneven_factoren(n):
+    m = int(n**0.5)  # Start bij de vierkantswortel van n, afgerond omlaag
+    if m % 2 == 0:   # Zorg ervoor dat m oneven is
+        m += 1
+    while True:
+        k = m**2
+        if k >= n:
+            return m, k
+        m += 2  # Alleen oneven waarden van m testen
+return eerste_kwadraat_met_oneven_factoren(22)
+#+end_src
+
+#+RESULTS:
+: (5, 25)
+
+
+
+#+begin_src python :results verbatim
+m, k = 5, 25
+
+# de laatste hoe is eigenlijk incorrect,
+# maar plaatsen we, voor de berekening op dezelfde plek als de eerste (rechts onder)
+hoeken = [k, k-m+1, k-2*m+2, k-3*m+3, (m-2)**2]
+return hoeken
+#+end_src
+
+#+RESULTS:
+: [25, 21, 17, 13, 9]
+
+Vanaf een hoek is de afstand altijd m.
+
+Als we niet precies op een hoek zitten moeten we kijken hoe ver we van het midden zitten.
+
+#+begin_src python :results verbatim
+hoeken = [25, 21, 17, 13, 9]
+midden = []
+s = hoeken[0]
+for h in hoeken[1:]:
+    midden.append(int((s+h) / 2))
+    s = h
+return midden
+#+end_src
+
+#+RESULTS:
+: [23, 19, 15, 11]
+
+Vanaf het midden is het altijd precies m/2.
+als we niet OP het midden zitten dan is de afstand m + het kleinste verschil vanaf een midden.
+
+#+begin_src python
+m = 5
+minimum = m # start met m
+midden = [23, 19, 15, 11]
+
+for md in midden:
+    a = abs(md-22)
+    if a < minimum:
+        minimum = a
+
+return minimum
+#+end_src
+
+#+RESULTS:
+: 1
+
+
+
+
+* Part Two
