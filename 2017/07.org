@@ -1,0 +1,35 @@
+:PROPERTIES:
+:ID:       1f4debb5-9cbf-4333-92bd-e8d15896ac59
+:END:
+#+title: 2017 Day 7: Recursive Circus
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+
+Just create a dot image. surround the data with =digraph G {  }=
+Replace all weights with nothing. ( =%s/(\d+)//g= )
+
+#+begin_src dot :file recursive-circus.png :cmdline -Kdot -Tpng
+digraph G {
+pbga
+xhth
+ebii
+havc
+ktlj
+fwft  -> ktlj, cntj, xhth
+qoyq
+padx  -> pbga, havc, qoyq
+tknk  -> ugml, padx, fwft
+jptl
+ugml  -> gyxo, ebii, jptl
+gyxo
+cntj
+}
+#+end_src
+
+#+RESULTS:
+[[file:recursive-circus.png]]
+
+
+* Part Two
