@@ -11,3 +11,6 @@ Check report is the same in sorted and reverse sorted order.
 Check if each pair is the desired difference.
 
 * Part Two
+
+If the report is Unsafe:
+Calculate all possible dampened reports and check if any of them is safe.
