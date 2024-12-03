@@ -10,7 +10,7 @@
 extract with regex
 
 
-#+begin_src python :results verbatim :wrap src python
+#+begin_src python :results verbatim :wrap src python :exports both
 import re
 
 memory = 'xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))'
@@ -31,7 +31,7 @@ Split by "do()" then at least the start should be considered on.
 Split each part by "don't()" if there are multiple then only the first part is
 on the others are all off.
 
-#+begin_src python :results verbatim :wrap src python
+#+begin_src python :results verbatim :wrap src python :exports both
 import re
 
 memory = "xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))"
