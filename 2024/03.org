@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       49b84d28-1f7e-48d9-a8d5-38de335cd3c7
+:END:
+#+title: 2024 Day 3: Mull It Over
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+
+Maybe extract with regex?
+
+* Part Two
