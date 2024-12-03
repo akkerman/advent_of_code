@@ -14,14 +14,14 @@ extract with regex
 import re
 
 memory = 'xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))'
-pattern = r'mul\((\d+,\d+)\)'
+pattern = r'mul\((\d+),(\d+)\)'
 
 return re.findall(pattern, memory)
 #+end_src
 
 #+RESULTS:
 #+begin_src python
-['2,4', '5,5', '11,8', '8,5']
+[('2', '4'), ('5', '5'), ('11', '8'), ('8', '5')]
 #+end_src
 
 * Part Two
@@ -35,8 +35,7 @@ on the others are all off.
 import re
 
 memory = "xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))"
-
-pattern = r'mul\((\d+,\d+)\)'
+pattern = r'mul\((\d+),(\d+)\)'
 
 sub_matches = [do.split("don't()")[0] for do in memory.split('do()')]
 
@@ -45,5 +44,5 @@ return [m for sub in sub_matches for m in re.findall(pattern, sub)]
 
 #+RESULTS:
 #+begin_src python
-['2,4', '8,5']
+[('2', '4'), ('8', '5')]
 #+end_src
