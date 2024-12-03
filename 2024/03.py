@@ -1,28 +1,33 @@
 # pylint: disable=missing-module-docstring,missing-function-docstring
 # pylint: disable=invalid-name
 import sys
-import string
 import re
+from typing import List
 
 
-def part_one(memory:str)->int:
-    """ part one """
+pattern = r'mul\((\d+,\d+)\)'
 
-    pattern = r"mul\((\d+,\d+)\)"
-    matches = re.findall(pattern, memory)
-
-
+def mul(matches:List[str])->int:
     sum = 0 
     for match in matches:
         a, b = match.split(',')
         sum += int(a) * int(b)
-
     return sum
 
+def part_one(memory:str)->int:
+    """ part one """
+    matches = re.findall(pattern, memory)
+    return mul(matches)
 
-def part_two(lines):
+
+def part_two(memory:str)->int:
     """ part two """
-    return 'todo'
+    dos = memory.split('do()')
+    matches: List[str] = []
+    for do in dos:
+        stilldo = do.split("don't()")[0]
+        matches += re.findall(pattern, stilldo)
+    return mul(matches)
 
 
 def main():

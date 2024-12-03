@@ -7,6 +7,39 @@
 
 * Part One
 
-Maybe extract with regex?
+extract with regex
+
+
+#+begin_src python :results verbatim
+import re
+
+memory = 'xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))'
+pattern = r'mul\((\d+,\d+)\)'
+
+return re.findall(pattern, memory)
+#+end_src
+
+#+RESULTS:
+: ['2,4', '5,5', '11,8', '8,5']
 
 * Part Two
+
+Split by "do()" then at least the start should be considered on.
+
+Split each part by "don't()" if there are multiple then only the first part is
+one the others are all off.
+
+#+begin_src python :results verbatim
+import re
+
+memory = "xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))"
+
+pattern = r'mul\((\d+,\d+)\)'
+
+sub_matches = [do.split("don't()")[0] for do in memory.split('do()')]
+
+return [m for sub in sub_matches for m in re.findall(pattern, sub)]
+#+end_src
+
+#+RESULTS:
+: ['2,4', '8,5']
