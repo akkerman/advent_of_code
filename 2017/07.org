@@ -32,4 +32,9 @@ cntj
 [[file:recursive-circus.png]]
 
 
+As an alternative, after parsing the input into vertices and edges.
+Look for the one source of an edge that does not exist as a target.
+
+All nodes lead from the root, nothing leads to the root.
+
 * Part Two
