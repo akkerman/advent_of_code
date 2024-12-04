@@ -7,7 +7,9 @@
 
 * Part One
 
-Just create a dot image. surround the data with =digraph G {  }=
+** Just create a dot image.
+
+Surround the data with =digraph G {  }=
 Replace all weights with nothing. ( =%s/(\d+)//g= )
 
 #+begin_src dot :file recursive-circus.png :cmdline -Kdot -Tpng
@@ -31,10 +33,51 @@ cntj
 #+RESULTS:
 [[file:recursive-circus.png]]
 
+** Solve it with python
 
-As an alternative, after parsing the input into vertices and edges.
+After parsing the input into vertices and edges.
 Look for the one source of an edge that does not exist as a target.
 
 All nodes lead from the root, nothing leads to the root.
+It is possible to do with a set difference, it should only contain one element.
+
+#+begin_src python
+edges = [
+    ('fwft', 'ktlj'), ('fwft', 'cntj'), ('fwft', 'xhth'), ('padx', 'pbga'),
+    ('padx', 'havc'), ('padx', 'qoyq'), ('tknk', 'ugml'), ('tknk', 'padx'),
+    ('tknk', 'fwft'), ('ugml', 'gyxo'), ('ugml', 'ebii'), ('ugml', 'jptl')]
+
+sources = {edge[0] for edge in edges}
+targets = {edge[1] for edge in edges}
+return sources - targets # {'thknk'}
+#+end_src
+
+#+RESULTS:
+: {'tknk'}
 
 * Part Two
+
+Idee hier was om eerst, van alle vertices, het totaal gewicht te bepalen.
+Dan om te kijken of er een vertex te vinden was (the disc) die buren heeft die niet hetzelfde totaal gewicht hebben.
+
+
+Omdat gegeven is dat er precies 1 programma (vertex) een verkeerd gewicht heeft
+is het mogelijk om de gewichten in een Counter te stoppen en alleen die Counter
+te bekijken die 2 elementen heeft. Daarin zal dan 1 gewicht 1x voorkomen en een
+ander gewicht meerdere keren. Inprinciepe zou je ook een disc kunnen hebben met
+twee torens elk een ander gewicht maar dan weet je nooit eenduidig welke
+aangepast moet worden. Er staat in de tekst niets over dat je bv altijd gewicht
+moet verwijderen en zo het kan herkennen, dus ik heb aangenomen dat er altijd
+minimaal 3 torentjes op een disc staan.
+
+Op deze manier kan dan het werkelijke en gewenste gewicht gevonden worden en
+toen ging het mis.
+
+Eerst zat ik het verschil van beide terug te geven. Dat was niet goed (veel te laag).
+Vervolgens zat ik het gewenste gewicht van de toren terug te geven (*what would its weight need to be*) maar dat was steeds te hoog.
+
+Uiteindelijk viel het spreekwoordelijke kwartje en ging ik uitzoeken wat de
+onderste vertex van het torentje is welke het verkeerde gewicht had en het
+verschil toepassen op het originele gewicht (niet het totaal) van die vertex.
+
+Dat gaf dan dus het gewenste gewicht.
