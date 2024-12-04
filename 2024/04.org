@@ -1,0 +1,28 @@
+:PROPERTIES:
+:ID:       c7a60304-c46f-411c-97e6-36b763d5c49a
+:END:
+#+title: 2024 Day 4: Ceres Search
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+
+Loop over all rows and columns and count occurences of XMAS, but also count them in reverse.
+
+Same for diagonals, top left to bottom right and top right to bottom left.
+First come up with a function that gets me the diagonals.
+
+* Part Two
+
+What if I just loop trough the grid searching for A?
+When found inspect the diagonal neighbours.
+
+Do the search _within_ the grid, the heart of the cross (A) will not be on the sides (puzzle doesn't mention wrapping). That way a check if we are in the grid comparing neighbours is not necessary.
+
+
+Had some trouble naming the 2 diagonals in de the X. So I went with d1 and d2,
+afterwards went to internet and learned they are called Main Diagonal and Anti Diagonal so renamed variables and functions accordingly.
+
+- Main Diagonal :: The diagonal that runs from the top-left corner to the
+  bottom-right corner of the square.
+- Anti Diagonal :: The diagonal that runs from the top-right corner to the bottom-left corner of the square.
