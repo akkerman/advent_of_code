@@ -33,9 +33,16 @@ def part_one(registers: dict[str, int], instructions:List[Instruction]) -> int:
 
 def part_two(registers: dict[str, int], instructions:List[Instruction]) -> int:
     """ part two """
-    _ = registers
-    _ = instructions
-    return -1
+    max_value = 0
+    for reg, op, val, evalReg, evalOp, evalVal in instructions:
+        if evalOp(registers[evalReg], evalVal):
+            if op == 'inc':
+                registers[reg] += val
+            else:
+                registers[reg] -= val
+        max_value = max(max_value, registers[reg])
+
+    return max_value
 
 pattern = r'([a-z]+) (inc|dec) (-?[0-9]+) if ([a-z]+) (>|<|>=|<=|==|!=) (-?[0-9]+)'
 
