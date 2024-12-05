@@ -2,7 +2,8 @@
 # pylint: disable=invalid-name
 import sys
 from typing import List, Tuple
-from util_05 import check_order
+from util_05 import get_rules, check_order
+from functools import cmp_to_key
 
 
 def part_one(rules: List[Tuple[int, int]], updates: List[List[int]]) -> int:
@@ -15,12 +16,23 @@ def part_one(rules: List[Tuple[int, int]], updates: List[List[int]]) -> int:
 
     return sum
 
-
 def part_two(rules: List[Tuple[int, int]], updates: List[List[int]]) -> int:
     """ part two """
-    if rules == updates:
-        return 0
-    return -1
+
+    def compare(x:int, y:int) -> int:
+        if (x,y) in rules:
+            return -1
+        else:
+            return 0
+        
+    sum = 0
+    for update in updates:
+        if not check_order(rules, update):
+            update.sort(key=cmp_to_key(compare))
+            idx = int(len(update)/2)
+            sum += update[idx]
+            
+    return sum
 
 
 def main():
