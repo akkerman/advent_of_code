@@ -1,0 +1,11 @@
+:PROPERTIES:
+:ID:       90f08bca-bbb3-4929-a95e-838c69932506
+:END:
+#+title: 2020 Day 2: Password Philosophy
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+
+
+* Part Two

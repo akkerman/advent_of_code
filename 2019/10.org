@@ -1,0 +1,11 @@
+:PROPERTIES:
+:ID:       51c719ea-61f1-4677-a4dd-06f9b3af889c
+:END:
+#+title: 2019 Day 10: Monitoring Station
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+
+
+* Part Two
