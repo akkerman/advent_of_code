@@ -1,4 +1,4 @@
-from util_05 import get_rules, check_order
+from util_05 import get_rules, check_order, make_sort_pages
 
 rules = [
       (47,53),
@@ -37,3 +37,9 @@ def test_check_order():
    assert(check_order(rules, [75,97,47,61,53]) == False)
    assert(check_order(rules, [61,13,29]) == False)
    assert(check_order(rules, [97,13,75,29,47]) == False)
+
+def test_sort_pages():
+   sort_pages = make_sort_pages(rules)
+   assert(sort_pages([75,97,47,61,53])) == [97,75,47,61,53]
+   assert(sort_pages([61,13,29])) == [61,29,13]
+   assert(sort_pages([97,13,75,29,47])) == [97,75,47,29,13]

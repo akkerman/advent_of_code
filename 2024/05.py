@@ -2,38 +2,29 @@
 # pylint: disable=invalid-name
 import sys
 from typing import List, Tuple
-from util_05 import get_rules, check_order
-from functools import cmp_to_key
+from util_05 import check_order, make_sort_pages
 
+def middle_page(pages: List[int]) -> int:
+    idx = int(len(pages)/2)
+    return pages[idx]
 
 def part_one(rules: List[Tuple[int, int]], updates: List[List[int]]) -> int:
     """ part one """
     sum = 0
     for update in updates:
         if check_order(rules, update):
-            idx = int(len(update)/2)
-            sum += update[idx]
-
+            sum += middle_page(update)
     return sum
 
 def part_two(rules: List[Tuple[int, int]], updates: List[List[int]]) -> int:
     """ part two """
-
-    def compare(x:int, y:int) -> int:
-        if (x,y) in rules:
-            return -1
-        else:
-            return 0
-        
+    sort_pages = make_sort_pages(rules)
     sum = 0
     for update in updates:
         if not check_order(rules, update):
-            update.sort(key=cmp_to_key(compare))
-            idx = int(len(update)/2)
-            sum += update[idx]
-            
+            sort_pages(update)
+            sum += middle_page(update)
     return sum
-
 
 def main():
     """ main """
@@ -60,6 +51,5 @@ def main():
     print('part_one', part_one(rules, updates))
 
     print('part_two', part_two(rules, updates))
-
 
 main()
