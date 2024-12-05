@@ -1,0 +1,48 @@
+:PROPERTIES:
+:ID:       eec2de7f-8fd0-4e83-90f3-2903bfa6b5ff
+:END:
+#+title: 2017 Day 1: Inverse Captcha
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+
+Kijk naar alle paren van de lijst met zichzelf, positie geroteerd.
+Neem alleen alle paren die gelijke getallen hebben
+Tel alles op.
+
+
+#+begin_src python
+line = [int(i) for i in "91212129"]
+rotated = line[1:] + line[:1]
+return sum([a for a, b in zip(line, rotated) if a == b])
+#+end_src
+
+#+RESULTS:
+: 9
+
+
+* Part Two
+
+Soort van hetzelfde als part one maar dan halverwege geroteerd, dit doet [[id:4cb2f4d9-6cf1-4d06-9aef-899b1245899c][ROT13]]
+met het alphabet ook btw.
+
+
+#+begin_src python
+line = [int(i) for i in "12131415"]
+rotated =  line[4:] + line[:4]
+return sum([a for a, b in zip(line, rotated) if a == b])
+#+end_src
+
+#+RESULTS:
+: 4
+
+Je kan ook alleen de eerste met de tweede helft zippen en dan de som verdubbelen
+
+#+begin_src python
+line = [int(i) for i in "12131415"]
+return 2*sum([a for a, b in zip(line[:4],line[4:]) if a == b])
+#+end_src
+
+#+RESULTS:
+: 4
