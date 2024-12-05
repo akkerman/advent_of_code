@@ -3,7 +3,7 @@
 :END:
 #+title: 2024 Day 5: Print Queue
 #+filetags: :python:
-- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]] · 2017 Day 1
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]] · [[id:eec2de7f-8fd0-4e83-90f3-2903bfa6b5ff][2017 Day 1: Inverse Captcha]]
 
 
 * Part One
