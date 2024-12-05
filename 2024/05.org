@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       e11179d1-3728-44ad-9b5b-8276463ccb49
+:END:
+#+title: 2024 Day 5: Print Queue
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]] · 2017 Day 1
+
+
+* Part One
+
+
+* Part Two
