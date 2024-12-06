@@ -16,7 +16,20 @@
 * Part Two
 - references :: [[id:96520f57-d815-4f21-874c-24ea3a7a1906][2018 Day 4: Repose Record]]
 
-  Dus moet rechthoeken vinden in een grid waarvan alle punten van de rechthoek
-  NIET In de grid zitten maar beperkt zijn door die obstakels.
+Dus moet rechthoeken vinden in een grid waarvan alle punten van de rechthoek
+NIET In de grid zitten maar beperkt zijn door die obstakels.
 
-  Hmm. ik zou evt kunnen zoeken naar rechthoeken in het looppad en dan kijken of elk van die hoeken ingeperkt is door een obstakel. als dat er 3 zijn dan heb ik de 4e gevonden.
+Ik kan alle obstakels afgaan en zoeken naar een obstakel dat er schuin tegenoverligt.
+Als ik dan ook de andere hoeken kan vinden heb ik een mogelijk vierkantje.
+
+Toen ik bovenstaande deed had ik te weinig mogelijke punten.
+De remedie is, niet alleen naar de main diagonal zoeken maar ook de anti diagonal.
+
+Vind ik dan dubbelen? Niet heel boeiend, ik stop ze in een set.
+Nu vind ik meer (8 vanuit het voorbeeld.) Het issue is dat die de guard nooit
+bij die twee extra punten komt.
+
+Mijn eerste gedachte is nu dat ik dan alle punten weg haal waar de guard nooit gelopen heeft, maar dan heb ik weer te weinig (5).
+
+Het blijkt dat optie 5, vanuit het voorbeeold, helemaal geen rechthoek is maar twee overlappende rechthoeken.
+Daar had ik ff geen rekening mee gehouden. En vind mijn algorithme helemaal nooit.

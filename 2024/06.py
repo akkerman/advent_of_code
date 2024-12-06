@@ -12,6 +12,18 @@ next_direction = {
     (0,-1): (-1,0),
 }
 
+def print_map(map:List[Coord], guard_pos:Coord, max:Coord, extra: Set[Coord]):
+    for r in range(max[0]):
+        for c in range(max[1]):
+            if (r,c) in extra:
+                print('O', end='')
+            elif (r,c) == guard_pos:
+                print('^', end='')
+            elif (r,c) in map:
+                print('#', end='')
+            else:
+                print('.', end='')
+        print()
 
 def part_one(map:List[Coord], guard_pos:Coord, max:Coord) -> Set[Coord]:
     """ part one """
@@ -33,30 +45,30 @@ def part_one(map:List[Coord], guard_pos:Coord, max:Coord) -> Set[Coord]:
             return positions
         guard_pos = next_pos
 
-def part_two(map:List[Coord], guard_pos:Coord, max:Coord, path: Set[Coord]) -> int:
+def part_two(map:List[Coord], guard_pos:Coord, max:Coord, path: Set[Coord]) -> Set[Coord]:
     """ part two """
 
-    possibilities = 0
-    for (r1, c1) in path:
-        for (r2, c2) in path:
-            if r1 >= r2 or c1 >= c2:
-               # skip if not diagonal
-               continue
+    possibilities: Set[Coord] = set()
+    for (r1, c1) in map:
+        for (r2, c2) in map:
+            if r1 < r2 and c1 < c2:
+                # main diagonal
+                p1 = (r1+1, c2+1)
+                p2 = (r2-1, c1-1)
+                if p1 in map and p2 not in map:
+                    possibilities.add(p2)
+                if p1 not in map and p2 in map:
+                    possibilities.add(p1)
 
-            if (r1, c2) in path and (r2, c1) in path:
-                num_obstacles = 0
-                # a rectangle was found
-                # check bounding obstacles
-                if (r1-1, c1) in map:
-                    num_obstacles += 1
-                if (r1, c2+1) in map:
-                    num_obstacles += 1
-                if (r2+1, c2) in map:
-                    num_obstacles += 1
-                if (r2, c1-1) in map:
-                    num_obstacles += 1
-                if num_obstacles == 3:
-                    possibilities += 1
+            if r1 > r2 and c1 < c2:
+                # anti diagonal
+                p1 = (r2-1, c1+1)
+                p2 = (r1+1, c2-1)
+                if p1 in map and p2 not in map:
+                    possibilities.add(p2)
+                if p1 not in map and p2 in map:
+                    possibilities.add(p1)
+            
 
     return possibilities
 
@@ -81,7 +93,12 @@ def main():
     print('part_one', len(walking_path))
 
     # too low: 539
-    print('part_two', part_two(map, guard_pos, (r, max_c), walking_path))
+    # too high: 13823
+    # nope: 7644
+    possibilities = part_two(map, guard_pos, (r, max_c), walking_path)
+    print_map(map, guard_pos, (r, max_c), possibilities)
+    print(possibilities)
+    print('part_two', len(possibilities))
 
 
 main()
