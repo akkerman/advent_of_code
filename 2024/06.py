@@ -34,7 +34,6 @@ def print_map(map:List[Coord], guard_pos:Coord, max:Coord, extra: Set[Coord]):
 def part_one(map:List[Coord], guard_pos:Coord, max:Coord):
     """ part one """
     path: Set[Coord] = set()
-    directional_path: Set[Tuple[Coord,Direction]] = set()
     def is_obstacle(pos:Coord) -> bool:
         return pos in map
     def is_valid(pos:Coord) -> bool:
@@ -44,13 +43,12 @@ def part_one(map:List[Coord], guard_pos:Coord, max:Coord):
 
     while True:
         path.add(guard_pos)
-        directional_path.add((guard_pos, dir))
         next_pos = (guard_pos[0] + dir[0], guard_pos[1] + dir[1])
         if is_obstacle(next_pos):
             dir = next_direction[dir]
             continue
         if not is_valid(next_pos):
-            return path, directional_path
+            return path
         guard_pos = next_pos
 
 def stuck_in_loop(map:List[Coord], guard_initial_pos: Tuple[Coord, Direction], max: Coord) -> bool:
@@ -77,16 +75,30 @@ def stuck_in_loop(map:List[Coord], guard_initial_pos: Tuple[Coord, Direction], m
         guard_pos = next_pos
 
 
-def part_two(map:List[Coord], guard_pos: Coord, max:Coord, path: Set[Coord], directional_path: Set[Tuple[Coord,Direction]]):
+def part_two(map:List[Coord], guard_pos: Coord, max:Coord):
     """ part two """
     posibilities: Set[Coord] = set()
-    guard_pos_dir = (guard_pos, UP)
-    for r,c in path:
-        updated_map = map + [(r,c)]
-        if stuck_in_loop(updated_map, guard_pos_dir, max):
-            posibilities.add((r,c))
+    directional_path: Set[Tuple[Coord,Direction]] = set()
 
-    return posibilities
+    def is_obstacle(pos:Coord) -> bool:
+        return pos in map
+    def is_valid(pos:Coord) -> bool:
+        return pos[0] >= 0 and pos[0] < max[0] and pos[1] >= 0 and pos[1] < max[1]
+
+    dir = (-1,0)
+
+    while True:
+        directional_path.add((guard_pos, dir))
+        next_pos = (guard_pos[0] + dir[0], guard_pos[1] + dir[1])
+        if is_obstacle(next_pos):
+            dir = next_direction[dir]
+            continue
+        if not is_valid(next_pos):
+            return posibilities
+
+        if stuck_in_loop(map + [next_pos], (guard_pos, dir), max):
+            posibilities.add(guard_pos)
+        guard_pos = next_pos
 
 
 
@@ -105,10 +117,10 @@ def main():
         map += [(r, c) for c in range(len(line)) if line[c] == '#']
         r+=1
 
-    path, directional_path = part_one(map, guard_pos, (r, max_c))
+    path = part_one(map, guard_pos, (r, max_c))
     print('part_one', len(path))
 
-    possibilities = part_two(map, guard_pos, (r, max_c), path, directional_path)
+    possibilities = part_two(map, guard_pos, (r, max_c))
     print('part_two', len(possibilities))
 
 

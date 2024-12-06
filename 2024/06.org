@@ -46,6 +46,13 @@ Het idee nu is.
 - zodra de guard UIT het lab gaat is er geen loop
 
 
+[2024-12-06 Fri 19:30]
+
 Ik had allemaal slimme dingen bedacht zoals op het path zetten en dan de guard ertgen aan laten lopen en vanaf dat moment kijken of er loops te vinden zijn maar dat geeft structureel een te hoog getal.
 
 Uiteindelijk alle plaatsen waar de guard langs kwam een obstakel neergezet en vervolgens het de hele simulatie gedraait. Duurt bijna 3 minuten maar dan komt het juiste antwoord er iig uit!
+
+
+[2024-12-06 Fri 20:32]
+
+Toch nog een poging gedaan om de controle of er een loop is te starten voordat de guard er tegenaan loopt. Nu duurt het net iets meer dan 30 seconden.
