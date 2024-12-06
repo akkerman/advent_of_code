@@ -1,0 +1,22 @@
+:PROPERTIES:
+:ID:       a85f26c7-2133-455d-b769-a15300d999b5
+:END:
+#+title: 2019 Day 3: Corssed Wires
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+
+Mijn idee is om de twee regels input te parsen naar 2 verzamelingen vectoren.
+Dan ga ik voor elke vector in 1 set kijken of er een mogelijk kruispunt is met een vector in de tweede set.
+
+Stel ik heb een horizontale vector (x1, y1) (x2, y2) hierbij is x1 != x2 en y1 == y2
+
+De x-waarde van de verticale vector ligt tussen de x-waarden van de horizontale.
+De y-waarde van de horizontale vector ligt tussen de y-waarden van de verticale.
+
+Als dit zo is dan is het kruispunt v.x, h.y
+
+
+
+* Part Two
