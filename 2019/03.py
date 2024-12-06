@@ -35,9 +35,9 @@ def find_intersections(wire1: Wire, wire2: Wire):
                 intersections.append((v[0][0], h[0][1]))
 
     return intersections
-def part_one(wire1, wire2):
+def part_one(wire1:Wire, wire2:Wire):
     """ part one """
-    return 'todo'
+    return min([abs(x) + abs(y) for x, y in find_intersections(wire1, wire2) if x != 0 and y != 0])
 
 
 def part_two(lines):
@@ -45,17 +45,37 @@ def part_two(lines):
     return 'todo'
 
 
+def parse_wire(line: str) -> Wire:
+    """ parse wire """
+    wire: Wire = []
+    x, y = 0, 0
+    for move in line.split(','):
+        direction = move[0]
+        length = int(move[1:])
+        if direction == 'U':
+            wire.append(((x, y), (x, y + length)))
+            y += length
+        elif direction == 'D':
+            wire.append(((x, y), (x, y - length)))
+            y -= length
+        elif direction == 'L':
+            wire.append(((x, y), (x - length, y)))
+            x -= length
+        elif direction == 'R':
+            wire.append(((x, y), (x + length, y)))
+            x += length
+    return wire
+
 def main():
     """ main """
-    lines = []
+    wires: List[Wire] = []
     for line in sys.stdin:
         line = line.replace('\n', '')
-        
-        lines.append(line)
+        wires.append(parse_wire(line))
 
-    print('part_one', part_one(lines))
+    print('part_one', part_one(wires[0], wires[1]))
 
-    print('part_two', part_two(lines))
+    print('part_two', part_two(wires))
 
 
 main()
