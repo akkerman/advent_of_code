@@ -53,11 +53,6 @@ def part_one(map:List[Coord], guard_pos:Coord, max:Coord):
             return path, directional_path
         guard_pos = next_pos
 
-def neighbors(path:Set[Tuple[Coord,Direction]],pos:Coord) -> Set[Tuple[Coord,Direction]]:
-    r, c = pos
-    candidates: Set[Tuple[Coord,Direction]] = set([ ((r-1, c), DOWN), ((r+1, c), UP), ((r, c-1), RIGHT), ((r, c+1), LEFT) ])
-    return candidates & path
-
 def stuck_in_loop(map:List[Coord], guard_initial_pos: Tuple[Coord, Direction], max: Coord) -> bool:
     directional_path: Set[Tuple[Coord,Direction]] = set()
     def is_obstacle(pos:Coord) -> bool:
@@ -84,13 +79,13 @@ def stuck_in_loop(map:List[Coord], guard_initial_pos: Tuple[Coord, Direction], m
 
 def part_two(map:List[Coord], guard_pos: Coord, max:Coord, path: Set[Coord], directional_path: Set[Tuple[Coord,Direction]]):
     """ part two """
-
     posibilities: Set[Coord] = set()
-    for pos in path - {guard_pos}:
-        for neighbor in neighbors(directional_path, pos):
-            updated_map = map + [pos]
-            if stuck_in_loop(updated_map, neighbor, max):
-                posibilities.add(pos)
+    guard_pos_dir = (guard_pos, UP)
+    for r,c in path:
+        updated_map = map + [(r,c)]
+        if stuck_in_loop(updated_map, guard_pos_dir, max):
+            posibilities.add((r,c))
+
     return posibilities
 
 
@@ -113,10 +108,6 @@ def main():
     path, directional_path = part_one(map, guard_pos, (r, max_c))
     print('part_one', len(path))
 
-    # too low: 539
-    # too high: 13823
-    # nope: 7644
-    # nope: 1820
     possibilities = part_two(map, guard_pos, (r, max_c), path, directional_path)
     print('part_two', len(possibilities))
 

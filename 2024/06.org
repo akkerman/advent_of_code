@@ -44,3 +44,8 @@ Het idee nu is.
 - voor elk van die punten, start een simulatie om kijken of er wel/geen loop is
 - een loop is het nogmaals verkrijgen van de locatie/richting combinatie
 - zodra de guard UIT het lab gaat is er geen loop
+
+
+Ik had allemaal slimme dingen bedacht zoals op het path zetten en dan de guard ertgen aan laten lopen en vanaf dat moment kijken of er loops te vinden zijn maar dat geeft structureel een te hoog getal.
+
+Uiteindelijk alle plaatsen waar de guard langs kwam een obstakel neergezet en vervolgens het de hele simulatie gedraait. Duurt bijna 3 minuten maar dan komt het juiste antwoord er iig uit!
