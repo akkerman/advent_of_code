@@ -15,3 +15,8 @@
 
 * Part Two
 - references :: [[id:96520f57-d815-4f21-874c-24ea3a7a1906][2018 Day 4: Repose Record]]
+
+  Dus moet rechthoeken vinden in een grid waarvan alle punten van de rechthoek
+  NIET In de grid zitten maar beperkt zijn door die obstakels.
+
+  Hmm. ik zou evt kunnen zoeken naar rechthoeken in het looppad en dan kijken of elk van die hoeken ingeperkt is door een obstakel. als dat er 3 zijn dan heb ik de 4e gevonden.
