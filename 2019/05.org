@@ -9,6 +9,9 @@
 
 - references :: [[id:95af1129-2de3-4ad3-bfb1-d86e58c7f2e1][2019 Day 2: 1202 Program Alarm]]
 
+Leuk dit.
+Wel super goed lezen maar zodra dat dan lukt bam in 1x een antwoord.
 
+Een paar helper functies geintroduceerd zodat ik niet de code 'vervuil' met die immediate/position mode.
 
 * Part Two
