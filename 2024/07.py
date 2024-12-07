@@ -1,43 +1,43 @@
 # pylint: disable=missing-module-docstring,missing-function-docstring
 # pylint: disable=invalid-name
 import sys
-import string
-from typing import List, Tuple, Dict 
+from typing import List, Tuple
 
 Equation = Tuple[int, List[int]]
 
-def can_be_true(value:int, numbers:List[int]):
-    def fn(value:int, current: int, numbers:List[int]):
-        if current == value:
+def can_be_true(value:int, numbers:List[int], concat:bool=False):
+    def fn(value:int, current: int, numbers:List[int], formule:str=''):
+        if current == value and len(numbers) == 0:
             return True
         if current > value:
             return False
         if len(numbers) == 0:
             return False
-        if fn(value, current + numbers[0], numbers[1:]):
+        if fn(value, current + numbers[0], numbers[1:], formule+'+'+str(numbers[0])):
             return True
-        if fn(value, current * numbers[0], numbers[1:]):
+        if fn(value, current * numbers[0], numbers[1:], formule+'*'+str(numbers[0])):
             return True
+        if concat:
+            if fn(value, int(str(current) + str(numbers[0])), numbers[1:], formule+'||'+str(numbers[0])):
+                return True
         return False
-    return fn(value, numbers[0], numbers[1:])
+    return fn(value, numbers[0], numbers[1:], ''+str(numbers[0]))
 
-def part_one(equations:List[Equation]):
+def part_one(equations:List[Equation]) -> int:
     """ part one """
     sum = 0
     for value, numbers in equations:
-        print(value, end=" ")
         if can_be_true(value, numbers):
             sum += value
-            print('true')
-        else:
-            print('false')
     return sum
 
-
-def part_two(lines):
+def part_two(equations:List[Equation]) -> int:
     """ part two """
-    return 'todo'
-
+    sum = 0
+    for value, numbers in equations:
+        if can_be_true(value, numbers, concat=True):
+            sum += value
+    return sum
 
 def main():
     """ main """
@@ -52,8 +52,6 @@ def main():
         equations.append((testvalue, nmbrs))
 
     print('part_one', part_one(equations))
-
     print('part_two', part_two(equations))
-
 
 main()

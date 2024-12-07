@@ -12,3 +12,23 @@ Recursieve functie die 1 voor 1 de nummers afgaat, de lijst kleiner maakt en
 elke operator probeert.
 
 * Part Two
+
+Toevoegen van concat, kan gewoon in dezelfde functie en dit stukje afhankelijke van het deel wel/niet doorlopen.
+
+[2024-12-07 Sat 06:26] Ik krijg een verkeerd antwoord en begrijp niet waarom.
+
+
+[2024-12-07 Sat 07:03] Gevonden.
+Als je een recursieve functie schrijft is de conditie waaronder je stopt heel belangrijk.
+
+Ik had een functie die =True= teruggaf als de test waarde en de berekende waarde gelijk waren.
+Deze leverde false positives.
+
+De fout zat erin dat als we de juiste waarde berekend hebben we wel klaar moeten zijn met de berekening dus:
+
+#+begin_src python
+def fn(value:int, current: int, numbers:List[int], formule:str=''):
+    if current == value and len(numbers) == 0:
+        return True
+    # rest omitted
+#+end_src
