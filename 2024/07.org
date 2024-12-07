@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       3ec3eb29-5f53-4b5c-a1e9-21833bf38278
+:END:
+#+title: 2024 Day 7: Bridge Repair
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+- references :: [[id:1282144d-3982-4f70-b2fb-9f780fd17e8d][2022 Day 9: Rope Bridge]]
+
+Recursieve functie die 1 voor 1 de nummers afgaat, de lijst kleiner maakt en
+elke operator probeert.
+
+* Part Two
