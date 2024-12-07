@@ -8,7 +8,7 @@ from typing import List
 pattern = r'mul\((\d+),(\d+)\)'
 
 def mul(matches:List[str])->int:
-    return sum([int(a) * int(b) for a,b in matches])
+    return sum(int(a) * int(b) for a,b in matches)
 
 def part_one(memory:str)->int:
     """ part one """
@@ -17,7 +17,7 @@ def part_one(memory:str)->int:
 
 def part_two(memory:str)->int:
     """ part two """
-    sub_matches = [do.split("don't()")[0] for do in memory.split('do()')]
+    sub_matches = (do.split("don't()")[0] for do in memory.split('do()'))
     matches = [m for sub in sub_matches for m in re.findall(pattern, sub)]
     return mul(matches)
 

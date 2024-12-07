@@ -41,28 +41,20 @@ def is_save_with_dampeners(report: List[int]) -> bool:
 
 def part_one(reports: List[List[int]]):
     """ part one """
-    sum = 0
-    for report in reports:
-        if is_save(report):
-            sum += 1
-    return sum
+    return sum(is_save(report) for report in reports)
 
 
 def part_two(reports: List[List[int]]):
     """ part two """
-    sum = 0
-    for report in reports:
-        if is_save_with_dampeners(report):
-            sum += 1
-    return sum
+    return sum(is_save_with_dampeners(report) for report in reports)
 
 
 def main():
     """ main """
     reports: List[List[int]] = []
     for line in sys.stdin:
-        line = line.replace('\n', '')
-        report = [int(l) for l in line.split(' ')]
+        line = line.strip()
+        report = list(map(int, line.split(' ')))
         
         reports.append(report)
 
