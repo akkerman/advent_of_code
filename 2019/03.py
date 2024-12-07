@@ -40,9 +40,35 @@ def part_one(wire1:Wire, wire2:Wire):
     return min([abs(x) + abs(y) for x, y in find_intersections(wire1, wire2) if x != 0 and y != 0])
 
 
-def part_two(lines):
+
+def length(start: Coord, end: Coord) -> int:
+    l= abs(start[0] - end[0]) + abs(start[1] - end[1])
+    print(f'{start} -> {end} = {l}')
+    return l
+
+def step_counter(wire: Wire, intersection: Coord) -> int:
+    steps = 0
+    for start, end in wire:
+        if intersection == start:
+            return steps
+        steps += length(start, end)
+    return steps
+
+
+def part_two(wire1: Wire, wire2: Wire) -> int:
     """ part two """
-    return 'todo'
+    intersections = find_intersections(wire1, wire2)
+
+    stepsum: List[int] = []
+    for coord in intersections:
+        print('\nfind steps for', coord)
+        if coord == (0, 0):
+            continue
+        stepsum.append(step_counter(wire1, coord) + step_counter(wire2, coord))
+
+    print (stepsum)
+    return min(stepsum)
+
 
 
 def parse_wire(line: str) -> Wire:
@@ -75,7 +101,7 @@ def main():
 
     print('part_one', part_one(wires[0], wires[1]))
 
-    print('part_two', part_two(wires))
-
+    # too high: 306080
+    print('part_two', part_two(wires[0], wires[1]))
 
 main()
