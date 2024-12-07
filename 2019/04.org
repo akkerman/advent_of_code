@@ -1,0 +1,30 @@
+:PROPERTIES:
+:ID:       d34e249b-bc09-4108-903f-9ce0bc5b940b
+:END:
+#+title: 2019 Day 4: Secure Container
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+
+Recht to recht aan, maak een loop van begin tot eind uit de puzzle input.
+maak paren van elk getal controlerende of de twee voorwaarden gelden.
+
+* Part Two
+
+Echt een super ingewikkelde manier om aan te geven dat er 1 cijfer precies 2x moet voorkomen.
+
+* Refactor
+
+chatgpt eens gevraag om verbeteringen die meer pythonisch zijn.
+
+
+sum kan ook als je de lijst vult met booleans:
+
+#+begin_src python
+lst = [True, False, True, False, False]
+return sum(lst)
+#+end_src
+
+#+RESULTS:
+: 2

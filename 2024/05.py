@@ -5,47 +5,41 @@ from typing import List, Tuple
 from util_05 import check_order, make_sort_pages
 
 def middle_page(pages: List[int]) -> int:
-    idx = int(len(pages)/2)
-    return pages[idx]
+    return pages[len(pages) // 2]
 
 def part_one(rules: List[Tuple[int, int]], updates: List[List[int]]) -> int:
-    """ part one """
-    sum = 0
-    for update in updates:
-        if check_order(rules, update):
-            sum += middle_page(update)
-    return sum
+    """ sum all middle pages that are in order """
+    return sum(middle_page(update) for update in updates if check_order(rules, update))
 
 def part_two(rules: List[Tuple[int, int]], updates: List[List[int]]) -> int:
-    """ part two """
+    """ sum all middle pages after sorting when not in order """
     sort_pages = make_sort_pages(rules)
-    sum = 0
-    for update in updates:
-        if not check_order(rules, update):
-            sort_pages(update)
-            sum += middle_page(update)
-    return sum
+    return sum(
+        middle_page(update)
+        for update in updates
+        if not check_order(rules, update) and sort_pages(update)
+    )
+
 
 def main():
     """ main """
     rules: List[Tuple[int, int]] = []
     updates: List[List[int]] = []
-
     processing = 'ordering'
+    
     for line in sys.stdin:
-        line = line.replace('\n', '')
-        if line == '':
+        line = line.strip()
+        if not line:
             processing = 'updates'
             continue
 
         if processing == 'ordering':
-            parts = line.split('|')
-            rules.append((int(parts[0]), int(parts[1])))
-            continue
+            rule = tuple(map(int, line.split('|')))
+            assert len(rule) == 2
+            rules.append(rule)
+        else:  # processing == 'updates'
+            updates.append(list(map(int, line.split(','))))
 
-        if processing == 'updates': 
-            line = line.split(',')
-            updates.append([int(x) for x in line])
         
 
     print('part_one', part_one(rules, updates))
