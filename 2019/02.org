@@ -1,0 +1,18 @@
+:PROPERTIES:
+:ID:       95af1129-2de3-4ad3-bfb1-d86e58c7f2e1
+:END:
+#+title: 2019 Day 2: 1202 Program Alarm
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]] · [[id:8cd1ed8f-6f67-41a6-a8cd-577f8b959eac][intcode]]
+
+* Part One
+
+Redelijk recht to recht aan, voorbeeld antwoord vlot gevonden.
+Voor de echte input moet je blijkbaar eerst de input aanpassen.
+
+Dan krijg ik idd het juiste antwoord, wel jammer dat het voorbeeld nu stuk gaat.
+
+* Part Two
+
+De noun en verb als parameters voor part 1 gemaakt ipv hardcoded daarin.
+Nu over alle mogelijkheden van 0-99 loopen voor noun en verb en kijken of we tot de target komen.

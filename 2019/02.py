@@ -3,10 +3,10 @@
 import sys
 from typing import List
 
-def part_one(program: List[int]) -> int:
+def part_one(program: List[int], noun:int, verb: int) -> int:
     """ part one """
-    program[1] = 12
-    program[2] = 2
+    program[1] = noun
+    program[2] = verb
     for i in range(0, len(program), 4):
         if program[i] == 99:
             break
@@ -22,6 +22,11 @@ def part_one(program: List[int]) -> int:
 
 def part_two(program: List[int]) -> int:
     """ part two """
+    target = 19690720
+    for noun in range(100):
+        for verb in range(100):
+            if part_one(program.copy(), noun, verb) == target:
+                return 100 * noun + verb
     return -1
 
 
@@ -33,7 +38,7 @@ def main():
         break
         
 
-    print('part_one', part_one(program.copy()))
+    print('part_one', part_one(program.copy(), 12, 2))
 
     print('part_two', part_two(program.copy()))
 
