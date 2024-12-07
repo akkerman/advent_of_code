@@ -7,22 +7,22 @@ Equation = Tuple[int, List[int]]
 
 def can_be_true(value:int, numbers:List[int], concat:bool=False):
     """ check if there is a way to get the value with the numbers interspersed by +, * and concatenation """
-    def fn(value:int, current: int, numbers:List[int], formule:str=''):
+    def fn(current: int, numbers:List[int], formule:str=''):
         if current == value and len(numbers) == 0:
             return True
         if current > value:
             return False
         if len(numbers) == 0:
             return False
-        if fn(value, current + numbers[0], numbers[1:], formule+'+'+str(numbers[0])):
+        if fn( current + numbers[0], numbers[1:], formule+'+'+str(numbers[0])):
             return True
-        if fn(value, current * numbers[0], numbers[1:], formule+'*'+str(numbers[0])):
+        if fn( current * numbers[0], numbers[1:], formule+'*'+str(numbers[0])):
             return True
         if concat:
-            if fn(value, int(str(current) + str(numbers[0])), numbers[1:], formule+'||'+str(numbers[0])):
+            if fn(int(str(current) + str(numbers[0])), numbers[1:], formule+'||'+str(numbers[0])):
                 return True
         return False
-    return fn(value, numbers[0], numbers[1:], ''+str(numbers[0]))
+    return fn(numbers[0], numbers[1:], ''+str(numbers[0]))
 
 def part_one(equations:List[Equation]) -> int:
     """ Sum all values of equation that can be true """
