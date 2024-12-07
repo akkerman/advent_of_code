@@ -3,6 +3,7 @@
 :ROAM_REFS: https://adventofcode.com/2015/day/23
 :END:
 #+title: 2015 Day 23: Opening the Turing Lock
+#+filetags: :python:
 
 - tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]] · [[id:4a79991d-d2c3-437d-b284-2d5c47d1977e][Assembly Languge Puzzle]]
 

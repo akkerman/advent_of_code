@@ -3,6 +3,7 @@
 :END:
 #+title: 2016 Day 11: Radioisotope Thermoelectric Generators
 #+options: toc:nil num:nil
+#+filetags: :python:
 
 - tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
 

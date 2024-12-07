@@ -2,6 +2,7 @@
 :ID:       5caea7fd-dc63-4de8-ac8e-4f95869da277
 :END:
 #+title: 2015 Day 25: Let It Snow
+#+filetags:
 
 - tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
 

@@ -31,7 +31,7 @@ bij die twee extra punten komt.
 
 Mijn eerste gedachte is nu dat ik dan alle punten weg haal waar de guard nooit gelopen heeft, maar dan heb ik weer te weinig (5).
 
-Het blijkt dat optie 5, vanuit het voorbeeold, helemaal geen rechthoek is maar twee overlappende rechthoeken.
+Het blijkt dat optie 5, vanuit het voorbeeld, helemaal geen rechthoek is maar twee overlappende rechthoeken.
 Daar had ik ff geen rekening mee gehouden. En vind mijn algorithme helemaal nooit.
 Achteraf wel stom, want optie 2 toont dit scenario al.
 

@@ -2,6 +2,8 @@
 :ID:       8bf34638-57f8-48b2-bd59-ed5424cbbc4a
 :END:
 #+title: 2016 Day 12: Leonardo's Monorail
+#+filetags: :python:
+
 
 - tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]] · [[id:4a79991d-d2c3-437d-b284-2d5c47d1977e][Assembly Languge Puzzle]]
 

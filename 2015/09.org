@@ -2,8 +2,9 @@
 :ID:       9415628a-c483-408c-8d30-a0d9467d0504
 :END:
 #+title: 2015 Day 9: All in a Single Night
+#+filetags: :python:
 
-- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]] · [[id:e77b2a13-7f1e-45a0-8e10-5a89155d4da2][dot]]
 
 * Part One
 
