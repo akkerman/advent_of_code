@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       50b58189-54eb-4ab2-8870-8c26e99b4d06
+:END:
+#+title: 2019 Day 5: Sunny with a Chance of Asteroids
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+
+- references :: [[id:95af1129-2de3-4ad3-bfb1-d86e58c7f2e1][2019 Day 2: 1202 Program Alarm]]
+
+
+
+* Part Two
