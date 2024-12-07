@@ -28,4 +28,6 @@ Tel dan steps en de twee wires bijelkaar op. Doe dit voor elke intersecntion en 
 [2024-12-07 Sat 08:17]
 
 Okay foute aanname dat een intersection op een start/end punt van de wire begint.
-Ik moet kijken of het ergen op het draadje ligt...
+Ik moet kijken of het ergens op het draadje ligt...
+
+[2024-12-07 Sat 12:32] done

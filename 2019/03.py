@@ -43,16 +43,23 @@ def part_one(wire1:Wire, wire2:Wire):
 
 def length(start: Coord, end: Coord) -> int:
     l= abs(start[0] - end[0]) + abs(start[1] - end[1])
-    print(f'{start} -> {end} = {l}')
     return l
+
+def is_between_coordinates(start: Coord, end: Coord, intersection: Coord) -> bool:
+    x1, y1 = start
+    x2, y2 = end
+    zx, zy = intersection
+    
+    return min(x1, x2) <= zx <= max(x1, x2) and min(y1, y2) <= zy <= max(y1, y2)
+
 
 def step_counter(wire: Wire, intersection: Coord) -> int:
     steps = 0
     for start, end in wire:
-        if intersection == start:
-            return steps
+        if is_between_coordinates(start, end, intersection):
+           return steps + length(start, intersection)
         steps += length(start, end)
-    return steps
+    return -1
 
 
 def part_two(wire1: Wire, wire2: Wire) -> int:
@@ -61,15 +68,11 @@ def part_two(wire1: Wire, wire2: Wire) -> int:
 
     stepsum: List[int] = []
     for coord in intersections:
-        print('\nfind steps for', coord)
         if coord == (0, 0):
             continue
         stepsum.append(step_counter(wire1, coord) + step_counter(wire2, coord))
 
-    print (stepsum)
     return min(stepsum)
-
-
 
 def parse_wire(line: str) -> Wire:
     """ parse wire """
@@ -101,7 +104,36 @@ def main():
 
     print('part_one', part_one(wires[0], wires[1]))
 
-    # too high: 306080
+    # too high: 46152
     print('part_two', part_two(wires[0], wires[1]))
 
-main()
+
+def test_part_one():
+    wire1 = parse_wire('R8,U5,L5,D3')
+    wire2 = parse_wire('U7,R6,D4,L4')
+    assert part_one(wire1, wire2) == 6
+
+    wire1 = parse_wire('R75,D30,R83,U83,L12,D49,R71,U7,L72')
+    wire2 = parse_wire('U62,R66,U55,R34,D71,R55,D58,R83')
+    assert part_one(wire1, wire2) == 159
+
+    wire1 = parse_wire('R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51')
+    wire2 = parse_wire('U98,R91,D20,R16,D67,R40,U7,R15,U6,R7')
+    assert part_one(wire1, wire2) == 135
+
+def test_part_two():
+    wire1 = parse_wire('R8,U5,L5,D3')
+    wire2 = parse_wire('U7,R6,D4,L4')
+    assert part_two(wire1, wire2) == 30
+
+    wire1 = parse_wire('R75,D30,R83,U83,L12,D49,R71,U7,L72')
+    wire2 = parse_wire('U62,R66,U55,R34,D71,R55,D58,R83')
+    assert part_two(wire1, wire2) == 610
+
+    wire1 = parse_wire('R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51')
+    wire2 = parse_wire('U98,R91,D20,R16,D67,R40,U7,R15,U6,R7')
+    assert part_two(wire1, wire2) == 410
+
+
+if __name__ == '__main__':
+    main()
