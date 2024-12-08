@@ -5,7 +5,7 @@ from typing import List, Tuple
 
 
 def part_one(orbit_map: List[Tuple[str,str]]):
-    """ part one """
+    """ count direct and indirect orbits of COM """
 
     def count_orbits(start: str, depth: int) -> int:
         count: int = depth
@@ -16,7 +16,7 @@ def part_one(orbit_map: List[Tuple[str,str]]):
     return count_orbits('COM', 0)
 
 def part_two(orbit_map: List[Tuple[str,str]]):
-    """ part two """
+    """ find shortest path between YOU and SAN """
     def find_path(start: str, end: str):
         if start == end:
             return [end]
@@ -29,9 +29,7 @@ def part_two(orbit_map: List[Tuple[str,str]]):
             if path:
                 paths.append([start] + path)
         
-        if not paths:
-            return None
-        return min(paths, key=len)
+        return min(paths, key=len) if paths else None
 
     path1 = find_path('COM', 'YOU')
     path2 = find_path('COM', 'SAN')
