@@ -12,3 +12,22 @@ afstanden tussen alle punten had bepaald. Ik hoef nu niet alle afstanden tussen
 alle punten te hebben alleen alle afstanden vanaf COM.
 
 * Part Two
+
+Ik probeerde eerst om het kortste pad te berekenen van YOU naar SAN maar vanwege
+het formaat, de tuples was dat lastig want dan moet je weten aan welke kant je
+moet kijken.
+
+Heb er nog kort over nagedacht om de graph anders op te zetten maar ging toen voor het bereken van 2x een kortste pad =COM -> YOU= en =COM -> SAN= in de hoop dat als ik dan de gemeenschappelijke planeten verwijder ik het gewenste anwoord heb. (ja)
+
+Uiteindelijk is het:
+
+#+begin_src python
+path1 = find_path('COM', 'YOU')
+path2 = find_path('COM', 'SAN')
+
+return len(set(path1) ^ set(path2)) - 2
+#+end_src
+
+
+Er moet twee af want YOU en SAN moesten we niet tellen.
+Dat dakje is het [[id:c0bfe821-f953-4418-a74b-45a1bb91372e][symetric difference of a set]]
