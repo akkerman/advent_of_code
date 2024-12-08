@@ -1,7 +1,6 @@
 # pylint: disable=missing-module-docstring,missing-function-docstring
 # pylint: disable=invalid-name
 import sys
-import string
 from typing import List, Tuple
 
 
@@ -18,8 +17,28 @@ def part_one(orbit_map: List[Tuple[str,str]]):
 
 def part_two(orbit_map: List[Tuple[str,str]]):
     """ part two """
-    return 'todo'
+    def find_path(start: str, end: str):
+        if start == end:
+            return [end]
+        paths: List[List[str]] = []
+        planets = [o for p,o in orbit_map if p == start]
+        if not planets:
+            return None
+        for planet in planets:
+            path = find_path(planet, end)
+            if path:
+                paths.append([start] + path)
+        
+        if not paths:
+            return None
+        return min(paths, key=len)
 
+    path1 = find_path('COM', 'YOU')
+    path2 = find_path('COM', 'SAN')
+
+    assert path1 and path2
+
+    return len(set(path1) ^ set(path2)) - 2
 
 def main():
     """ main """
