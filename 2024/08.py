@@ -42,9 +42,31 @@ def part_one(antennas: Set[Antenna], names: Set[str], size: Tuple[int, int]):
     return len(antinodes)
 
 
-def part_two(lines):
+def part_two(antennas: Set[Antenna], names: Set[str], size: Tuple[int, int]):
     """ part two """
-    return 'todo'
+    antinodes: Set[Coord] = set()
+
+    def add_antinode(r:int,c:int):
+        if 1 <= r <= size[0] and 1 <= c <= size[1]:
+            antinodes.add((r,c))
+            return True
+        return False
+
+
+    for name in names:
+        coords = [(r,c) for n,r,c in antennas if n == name]
+        for r1, c1 in coords:
+            for r2, c2 in coords:
+                if (r1, c1) == (r2, c2):
+                    continue
+                m = 1
+                while add_antinode(r1 + (r2-r1)*m, c1+(c2-c1)*m):
+                    m += 1
+                m2 = 1
+                while add_antinode(r2 + (r1-r2)*m2, c2+(c1-c2)*m2):
+                    m2 += 1
+
+    return len(antinodes)
 
 
 def main():
@@ -64,10 +86,9 @@ def main():
                 names.add(name)
         
 
-    # nope: 257
     print('part_one', part_one(antennas, names, (rows, cols)))
 
-    print('part_two', part_two(antennas))
+    print('part_two', part_two(antennas, names, (rows, cols)))
 
 
 main()

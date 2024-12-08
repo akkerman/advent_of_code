@@ -10,6 +10,39 @@
 - references :: [[id:4d8df256-af0d-4847-b626-94b01b6d06a8][2016 Day 25: Clock Signal]]
 
 
+Alle antennes in een set.
+Dubbele loop over antennes met dezelfde naam.
+Maak antinodes in een andere set met dubbel de afstand van de antenne naar de andere antenne.
+Tel antinodes in set.
 
+Ik zat wel een beetje te klooien met de grenzen.
+Uiteindelijk heb ik alles 1 based gemaakt. Want dan kan ik het printje veel gemakkelijker vergelijken in mijn editor die ook 1-based is (eerste regel en colom is 1)
+
+Ik ben daarom ook de hele tijd coordinaten in rijen en colommen aan het uitzetten ipv x,y.
+
+x,y is, voor mij, namelijk vanuit een nulpunt naar rechts en omhoog.
 
 * Part Two
+
+Bah, ik snap niet wat er bedoeld wordt.
+
+Na bestuderen van het voorbeeld met T denk ik dat er bedoeld wordt dat er niet
+alleen op dubbele afstand maar op elke afstand wat een veelvoud is van de
+afstand tussen twee antennes een antinode ontstaat.
+
+Dus:
+
+- op de tegenoverliggende antenne
+- 2x zo ver (part one)
+- 3x zo ver
+- etc..
+
+Ik heb al een util functie die mij de antinodes in een grid plaatst.
+Die kan ik true/false laten teruggeven zodat ik kan blijven toevoegen totdat het niet meer hoeft.
+
+
+Op 1 of andere manier worden op de originele antennes geen antinodes geplaatst.
+Ik kwam er achter dat ik in deel 1 niet geprogrammeerd had, *op dubbele afstand van de antenne* maar in *tegengestelde richting net zo ver*. Dit komt, omdat je met paren werkt, op hetzelfde neer maar gaf me wat hoofdbrekens bij deel twee.
+
+Daarom bij part one: =add_antinode(r1 + (r1-r2), c2 + (c1-c2))= en
+bij part two: =add_antinode(r1 + (r2-r1)*m, c1 + (c-c1)*m)=
