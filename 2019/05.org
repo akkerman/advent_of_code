@@ -15,3 +15,12 @@ Wel super goed lezen maar zodra dat dan lukt bam in 1x een antwoord.
 Een paar helper functies geintroduceerd zodat ik niet de code 'vervuil' met die immediate/position mode.
 
 * Part Two
+
+Onderstaand stukje was verwarrend en zorgde voor een oneindige lus.
+m.n. *Otherwise, it does nothing* dat klopt niet helemaal. Anders wordt de instruction point verhoogt met het aantal verbruikte parameters (~+=3~)
+
+#+begin_quote
+Opcode 5 is jump-if-true: if the first parameter is non-zero, it sets the
+instruction pointer to the value from the second parameter. Otherwise, it does
+nothing.
+#+end_quote
