@@ -13,17 +13,17 @@ def computer(program: List[int]):
     """ part one """
     modes = [0,0,0,0]
 
-    def set_value(offset:int, index:int, value:int):
+    def set_value(instruction_pointer:int, parameter:int, value:int):
         # parameters that an instruction writes to wil never be in immediate mode
-        program[program[offset+index]] = value
+        program[program[instruction_pointer+parameter]] = value
 
-    def get_value(offset:int, index:int):
-        if modes[index]:
+    def get_value(instruction_pointer:int, parameter:int):
+        if modes[parameter]:
             # immediate mode
-            return program[offset+index]
+            return program[instruction_pointer + parameter]
         else:
             # position mode
-            return program[program[offset+index]]
+            return program[program[instruction_pointer + parameter]]
 
     i = 0
     while i < len(program):
