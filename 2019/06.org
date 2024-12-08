@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       83f01fdf-777e-4696-a09c-45acd68872d0
+:END:
+#+title: 2019 Day 6: Universal Orbit Map
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+
+Doet me denken aan een aoc opgave die ik ooit eerder maakte en waarbij ik alle
+afstanden tussen alle punten had bepaald. Ik hoef nu niet alle afstanden tussen
+alle punten te hebben alleen alle afstanden vanaf COM.
+
+* Part Two
