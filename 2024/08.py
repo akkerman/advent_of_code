@@ -25,19 +25,18 @@ def part_one(antennas: Set[Antenna], names: Set[str], size: Tuple[int, int]):
     """ part one """
     antinodes: Set[Coord] = set()
 
-    def add_antinode(r:int,c:int):
-        if 1 <= r <= size[0] and 1 <= c <= size[1]:
-            antinodes.add((r,c))
+    def is_within_grid(r:int,c:int):
+        return 1 <= r <= size[0] and 1 <= c <= size[1]
 
+    def add_antinode(r:int,c:int):
+        if is_within_grid(r, c):
+            antinodes.add((r,c))
 
     for name in names:
         coords = [(r,c) for n,r,c in antennas if n == name]
-        for r1, c1 in coords:
-            for r2, c2 in coords:
-                if (r1, c1) == (r2, c2):
-                    continue
-                add_antinode(r1 + (r1-r2), c1 + (c1-c2))
-                add_antinode(r2 + (r2-r1), c2 + (c2-c1))
+        for (r1, c1), (r2, c2) in ((p1, p2) for p1 in coords for p2 in coords if p1 != p2):
+            add_antinode(r1+(r1-r2), c1+(c1-c2))
+            add_antinode(r2+(r2-r1), c2+(c2-c1))
 
     return len(antinodes)
 
@@ -46,8 +45,11 @@ def part_two(antennas: Set[Antenna], names: Set[str], size: Tuple[int, int]):
     """ part two """
     antinodes: Set[Coord] = set()
 
+    def is_within_grid(r:int,c:int):
+        return 1 <= r <= size[0] and 1 <= c <= size[1]
+
     def add_antinode(r:int,c:int):
-        if 1 <= r <= size[0] and 1 <= c <= size[1]:
+        if is_within_grid(r, c):
             antinodes.add((r,c))
             return True
         return False
@@ -55,16 +57,15 @@ def part_two(antennas: Set[Antenna], names: Set[str], size: Tuple[int, int]):
 
     for name in names:
         coords = [(r,c) for n,r,c in antennas if n == name]
-        for r1, c1 in coords:
-            for r2, c2 in coords:
-                if (r1, c1) == (r2, c2):
-                    continue
-                m = 1
-                while add_antinode(r1 + (r2-r1)*m, c1+(c2-c1)*m):
-                    m += 1
-                m2 = 1
-                while add_antinode(r2 + (r1-r2)*m2, c2+(c1-c2)*m2):
-                    m2 += 1
+
+        for (r1, c1), (r2, c2) in ((p1, p2) for p1 in coords for p2 in coords if p1 != p2):
+            m = 1
+            while add_antinode(r1+(r2-r1)*m, c1+(c2-c1)*m):
+                m += 1
+
+            m = 1
+            while add_antinode(r2+(r1-r2)*m, c2+(c1-c2)*m):
+                m += 1
 
     return len(antinodes)
 
