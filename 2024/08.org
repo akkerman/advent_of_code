@@ -1,0 +1,15 @@
+:PROPERTIES:
+:ID:       3864d2ad-19d6-452c-97b1-eacd6abc3fc7
+:END:
+#+title: 2024 Day 8: Resonant Collinearity
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+
+- references :: [[id:4d8df256-af0d-4847-b626-94b01b6d06a8][2016 Day 25: Clock Signal]]
+
+
+
+
+* Part Two

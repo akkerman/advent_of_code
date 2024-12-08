@@ -1,0 +1,11 @@
+:PROPERTIES:
+:ID:       4d8df256-af0d-4847-b626-94b01b6d06a8
+:END:
+#+title: 2016 Day 25: Clock Signal
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+
+
+* Part Two
