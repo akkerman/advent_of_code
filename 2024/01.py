@@ -1,31 +1,23 @@
-# pylint: disable=missing-module-docstring,missing-function-docstring
-# pylint: disable=invalid-name
+""" Day 1: Historian Hysteria """
 import sys
-from typing import List
 from collections import Counter
 
 
-def part_one(list1: List[int], list2: List[int]):
-    """ part one """
+def part_one(list1: list[int], list2: list[int]):
+    """ calculate total distance between two lists """
     paired = zip(sorted(list1), sorted(list2))
+    return sum(abs(one - two) for one, two in paired)
 
-    sum = 0
-    for one, two in paired:
-        sum += abs(one - two)
-
-    return sum
-
-
-def part_two(list1: List[int], list2: List[int]):
-    """ part two """
+def part_two(list1: list[int], list2: list[int]):
+    """ Calculate simularity score between to lists """
     counts = Counter(list2)
     return sum(one * counts[one] for one in list1)
 
 
 def main():
     """ main """
-    list1: List[int] = []
-    list2: List[int] = []
+    list1: list[int] = []
+    list2: list[int] = []
     for line in sys.stdin:
         line = line.replace('\n', '')
         one, two = line.split('   ')

@@ -1,5 +1,3 @@
-# pylint: disable=missing-module-docstring,missing-function-docstring
-# pylint: disable=invalid-name
 import sys
 
 DOT = -607
@@ -56,6 +54,7 @@ def part_one(diskmap: list[int]) -> int:
 
 
 def find_free_space(diskmap: list[int], length: int) -> int:
+    """ find continuous free spece of given length """
     sequence = [DOT] * length
     for i in range(len(diskmap) - length):
         if diskmap[i:i+length] == sequence:

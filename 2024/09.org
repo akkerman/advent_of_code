@@ -92,7 +92,7 @@ def checksum(diskmap: List[int]) -> int:
 
 #+CAPTION: final checksum function
 #+begin_src python
-def checksum(diskmap: List[int]) -> int:
+def checksum(diskmap: list[int]) -> int:
     """ sum the product of file_id and position """
     return sum(file_id * i for i, file_id in enumerate(diskmap) if file_id != DOT)
 #+end_src

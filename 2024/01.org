@@ -21,3 +21,45 @@ Python heeft een counter object zodat het bepalen van hoe vaak iets in een lijst
 voorkomt eenvoudig =counts=Counter(list)=.
 
 Maar 't kan uiteraard ook met een filter (javascript) ~list2.filter(i => i === list1item).length~
+
+* Refactoring
+
+Originele eerste oplossing was:
+
+#+begin_src python
+def part_one(list1: List[int], list2: List[int]):
+    """ part one """
+    paired = zip(sorted(list1), sorted(list2))
+
+    sum = 0
+    for one, two in paired:
+        sum += abs(one - two)
+
+    return sum
+#+end_src
+
+Hier zijn een aantal dingen minder optimaal en kunnen worden herschreven als onderstaand.
+De code is nu compacter en idiomatischer. Expliciet gebruik van een teller en een for-lus is vervangen.
+
+
+#+begin_src python
+def part_one(list1: list[int], list2: list[int]):
+    """ calculate total distance between two lists """
+    paired = zip(sorted(list1), sorted(list2))
+    return sum(abs(one - two) for one, two in paired)
+#+end_src
+
+Omdat sum wordt toegepast op een generator comprehension en niet op een lijst
+comprehension kan sum de teller bij elke iteratie bijwerken en hoeft er niet een
+gehele lijst in geheugen worden genomen. Wat mijn originele reden was om niet te
+schrijven:
+
+#+begin_src python
+def part_one(list1: list[int], list2: list[int]):
+    """ calculate total distance between two lists """
+    paired = zip(sorted(list1), sorted(list2))
+    distances = [abs(one - two) for one, two in paired]
+    return sum(distances)
+#+end_src
+
+Her verscil zit in de vierkante haken (lijst vs generator)

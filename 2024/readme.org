@@ -1,0 +1,35 @@
+:PROPERTIES:
+:ID:       212a04da-2f2f-42a8-aac3-6cc62a805688
+:END:
+#+title: AOC 2024
+
+Dit zijn de oplossingen voor [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][Advent of Code]] 2024.
+
+
+* Goal
+
+Dit jaar schrijf ik de oplossingen in [[id:126a1e03-1dcd-4fa3-80dd-59fd6e07ab56][Python]] en wil ga ik de code, na het oplossen, refactoren.
+
+Bij de refactoring doe ik de volgende zaken
+
+- voeg types toe
+- schrijf pydoc comments die nog iets meer uitleggen wat een (hulp)functie doet
+- vraag chatgpt om een alternatieve versie die wellicht meer pythonic is
+
+* Lessons learned
+
+** sum over generator
+
+Zie [[id:7153c1e3-c016-46c3-8496-223545c1a19d][2024 Day 1: Historian Hysteria]].
+
+** Typing Modernized
+
+Uitzoeken wat is het verschil in List en list in type annotations?
+
+#+begin_src python
+from typings import List
+
+list1: List[int]
+# vs
+list2: list[int]
+#+end_src

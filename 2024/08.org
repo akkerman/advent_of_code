@@ -16,7 +16,9 @@ Maak antinodes in een andere set met dubbel de afstand van de antenne naar de an
 Tel antinodes in set.
 
 Ik zat wel een beetje te klooien met de grenzen.
-Uiteindelijk heb ik alles 1 based gemaakt. Want dan kan ik het printje veel gemakkelijker vergelijken in mijn editor die ook 1-based is (eerste regel en colom is 1)
+Uiteindelijk heb ik alles 1 based gemaakt. Want dan kan ik het printje veel
+gemakkelijker vergelijken in mijn editor die ook 1-based is (eerste regel en
+colom is 1)
 
 Ik ben daarom ook de hele tijd coordinaten in rijen en colommen aan het uitzetten ipv x,y.
 
@@ -42,7 +44,9 @@ Die kan ik true/false laten teruggeven zodat ik kan blijven toevoegen totdat het
 
 
 Op 1 of andere manier worden op de originele antennes geen antinodes geplaatst.
-Ik kwam er achter dat ik in deel 1 niet geprogrammeerd had, *op dubbele afstand van de antenne* maar in *tegengestelde richting net zo ver*. Dit komt, omdat je met paren werkt, op hetzelfde neer maar gaf me wat hoofdbrekens bij deel twee.
+Ik kwam er achter dat ik in deel 1 niet geprogrammeerd had, *op dubbele afstand
+van de antenne* maar in *tegengestelde richting net zo ver*. Dit komt, omdat je met
+paren werkt, op hetzelfde neer maar gaf me wat hoofdbrekens bij deel twee.
 
 Daarom bij part one: =add_antinode(r1 + (r1-r2), c2 + (c1-c2))= en
 bij part two: =add_antinode(r1 + (r2-r1)*m, c1 + (c-c1)*m)=
