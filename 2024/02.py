@@ -14,8 +14,11 @@ def is_save(report: List[int]) -> bool:
 
 def is_monotonic(report: List[int]) -> bool:
     """ check if the levels are all decreasing or all increasing """
-    return all(report[i] <= report[i+1] for i in range(0, len(report)-1)) or \
-           all(report[i] >= report[i+1] for i in range(0, len(report)-1))
+    return (
+        all(report[i] <= report[i+1] for i in range(0, len(report)-1)) or
+        all(report[i] >= report[i+1] for i in range(0, len(report)-1))
+    )
+
 
 def is_save_level(l1: int, l2: int) -> bool:
     """ check if the difference between levels is 1, 2 or 3 """
@@ -23,8 +26,10 @@ def is_save_level(l1: int, l2: int) -> bool:
 
 def is_save_with_dampener(report: list[int]) -> bool:
     """Check if the report is safe or can be made safe by removing one level."""
-    return is_save(report) or \
-           any(is_save(report[:i] + report[i+1:]) for i in range(len(report)))
+    return (
+       is_save(report) or 
+       any(is_save(report[:i] + report[i+1:]) for i in range(len(report)))
+     )
 
 
 def part_one(reports: List[List[int]]):

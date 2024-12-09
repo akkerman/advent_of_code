@@ -16,9 +16,9 @@ Bij de refactoring doe ik de volgende zaken
 - schrijf pydoc comments die nog iets meer uitleggen wat een (hulp)functie doet
 - vraag chatgpt om een alternatieve versie die wellicht meer pythonic is
 
-* Lessons learned
+* Lessons learned · spoiler free
 
-** sum over generator
+** ~sum~ over generator
 
 Zie [[id:7153c1e3-c016-46c3-8496-223545c1a19d][2024 Day 1: Historian Hysteria]].
 
@@ -48,7 +48,7 @@ return count_even([1,2,3,4,5,6,8,10])
 #+RESULTS:
 : 5
 
-** Gebruik any en all
+** Gebruik ~any~ en ~all~
 
 Zie [[id:71e660ab-fdfe-4e6b-8469-2b7acc36ceca][2024 Day 2: Red-Nosed Reports]]
 

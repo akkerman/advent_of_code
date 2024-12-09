@@ -110,6 +110,5 @@ def is_save_with_dampener(report: list[int]) -> bool:
 #+begin_src python
 def is_save_with_dampener(report: list[int]) -> bool:
     """Check if the report is safe or can be made safe by removing one level."""
-    return is_save(report) or \
-           any(is_save(report[:i] + report[i+1:]) for i in range(len(report)))
+    return is_save(report) or any(is_save(report[:i] + report[i+1:]) for i in range(len(report)))
 #+end_src
