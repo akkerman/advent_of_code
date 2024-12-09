@@ -5,6 +5,18 @@ from typing import List
 
 DOT = -607
 
+DEBUG = False
+
+def print_diskmap(diskmap: List[int]):
+    if not DEBUG:
+        return
+    for d in diskmap:
+        if d == DOT:
+            print('.', end='')
+        else:
+            print(d, end='')
+    print()
+
 def explode(diskmap: List[int]):
     """ explode """
     newdiskmap: List[int] = []
@@ -35,7 +47,7 @@ def checksum(diskmap: List[int]) -> int:
     c = 0
     for i in range(len(diskmap)):
         if diskmap[i] == DOT:
-            break
+            continue
         file_id = diskmap[i]
         assert isinstance(file_id, int)
         c += file_id * i
@@ -47,9 +59,42 @@ def part_one(diskmap: List[int]) -> int:
     return checksum(move(explode(diskmap)))
 
 
-def part_two(lines):
+def find_free_space(diskmap: List[int], length: int) -> int:
+    sequence = [DOT] * length
+    for i in range(len(diskmap) - length):
+        if diskmap[i:i+length] == sequence:
+            return i
+    return -1
+
+def move_2(diskmap: List[int]):
+    file_end_idx = len(diskmap) - 1
+    file_start_idx = file_end_idx
+
+    print_diskmap(diskmap)
+    while file_end_idx > 0:
+        file_start_idx = diskmap.index(diskmap[file_end_idx])
+        file = diskmap[file_start_idx:file_end_idx+1]
+
+        free_start_idx = find_free_space(diskmap, len(file))
+        if free_start_idx >= 0 and free_start_idx < file_start_idx:
+            diskmap[free_start_idx:free_start_idx+len(file)] = file
+            diskmap[file_start_idx:file_end_idx+1] = [DOT] * len(file)
+            print_diskmap(diskmap)
+
+        file_end_idx = file_start_idx - 1
+        while diskmap[file_end_idx] == DOT:
+            file_end_idx -= 1
+
+    return diskmap
+
+
+
+
+def part_two(diskmap: List[int]):
     """ part two """
-    return 'todo'
+    dm = move_2(explode(diskmap))
+    print_diskmap(dm)
+    return checksum(dm)
 
 
 def main():
