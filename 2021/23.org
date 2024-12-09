@@ -1,0 +1,11 @@
+:PROPERTIES:
+:ID:       fbfe39ea-9e91-4b70-b112-8bae84325ad5
+:END:
+#+title: 2021 Day 23: Amphipod
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+
+
+* Part Two
