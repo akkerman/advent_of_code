@@ -62,4 +62,4 @@ def part_one(list1: list[int], list2: list[int]):
     return sum(distances)
 #+end_src
 
-Her verscil zit in de vierkante haken (lijst vs generator)
+Her verschil zit in de vierkante haken (lijst vs generator)

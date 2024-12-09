@@ -1,10 +1,9 @@
-# pylint: disable=missing-module-docstring,missing-function-docstring
-# pylint: disable=invalid-name
+""" Day 2: Red-Nosed Reports """
 import sys
 from typing import List
 
 def is_save(report: List[int]) -> bool:
-    if not sorted_or_reversed(report):
+    if not is_monotonic(report):
         return False
 
     for l1, l2 in zip(report, report[1:]):
@@ -13,30 +12,19 @@ def is_save(report: List[int]) -> bool:
 
     return True
 
-def sorted_or_reversed(report: List[int]) -> bool:
-    sorted_report = sorted(report)
-    reversed_report = sorted(report, reverse=True)
-    
-    if report != sorted_report and report != list(reversed_report):
-        return False 
-    return True
+def is_monotonic(report: List[int]) -> bool:
+    """ check if the levels are all decreasing or all increasing """
+    return all(report[i] <= report[i+1] for i in range(0, len(report)-1)) or \
+           all(report[i] >= report[i+1] for i in range(0, len(report)-1))
 
 def is_save_level(l1: int, l2: int) -> bool:
-    diff = abs(l1 - l2)
-    if diff == 0 or diff > 3:
-        return False
-    return True
+    """ check if the difference between levels is 1, 2 or 3 """
+    return 1 <= abs(l1 - l2) <= 3
 
-def is_save_with_dampeners(report: List[int]) -> bool:
-    if is_save(report):
-        return True
-
-    for i in range(0, len(report)):
-        dampened = report[:i] + report[i+1:]
-        if is_save(dampened):
-            return True
-
-    return False
+def is_save_with_dampener(report: list[int]) -> bool:
+    """Check if the report is safe or can be made safe by removing one level."""
+    return is_save(report) or \
+           any(is_save(report[:i] + report[i+1:]) for i in range(len(report)))
 
 
 def part_one(reports: List[List[int]]):
@@ -46,7 +34,7 @@ def part_one(reports: List[List[int]]):
 
 def part_two(reports: List[List[int]]):
     """ part two """
-    return sum(is_save_with_dampeners(report) for report in reports)
+    return sum(is_save_with_dampener(report) for report in reports)
 
 
 def main():

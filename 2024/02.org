@@ -15,3 +15,101 @@ Check if each pair is the desired difference.
 
 If the report is Unsafe:
 Calculate all possible dampened reports and check if any of them is safe.
+
+
+* Refactoring
+
+** is save level
+
+Ik weet niet helemaal waarom ik deze conditie gekozen heb
+#+begin_src python
+if diff == 0 or diff > 3:
+#+end_src
+Want onderstaande is precies hetzelfde en letterlijk wat in de tekst staat
+#+begin_src python
+if 1 <= diff <= 3:
+#+end_src
+Alleen moet je dan wel de ~True~ / ~False~ omdraaien
+
+---
+
+#+caption: implementation during solving
+#+begin_src python
+def is_save_level(l1: int, l2: int) -> bool:
+    diff = abs(l1 - l2)
+    if diff == 0 or diff > 3:
+        return False
+    return True
+#+end_src
+
+#+caption: alternative implementation
+#+begin_src python
+def is_save_level(l1: int, l2: int) -> bool:
+    """ check if the difference between levels is 1, 2 or 3 """
+    return abs(l1 - l2) in [1, 2, 3]
+#+end_src
+
+#+caption: updated implementation
+#+begin_src python
+def is_save_level(l1: int, l2: int) -> bool:
+    """ check if the difference between levels is 1, 2 or 3 """
+    return 1 <= abs(l1 - l2) <= 3
+#+end_src
+
+** all decreasing or increasing
+
+#+caption: implementation during solving
+#+begin_src python
+def sorted_or_reversed(report: List[int]) -> bool:
+    sorted_report = sorted(report)
+    reversed_report = sorted(report, reverse=True)
+
+    if report != sorted_report and report != list(reversed_report):
+        return False
+    return True
+#+end_src
+
+
+#+caption: updated implementation
+#+begin_src python
+def is_monotonic(report: List[int]) -> bool:
+    """ check if the levels are all decreasing or all increasing """
+    return all(report[i] <= report[i+1] for i in range(len(report)-1)) or \
+           all(report[i] >= report[i+1] for i in range(len(report)-1))
+#+end_src
+
+Mijn initiele versie vind ik wel iets leesbaarder en brengt ook de intentie, via
+de code, wat gemakkelijker naar buiten.
+
+De bijgewerkte implementatie zorgt er echter voor dat er short-circuit op treed,
+zodra een paar NIET voldoet aan de voorwaarde dan stopt ~all~ gelijk de verwerking
+en als de eerste (oplopend) wel klopt dan hoeft het andere stuk niet te worden
+nagelopen. In mijn eerste versie sorteerd ik altijd eerst de lijst beide kanten
+op.
+
+
+De naam vind ik wel gaaf zie evt [[https://en.wikipedia.org/wiki/Monotonic_function][Monotonic function - Wikipedia]]
+
+** is save with dampener
+
+#+begin_src python
+def is_save_with_dampener(report: list[int]) -> bool:
+    """ check if the report is save or can be safe when removing one level """
+    if is_save(report):
+        return True
+
+    for i in range(0, len(report)):
+        dampened = report[:i] + report[i+1:]
+        if is_save(dampened):
+            return True
+
+    return False
+#+end_src
+
+
+#+begin_src python
+def is_save_with_dampener(report: list[int]) -> bool:
+    """Check if the report is safe or can be made safe by removing one level."""
+    return is_save(report) or \
+           any(is_save(report[:i] + report[i+1:]) for i in range(len(report)))
+#+end_src

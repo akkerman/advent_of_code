@@ -22,6 +22,84 @@ Bij de refactoring doe ik de volgende zaken
 
 Zie [[id:7153c1e3-c016-46c3-8496-223545c1a19d][2024 Day 1: Historian Hysteria]].
 
+#+caption: liever niet
+#+begin_src python
+def count_even(numbers:list[int]):
+   count = 0
+   for n in numbers:
+      if n % 2 == 0:
+         count += 1
+   return count
+
+return count_even([1,2,3,4,5,6,8,10])
+#+end_src
+
+#+RESULTS:
+: 5
+
+#+caption: liever wel
+#+begin_src python
+def count_even(numbers:list[int]):
+   return sum(not e % 2 for e in numbers)
+
+return count_even([1,2,3,4,5,6,8,10])
+#+end_src
+
+#+RESULTS:
+: 5
+
+** Gebruik any en all
+
+Zie [[id:71e660ab-fdfe-4e6b-8469-2b7acc36ceca][2024 Day 2: Red-Nosed Reports]]
+
+controle of getallen gesorteerd zijn:
+
+#+begin_src python
+def is_sorted(numbers):
+    return numbers == sorted(numbers)
+return is_sorted([2,1,2,3,4,5,6,7,8,9])
+#+end_src
+
+#+RESULTS:
+: False
+
+Als dat een flinke lijst is en redelijk in het begin is het al duidelijk niet sorted dan heb je nu wel eerst de gehele lijst gesorteerd.
+
+#+begin_src python
+def is_sorted(numbers):
+    return all(numbers[i] <= numbers[i+1] for i in range(len(numbers)-1))
+
+return is_sorted([2,1,2,3,4,5,6,7,8,9])
+#+end_src
+
+#+RESULTS:
+: False
+
+---
+
+Controle of er een paar gelijke getallen in een reeks zit
+#+begin_src python
+def contains_pair(numbers):
+    for i in range(len(numbers)-1):
+        if numbers[i] == numbers[i+1]:
+            return True
+    return False
+return contains_pair([1,2,3,4,5,6,6,7,8,9])
+#+end_src
+
+#+RESULTS:
+: True
+
+Onderstaande is vrijwel helemaal gelijk maar je hebt geen expliciete ~True~ / ~False~ meer nodig.
+#+begin_src python
+def contains_pair(numbers):
+    return any(numbers[i] == numbers[i+1] for i in range(len(numbers)-1))
+return contains_pair([1,2,3,4,5,6,6,7,8,9])
+#+end_src
+
+#+RESULTS:
+: True
+
 ** Typing Modernized
 
 Uitzoeken wat is het verschil in List en list in type annotations?
