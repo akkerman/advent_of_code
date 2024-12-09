@@ -3,13 +3,149 @@
 :END:
 #+title: 2024 Day 9: Disk Fragmenter
 #+filetags: :python:
+#+setupfile: ../../refs/theme-readtheorg.setup
+
 - tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
 
 * Part One
 
 - references :: [[id:fbfe39ea-9e91-4b70-b112-8bae84325ad5][2021 Day 23: Amphipod]]
 
+Ik moet altijd goed opletten bij zulke grote lappen teksts.
+Mijn aanpak is dan altijd om te kijken welke transformaties er worden besproken
+en of ik deze dan in aparte functies kan onderbrengen.
+
+In dit geval heb ik:
+
+#+begin_src python
+
+def explode(diskmap: List[int]):
+    pass
+
+def move(diskmap: List[int]): List[int]
+   pass
+
+def checksum(diskmap: List[int]) -> int:
+    pass
+
+def part_one(diskmap: List[int]) -> int:
+    return checksum(move(explode(diskmap)))
+
+#+end_src
+
+In eerste instantie had ik die empty space daadwerkelijk met ='.'= gecodeerd maar
+dat vond ik toch irritant worden omdat mijn lijsten dan =List[(str|int)]= zijn en
+als je dan een element er uitneemt kan die linter niet bepalen dat het deze keer
+echt een int is en geen str. Dus alle voorkomens van ='.'= vervangen door =DOT= en
+er een negatief getal aan toegewezen (=-607= omdat, als je een beetje knijpt met
+je ogen, dit lijkt op "dot" 😉).
+
+
+** Explode
+
+#+CAPTION: original explode function during solving
+#+begin_src python
+def explode(diskmap: List[int]):
+    """ translate dense diskmap to individual blocks """
+    newdiskmap: List[int] = []
+    id = 0
+    for i in range(len(diskmap)):
+        if i % 2 == 0: # file
+            newdiskmap += [id] * diskmap[i]
+            id += 1
+        else:
+            newdiskmap += [DOT] * diskmap[i]
+    return newdiskmap
+#+end_src
+
+#+CAPTION: final explode function
+#+begin_src python
+def explode(diskmap: list[int]) -> list[int]:
+    """Translate dense diskmap to individual blocks."""
+    newdiskmap = []
+
+    for index, count in enumerate(diskmap):
+        block = [index // 2] * count if index % 2 == 0 else [DOT] * count
+        newdiskmap.extend(block)
+
+    return newdiskmap
+#+end_src
+
+** Move
+
+Ongewijzigd. Alleen twee, iets verduidelijkende, commentaren toegevoegd.
+
+** Checksum
+
+#+CAPTION: original checksum function during solving
+#+begin_src python
+def checksum(diskmap: List[int]) -> int:
+    c = 0
+    for i in range(len(diskmap)):
+        if diskmap[i] == DOT:
+            continue
+        file_id = diskmap[i]
+        assert isinstance(file_id, int)
+        c += file_id * i
+    return c
+#+end_src
+
+#+CAPTION: final checksum function
+#+begin_src python
+def checksum(diskmap: List[int]) -> int:
+    """ sum the product of file_id and position """
+    return sum(file_id * i for i, file_id in enumerate(diskmap) if file_id != DOT)
+#+end_src
+
+
 * Part Two
 
 
-Stoppen met verplaatsen als je het bestand niet verder links krijgt.
+** find free space
+
+Om te kunnen voldoen aan de vereiste om alleen gehele documenten te verplaatsen
+is er een manier nodig om het eerste vrije stuk disk te vinden wat groot genoeg
+is om de het file naartoe te verplaatsen.
+
+
+#+begin_src python
+def find_free_space(diskmap: list[int], length: int) -> int:
+    """ find continuous free spece of given length """
+    sequence = [DOT] * length
+    for i in range(len(diskmap) - length):
+        if diskmap[i:i+length] == sequence:
+            return i
+    return -1
+#+end_src
+
+** know when to stop
+
+In eerste instantie klopte er van het antwoord zeer weinig. Je moet dan ook wel
+stoppen met verplaatsen als je het bestand niet verder links krijgt. Wat er dus
+gebeurde is dat mijn oplossing bestanden bleef verplaatsen totdat de
+bestandspointer (=file_end_idx=) bij 0 aangeland was. Wat erin resulteerde dat
+sommige bestanden een ander plekje kregen rechts van waar ze origineel stonden.
+
+
+Een additionele conditie deed ik, in eerste instantie, door te kijken of het
+gevonden stuk free space wel links van het bestand ligt:
+
+
+#+begin_src python
+free_start_idx = find_free_space(diskmap, len(file))
+if free_start_idx >= 0 and free_start_idx < file_start_idx:
+#+end_src
+
+Maar bedacht later dat ik het ook kan verwerken in de te doorzoeken ruimte voor
+lege stukjes dit zorgde voor ~30% sneller verwerking:
+
+#+begin_src python
+free_start_idx = find_free_space(diskmap[:file_start_idx+1], len(file))
+if free_start_idx >= 0:
+#+end_src
+
+** performance
+
+De oplossing is nog best wel brute-force maar echt heel super dat ik gisteren
+gewisseld was van python3 naar pypy3 om de code te draaien. De uiteindelijke
+versie doet er 32s over met python3 en 9s met pypy3.

@@ -1,13 +1,12 @@
 # pylint: disable=missing-module-docstring,missing-function-docstring
 # pylint: disable=invalid-name
 import sys
-from typing import List
 
 DOT = -607
 
 DEBUG = False
 
-def print_diskmap(diskmap: List[int]):
+def print_diskmap(diskmap: list[int]):
     if not DEBUG:
         return
     for d in diskmap:
@@ -17,19 +16,18 @@ def print_diskmap(diskmap: List[int]):
             print(d, end='')
     print()
 
-def explode(diskmap: List[int]):
-    """ explode """
-    newdiskmap: List[int] = []
-    id = 0
-    for i in range(len(diskmap)):
-        if i % 2 == 0: # file
-            newdiskmap += [id] * diskmap[i]
-            id += 1
-        else: 
-            newdiskmap += [DOT] * diskmap[i]
+def explode(diskmap: list[int]) -> list[int]:
+    """Translate dense diskmap to individual blocks."""
+    newdiskmap: list[int] = []
+
+    for index, count in enumerate(diskmap):
+        block = [index // 2] * count if index % 2 == 0 else [DOT] * count
+        newdiskmap.extend(block)
+
     return newdiskmap
 
-def move(diskmap: List[int]):
+def move(diskmap: list[int]):
+    """ move (part of) files empty space on the left """
     empty_idx = diskmap.index(DOT)
     file_idx = len(diskmap) - 1
 
@@ -37,36 +35,35 @@ def move(diskmap: List[int]):
         file = diskmap[file_idx]
         diskmap[empty_idx] = file
         diskmap[file_idx] = DOT
+
+        # find next empty space on the left
         while diskmap[empty_idx] != DOT:
             empty_idx += 1
+
+        # find next file on the right
         while diskmap[file_idx] == DOT:
             file_idx -= 1
     return diskmap
 
-def checksum(diskmap: List[int]) -> int:
-    c = 0
-    for i in range(len(diskmap)):
-        if diskmap[i] == DOT:
-            continue
-        file_id = diskmap[i]
-        assert isinstance(file_id, int)
-        c += file_id * i
-    return c
+def checksum(diskmap: list[int]) -> int:
+    """ sum the product of file_id and position """
+    return sum(file_id * i for i, file_id in enumerate(diskmap) if file_id != DOT)
 
 
-def part_one(diskmap: List[int]) -> int:
-    """ part one """
+def part_one(diskmap: list[int]) -> int:
+    """ calculate checksum after moving (part of) files """
     return checksum(move(explode(diskmap)))
 
 
-def find_free_space(diskmap: List[int], length: int) -> int:
+def find_free_space(diskmap: list[int], length: int) -> int:
     sequence = [DOT] * length
     for i in range(len(diskmap) - length):
         if diskmap[i:i+length] == sequence:
             return i
     return -1
 
-def move_2(diskmap: List[int]):
+def move_2(diskmap: list[int]):
+    """ move whole files to empty space on the left """
     file_end_idx = len(diskmap) - 1
     file_start_idx = file_end_idx
 
@@ -75,8 +72,8 @@ def move_2(diskmap: List[int]):
         file_start_idx = diskmap.index(diskmap[file_end_idx])
         file = diskmap[file_start_idx:file_end_idx+1]
 
-        free_start_idx = find_free_space(diskmap, len(file))
-        if free_start_idx >= 0 and free_start_idx < file_start_idx:
+        free_start_idx = find_free_space(diskmap[:file_start_idx+1], len(file))
+        if free_start_idx >= 0:
             diskmap[free_start_idx:free_start_idx+len(file)] = file
             diskmap[file_start_idx:file_end_idx+1] = [DOT] * len(file)
             print_diskmap(diskmap)
@@ -90,8 +87,8 @@ def move_2(diskmap: List[int]):
 
 
 
-def part_two(diskmap: List[int]):
-    """ part two """
+def part_two(diskmap: list[int]):
+    """ calculate checksum after moving files """
     dm = move_2(explode(diskmap))
     print_diskmap(dm)
     return checksum(dm)
@@ -99,7 +96,7 @@ def part_two(diskmap: List[int]):
 
 def main():
     """ main """
-    diskmap: List[int] = []
+    diskmap: list[int] = []
     for line in sys.stdin:
         line = line.strip()
         diskmap += list(map(int, list(line)))
@@ -107,6 +104,5 @@ def main():
     print('part_one', part_one(diskmap))
 
     print('part_two', part_two(diskmap))
-
 
 main()
