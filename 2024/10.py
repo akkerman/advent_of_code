@@ -31,7 +31,7 @@ def make_score(topo: list[Position]):
     """ return a function that scores a trail """
     neighbours = make_get_neighbours(topo)
 
-    def score_trail(start: Position) -> int:
+    def score_trail(start: Position, all_trails: bool = False) -> int:
         """ score a trail starting at start """
         score = 0
         visited: set[tuple[int,int]] = set()
@@ -44,11 +44,11 @@ def make_score(topo: list[Position]):
 
                 if nh == 9:
                     score += 1
-                    print('score', score, 'at', nr, nc)
                 else: 
                     todo.append((nr, nc, nh))
 
-                visited.add((nr, nc))
+                if not all_trails:
+                    visited.add((nr, nc))
 
         return score
 
@@ -61,9 +61,10 @@ def part_one(topo: list[Position]) -> int:
     return sum(score(start) for start in trail_heads(topo))
 
 
-def part_two(lines):
+def part_two(topo: list[Position]) -> int:
     """ part two """
-    return 'todo'
+    score = make_score(topo)
+    return sum(score(start, all_trails=True) for start in trail_heads(topo))
 
 def as_int(s: str) -> int:
     """ convert string to int, return -1 if on error """
