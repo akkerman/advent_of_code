@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       c0966b70-a93f-452c-93a9-d85dc702df83
+:END:
+#+title: 2024 Day 10: Hoof It
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+
+- references :: [[id:e6f18727-5c54-414e-bb0f-30b3c3e7c562][2023 Day 15: Lens Library]]
+
+Hmm. hadden we in voorgaande jaren al niet eens iets met een hoogte kaart?
+
+* Part Two

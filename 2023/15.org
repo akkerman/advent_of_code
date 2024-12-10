@@ -1,0 +1,11 @@
+:PROPERTIES:
+:ID:       e6f18727-5c54-414e-bb0f-30b3c3e7c562
+:END:
+#+title: 2023 Day 15: Lens Library
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+
+
+* Part Two
