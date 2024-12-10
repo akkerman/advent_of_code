@@ -1,25 +1,21 @@
-# pylint: disable=missing-module-docstring,missing-function-docstring
-# pylint: disable=invalid-name
+""" Day 4: Ceres Search """
 import sys
-import string
-from typing import List
 
-
-def rotate(grid: List[str]) -> List[str]:
+def rotate(grid: list[str]) -> list[str]:
     return [''.join([grid[j][i] for j in range(len(grid))]) for i in range(len(grid[0]))]
 
-def count_xmas(grid: List[str]) -> int:
+def count_xmas(grid: list[str]) -> int:
     count = 0
     for line in grid:
         count += line.count('XMAS')
         count += line[::-1].count('XMAS')
     return count
 
-def main_diagonals(grid: List[str]) -> List[str]:
+def main_diagonals(grid: list[str]) -> list[str]:
     rows = len(grid)
     cols = len(grid[0])
 
-    diagonals: List[str] = []
+    diagonals: list[str] = []
     for d in range(rows + cols - 1):
         dia = ''
         for r in range(d + 1):
@@ -29,11 +25,11 @@ def main_diagonals(grid: List[str]) -> List[str]:
         diagonals.append(dia)
     return diagonals
 
-def anti_diagonals(grid: List[str]) -> List[str]:
+def anti_diagonals(grid: list[str]) -> list[str]:
     rows = len(grid)
     cols = len(grid[0])
 
-    diagonals: List[str] = []
+    diagonals: list[str] = []
     for d in range(rows + cols - 1):
         dia = ''
         for r in range(d + 1):
@@ -44,7 +40,7 @@ def anti_diagonals(grid: List[str]) -> List[str]:
     return diagonals
 
 
-def part_one(grid: List[str]):
+def part_one(grid: list[str]):
     """ part one """
     count = 0
     count += count_xmas(grid)
@@ -53,7 +49,7 @@ def part_one(grid: List[str]):
     count += count_xmas(anti_diagonals(grid))
     return count
 
-def is_xmas(grid: List[str], r: int, c: int) -> bool:
+def is_xmas(grid: list[str], r: int, c: int) -> bool:
     topleft = grid[r-1][c-1]
     topright = grid[r-1][c+1]
     bottomleft = grid[r+1][c-1]
@@ -64,7 +60,7 @@ def is_xmas(grid: List[str], r: int, c: int) -> bool:
 
     return main and anti
 
-def part_two(grid: List[str]) -> int:
+def part_two(grid: list[str]) -> int:
     """ part two """
     rows = len(grid)
     cols = len(grid[0])
@@ -79,7 +75,7 @@ def part_two(grid: List[str]) -> int:
 
 def main():
     """ main """
-    grid: List[str] = []
+    grid: list[str] = []
     for line in sys.stdin:
         line = line.replace('\n', '')
         grid.append(line)

@@ -1,13 +1,10 @@
-# pylint: disable=missing-module-docstring,missing-function-docstring
-# pylint: disable=invalid-name
+""" Day 3: Mull It over """
 import sys
 import re
-from typing import List
-
 
 pattern = r'mul\((\d+),(\d+)\)'
 
-def mul(matches:List[str])->int:
+def mul(matches:list[str])->int:
     return sum(int(a) * int(b) for a,b in matches)
 
 def part_one(memory:str)->int:
