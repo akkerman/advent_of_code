@@ -1,0 +1,20 @@
+:PROPERTIES:
+:ID:       0a454b90-329f-4f8b-ae48-64e50f25cf8d
+:END:
+#+title: 2018 Day 3: No Matter How You Slice It
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+
+
+For each claim, determine all coordinates of it's area.
+
+Determine overlapping coordinates between each pair of area's.
+
+Put all coordinates into one set and see how many elements there are in that set.
+
+* Part Two
+
+
+Add a check to the existing loop.
