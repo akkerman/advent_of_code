@@ -55,7 +55,7 @@ def part_one(diskmap: list[int]) -> int:
 
 
 def find_free_space(diskmap: list[int], length: int) -> int:
-    """Find continuous free spece of given length."""
+    """Find continuous free space of given length."""
     sequence = [DOT] * length
     for i in range(len(diskmap) - length):
         if diskmap[i:i+length] == sequence:
@@ -88,7 +88,7 @@ def move_2(diskmap: list[int]):
 
 
 def part_two(diskmap: list[int]):
-    """Calculate checksum after moving files."""
+    """Calculate checksum after moving whole files."""
     dm = move_2(explode(diskmap))
     print_diskmap(dm)
     return checksum(dm)
