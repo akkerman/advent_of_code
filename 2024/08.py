@@ -1,15 +1,12 @@
-# pylint: disable=missing-module-docstring,missing-function-docstring
-# pylint: disable=invalid-name
+"""Day 8: Resonant Collinearity."""
 import sys
-from typing import Dict, Tuple, Set
 
+Antenna = tuple[str, int, int]
+Coord = tuple[int, int]
 
-Antenna = Tuple[str, int, int]
-Coord = Tuple[int, int]
-
-def print_map(antennas: Set[Antenna], antinodes: Set[Coord], size: Tuple[int, int]):
-    """ print map """
-    coords_to_name: Dict[Coord, str] = {(r,c): n for n,r,c in antennas}
+def print_map(antennas: set[Antenna], antinodes: set[Coord], size: tuple[int, int]):
+    """Print the map with antennas and antinodes."""
+    coords_to_name: dict[Coord, str] = {(r,c): n for n,r,c in antennas}
     for r in range(1, 1+size[0]):
         for c in range(1, 1+size[1]):
             if (r,c) in antinodes:
@@ -21,9 +18,9 @@ def print_map(antennas: Set[Antenna], antinodes: Set[Coord], size: Tuple[int, in
         print()
 
 
-def part_one(antennas: Set[Antenna], names: Set[str], size: Tuple[int, int]):
-    """ part one """
-    antinodes: Set[Coord] = set()
+def part_one(antennas: set[Antenna], names: set[str], size: tuple[int, int]):
+    """Determine unique locations of antinodes with double the distance between antennas."""
+    antinodes: set[Coord] = set()
 
     def is_within_grid(r:int,c:int):
         return 1 <= r <= size[0] and 1 <= c <= size[1]
@@ -41,9 +38,9 @@ def part_one(antennas: Set[Antenna], names: Set[str], size: Tuple[int, int]):
     return len(antinodes)
 
 
-def part_two(antennas: Set[Antenna], names: Set[str], size: Tuple[int, int]):
-    """ part two """
-    antinodes: Set[Coord] = set()
+def part_two(antennas: set[Antenna], names: set[str], size: tuple[int, int]):
+    """Determine unique locations of antinodes for all antenna distances within the map."""
+    antinodes: set[Coord] = set()
 
     def is_within_grid(r:int,c:int):
         return 1 <= r <= size[0] and 1 <= c <= size[1]
@@ -72,8 +69,8 @@ def part_two(antennas: Set[Antenna], names: Set[str], size: Tuple[int, int]):
 
 def main():
     """ main """
-    antennas: Set[Antenna] = set()
-    names: Set[str] = set()
+    antennas: set[Antenna] = set()
+    names: set[str] = set()
     rows = 0
     cols = 0
     for line in sys.stdin:
@@ -90,6 +87,5 @@ def main():
     print('part_one', part_one(antennas, names, (rows, cols)))
 
     print('part_two', part_two(antennas, names, (rows, cols)))
-
 
 main()

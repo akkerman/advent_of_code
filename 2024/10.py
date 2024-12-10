@@ -1,5 +1,4 @@
-# pylint: disable=missing-module-docstring,missing-function-docstring
-# pylint: disable=invalid-name
+"""Day 10: Hoof It."""
 import sys
 
 
@@ -11,28 +10,28 @@ Position = tuple[Row, Col, Height]
 
 
 def trail_heads(topo: list[Position]):
-    """ enumerate positions with height 0 """
+    """Enumerate positions with height 0."""
     for (row, col, height) in topo:
         if height == 0:
             yield (row, col, height)
 
 def make_get_neighbours(topo: list[Position]):
-    """ return a function that returns the neighbours of a position """
+    """Return a function that returns the neighbours of a position."""
     lookup = {(row, col): height for (row, col, height) in topo}
 
     def get_neighbours(r: Row, c: Col) -> list[Position]:
-        """ return neigbouring positions """
+        """Return neigbouring positions."""
         candidates = [(r-1, c), (r+1, c), (r, c-1), (r, c+1)]
         return [(row, col, lookup[(row, col)]) for row, col in candidates if (row, col) in lookup]
     return get_neighbours
 
 
 def make_score(topo: list[Position]):
-    """ return a function that scores a trail """
+    """Return a function that scores a trail."""
     neighbours = make_get_neighbours(topo)
 
     def score_trail(start: Position, all_trails: bool = False) -> int:
-        """ score a trail starting at start """
+        """Score a trail starting at start."""
         score = 0
         visited: set[tuple[int,int]] = set()
         todo: list[Position] = [start]
@@ -56,18 +55,18 @@ def make_score(topo: list[Position]):
 
 
 def part_one(topo: list[Position]) -> int:
-    """ sum of trailhead scores"""
+    """Sum of trailhead scores for all reachable summits."""
     score = make_score(topo)
     return sum(score(start) for start in trail_heads(topo))
 
 
 def part_two(topo: list[Position]) -> int:
-    """ part two """
+    """Sum of trailhead score for all trails."""
     score = make_score(topo)
     return sum(score(start, all_trails=True) for start in trail_heads(topo))
 
 def as_int(s: str) -> int:
-    """ convert string to int, return -1 if on error """
+    """Convert string to int, return -1 on error."""
     try:
         return int(s)
     except ValueError:

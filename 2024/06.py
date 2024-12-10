@@ -1,24 +1,23 @@
-# pylint: disable=missing-module-docstring,missing-function-docstring
-# pylint: disable=invalid-name
+"""Day 6: Guard Gallivant."""
 import sys
-from typing import List, Set, Tuple, Dict
 
-Coord = Tuple[int,int]
-Direction = Tuple[int,int]
+Coord = tuple[int,int]
+Direction = tuple[int,int]
 
 UP: Direction = (-1,0)
 DOWN: Direction = (1,0)
 LEFT: Direction = (0,-1)
 RIGHT: Direction = (0,1)
 
-next_direction: Dict[Direction, Direction] = {
+next_direction: dict[Direction, Direction] = {
     UP: RIGHT,
     RIGHT: DOWN,
     DOWN: LEFT,
     LEFT: UP,
 }
 
-def print_map(map:List[Coord], guard_pos:Coord, max:Coord, extra: Set[Coord]):
+def print_map(map:list[Coord], guard_pos:Coord, max:Coord, extra: set[Coord]):
+    """Print the laboratory map with the guard and obstacles."""
     for r in range(max[0]):
         for c in range(max[1]):
             if (r,c) in extra:
@@ -31,9 +30,9 @@ def print_map(map:List[Coord], guard_pos:Coord, max:Coord, extra: Set[Coord]):
                 print('.', end='')
         print()
 
-def part_one(map:List[Coord], guard_pos:Coord, max:Coord):
-    """ part one """
-    path: Set[Coord] = set()
+def part_one(map:list[Coord], guard_pos:Coord, max:Coord):
+    """Determine distinct positions the guard will visit before leaving the mapped area."""
+    path: set[Coord] = set()
     def is_obstacle(pos:Coord) -> bool:
         return pos in map
     def is_valid(pos:Coord) -> bool:
@@ -51,8 +50,9 @@ def part_one(map:List[Coord], guard_pos:Coord, max:Coord):
             return path
         guard_pos = next_pos
 
-def stuck_in_loop(map:List[Coord], guard_initial_pos: Tuple[Coord, Direction], max: Coord) -> bool:
-    directional_path: Set[Tuple[Coord,Direction]] = set()
+def stuck_in_loop(map:list[Coord], guard_initial_pos: tuple[Coord, Direction], max: Coord) -> bool:
+    """Check if the guard will be stuck in a loop."""
+    directional_path: set[tuple[Coord,Direction]] = set()
     def is_obstacle(pos:Coord) -> bool:
         return pos in map
     def is_valid(pos:Coord) -> bool:
@@ -75,10 +75,10 @@ def stuck_in_loop(map:List[Coord], guard_initial_pos: Tuple[Coord, Direction], m
         guard_pos = next_pos
 
 
-def part_two(map:List[Coord], guard_pos: Coord, max:Coord):
-    """ part two """
-    posibilities: Set[Coord] = set()
-    directional_path: Set[Tuple[Coord,Direction]] = set()
+def part_two(map:list[Coord], guard_pos: Coord, max:Coord):
+    """Determine distinct positions to place an obstruction to trap the guard in a loop."""
+    posibilities: set[Coord] = set()
+    directional_path: set[tuple[Coord,Direction]] = set()
 
     def is_obstacle(pos:Coord) -> bool:
         return pos in map
@@ -86,6 +86,8 @@ def part_two(map:List[Coord], guard_pos: Coord, max:Coord):
         return pos[0] >= 0 and pos[0] < max[0] and pos[1] >= 0 and pos[1] < max[1]
 
     dir = (-1,0)
+
+    orig_guard_pos = guard_pos
 
     while True:
         directional_path.add((guard_pos, dir))
@@ -96,15 +98,15 @@ def part_two(map:List[Coord], guard_pos: Coord, max:Coord):
         if not is_valid(next_pos):
             return posibilities
 
-        if stuck_in_loop(map + [next_pos], (guard_pos, dir), max):
+        if stuck_in_loop(map + [next_pos], (orig_guard_pos, UP), max):
             posibilities.add(guard_pos)
         guard_pos = next_pos
 
 
 
 def main():
-    """ main """
-    map:List[Coord] = []
+    """Parse input file, pass to puzzle solvers."""
+    map:list[Coord] = []
     guard_pos: Coord = (0,0)
     r = 0
     max_c = 0

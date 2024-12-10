@@ -1,3 +1,4 @@
+"""Day 9: Disk Fragmenter."""
 import sys
 
 DOT = -607
@@ -25,7 +26,7 @@ def explode(diskmap: list[int]) -> list[int]:
     return newdiskmap
 
 def move(diskmap: list[int]):
-    """ move (part of) files empty space on the left """
+    """Move (part of) files empty space on the left."""
     empty_idx = diskmap.index(DOT)
     file_idx = len(diskmap) - 1
 
@@ -44,17 +45,17 @@ def move(diskmap: list[int]):
     return diskmap
 
 def checksum(diskmap: list[int]) -> int:
-    """ sum the product of file_id and position """
+    """Sum the product of file_id and position."""
     return sum(file_id * i for i, file_id in enumerate(diskmap) if file_id != DOT)
 
 
 def part_one(diskmap: list[int]) -> int:
-    """ calculate checksum after moving (part of) files """
+    """Calculate checksum after moving (part of) files."""
     return checksum(move(explode(diskmap)))
 
 
 def find_free_space(diskmap: list[int], length: int) -> int:
-    """ find continuous free spece of given length """
+    """Find continuous free spece of given length."""
     sequence = [DOT] * length
     for i in range(len(diskmap) - length):
         if diskmap[i:i+length] == sequence:
@@ -62,7 +63,7 @@ def find_free_space(diskmap: list[int], length: int) -> int:
     return -1
 
 def move_2(diskmap: list[int]):
-    """ move whole files to empty space on the left """
+    """Move whole files to empty space on the left."""
     file_end_idx = len(diskmap) - 1
     file_start_idx = file_end_idx
 
@@ -87,14 +88,14 @@ def move_2(diskmap: list[int]):
 
 
 def part_two(diskmap: list[int]):
-    """ calculate checksum after moving files """
+    """Calculate checksum after moving files."""
     dm = move_2(explode(diskmap))
     print_diskmap(dm)
     return checksum(dm)
 
 
 def main():
-    """ main """
+    """Parse input file, pass to puzzle solvers."""
     diskmap: list[int] = []
     for line in sys.stdin:
         line = line.strip()

@@ -2,22 +2,24 @@
 import sys
 import re
 
-pattern = r'mul\((\d+),(\d+)\)'
+PATTERN = r'mul\((\d+),(\d+)\)'
 
-def mul(matches:list[str])->int:
-    return sum(int(a) * int(b) for a,b in matches)
+Mul = tuple[str, str]
+
+def mul(mul_instruction:Mul)->int:
+    """Apply the mul instruction."""
+    return int(mul_instruction[0]) * int(mul_instruction[1])
 
 def part_one(memory:str)->int:
-    """ part one """
-    return mul(re.findall(pattern, memory))
-
+    """Add up all uncorrupted mul instructions."""
+    instructions = re.findall(PATTERN, memory)
+    return sum(mul(m) for m in instructions)
 
 def part_two(memory:str)->int:
-    """ part two """
-    sub_matches = (do.split("don't()")[0] for do in memory.split('do()'))
-    matches = [m for sub in sub_matches for m in re.findall(pattern, sub)]
-    return mul(matches)
-
+    """Add up all enabled mull instructions."""
+    enabled_sections = (do.split("don't()")[0] for do in memory.split('do()'))
+    instructions = (m for enabled in enabled_sections for m in re.findall(PATTERN, enabled))
+    return sum(mul(m) for m in instructions)
 
 def main():
     """ main """
@@ -28,6 +30,5 @@ def main():
     print('part_one', part_one(memory))
 
     print('part_two', part_two(memory))
-
 
 main()
