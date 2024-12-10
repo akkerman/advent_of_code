@@ -102,12 +102,26 @@ return contains_pair([1,2,3,4,5,6,6,7,8,9])
 
 ** Typing Modernized
 
-Uitzoeken wat is het verschil in List en list in type annotations?
+Vanaf Python 3.9 zijn de ingebouwde types (=list=, =tuple=, =dict=, etc.) rechtstreeks te gebruiken als typeparameters.
+Dit maakt importeren van =typing=-module overbodig.
 
+Oude stijl:
 #+begin_src python
-from typings import List
+from typing import List, Tuple, Deque
+from collections import deque, defaultdict
 
-list1: List[int]
-# vs
-list2: list[int]
+my_list: List[int] = [1, 2, 3]
+my_tuple: Tuple[int, str] = (42, "hello")
+my_deque: Deque[int] = deque([1, 2, 3])
+my_defaultdict: DefaultDict[str, list[int]] = defaultdict(list)
+#+end_src
+
+Moderne Stijl (Python 3.9+)
+#+begin_src python
+from collections import deque, defaultdict
+
+my_list: list[int] = [1, 2, 3]
+my_tuple: tuple[int, str] = (42, "hello")
+my_deque: deque[int] = deque([1, 2, 3])
+my_defaultdict: defaultdict[str, list[int]] = defaultdict(list)
 #+end_src
