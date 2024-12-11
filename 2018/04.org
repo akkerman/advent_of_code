@@ -45,4 +45,4 @@ Komt deze dan deze als 'winnaar' uit de bus? Omdat die guard op minute 30 3x aan
 [..:32] wakes up
 #+end_quote
 
-Ongelofelijk lang gezocht waarom mijn oplossing voor twee het niet deed. Was ik vergeten de lijst sorted door te geven!
+Ongelofelijkflang gezocht waarom mijn oplossing voor twee het niet deed. Was ik vergeten de lijst sorted door te geven!

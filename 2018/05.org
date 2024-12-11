@@ -7,5 +7,19 @@
 
 * Part One
 
+In eerste instantie ging ik het hele polymer door om te kijken wat er reageerde en weg viel.
+
+Dat gaf het verkeerde resultaat.
+
+Nu wordt er elke keer van voren af aan begonnen zodar er een ractie plaats gevonden heeft.
+
 
 * Part Two
+
+
+Hmm. ja eerst alle characters uit de string halen en dan 1 voor 1 de reactie afspelen.
+Niet heel lastig zeker omdat python een util heeft voor alle lowercase ascii maar duurt wel ff.
+
+Wellicht bijhouden waar de reactie was en 1tje daarvoor beginnen ipv helemaal van voren?
+
+Ja dan heb ik in < 300ms resultaat ipv 23 seconden.
