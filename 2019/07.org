@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       f17c38e0-d2ae-450c-be6b-a401a022a052
+:END:
+#+title: 2019 Day 7: Amplification Circuit
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+- references :: [[id:50b58189-54eb-4ab2-8870-8c26e99b4d06][2019 Day 5: Sunny with a Chance of Asteroids]]
+
+okay, eerst de computer van dag 5 erin kopieren.
+
+
+* Part Two
