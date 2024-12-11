@@ -6,6 +6,47 @@
 - tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
 
 * Part One
+
 - references :: [[id:6b9831de-37d4-480e-b3af-c6ed2b872775][2019 Day 20: Donut Maze]]
 
+Opgelost door een blink functie te maken die 1 iteratie simuleerd.
+Als je deze dan 25 keer uitvoert heb je een list van ruim 100.000 stenen.
+
 * Part Two
+
+Wauw als je het blind brute forced dan loopt mijn hele geheugen (32G) vol.
+
+Volgens mij maakt het niet uit of je alle stenen verwerkt of een steen 1 voor 1.
+Zelfs met de aanpak om elke steen uit de input 1 voor 1 te bepalen zie ik dat er zelfs heel veel swap space gebruikt wordt!
+
+Een testje met alleen de eerste steen en 45 blinks duurt al 20 seconden. 50 duurde zo lang dat ik het afgebroken.
+
+Een aantal observaties
+
+- er zijn precies 3 bewerkingen
+- alleen de bewerking die splits zorgt voor een verandering van het aantal stenen
+- volgorde van de stenen is niet relevant (ook al lijkt de tekst iets te suggereren)
+  er is bv geen merge van stenen
+
+Dit lijkt dan te passen in een recursieve functie die elke keer de operatie doet
+en aan zichzelf doorgeeft voor 1 blink minder.
+
+Voor die splitsing is het de optelling van links en rechts met 1 blink minder.
+
+En voor de andere operaties het aantal van de uitkomst met 1 blink minder
+
+#+begin_src python
+def solve(stone, blinks): int
+   if blinks == 0:
+       return 1
+   if even_length:
+       return solve(left_part, blinks-1) + solve(right_part, blinks-1)
+   solve(operation(stone), blinks-1)
+#+end_src
+
+
+Recursive functie is ook sloom.
+
+Hopelijk zit er veel herhaling in -> cache.
+
+Yep, done.
