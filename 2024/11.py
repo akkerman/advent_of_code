@@ -21,18 +21,18 @@ def blink(stones: list[int]) -> list[int]:
     return new_stones
 
 
-def part_one(stones: list[int]) -> int:
+def part_one(stones: list[int], blinks: int = 25) -> int:
     """Solution to part one."""
     new_stones = stones
-    for _ in range(25):
+    for _ in range(blinks):
         new_stones = blink(new_stones)
         # print(f'After {_ + 1} blinks:\n{new_stones}\n')
     return len(new_stones)
 
 
-def part_two(lines):
+def part_two(stones: list[int]) -> int:
     """Solution to part two."""
-    return 'todo'
+    return part_one(stones, 75)
 
 
 def main():
