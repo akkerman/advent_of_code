@@ -125,3 +125,23 @@ my_tuple: tuple[int, str] = (42, "hello")
 my_deque: deque[int] = deque([1, 2, 3])
 my_defaultdict: defaultdict[str, list[int]] = defaultdict(list)
 #+end_src
+** Invalid filename
+
+Zie [[id:e11179d1-3728-44ad-9b5b-8276463ccb49][2024 Day 5: Print Queue]]
+
+De bestandsnamen die ik gebruik zijn blijkbaar niet helemaal oké omdat het begint met een getal, dit geen geldige identifier is in python en ik dan issues krijg met import.
+
+Zie evt [[https://docs.python.org/3/reference/import.html#the-import-system][5. The import system — Python 3.13.1 documentation]]
+
+Bij dag 5 had ik het idee om wat tests te schrijven voor de functies omdat er m.i. zoveel voorwaarden waren.
+Ik heb dat uiteindelijk gedaan door een apart bestand =util_05.py= te maken
+
+Het blijkt dat je evt ook zo kan:
+
+#+begin_src python
+import importlib.util
+
+spec = importlib.util.spec_from_file_location("module_name", "./05.py")
+module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(module)
+#+end_src
