@@ -64,7 +64,7 @@ Volgens mij is het aantal zijden gelijk aan het aantal hoeken.
 Hoe een hoek te herkennen.
 voor elk plot kijken we of het hoekje ervan daadwerkelijk een hoek is.
 
-Als een potentiele hoek één aansluitend Plot heeft dan is het een hoek (aan de buitenkant van de region)
+Als een potentiele hoek één aangrenzende Plot heeft dan is het een hoek (aan de buitenkant van de region)
 
 #+begin_src
 + +    +       +
