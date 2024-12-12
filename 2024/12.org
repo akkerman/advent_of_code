@@ -116,11 +116,11 @@ Als het een hoek is kun je iets toevoegen aan de telling, voor debuggen wellicht
 Kleine nachtmerries: A=20 en E=12
 
 #+begin_src
-
-    A           EEEE
-   AAA          E
-  AAAAA         EEEE
- AA   AA        E
- AA   AA        EEEE
-
+.....................
+....A...........EEEE.
+...AAA..........E....
+..AAAAA.........EEEE.
+.AA...AA........E....
+.AA...AA........EEEE.
+.....................
 #+end_src

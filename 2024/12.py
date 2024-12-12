@@ -4,6 +4,7 @@ from collections import defaultdict
 
 Plot = tuple[str, int, int] # name, row, column
 Coord = tuple[int, int] # row, column
+CornerCoord = tuple[float, float] # row, column
 Region = tuple[str, set[Coord]] # name, region
 
 
@@ -67,6 +68,44 @@ class GardenCalculator:
             visited.update(region)
             yield name, region
 
+    def possible_corners(self, region:set[Coord]) -> set[CornerCoord]:
+        corners: set[CornerCoord] = set()
+        for r,c in region:
+            corners.update([(r-0.5, c-0.5), (r-0.5,c+0.5), (r+0.5, c+0.5), (r+0.5, c-0.5)])
+        return corners
+
+    def coord_for_corner(self, cc: CornerCoord) -> list[Coord]:
+        r, c = cc
+        def it(r:float, c:float) -> Coord:
+            return (int(r), int(c))
+
+        return [it(r-0.5, c-0.5), it(r-0.5,c+0.5), it(r+0.5, c+0.5), it(r+0.5, c-0.5)]
+
+
+    def corners(self, region:set[Coord]) -> int:
+        """Determines the corners (sides) of a region."""
+        corners = 0
+
+        TL = 0
+        TR = 1
+        BR = 2
+        BL = 3
+
+        c = 1
+        for corner in self.possible_corners(region):
+            plots = self.coord_for_corner(corner)
+            union = set(plots) & region
+            numplots = len(union)
+            if numplots == 1 or numplots == 3: # outer corner or inner corner
+                corners += 1
+            elif numplots == 2:
+                if plots[TL] in region and plots[BR] in region:
+                    corners += 2
+                elif plots[TR] in region and plots[BL] in region:
+                    corners += 2
+            c += 1
+        return corners
+
 
 def part_one(garden: list[Plot]):
     """Solution to part one."""
@@ -77,22 +116,8 @@ def part_one(garden: list[Plot]):
 def part_two(garden: list[Plot]):
     """Solution to part two."""
     calculator = GardenCalculator(garden)
-    price = 0
-    for name, region in calculator.regions():
-        nbr = calculator.neighbor_region(region)
-        corners: set[Coord] = set()
-        for r, c in nbr:
-            for nr, nc in [(r-1, c-1), (r-1, c+1), (r+1, c-1), (r+1, c+1)]:
-                if (nr, nc) in nbr:
-                    if (nr, c) in region and not (r, nc) in region:
-                        corners.add((r, nc))
-                    if not (nr, c) in region and (r, nc) in region:
-                        corners.add((nr, c))
-
-        print(name, calculator.area(region), len(corners), calculator.area(region)*len(corners)) 
-        price += calculator.area(region) * len(corners)
-
-    return price
+    regions = calculator.regions()
+    return sum(calculator.area(region) * calculator.corners(region) for _, region in regions)
 
 def main():
     """Parse input file, pass to puzzle solvers."""
