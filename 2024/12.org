@@ -14,11 +14,11 @@ De oppervlakte van de gebieden zou berekend kunnen worden met een =Counter=.
 Wellicht kan ik het volgende doen.
 
 - Maak een lus over alle dezelfde characters b.v. =A=.
-- Tel het aantal buren dat ongeljk is aan =A=
-- Ontdubbel door ze coordinaten in een set te kiepen.
+- Tel het aantal buren dat ongelijk is aan =A=
+- Ontdubbellen door ze coördinaten in een set te kiepen.
 
 Tja dan heb je idd alle punten waartegen een fence moet staan.
-En deze berekeng is correct als alle gebieden rechthoeken zijn.
+En deze berekening is correct als alle gebieden rechthoeken zijn.
 Waar ik nu de mist in ga is, dat 1 coordinaat ook meerdere keren zou kunnen meetellen als fence.
 
 In het voorbeeld, regio ~C~. Heb ik alle paatsen geidentificeerd die aangrenzend zijn en dus een hek ertussen moeten hebben. (gemarkeerd met ~F~)
@@ -42,29 +42,28 @@ Boem okay het voorbeeld werkt maar de uitkomst van het andere veld klopt nu niet
 Ik neem nu alles met dezelfde naam als 1 veld.
 In  het voorbeeld het je b.v. twee keer ~C~
 
-- area 1 en perimiter 4
-- area 14 en perimiter 28
+- area 1 en perimeter 4
+- area 14 en perimeter 28
 
 Ik kom nu met area 14 en perimiter 32. Dus die getallen kloppen wel maar de vermenigvuldiging uiteraard niet want ~1*4 + 14*26 != 15*32~.
 
 Idee nu
 - lus door alle plots
-- bepaal voor een plot de regio waar deze in valt
+- bepaal voor een plot de regio waar deze in valt (flood-fill)
 - bepaal buren
 - bepaal fences obv regio en buren
 - gooi coords van de regio in een visited
   zodat ik die regio niet nog een keer ga berekenen
 
-* Part Two
 
+* Part Two
 
 Volgens mij is het aantal zijden gelijk aan het aantal hoeken.
 
-
 Hoe een hoek te herkennen.
-voor elk plot kijken we of het hoekje ervan daadwerkelijk een hoek is.
+Voor elk plot kijken we of het hoekje ervan daadwerkelijk een hoek is.
 
-Als een potentiele hoek één aangrenzende Plot heeft dan is het een hoek (aan de buitenkant van de region)
+Als een potentiële hoek één aangrenzende Plot heeft dan is het een hoek (aan de buitenkant van de region)
 
 #+begin_src
 + +    +       +
@@ -72,14 +71,14 @@ Als een potentiele hoek één aangrenzende Plot heeft dan is het een hoek (aan d
 + +     #####
 #+end_src
 
-Als een potentiele hoek 3 aangrenzende Plots heeft dan is het een hoek. (aan de binnenkant van de region)
+Als een potentiële hoek 3 aangrenzende Plots heeft dan is het een hoek. (aan de binnenkant van de region)
 #+begin_src
 +#
 ##
 #+end_src
 
 
-Als een potentiele hoek twee diagonale Plots heeft dan is het een hoek en moet deze dubbel geteld worden.
+Als een potentiële hoek twee diagonale Plots heeft dan is het een hoek en moet deze dubbel geteld worden.
 #+begin_src
 +######
 #     #
@@ -88,7 +87,7 @@ Als een potentiele hoek twee diagonale Plots heeft dan is het een hoek en moet d
 
 In alle andere gevallen is het geen hoek en kunnen we het overslaan.
 
-Hoe definieren we hoe tov Plots?
+Hoe definieren we hoek tov Plots?
 Voor een punt =(r,c)= dan zijn de hoeken ~[(r-0.5, c-0.5), (r-0.5,c+0.5), (r+0.5, c+0.5), (r+0.5, c-0.5)]~
 Zo zou je dus voor elk Plot de hoeken kunnen bepalen, of voor een regio alle hoeken en dan bovenstaande logica er op los laten.
 
