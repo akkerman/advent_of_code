@@ -67,7 +67,7 @@ def computer(program: list[int], input: Callable[[], int], output:Callable[[int]
             ValueError('Unknown opcode {}'.format(op))
 
 def amplifiers(acs: list[int], phase_setting: list[int]) -> int:
-    """Run the simulation."""
+    """Run the 5 amplifiers with the given phase setting."""
 
     values = phase_setting[::-1]
     values.insert(-1, 0)
@@ -85,7 +85,7 @@ def amplifiers(acs: list[int], phase_setting: list[int]) -> int:
 
 
 def part_one(acs: list[int]) -> tuple[int, list[int]]:
-    """Solution to part one."""
+    """Find maximum signal that can be sent to the thrusters."""
     signal = 0
     phase_setting = []
 
