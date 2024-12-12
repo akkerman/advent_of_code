@@ -89,7 +89,7 @@ Als een potentiele hoek twee diagonale Plots heeft dan is het een hoek en moet d
 In alle andere gevallen is het geen hoek en kunnen we het overslaan.
 
 Hoe definieren we hoe tov Plots?
-Voor een punt =(r,c)= dan zijn de hoeken [(r-0.5, c-0.5), (r-0.5,c+0.5), (r+0.5, c+0.5), (r+0.5, c-0.5)]
+Voor een punt =(r,c)= dan zijn de hoeken ~[(r-0.5, c-0.5), (r-0.5,c+0.5), (r+0.5, c+0.5), (r+0.5, c-0.5)]~
 Zo zou je dus voor elk Plot de hoeken kunnen bepalen, of voor een regio alle hoeken en dan bovenstaande logica er op los laten.
 
 Kleine nachtmerries: A=20 en E=12 (testdata) punten = 4+20+12=36
