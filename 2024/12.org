@@ -56,3 +56,71 @@ Idee nu
   zodat ik die regio niet nog een keer ga berekenen
 
 * Part Two
+
+
+Volgens mij is het aantal zijden gelijk aan het aantal hoeken.
+
+
+Hoe een hoek te herkennen.
+voor elk plot kijken we of het hoekje ervan daadwerkelijk een hoek is.
+
+
+Als een hoek 1 veld in de region heeft dan is het een hoek.
+
+#+begin_src
+. .
+ A
+. .
+#+end_src
+
+Als een hoek één aansluitend Plot dan is het een hoek.
+
+#+begin_src
+.       .
+ AAAAAAA
+ AAAAA  .
+.     .
+#+end_src
+
+Als een Plot 3 aansluitende Plots heeft dan is het een hoek.
+#+begin_src
+
+#+end_src
+
+Als een hoek 3 aansluitende Plots heeft dan zijn er twee hoeken.
+
+#+begin_src
+A
+A.
+AAAAA
+#+end_src
+
+Als een Hoek twee diagonale Plots heeft dan is het een hoek en moet deze dubbel geteld worden.
+
+#+begin_src
+AAAAAA <--
+AA    A
+AAAAAAA
+#+end_src
+
+
+Wat is een hoek.
+
+Voor een punt =(r,c)= dan zijn de hoeken [(r-0.5, c-0.5), (r-0.5,c+0.5), (r+0.5, r+0.5), (r+0.5, c-0.5)]
+
+Zo zou je dus voor elk Plot de hoeken kunnen bepalen.
+Wel kijken of een hoek al eerder bepaald is.
+Als het een hoek is kun je iets toevoegen aan de telling, voor debuggen wellicht handig om ze eerst in een lijst te stoppen. Dan kun je zien of je een hoek niet perongeluk dubbel neemt (visited verkeer geimplementeerd) en controle of je de juiste dingen berekend.
+
+
+Kleine nachtmerries: A=20 en E=12
+
+#+begin_src
+
+    A           EEEE
+   AAA          E
+  AAAAA         EEEE
+ AA   AA        E
+ AA   AA        EEEE
+
+#+end_src

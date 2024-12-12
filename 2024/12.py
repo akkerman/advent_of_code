@@ -68,18 +68,31 @@ class GardenCalculator:
             yield name, region
 
 
-
-
 def part_one(garden: list[Plot]):
     """Solution to part one."""
     calculator = GardenCalculator(garden)
     return sum(calculator.area(region) * calculator.perimeter(region) for _, region in calculator.regions())
 
 
-def part_two(lines):
+def part_two(garden: list[Plot]):
     """Solution to part two."""
+    calculator = GardenCalculator(garden)
+    price = 0
+    for name, region in calculator.regions():
+        nbr = calculator.neighbor_region(region)
+        corners: set[Coord] = set()
+        for r, c in nbr:
+            for nr, nc in [(r-1, c-1), (r-1, c+1), (r+1, c-1), (r+1, c+1)]:
+                if (nr, nc) in nbr:
+                    if (nr, c) in region and not (r, nc) in region:
+                        corners.add((r, nc))
+                    if not (nr, c) in region and (r, nc) in region:
+                        corners.add((nr, c))
 
-    return 'todo'
+        print(name, calculator.area(region), len(corners), calculator.area(region)*len(corners)) 
+        price += calculator.area(region) * len(corners)
+
+    return price
 
 def main():
     """Parse input file, pass to puzzle solvers."""
