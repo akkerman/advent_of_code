@@ -64,44 +64,35 @@ Volgens mij is het aantal zijden gelijk aan het aantal hoeken.
 Hoe een hoek te herkennen.
 voor elk plot kijken we of het hoekje ervan daadwerkelijk een hoek is.
 
-Als een hoek één aansluitend Plot dan is het een hoek (aan de buitenkant van de region)
+Als een potentiele hoek één aansluitend Plot heeft dan is het een hoek (aan de buitenkant van de region)
 
 #+begin_src
-. .    .       .
++ +    +       +
  #      #######
-. .     #####
++ +     #####
 #+end_src
 
-Als een Plot 3 aansluitende Plots heeft dan is het een hoek. (aan de binnenkant van de region)
+Als een potentiele hoek 3 aangrenzende Plots heeft dan is het een hoek. (aan de binnenkant van de region)
 #+begin_src
-.#
++#
 ##
 #+end_src
 
 
-Als een Hoek twee diagonale Plots heeft dan is het een hoek en moet deze dubbel geteld worden.
-
+Als een potentiele hoek twee diagonale Plots heeft dan is het een hoek en moet deze dubbel geteld worden.
 #+begin_src
-.######
++######
 #     #
 #######
 #+end_src
 
-
-Als een hoek 1 of 3 Plots als buren heeft => +1
-Als een hoek 2 Plots als buren heeft check of het een diagonaal is => +2
 In alle andere gevallen is het geen hoek en kunnen we het overslaan.
 
-Wat is een hoek.
-
+Hoe definieren we hoe tov Plots?
 Voor een punt =(r,c)= dan zijn de hoeken [(r-0.5, c-0.5), (r-0.5,c+0.5), (r+0.5, c+0.5), (r+0.5, c-0.5)]
+Zo zou je dus voor elk Plot de hoeken kunnen bepalen, of voor een regio alle hoeken en dan bovenstaande logica er op los laten.
 
-Zo zou je dus voor elk Plot de hoeken kunnen bepalen.
-
-Als het een hoek is kun je iets toevoegen aan de telling.
-
-
-Kleine nachtmerries: A=20 en E=12
+Kleine nachtmerries: A=20 en E=12 (testdata) punten = 4+20+12=36
 
 #+begin_src
 .....................

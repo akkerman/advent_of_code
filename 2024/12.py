@@ -108,13 +108,13 @@ class GardenCalculator:
 
 
 def part_one(garden: list[Plot]):
-    """Solution to part one."""
+    """Fence price based on area and perimeter."""
     calculator = GardenCalculator(garden)
     return sum(calculator.area(region) * calculator.perimeter(region) for _, region in calculator.regions())
 
 
 def part_two(garden: list[Plot]):
-    """Solution to part two."""
+    """Fence price based on area and sides (corners)."""
     calculator = GardenCalculator(garden)
     regions = calculator.regions()
     return sum(calculator.area(region) * calculator.corners(region) for _, region in regions)
