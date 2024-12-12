@@ -1,12 +1,9 @@
 """Day 7: Amplification Circuit."""
 import sys
-import string
+from typing import Callable
+from itertools import permutations
 
-
-def output(value:int):
-    print(value)
-
-def computer(program: list[int], input:int=1):
+def computer(program: list[int], input: Callable[[], int], output:Callable[[int], None]) -> None:
     """ part one """
     ADD = 1
     MULTIPLY = 2
@@ -45,7 +42,7 @@ def computer(program: list[int], input:int=1):
             write(i, 3, read(i, 1) * read(i, 2))
             i+=4
         elif op == INPUT:
-            write(i, 1, input)
+            write(i, 1, input())
             i+=2
         elif op == OUTPUT:
             output(read(i, 1))
@@ -69,28 +66,68 @@ def computer(program: list[int], input:int=1):
         else:
             ValueError('Unknown opcode {}'.format(op))
 
-def part_one(lines):
+def amplifiers(acs: list[int], phase_setting: list[int]) -> int:
+    """Run the simulation."""
+
+    values = phase_setting[::-1]
+    values.insert(-1, 0)
+
+    def input()->int:
+        return values.pop()
+
+    def output(value:int):
+        values.insert(-1, value)
+
+    for _ in range(5):
+        computer(acs.copy(), input, output)
+
+    return values.pop()
+
+
+def part_one(acs: list[int]) -> tuple[int, list[int]]:
     """Solution to part one."""
-    return 'todo'
+    signal = 0
+    phase_setting = []
+
+    for perm in permutations(range(5)):
+        setting = list(perm)
+        output = amplifiers(acs.copy(), setting)
+        if output > signal:
+            signal = output
+            phase_setting = setting
+
+    return signal, phase_setting
 
 
-def part_two(lines):
+def part_two(acs: list[int]):
     """Solution to part two."""
     return 'todo'
 
 
 def main():
     """Parse input file, pass to puzzle solvers."""
-    lines = []
+    acs: list[int] = [] # amplifier controller software
     for line in sys.stdin:
         line = line.strip()
         line = list(map(int, line.split(',')))
-        
-        lines.append(line)
+        acs.extend(line)
 
-    print('part_one', part_one(lines))
+    print('part_one', part_one(acs.copy()))
 
-    print('part_two', part_two(lines))
+    print('part_two', part_two(acs))
 
+if __name__ == '__main__':
+    main()
 
-main()
+def test_amplifiers1():
+    assert amplifiers([3,15,3,16,1002,16,10,16,1,16,15,15,4,15,99,0,0], [4,3,2,1,0]) == 43210
+def test_amplifiers2():
+    assert amplifiers([3,23,3,24,1002,24,10,24,1002,23,-1,23,101,5,23,23,1,24,23,23,4,23,99,0,0], [0,1,2,3,4]) == 54321
+def test_amplifiers3():
+    assert amplifiers([3,31,3,32,1002,32,10,32,1001,31,-2,31,1007,31,0,33,1002,33,7,33,1,33,31,31,1,32,31,31,4,31,99,0,0,0], [1,0,4,3,2])
+def test_part_one_1():
+    assert part_one([3,15,3,16,1002,16,10,16,1,16,15,15,4,15,99,0,0]) == (43210, [4,3,2,1,0 ])
+def test_part_one_2():
+    assert part_one([3,23,3,24,1002,24,10,24,1002,23,-1,23,101,5,23,23,1,24,23,23,4,23,99,0,0]) == (54321, [0,1,2,3,4 ])
+def test_part_one_3():
+    assert part_one([3,31,3,32,1002,32,10,32,1001,31,-2,31,1007,31,0,33,1002,33,7,33,1,33,31,31,1,32,31,31,4,31,99,0,0,0]) == (65210, [1,0,4,3,2 ])

@@ -8,7 +8,9 @@
 * Part One
 - references :: [[id:50b58189-54eb-4ab2-8870-8c26e99b4d06][2019 Day 5: Sunny with a Chance of Asteroids]]
 
-okay, eerst de computer van dag 5 erin kopieren.
+Okay, eerst de computer van dag 5 erin kopieren.
+
+En ook maar ff wat refactoren. Als we dit hele jaar deze code gaan gebruiken dan refactor voor leesbaarheid.
 
 
 * Part Two
