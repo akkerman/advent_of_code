@@ -1,0 +1,58 @@
+:PROPERTIES:
+:ID:       537206c1-5275-44e7-8df4-1627d60aa1e4
+:END:
+#+title: 2024 Day 12: Garden Groups
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+
+- references :: [[id:bdace667-0f38-439d-a3b5-dcea7611b69f][2023 Day 5: If You Give A Seed A Fertilizer]] · [[id:e19d21af-f4a0-4c5c-a50d-c0f9c1471163][2023 Day 21: Step Counter]]
+
+De oppervlakte van de gebieden zou berekend kunnen worden met een =Counter=.
+
+Wellicht kan ik het volgende doen.
+
+- Maak een lus over alle dezelfde characters b.v. =A=.
+- Tel het aantal buren dat ongeljk is aan =A=
+- Ontdubbel door ze coordinaten in een set te kiepen.
+
+Tja dan heb je idd alle punten waartegen een fence moet staan.
+En deze berekeng is correct als alle gebieden rechthoeken zijn.
+Waar ik nu de mist in ga is, dat 1 coordinaat ook meerdere keren zou kunnen meetellen als fence.
+
+In het voorbeeld, regio ~C~. Heb ik alle paatsen geidentificeerd die aangrenzend zijn en dus een hek ertussen moeten hebben. (gemarkeerd met ~F~)
+
+#+begin_src 
+  F
+ +-+
+F|C|F
+ + +-+
+F|C C|F
+ +-+ +
+  F|C|F
+   +-+
+    F
+#+end_src
+
+Nu ik toch beide sets heb denk ik dat ik ermee weg kom om voor elk punt ~C~ te kijken hoeveel buren ~F~ deze heeft en dat op te tellen.
+
+Boem okay het voorbeeld werkt maar de uitkomst van het andere veld klopt nu niet.
+
+Ik neem nu alles met dezelfde naam als 1 veld.
+In  het voorbeeld het je b.v. twee keer ~C~
+
+- area 1 en perimiter 4
+- area 14 en perimiter 28
+
+Ik kom nu met area 14 en perimiter 32. Dus die getallen kloppen wel maar de vermenigvuldiging uiteraard niet want ~1*4 + 14*26 != 15*32~.
+
+Idee nu
+- lus door alle plots
+- bepaal voor een plot de regio waar deze in valt
+- bepaal buren
+- bepaal fences obv regio en buren
+- gooi coords van de regio in een visited
+  zodat ik die regio niet nog een keer ga berekenen
+
+* Part Two
