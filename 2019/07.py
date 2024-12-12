@@ -119,6 +119,7 @@ def main():
 if __name__ == '__main__':
     main()
 
+# part one tests
 def test_amplifiers1():
     assert amplifiers([3,15,3,16,1002,16,10,16,1,16,15,15,4,15,99,0,0], [4,3,2,1,0]) == 43210
 def test_amplifiers2():
