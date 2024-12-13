@@ -17,6 +17,7 @@ Recursive functie die minimale cost berekend van het drukken op elke knop etc et
 Performance gaat drastisch omhoog als ik ~@cache~ gebruik.
 Antwoord lijkt gelijk als ik geen rekening houd met button presses.
 
-
-
 * Part Two
+
+[2024-12-13 Fri 06:49] RecursionError: maximum recursion depth exceeded
+Tijd voor de werkdag!

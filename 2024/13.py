@@ -33,7 +33,7 @@ def play(machine: Machine) -> int:
     def press(coord: Coord, cost:int, presses: Coord) -> int:
         if (coord == P):
             return cost
-        if too_far(coord, P) or too_many_presses(presses):
+        if too_far(coord, P): # or too_many_presses(presses):
             return INF
 
         return min(
@@ -48,9 +48,9 @@ def part_one(machines: list[Machine]) -> int:
     return sum(play(machine) for machine in machines)
 
 
-def part_two(lines):
+def part_two(machines: list[Machine]):
     """Solution to part two."""
-    return 'todo'
+    return sum(play(machine) for machine in machines)
 
 
 def main():
@@ -77,7 +77,12 @@ def main():
 
     print('part_one', part_one(machines))
 
-    print('part_two', part_two(machines))
+    def move_price(machine: Machine) -> Machine:
+        P = machine['prize']
+        machine['prize'] = (P[0] + 10000000000000, P[1] + 10000000000000)
+        return machine
+
+    print('part_two', part_two([move_price(m) for m in machines]))
 
 
 main()
