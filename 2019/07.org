@@ -31,3 +31,6 @@ je zou eigenlijk de huidige state van de insruction pointer bij moeten houden en
 
 
 Okay part one aangepast zodat de computer hieraan voldoet.
+
+Nu is het een kwestie van de computers 1x maken en deze hergebruiken net zolang
+totdat er een None uit de output komt en dan de voorlaatste waarde teruggeven.

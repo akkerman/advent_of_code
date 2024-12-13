@@ -1,8 +1,9 @@
 """Day 7: Amplification Circuit."""
+from collections import deque
 import sys
 from itertools import permutations
 
-def computer(program: list[int]):
+def computer(program: list[int], phase_setting: int):
     ADD = 1
     MULTIPLY = 2
     INPUT = 3
@@ -16,9 +17,12 @@ def computer(program: list[int]):
     modes = [0,0,0,0]
     i = 0 # instruction pointer
 
-    def run(input:list[int])->int|None:
+    phase_setting_applied = False
+
+    def run(input:int)->int|None:
         nonlocal modes
         nonlocal i
+        nonlocal phase_setting_applied
 
         def write(instruction_pointer:int, parameter:int, value:int):
             # parameters that an instruction writes to wil never be in immediate mode
@@ -45,7 +49,11 @@ def computer(program: list[int]):
                 write(i, 3, read(i, 1) * read(i, 2))
                 i+=4
             elif op == INPUT:
-                write(i, 1, input.pop())
+                if not phase_setting_applied:
+                    write(i, 1, phase_setting)
+                    phase_setting_applied = True
+                else:
+                    write(i, 1, input)
                 i+=2
             elif op == OUTPUT:
                 output = read(i, 1)
@@ -76,21 +84,28 @@ def computer(program: list[int]):
 
 def amplifiers(acs: list[int], phase_setting: list[int]) -> int:
     """Run the 5 amplifiers with the given phase setting."""
-
-    values = phase_setting[::-1]
-    values.insert(-1, 0)
-
+    value = 0
+    ps = deque(phase_setting)
     for _ in range(5):
-        output = computer(acs.copy())(values)
-        assert output is not None
-        values.insert(-1, output)
-
-    return values.pop()
+        value = computer(acs.copy(), ps.popleft())(value)
+        assert value is not None
+    return value
 
 
 
 def feedback(acs: list[int], phase_setting: list[int]) -> int:
-    return -1
+    """Run the 5 amplifiers with the given phase setting in feedback mode."""
+    value = 0
+    output = 0
+    ps = deque(phase_setting)
+    amp = [computer(acs.copy(), ps.popleft()) for _ in range(5)]
+    amp_index = 0
+    while output is not None:
+        value = output
+        output = amp[amp_index](value)
+        amp_index = (amp_index + 1) % 5
+    return value
+
 
 
 def part_one(acs: list[int]) -> tuple[int, list[int]]:
@@ -100,7 +115,7 @@ def part_one(acs: list[int]) -> tuple[int, list[int]]:
 
     for perm in permutations(range(5)):
         setting = list(perm)
-        output = amplifiers(acs.copy(), setting)
+        output = amplifiers(acs.copy(), setting.copy())
         if output > signal:
             signal = output
             phase_setting = setting
@@ -110,7 +125,17 @@ def part_one(acs: list[int]) -> tuple[int, list[int]]:
 
 def part_two(acs: list[int]):
     """Solution to part two."""
-    return 'todo'
+    signal = 0
+    phase_setting = []
+
+    for perm in permutations(range(5, 10)):
+        setting = list(perm)
+        output = feedback(acs.copy(), setting.copy())
+        if output > signal:
+            signal = output
+            phase_setting = setting
+
+    return signal, phase_setting
 
 
 def main():
@@ -142,7 +167,12 @@ def test_part_one_2():
 def test_part_one_3():
     assert part_one([3,31,3,32,1002,32,10,32,1001,31,-2,31,1007,31,0,33,1002,33,7,33,1,33,31,31,1,32,31,31,4,31,99,0,0,0]) == (65210, [1,0,4,3,2 ])
 
-# def test_feedback1():
-#     assert feedback([3,26,1001,26,-4,26,3,27,1002,27,2,27,1,27,26,27,4,27,1001,28,-1,28,1005,28,6,99,0,0,5], [9,8,7,6,5]) == 139629729
-# def test_feedback2():
-#     assert feedback([3,52,1001,52,-5,52,3,53,1,52,56,54,1007,54,5,55,1005,55,26,1001,54,-5,54,1105,1,12,1,53,54,53,1008,54,0,55,1001,55,1,55,2,53,55,53,4,53,1001,56,-1,56,1005,56,6,99,0,0,0,0,10], [9,7,8,5,6]) == 18216
+# part two tests
+def test_feedback1():
+    assert feedback([3,26,1001,26,-4,26,3,27,1002,27,2,27,1,27,26,27,4,27,1001,28,-1,28,1005,28,6,99,0,0,5], [9,8,7,6,5]) == 139629729
+def test_feedback2():
+    assert feedback([3,52,1001,52,-5,52,3,53,1,52,56,54,1007,54,5,55,1005,55,26,1001,54,-5,54,1105,1,12,1,53,54,53,1008,54,0,55,1001,55,1,55,2,53,55,53,4,53,1001,56,-1,56,1005,56,6,99,0,0,0,0,10], [9,7,8,5,6]) == 18216
+def test_part_two1():
+    assert part_two([3,26,1001,26,-4,26,3,27,1002,27,2,27,1,27,26,27,4,27,1001,28,-1,28,1005,28,6,99,0,0,5]) == (139629729, [9,8,7,6,5])
+def test_part_two2():
+    assert part_two([3,52,1001,52,-5,52,3,53,1,52,56,54,1007,54,5,55,1005,55,26,1001,54,-5,54,1105,1,12,1,53,54,53,1008,54,0,55,1001,55,1,55,2,53,55,53,4,53,1001,56,-1,56,1005,56,6,99,0,0,0,0,10]) == (18216, [9,7,8,5,6])
