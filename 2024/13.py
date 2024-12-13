@@ -33,12 +33,12 @@ def play(machine: Machine) -> int:
     def press(coord: Coord, cost:int, presses: Coord) -> int:
         if (coord == P):
             return cost
-        if (too_far(coord, P) or too_many_presses(presses)):
+        if too_far(coord, P) or too_many_presses(presses):
             return INF
 
         return min(
-                press(move(coord,A), cost + 3, (presses[0] + 1, presses[1])),
-                press(move(coord,B), cost + 1, (presses[0], presses[1] + 1))
+            press(move(coord,A), cost + 3, (presses[0] + 1, presses[1])),
+            press(move(coord,B), cost + 1, (presses[0], presses[1] + 1))
         )
     cost = press((0,0), 0, (0,0))
     return 0 if cost == INF else cost
