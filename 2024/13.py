@@ -2,7 +2,6 @@
 import sys
 import re
 from functools import cache
-import heapq
 from utils import perf_timer
 
 
@@ -46,15 +45,17 @@ def play(machine: Machine) -> int:
     return 0 if cost == INF else cost
 
 def play_two(machine: Machine) -> int:
+    """ Elimination """
+    x_a, y_a = machine['A']
+    x_b, y_b = machine['B']
+    x_p, y_p = machine['prize']
 
-    ax, ay = machine['A']
-    bx, by = machine['B']
-    px, py = machine['prize']
+    A = (y_b*x_p - x_b*y_p) / (y_b*x_a - x_b*y_a)
+    B = (x_p - x_a*A) / x_b
 
-    a = (px*by - py*bx) / (ax*by - ay*bx)
-    b = (ax*py - ay*px) / (ax*by - ay*bx)
+    # print(A, B)
+    return int(3*A + B) if A.is_integer() and B.is_integer() else 0
 
-    return int(3*a + b) if a.is_integer() and b.is_integer() else 0
 
 @perf_timer
 def part_one(machines: list[Machine]) -> int:
@@ -93,16 +94,15 @@ def main():
     print('part_one', part_one(machines))
 
     def move_price(machine: Machine) -> Machine:
-        P = machine['prize']
-        machine['prize'] = (P[0] + 10000000000000, P[1] + 10000000000000)
-        return machine
+        M = machine.copy()
+        P = M['prize']
+        M['prize'] = (P[0] + 10000000000000, P[1] + 10000000000000)
+        return M
 
-    print('-'*40)
-    print('part_one with part_two logic', part_two(machines))
-
-    # too low: 432256907188
-    # try:     41254731438299
+    print('='*40)
+    print('part_one', part_two(machines), 'with part_two logic')
     print('part_two', part_two([move_price(m) for m in machines]))
+
 
 
 main()

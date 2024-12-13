@@ -23,9 +23,11 @@ def perf_timer(func: T) -> T:
         result = func(*args, **kwargs)
         end = time.time()
         duration = end - start
-        if duration < 1:
+        if duration < 0.001:
+            print(f'{func.__name__} took {duration * 1000000:.2f} microseconds')
+        elif duration < 1:
             print(f'{func.__name__} took {duration * 1000:.2f} milliseconds')
         else:
-            print(f'{func.__name__} took {duration} seconds')
+            print(f'{func.__name__} took {duration:.2f} seconds')
         return result
     return wrapper

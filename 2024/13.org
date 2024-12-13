@@ -19,11 +19,11 @@ Antwoord lijkt gelijk als ik geen rekening houd met button presses.
 
 * Part Two
 
-- [2024-12-13 Fri 06:49] RecursionError: maximum recursion depth exceeded. Tijd voor de werkdag!
-- [2024-12-13 Fri 07:14] Shower thoughts: use heapq with tuple[cost, x, y]. Process if not already seen
-- [2024-12-13 Fri 07:21] Gauw iets inelkaar gezet, duurt, met input van part one al veel te lang.
-- [2024-12-13 Fri 07:27] Werkt nu, is iets (3x) langzamer dan part one. ik laat em ff draaien. op part 2
-- [2024-12-13 Fri 08:37] 't zijn lineare vergelijkingen! kan ik daar iets mee?
+- 06:49 RecursionError: maximum recursion depth exceeded. Tijd voor de werkdag!
+- 07:14 Shower thoughts: use heapq with tuple[cost, x, y]. Process if not already seen
+- 07:21 Gauw iets inelkaar gezet, duurt, met input van part one al veel te lang.
+- 07:27 Werkt nu, is iets (3x) langzamer dan part one. ik laat em ff draaien. op part 2
+- 08:37 't zijn lineare vergelijkingen! kan ik daar iets mee?
 
 
 #+begin_src
@@ -39,11 +39,9 @@ Kunnen we schrijven als:
 34*A + 67*B = 5400 -> A = (5400 - 67*B) / 34
 94*A + 22*B = 8400 -> 94 * ((5400 - 67*B) / 34) + 22*B = 8400
 
-
 (34*94) * (5400-67*B) + (34*22*B) = 34*8400
 
 (5400-67*B) + (34*22*B) = 34*8400 / (34*94)
-
 
 #+end_src
 
@@ -66,3 +64,64 @@ Blijkbaar is het gemakkelijk te berekenen met [[https://nl.wikipedia.org/wiki/Re
 Blijkbaar is Gausian Elimination meestal sneller.
 
 Man, lineaire algebra was _altijd_ al mijn meest slechte vak tijdens mn studie.
+
+
+Oh man, deze video legt het goed uit [[https://www.youtube.com/watch?v=-5J-DAsWuJc][(1) Advent of Code 2024 | Day 13 "Claw Contraption" - YouTube]]
+
+
+Dat volgende had ik dus moeten doen:
+
+#+begin_src
+
+
+34*A + 67*B = 5400   (* 22)
+94*A + 22*B = 8400        (* 67)
+
+22*34*A + 22*67*B = 22*5400
+67*94*A + 22*67*B = 67*8400
+
+# B valt nu weg als we de functies van elkaar aftrekken
+
+22*34*A - 67*94*A = 22*5400 - 67*8400
+
+(22*34 - 67*94) * A = 22*5400 - 67*8400
+
+A = (22*5400 - 67*8400) / (22*34 - 67*94)
+B = (8400 - 94*A) / 22
+#+end_src
+
+\begin{align}
+x_a A + x_b B = x_p \label{eq:X} \\
+y_a A + y_b B = y_p \label{eq:Y} \\
+\end{align}
+
+Het idee is om factor B uit de vergelijkingen weg te werken door \ref{eq:X} te vermenigvuldigen met \(y_b\) en \ref{eq:Y} te vermenigvuldigen met \(x_b\) zodat ze elkaar opheffen als ze van elkaar afgetrokken worden. Hieronder in \ref{eq:mul_yb} and \ref{eq:mul_xb}.
+
+\begin{align}
+y_b x_a A + y_b x_b B = y_b x_p \label{eq:mul_yb} \\
+x_b y_a A + x_b y_b B = x_b y_p \label{eq:mul_xb} \\
+\end{align}
+
+En dan aftrekken:
+
+\begin{align}
+y_b x_a A  - x_b y_a A  = y_b x_p - x_b y_p
+\end{align}
+
+Nu \(B\) uit de vergelijking is kunnen we \(A\) naar links en de rest naar rechts halen.
+
+\begin{align}
+(y_b x_a - x_b y_a) A  = y_b x_p - x_b y_p
+\end{align}
+\begin{align}
+A = \frac{y_b x_p - x_b y_p}{y_b x_a - x_b y_a} \label{eq:A}
+\end{align}
+
+Eerst samen nemen in en daarna delen.
+Nu we een formule hebben voor \(A\) zullen we er ook 1 moeten hebben voor \(B\) die kunnen we echter uitdrukken in termen van \(A\) zodat we die ook direct kunnen berekeken.
+
+\begin{align}
+x_a A + x_b B = x_p \\
+x_b B = x_p - x_a A \\
+B = \frac{x_p - x_a A}{x_b} \\
+\end{align}
