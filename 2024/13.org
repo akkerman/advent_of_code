@@ -19,5 +19,50 @@ Antwoord lijkt gelijk als ik geen rekening houd met button presses.
 
 * Part Two
 
-[2024-12-13 Fri 06:49] RecursionError: maximum recursion depth exceeded
-Tijd voor de werkdag!
+- [2024-12-13 Fri 06:49] RecursionError: maximum recursion depth exceeded. Tijd voor de werkdag!
+- [2024-12-13 Fri 07:14] Shower thoughts: use heapq with tuple[cost, x, y]. Process if not already seen
+- [2024-12-13 Fri 07:21] Gauw iets inelkaar gezet, duurt, met input van part one al veel te lang.
+- [2024-12-13 Fri 07:27] Werkt nu, is iets (3x) langzamer dan part one. ik laat em ff draaien. op part 2
+- [2024-12-13 Fri 08:37] 't zijn lineare vergelijkingen! kan ik daar iets mee?
+
+
+#+begin_src
+# Machine 1
+Button A: X+94, Y+34
+Button B: X+22, Y+67
+Prize: X=8400, Y=5400
+#+end_src
+
+Kunnen we schrijven als:
+
+#+begin_src
+34*A + 67*B = 5400 -> A = (5400 - 67*B) / 34
+94*A + 22*B = 8400 -> 94 * ((5400 - 67*B) / 34) + 22*B = 8400
+
+
+(34*94) * (5400-67*B) + (34*22*B) = 34*8400
+
+(5400-67*B) + (34*22*B) = 34*8400 / (34*94)
+
+
+#+end_src
+
+Wat ik nu ff niet snap is dat de rechterkant nu een decimaal geworden is. En
+omdat A & B gehele getallen zijn kan dat volgens mij niet.
+
+- [2024-12-13 Fri 09:00] aan 't werk!
+
+- [2024-12-13 Fri 10:07] Random gedachte, had ik eerder niet ooit een een programma ofzo gebruikt.  Wel nadat eea gezien had op reddit.
+  -> [[id:97478f21-653e-44cd-8de8-c013fab66f81][2023 Day 24: Never Tell Me The Odds]] z3 solver
+  toen in javascript aangeroepen, weet eerlijk gezegd niet meer hoe het werkt!
+
+- [2024-12-13 Fri 13:08] part twee loopt nogsteeds, afbreken en kijken of iemand op reddit de math uitlegd.
+
+Blijkbaar is het gemakkelijk te berekenen met [[https://nl.wikipedia.org/wiki/Regel_van_Cramer][Regel van Cramer - Wikipedia]]
+
+[[https://www.reddit.com/r/adventofcode/comments/1hd7irq/2024_day_13_an_explanation_of_the_mathematics/][[2024 Day 13] An explanation of the mathematics : r/adventofcode]]
+
+
+Blijkbaar is Gausian Elimination meestal sneller.
+
+Man, lineaire algebra was _altijd_ al mijn meest slechte vak tijdens mn studie.

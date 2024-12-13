@@ -2,6 +2,8 @@
 import sys
 import re
 from functools import cache
+import heapq
+from utils import perf_timer
 
 
 Coord = tuple[int, int]
@@ -43,14 +45,27 @@ def play(machine: Machine) -> int:
     cost = press((0,0), 0, (0,0))
     return 0 if cost == INF else cost
 
+def play_two(machine: Machine) -> int:
+
+    ax, ay = machine['A']
+    bx, by = machine['B']
+    px, py = machine['prize']
+
+    a = (px*by - py*bx) / (ax*by - ay*bx)
+    b = (ax*py - ay*px) / (ax*by - ay*bx)
+
+    return int(3*a + b) if a.is_integer() and b.is_integer() else 0
+
+@perf_timer
 def part_one(machines: list[Machine]) -> int:
-    """Solution to part one."""
+    """Find the total cost to play all winnable games."""
     return sum(play(machine) for machine in machines)
 
 
+@perf_timer
 def part_two(machines: list[Machine]):
-    """Solution to part two."""
-    return sum(play(machine) for machine in machines)
+    """Find the total cost to play all winnable games."""
+    return sum(play_two(machine) for machine in machines)
 
 
 def main():
@@ -82,6 +97,11 @@ def main():
         machine['prize'] = (P[0] + 10000000000000, P[1] + 10000000000000)
         return machine
 
+    print('-'*40)
+    print('part_one with part_two logic', part_two(machines))
+
+    # too low: 432256907188
+    # try:     41254731438299
     print('part_two', part_two([move_price(m) for m in machines]))
 
 
