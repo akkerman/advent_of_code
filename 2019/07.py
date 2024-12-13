@@ -1,10 +1,8 @@
 """Day 7: Amplification Circuit."""
 import sys
-from typing import Callable
 from itertools import permutations
 
-def computer(program: list[int], input: Callable[[], int], output:Callable[[int], None]) -> None:
-    """ part one """
+def computer(program: list[int]):
     ADD = 1
     MULTIPLY = 2
     INPUT = 3
@@ -14,57 +12,67 @@ def computer(program: list[int], input: Callable[[], int], output:Callable[[int]
     LESS_THAN = 7
     EQUALS = 8
     HALT = 99
+
     modes = [0,0,0,0]
-
-    def write(instruction_pointer:int, parameter:int, value:int):
-        # parameters that an instruction writes to wil never be in immediate mode
-        program[program[instruction_pointer+parameter]] = value
-
-    def read(instruction_pointer:int, parameter:int):
-        if modes[parameter]:
-            # immediate mode
-            return program[instruction_pointer + parameter]
-        else:
-            # position mode
-            return program[program[instruction_pointer + parameter]]
-
     i = 0 # instruction pointer
-    while i < len(program):
-        p3, p2, p1, o1, o2 = list(str(program[i]).zfill(5))
-        modes = [0, int(p1), int(p2), int(p3)]
-        op = int(o1 + o2)
-        if op == HALT:
-            break
-        elif op == ADD:
-            write(i, 3, read(i, 1) + read(i, 2))
-            i+=4
-        elif op == MULTIPLY:
-            write(i, 3, read(i, 1) * read(i, 2))
-            i+=4
-        elif op == INPUT:
-            write(i, 1, input())
-            i+=2
-        elif op == OUTPUT:
-            output(read(i, 1))
-            i+=2
-        elif op == JUMP_IF_TRUE:
-            if read(i, 1) != 0:
-                i = read(i, 2)
+
+    def run(input:list[int])->int|None:
+        nonlocal modes
+        nonlocal i
+
+        def write(instruction_pointer:int, parameter:int, value:int):
+            # parameters that an instruction writes to wil never be in immediate mode
+            program[program[instruction_pointer+parameter]] = value
+
+        def read(instruction_pointer:int, parameter:int):
+            if modes[parameter]:
+                # immediate mode
+                return program[instruction_pointer + parameter]
             else:
-                i+=3
-        elif op == JUMP_IF_FALSE:
-            if read(i, 1) == 0:
-                i = read(i, 2)
+                # position mode
+                return program[program[instruction_pointer + parameter]]
+
+        while i < len(program):
+            p3, p2, p1, o1, o2 = list(str(program[i]).zfill(5))
+            modes = [0, int(p1), int(p2), int(p3)]
+            op = int(o1 + o2)
+            if op == HALT:
+                break
+            elif op == ADD:
+                write(i, 3, read(i, 1) + read(i, 2))
+                i+=4
+            elif op == MULTIPLY:
+                write(i, 3, read(i, 1) * read(i, 2))
+                i+=4
+            elif op == INPUT:
+                write(i, 1, input.pop())
+                i+=2
+            elif op == OUTPUT:
+                output = read(i, 1)
+                i+=2
+                return output
+            elif op == JUMP_IF_TRUE:
+                if read(i, 1) != 0:
+                    i = read(i, 2)
+                else:
+                    i+=3
+            elif op == JUMP_IF_FALSE:
+                if read(i, 1) == 0:
+                    i = read(i, 2)
+                else:
+                    i+=3
+            elif op == LESS_THAN:
+                write(i, 3, 1 if read(i, 1) < read(i, 2) else 0)
+                i+=4
+            elif op == EQUALS:
+                write(i, 3, 1 if read(i, 1) == read(i, 2) else 0)
+                i+=4
             else:
-                i+=3
-        elif op == LESS_THAN:
-            write(i, 3, 1 if read(i, 1) < read(i, 2) else 0)
-            i+=4
-        elif op == EQUALS:
-            write(i, 3, 1 if read(i, 1) == read(i, 2) else 0)
-            i+=4
-        else:
-            ValueError('Unknown opcode {}'.format(op))
+                ValueError('Unknown opcode {}'.format(op))
+
+        return None
+
+    return run
 
 def amplifiers(acs: list[int], phase_setting: list[int]) -> int:
     """Run the 5 amplifiers with the given phase setting."""
@@ -72,16 +80,17 @@ def amplifiers(acs: list[int], phase_setting: list[int]) -> int:
     values = phase_setting[::-1]
     values.insert(-1, 0)
 
-    def input()->int:
-        return values.pop()
-
-    def output(value:int):
-        values.insert(-1, value)
-
     for _ in range(5):
-        computer(acs.copy(), input, output)
+        output = computer(acs.copy())(values)
+        assert output is not None
+        values.insert(-1, output)
 
     return values.pop()
+
+
+
+def feedback(acs: list[int], phase_setting: list[int]) -> int:
+    return -1
 
 
 def part_one(acs: list[int]) -> tuple[int, list[int]]:
@@ -132,3 +141,8 @@ def test_part_one_2():
     assert part_one([3,23,3,24,1002,24,10,24,1002,23,-1,23,101,5,23,23,1,24,23,23,4,23,99,0,0]) == (54321, [0,1,2,3,4 ])
 def test_part_one_3():
     assert part_one([3,31,3,32,1002,32,10,32,1001,31,-2,31,1007,31,0,33,1002,33,7,33,1,33,31,31,1,32,31,31,4,31,99,0,0,0]) == (65210, [1,0,4,3,2 ])
+
+# def test_feedback1():
+#     assert feedback([3,26,1001,26,-4,26,3,27,1002,27,2,27,1,27,26,27,4,27,1001,28,-1,28,1005,28,6,99,0,0,5], [9,8,7,6,5]) == 139629729
+# def test_feedback2():
+#     assert feedback([3,52,1001,52,-5,52,3,53,1,52,56,54,1007,54,5,55,1005,55,26,1001,54,-5,54,1105,1,12,1,53,54,53,1008,54,0,55,1001,55,1,55,2,53,55,53,4,53,1001,56,-1,56,1005,56,6,99,0,0,0,0,10], [9,7,8,5,6]) == 18216

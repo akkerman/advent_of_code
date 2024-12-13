@@ -12,5 +12,22 @@ Okay, eerst de computer van dag 5 erin kopieren.
 
 En ook maar ff wat refactoren. Als we dit hele jaar deze code gaan gebruiken dan refactor voor leesbaarheid.
 
-
 * Part Two
+
+Dat we 5 programmas ogenschijnlijk parallel moeten gaan draaien vind ik nog lastig om in mijn hoofd te krijgen.
+Op 1 of andere manier moet ik iets vinden om de output van een computer bij de amp te krijgen waarom het programma draait.
+Hmm. programma dat is die lijst met tekens niet de computer functie.
+
+In het eerste onderdeel was het zo dat de amp/computer klaar was na de eerste output.
+Maar nu moet deze dus doorgaan. Als er geen input is moet deze erop wachten.
+Wellicht moet je het programma gewoon 'aan en uit' kunnen zetten? Dus zodra je
+een output hebt pauzeer je de computer en run je de volgende. Maar dan moet je
+dus een manier hebben om het ding aan en uit te zetten.
+
+Het doorgeven van amplifiers waarden heb ik in het eerste deel gedaan door de computer achter elkaar 5x te draaien en deze de juiste input te geven. Deze ketting moet ik dus nu vaker doen maar ik kan niet wachten totdat de lus (tmp opcode 99) klaar is.
+Ze moeten tussentijds met elkaar waarden uitwisselen.
+
+je zou eigenlijk de huidige state van de insruction pointer bij moeten houden en de computer meerdere keren kunnen starten.
+
+
+Okay part one aangepast zodat de computer hieraan voldoet.
