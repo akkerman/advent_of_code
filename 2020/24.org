@@ -1,5 +1,7 @@
+:PROPERTIES:
+:ID:       74f224fe-09fc-43b2-b84d-edccd2609af7
+:END:
 #+title: Day 24: Lobby Layout
-
 * Part One
 
 ** Parse Instructions
