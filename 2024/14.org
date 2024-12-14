@@ -1,0 +1,26 @@
+:PROPERTIES:
+:ID:       94bf9a99-9e2f-4241-806e-210582821083
+:END:
+#+title: 2024 Day 14: Restroom Redoubt
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+- references :: [[id:425ee4e7-eaa3-43b1-9a86-40c25bd1a2c4][2016 Day 2: Bathroom Security]]
+
+Ontcijferen van de coordinaten
+
+0,0 => top left
+
+x,y = 2,1 => 2 tiles from the left wall, 1 tile from the top
+
+#+begin_src
+.....
+..#..
+.....
+#+end_src
+
+In rijen en kolommen geredeneerd dan is de positie van een robot: (c,r) en ook de snelheid is (c,r)
+
+
+* Part Two
