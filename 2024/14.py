@@ -43,18 +43,38 @@ def count_quadrants(robots:list[CoVe]):
             pass # the middle
     return quadrants
 
+def safety(robots:list[CoVe]):
+    return math.prod(count_quadrants(robots).values())
+
 def part_one(robots:list[CoVe], steps:int=100):
-    """Solution to part one."""
+    """Find the safety of the robots after a given number of steps."""
     for _ in range(steps):
         robots = move(robots)
 
-    return math.prod(count_quadrants(robots).values())
+    return safety(robots)
 
+def print_at(robots:list[CoVe], sec:int):
+    """Print the floor at a given time."""
+    for _ in range(sec):
+        robots = move(robots)
+    print_floor(robots)
 
 
 def part_two(robots:list[CoVe]):
-    """Solution to part two."""
-    return 'todo'
+    """
+    Find the first time the robots are in the christmas tree configuration.
+    aka find the first time safety is at its lowest.
+    """
+    sf = 8**85
+    sec = 0
+    for i in range(1, ROWS*COLS):
+        robots = move(robots)
+        new_safe = safety(robots)
+        if new_safe < sf:
+            sf = new_safe
+            sec = i
+
+    return sf, sec
 
 
 def main():
@@ -62,8 +82,7 @@ def main():
     lines = [tuple(map(int,PATTERN.findall(line.strip()))) for line in fileinput.input()]
     robots: list[CoVe] = [(r,c, vr,vc) for c,r, vc,vr in lines] # type: ignore
 
-    print('part_one', part_one(robots)) 
-    print('part_two', part_two(robots))
-
+    print('part_one', part_one(robots.copy())) 
+    print('part_two', part_two(robots.copy()))
 
 main()

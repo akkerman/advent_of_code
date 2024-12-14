@@ -24,3 +24,22 @@ In rijen en kolommen geredeneerd dan is de positie van een robot: (c,r) en ook d
 
 
 * Part Two
+
+wtf? hoe zie een kerstboom er uit? beter gezegd, hoe herken ik dit in de code??
+Komt die kerstboom in 1 vd kwadranten? of heeft het te maken met die middelste dingen?
+Dus een hele grote stam in het midden??
+Wat heeft het met part one te maken?
+
+Wellicht minimum safety factor? Maar wanneer stop ik met zoeken?
+Ik doorstap het ROWS*COLS keer kijken of ik dan een minimum vind?
+
+Okay. m'n antwoord is off by one. omdat ik de seconden bij 0 begon te tellen wtf.
+
+Maar idd als ik het minimum neem en dan een plaatje maak dan krijg ik een kerstboom.
+
+#+CAPTION: Christmas Tree
+#+NAME:    fig:kb
+[[./14.org_scrot-20241214080725.png]]
+
+Had t plaatje gemaakt voor debug van example.
+Voor veel andere iteraties werkt dit plaatje niet want dan zijn er meer dan 9 robots op 1 plek...
