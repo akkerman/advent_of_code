@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       aa99065c-01ab-4433-8b87-ddb48ce0b469
+:END:
+#+title: 2019 Day 8: Space Image Format
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+
+In elkaar geflansed op m'n telefoon met 1 of ander appje.
+
+* Part Two

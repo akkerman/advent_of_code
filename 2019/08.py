@@ -16,42 +16,46 @@ def part_one(input:str):
     
     return int(count['1']) * int(count['2'])
 
+BLACK=0 
+WHITE=1
+TRANSPARENT=2
+
+
+
 def part_two(line:str):
     """Solution to part two."""
-    l = 25*6
+    # l = 25*6
+    l = 2*2
     layers:list[list[str]]=[]
     input=list(line)
     while len(input):
         layers.append(input[:l])
         input=input[l:]
 
+    [print(l) for l in layers]
     
-    img:list[str] = []    
-    for i in range(l):
-        lenl = len(layers)
-        print(lenl)
-        for n in range(lenl):
-            print(i,n, layers)
-            p = layers[i][n]
-            if p == '2':
-                if n == lenl-1:
-                    img.append(' ')
-                continue
-            if p == '0':
-                img.append('.')
-                break
-            if p == '1':
-                img.append('#')
-                break
-            
-            
-    while len(img):
-        print(''.join(img[:25]))
-        try:
-            img=img[25:]
-        except:
-            break
-
+#    img:list[str] = []    
+#    for i in range(l):
+#        lenl = len(layers)
+#        print(lenl)
+#        for n in range(lenl):
+#            print(i,n, layers)
+#            p = layers[i][n]
+#            if p == '0':
+#                img.append('.')
+#                break
+#            if p == '1':
+#                img.append('#')
+#                break
+#            
+#            
+#    while len(img):
+#        print(''.join(img[:25]))
+#        try:
+#            img=img[25:]
+#        except:
+#            break
+#
 
     return 'todo'
 
