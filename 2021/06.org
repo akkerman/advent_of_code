@@ -6,5 +6,9 @@
 
 * Part One
 
+Simulatie...
 
 * Part Two
+
+Het doen van de simulatie gaat hier heel veel memory kosten.
+Wat we kunnen doen is bijhouden hoeveel van elke timer er is.
