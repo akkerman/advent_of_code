@@ -4,60 +4,37 @@ from collections import Counter
 
 def part_one(input:str):
     """Solution to part one."""
-    l = 25*6
-    zeros=l+1
+    offset = 3*2 if len(input) < 100 else 25*6
+    zeros=offset+1
     count:Counter[str]=Counter()
     while len(input):
-        c = Counter(input[:l])
+        c = Counter(input[:offset])
         if c['0'] < zeros:
             zeros = c['0']
             count = c
-        input=input[l:]
+        input=input[offset:]
     
     return int(count['1']) * int(count['2'])
 
-BLACK=0 
-WHITE=1
-TRANSPARENT=2
 
+BLACK='0'
+WHITE='1'
+TRANSPARENT='2'
 
+def overlay(pixels:str):
+    for p in pixels:
+        if p == BLACK:
+            return ' '
+        if p == WHITE:
+            return '█'
+    return TRANSPARENT
 
-def part_two(line:str):
+def part_two(input:str):
     """Solution to part two."""
-    # l = 25*6
-    l = 2*2
-    layers:list[list[str]]=[]
-    input=list(line)
-    while len(input):
-        layers.append(input[:l])
-        input=input[l:]
-
-    [print(l) for l in layers]
-    
-#    img:list[str] = []    
-#    for i in range(l):
-#        lenl = len(layers)
-#        print(lenl)
-#        for n in range(lenl):
-#            print(i,n, layers)
-#            p = layers[i][n]
-#            if p == '0':
-#                img.append('.')
-#                break
-#            if p == '1':
-#                img.append('#')
-#                break
-#            
-#            
-#    while len(img):
-#        print(''.join(img[:25]))
-#        try:
-#            img=img[25:]
-#        except:
-#            break
-#
-
-    return 'todo'
+    offset = 6*25
+    image = [input[i:i+offset] for i in range(0, len(input), offset)]
+    pixels = [overlay(p) for p in zip(*image)]
+    [print(''.join(pixels[i:i+25])) for i in range(0, len(pixels), 25)]
 
 
 def main():

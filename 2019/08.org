@@ -8,5 +8,13 @@
 * Part One
 
 In elkaar geflansed op m'n telefoon met 1 of ander appje.
+Idee van de oplossing is dat er 25*6 characters van de input afgehaald wordt en geteld.
+En bij elke knip kijken we of het aantal nullen kleiner is dan we eerder gezien hebben.
+En als we dan de kleinste hebben bereken we het gevraagde product.
 
 * Part Two
+
+
+eerst opdelen in stukken van 6*25 lang.
+Dan al die stukken zippen en per gezipt ding die overlay bepaling doen.
+Dan nogmaals opdelen in stukken van 25 lang en onderelkaar printen.
