@@ -1,0 +1,32 @@
+:PROPERTIES:
+:ID:       9e6b240b-3863-4b80-87af-cb2306f2217f
+:END:
+#+title: 2024 Day 15: Warehouse Woes
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+- references :: [[id:342634fc-0bf5-480c-9998-b30261d019d2][2021 Day 6: Lanternfish]]
+
+Als je een box wilt verplaatsen en deze bots tegen een andere box dan moet je die eerst verplaatsen.
+Dit is een hele rij van boxes. als je 1 daarvan niet kan verplaatsen blijft de robot staan.
+Als je die wel kan verplaatsen begin je bij de gene die het verst weg van de robot is. En blijf je (recursief) de boxes verplaatsen totdat er plek vrij is voor de robot.
+
+* Part Two
+
+Dus col van het coord verdubbelen en dan col+1 ook toevoegen.
+
+
+Daar waar ik er bij deel één nog mee weg kwam de dozen te verplaatsen zodra ik zag dat het kon, zorgt dat nu voor situaties waar ik de werkelijkheid al heb veranderd, de controle niet meer klopt en de robot de doos door een andere heen drukt:
+
+#+begin_src
+##############
+##......##..##
+##.....[]...##
+##...[[]....##
+##.....@....##
+##..........##
+##############
+#+end_src
+
+Idee is nu om eerst recursief te bepalen WELKE coordinaten verplaatst moeten worden en dan als alle controles zeggen dat het kan dit in allemaal achter te doen.
