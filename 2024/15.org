@@ -30,3 +30,6 @@ Daar waar ik er bij deel één nog mee weg kwam de dozen te verplaatsen zodra ik
 #+end_src
 
 Idee is nu om eerst recursief te bepalen WELKE coordinaten verplaatst moeten worden en dan als alle controles zeggen dat het kan dit in allemaal achter te doen.
+
+'t is een hele lap code geworden
+Later eens kijken of andere dit slimmer kunnen. (korter *en* leesbaar)

@@ -41,45 +41,12 @@ def part_one(walls:set[Coord], boxes:set[Coord], directions:list[Coord], start:C
     return sum_gps(boxes)
 
 
-def print_warehouse(walls:set[Coord], left_boxes:set[Coord], right_boxes:set[Coord], robot:Coord, dir:Coord):
-
-    direction = {
-        (0,0): 'Initial state:',
-        (-1, 0):'Move ^:',
-        (1, 0) :'Move v:',
-        (0, -1):'Move <:',
-        (0, 1) :'Move >:'
-    }
-    print(direction[dir])
-
-
-    for row in range(7):
-        for col in range(14):
-            if (row, col) in walls:
-                print('#', end='')
-            elif (row, col) in left_boxes:
-                print('[', end='')
-            elif (row, col) in right_boxes:
-                print(']', end='')
-            elif (row, col) == robot:
-                print('@', end='')
-            else:
-                print('.', end='')
-        print()
-    print()
-
-
-
 def part_two(walls:set[Coord], left_boxes:set[Coord], right_boxes:set[Coord], directions:list[Coord], start:Coord) -> int:
     """Solution to part two."""
 
-    print_warehouse(walls, left_boxes, right_boxes, start, (0, 0))
 
-    def move_boxes(coord: Coord, direction:Coord):
-        orig_left_boxes = left_boxes.copy()
-        orig_right_boxes = right_boxes.copy()
-
-        def __move_boxes(coord:Coord, direction:Coord) -> bool:
+    def move_boxes(coord: Coord, direction:Coord) -> bool:
+        def __move_boxes(coord:Coord, direction:Coord) -> None | tuple[set[Coord], set[Coord]]:
             r,c = coord
             left = coord if coord in left_boxes else (r, c-1)
             right = coord if coord in right_boxes else (r, c+1)
@@ -88,72 +55,71 @@ def part_two(walls:set[Coord], left_boxes:set[Coord], right_boxes:set[Coord], di
             next_right = move(right, direction)
 
             if next_left in walls or next_right in walls:
-                return False
+                return None
 
             if direction[1] == -1: # left
-                if next_left not in right_boxes or __move_boxes(next_left, direction):
-                    left_boxes.remove(left)
-                    right_boxes.remove(right)
-                    left_boxes.add(next_left)
-                    right_boxes.add(next_right)
-                    return True
-                return False
+                if next_left not in right_boxes: 
+                    return {left},{right}
+                to_move = __move_boxes(next_left, direction)
+                if not to_move:
+                    return None
+                return to_move[0]|{left},to_move[1]|{right}
 
             if direction[1] == 1: # right
-                if next_right not in left_boxes or __move_boxes(next_right, direction):
-                    left_boxes.remove(left)
-                    right_boxes.remove(right)
-                    left_boxes.add(next_left)
-                    right_boxes.add(next_right)
-                    return True
-                return False
+                if next_right not in left_boxes:
+                    return {left},{right}
+                to_move = __move_boxes(next_right, direction)
+                if not to_move:
+                    return None
+                return to_move[0]|{left},to_move[1]|{right}
 
 
             ## up or down
             boxes = left_boxes | right_boxes
             if next_left not in boxes and next_right not in boxes:
-                left_boxes.remove(left)
-                right_boxes.remove(right)
-                left_boxes.add(next_left)
-                right_boxes.add(next_right)
-                print('neither '*10)
-                print_warehouse(walls, left_boxes, right_boxes, (0,0), direction)
-                return True
-            if next_right in boxes and __move_boxes(next_right, direction):
-                left_boxes.remove(left)
-                right_boxes.remove(right)
-                left_boxes.add(next_left)
-                right_boxes.add(next_right)
-                print('right '*10)
-                print_warehouse(walls, left_boxes, right_boxes, (0,0), direction)
-                return True
-            if next_left in boxes and __move_boxes(next_left, direction):
-                print('left')
-                left_boxes.remove(left)
-                right_boxes.remove(right)
-                left_boxes.add(next_left)
-                right_boxes.add(next_right)
-                print('left '*10)
-                print_warehouse(walls, left_boxes, right_boxes, (0,0), direction)
-                return True
-            if move_boxes(next_left, direction) and move_boxes(next_right, direction):
-                left_boxes.remove(left)
-                right_boxes.remove(right)
-                left_boxes.add(next_left)
-                right_boxes.add(next_right)
-                print('both '*10)
-                print_warehouse(walls, left_boxes, right_boxes, (0,0), direction)
-                return True
+                return {left},{right}
 
+            if next_left in boxes and next_right in boxes:
+                to_move_left = __move_boxes(next_left, direction) 
+                to_move_right = __move_boxes(next_right, direction)
+                if not to_move_left or not to_move_right:
+                    return None
+                return (to_move_left[0]|to_move_right[0]|{left},
+                        to_move_left[1]|to_move_right[1]|{right})
+
+            if next_right in boxes:
+                to_move = __move_boxes(next_right, direction)
+                if not to_move:
+                    return None
+                return to_move[0]|{left},to_move[1]|{right}
+
+            if next_left in boxes:
+                to_move = __move_boxes(next_left, direction)
+                if not to_move:
+                    return None
+                return to_move[0]|{left},to_move[1]|{right}
+
+        to_move = __move_boxes(coord, direction)
+        if not to_move:
             return False
 
-        if not __move_boxes(coord, direction):
-            # rollback
-            left_boxes.clear()
-            right_boxes.clear()
-            left_boxes.update(orig_left_boxes)
-            right_boxes.update(orig_right_boxes)
-            return False
+        left, right = to_move
+
+        lcopy = left_boxes.copy()
+        rcopy = right_boxes.copy()
+
+        left_boxes.difference_update(left)
+        right_boxes.difference_update(right)
+
+        if lcopy == left_boxes and rcopy == right_boxes:
+            raise Exception('no change')
+
+
+        left = {move(box, direction) for box in left}
+        right = {move(box, direction) for box in right}
+        left_boxes.update(left)
+        right_boxes.update(right)
+
 
         return True
 
@@ -161,16 +127,12 @@ def part_two(walls:set[Coord], left_boxes:set[Coord], right_boxes:set[Coord], di
     for dir in directions:
         next = move(robot, dir)
         if next in walls:
-            print_warehouse(walls, left_boxes, right_boxes, robot, dir)
             continue
         if next in left_boxes or next in right_boxes:
             if move_boxes(next, dir):
                 robot = next
-            print_warehouse(walls, left_boxes, right_boxes, robot, dir)
             continue
         robot = next
-        print_warehouse(walls, left_boxes, right_boxes, robot, dir)
-        if dir == (-1, 0): quit()
 
     return sum_gps(left_boxes)
 
@@ -224,7 +186,7 @@ def main():
                 directions.append(direction[char])
 
 
-    # print('part_one', part_one(walls.copy(), boxes.copy(), directions, start))
+    print('part_one', part_one(walls.copy(), boxes.copy(), directions, start))
 
     walls, left_boxes, right_boxes = widen(walls, boxes)
     r,c = start
