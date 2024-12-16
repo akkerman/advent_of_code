@@ -2,52 +2,35 @@
 import sys
 import heapq
 
-Coord = tuple[int, int] # row, col, cost
-
-NEXT_DIR = {
-    (0, 1): [(1, 0), (-1, 0)],
-    (1, 0): [(0, -1), (0, 1)],
-    (0, -1): [(1, 0), (-1, 0)],
-    (-1, 0): [(0, -1), (0, 1)],
-}
-
+Coord = tuple[int, int] # row, col
 CostCD = tuple[int, Coord, Coord]
 
 def move(coord: Coord, direction: Coord) -> Coord:
-    return coord[0] + direction[0], coord[1] + direction[1]
+    return (coord[0] + direction[0], coord[1] + direction[1])
 
 def part_one(path: set[Coord], start: Coord, end: Coord) -> int:
-    """Solution to part one."""
+    """Determine the lowest score a Reindeer could get to reach the end of the maze."""
+    def next_steps(cost:int, coord: Coord, dir: Coord) -> list[CostCD]:
+        ns: list[CostCD] = []
+        r,c = dir
+        dir_cost = [ ((r, c), 1), ((c, -r), 1001), ((-c, r), 1001) ]
 
-    def neighbors(cost:int, coord: Coord, dir: Coord) -> list[CostCD]:
-        nb: list[CostCD] = []
-        next = move(coord, dir)
-        if next in path:
-            nb.append((cost+1, next, dir))
+        for next_dir, added_cost in dir_cost:
+            next = move(coord, next_dir)
+            if next not in path: continue
+            ns.append((cost+added_cost, next, next_dir))
 
-        next_dir = NEXT_DIR[dir][0]
-        next = move(coord, next_dir)
-        if next in path:
-            nb.append((cost+1001, next, next_dir))
-
-        next_dir = NEXT_DIR[dir][1]
-        next = move(coord, next_dir)
-        if next in path:
-            nb.append((cost+1001, next, next_dir))
-        return nb
-
+        return ns
 
     queue: list[CostCD] = [(0, start, (0,1))]
     visited: set[tuple[Coord, Coord]] = set()
     while queue:
         next = heapq.heappop(queue)
-        print(next)
         cost, coord, dir = next
-        if coord == end:
-            return cost
+        if coord == end: return cost
         if (coord, dir) in visited: continue
         visited.add((coord, dir))
-        for n in neighbors(cost, coord, dir):
+        for n in next_steps(cost, coord, dir):
             heapq.heappush(queue, n)
     
     return -1
@@ -67,16 +50,14 @@ def main():
     end = (-1, -1)
     for line in sys.stdin:
         line = line.strip()
-        path.update((row,c) for c,d in enumerate(line) if d == '.')
+        path.update((row,c) for c,d in enumerate(line) if d != '#')
         if 'S' in line:
             start = (row, line.index('S'))
         if 'E' in line:
             end = (row, line.index('E'))
-            path.add(end)
 
         row += 1
 
-    # too low: 130406
     print('part_one', part_one(path, start, end))
 
     print('part_two', part_two(path))

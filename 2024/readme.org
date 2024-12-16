@@ -145,3 +145,57 @@ spec = importlib.util.spec_from_file_location("module_name", "./05.py")
 module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(module)
 #+end_src
+
+** direct (anti)-clockwise calculation
+
+Ik schreef altijd even een kleine dictionary om van de ene richting naar de andere te gaan.
+
+#+CAPTION clockwise, start with going up
+#+begin_src python
+NEXT_DIR = {
+    (-1, 0): (0, 1),
+    (0, 1): (1, 0),
+    (1, 0): (0, -1),
+    (0, -1): (-1, 0),
+}
+#+end_src
+
+
+#+CAPTION ani-clockwise, start with going up
+#+begin_src python
+NEXT_DIR = {
+    (-1, 0): (0, -1),
+    (0, -1): (1, 0),
+    (1, 0): (0, 1),
+    (0, 1): (-1, 0),
+}
+#+end_src
+
+Soms zelfs een langere, om vanuit 1 richting zowel de linksom als rechtsom te krijgen:
+
+#+CAPTION either way
+#+begin_src python
+NEXT_DIR = {
+    (0, 1): [(1, 0), (-1, 0)],
+    (1, 0): [(0, -1), (0, 1)],
+    (0, -1): [(1, 0), (-1, 0)],
+    (-1, 0): [(0, -1), (0, 1)],
+}
+#+end_src
+
+
+Tijdens kijken van oplossingen op reddit en/of youtube:
+
+#+begin_src python
+Coord = tuple[int,int]
+
+def turn_right(coord:Coord) -> Coord:
+    r,c = coord
+    return c, -r
+
+def turn_left(Coord):
+    r,c = coord
+    return -c, r
+#+end_src
+
+Kennis voor het eerst toegepast, na een refactor, in [[id:35b46482-e59a-4ea0-915b-b90ffe20d2e7][2024 Day 16: Reindeer Maze]]
