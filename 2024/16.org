@@ -18,5 +18,54 @@ Een fout die ik, in eerste instantie maakte, was dat als ik een stap nam
 waarvoor ik eerst moest draaien ik de kosten als +1000 rekende, omdat het
 rendier daar niet alleen draait maar ok een stap zet moet het +1001 zijn.
 
+Omdat alle punten gesorteerd zijn op laagste kosten kan het niet zo zijn dat ik
+het eindpunt bereik met hogere kosten alvorens ik de lagere kosten vind. Dus
+zodra ik op het eindpunt ben weet ik dat het de laagst mogelijke moet zijn.
 
 * Part Two
+
+Ok nu moet ik achterhalen welke tegels bij het _een_ pad horen dat leid tot de beste score.
+Er zijn dus meerde manieren om de laagste score te krijgen, zoals in het voorbeeld te zien is.
+
+Wat ik kan doen is voor elk punt bijhouden hoe ik daar gekomen ben en als ik dan
+aan het einde ben het pad (de paden) terug loop.  Om zeker te zijn dat ik alles
+heb moet ik ook alle tegels aflopen ipv stoppen zodra ik em tegen kwam.
+
+Ik weet alleen ff niet hoe het nu dan zit met laagste kosten, want in princiepe kan ik via elke route bij het eind komen.
+Hmm. als ik per punt bij houd wat de laagste kosten zijn om er te komen dan kan ik bij het teruglopen ervoor kiezen om alleen de laagst mogelijke te kiezen. En alleen een dubbele aftakking te kiezen als de kosten om op beide te komen gelijk is.
+
+In het voorbeeld is ook te zien dat er een aftakking is, die daarna weer
+samenkomt, beide parallele sporen hebben evenveel punten en bochten. Bij een
+groter grid moet dat bijna ook wel het geval zijn want alvorens je een grid hebt
+waarbij je 1000 stappen kunt doen en 1 bocht minder....
+
+
+
+Ik kom er nu achter dat, in een punt waar je zowel rechtdoor als via een bocht
+gaat komen, is, bij mij, het path voor dat punt niet van gelijke waarde. Zou het
+komen omdat ik de draai en de stap samen genomen heb?
+
+In onderstaande gaat het bv om het punt gemarkeerd met ~X~.
+Daar komt een path van onder en van links. Het path eronder heb ik maar de rest niet
+
+
+#+begin_src
+
+Verwacht           Huidig
+
+###############    ###############
+#.......#....O#    #.......#....O#
+#.#.###.#.###O#    #.#.###.#.###O#
+#.....#.#...#O#    #.....#.#...#O#
+#.###.#####.#O#    #.###.#####.#O#
+#.#.#.......#O#    #.#.#.......#O#
+#.#.#####.###O#    #.#.#####.###O#
+#..OOXOOOOOO#O#    #....XOOOOOO#O#
+###O#O#####O#O#    ###.#O#####O#O#
+#OOO#O....#O#O#    #...#O....#O#O#
+#O#O#O###.#O#O#    #.#.#O###.#O#O#
+#OOOOO#...#O#O#    #OOOOO#...#O#O#
+#O###.#.#.#O#O#    #O###.#.#.#O#O#
+#O..#.....#OOO#    #O..#.....#OOO#
+###############    ###############
+#+end_src
