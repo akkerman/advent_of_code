@@ -10,28 +10,22 @@ def move(coord: Coord, direction: Coord) -> Coord:
 
 def part_one(path: set[Coord], start: Coord, end: Coord) -> int:
     """Determine the lowest score a Reindeer could get to reach the end of the maze."""
-    def next_steps(cost:int, coord: Coord, dir: Coord) -> list[CostCD]:
-        ns: list[CostCD] = []
-        r,c = dir
-        dir_cost = [ ((r, c), 1), ((c, -r), 1001), ((-c, r), 1001) ]
-
-        for next_dir, added_cost in dir_cost:
-            next = move(coord, next_dir)
-            if next not in path: continue
-            ns.append((cost+added_cost, next, next_dir))
-
-        return ns
-
     queue: list[CostCD] = [(0, start, (0,1))]
     visited: set[tuple[Coord, Coord]] = set()
+
     while queue:
         next = heapq.heappop(queue)
         cost, coord, dir = next
         if coord == end: return cost
         if (coord, dir) in visited: continue
         visited.add((coord, dir))
-        for n in next_steps(cost, coord, dir):
-            heapq.heappush(queue, n)
+
+        dr, dc = dir
+        dir_cost = [ ((dr, dc), 1), ((dc, -dr), 1001), ((-dc, dr), 1001) ]
+        for next_dir, added_cost in dir_cost:
+            next = move(coord, next_dir)
+            if next not in path: continue
+            heapq.heappush(queue, (cost+added_cost, next, next_dir))
     
     return -1
 

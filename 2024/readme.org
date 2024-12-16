@@ -187,15 +187,9 @@ NEXT_DIR = {
 Tijdens kijken van oplossingen op reddit en/of youtube:
 
 #+begin_src python
-Coord = tuple[int,int]
-
-def turn_right(coord:Coord) -> Coord:
-    r,c = coord
-    return c, -r
-
-def turn_left(Coord):
-    r,c = coord
-    return -c, r
+dr, dc = direction
+turn_right = (dc, -dr)
+turn_left = (-dc, cr)
 #+end_src
 
 Kennis voor het eerst toegepast, na een refactor, in [[id:35b46482-e59a-4ea0-915b-b90ffe20d2e7][2024 Day 16: Reindeer Maze]]
