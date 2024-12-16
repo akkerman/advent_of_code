@@ -1,0 +1,22 @@
+:PROPERTIES:
+:ID:       35b46482-e59a-4ea0-915b-b90ffe20d2e7
+:END:
+#+title: 2024 Day 16: Reindeer Maze
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+
+Ok dijkstra met maatwerk cost.
+
+Ik heb er voor gekozen om een neighbors functie ~next_step~ te maken die mij alle
+valid next steps geeft met daarbij de kosten voor het maken van die stap.
+
+De realisatie hier is dat, als je een graph zou maken, de kosten tussen nodes 1 of 1001 is.
+
+Een fout die ik, in eerste instantie maakte, was dat als ik een stap nam
+waarvoor ik eerst moest draaien ik de kosten als +1000 rekende, omdat het
+rendier daar niet alleen draait maar ok een stap zet moet het +1001 zijn.
+
+
+* Part Two
