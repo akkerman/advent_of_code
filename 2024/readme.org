@@ -210,3 +210,6 @@ return a,b
 
 #+RESULTS:
 | 192 | 192 |
+
+
+[[id:45000afd-9917-49e0-bb97-7d99d38cccde][2024 Day 17: Chronospatial Computer]]

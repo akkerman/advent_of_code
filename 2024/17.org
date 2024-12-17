@@ -13,8 +13,127 @@
 
 Brute force duurt lang. Ben bang dat sommige programmas in een loop geraken.
 
-Zodra ik weer tijd heb.
+Ik heb wat print statements bij alle opcode condities gezet en dan komt er uiteindelijk deze lus uit die hetzelfde doe als het programma:
 
-- huidige oplossing aanpassen en de verwachte output meegeven
-- next_expected bijhouden obv de verwachte input
-- als output niet overeenkomt gelijk stoppen en volgende iteratie proberen.
+
+#+begin_src python
+a = 64196994
+b = 0
+c = 0
+
+out: list[int] = []
+while a:
+   b = a % 8
+   b = b ^ 1
+   c = a >> b
+   b = b ^ 5
+   b = b ^ c
+   a = a >> 3
+   out.append(b % 8)
+
+return ",".join(map(str,out))
+#+end_src
+
+#+RESULTS:
+: 6,4,6,0,4,5,7,2,7
+
+
+Met de gegeven input voor A komt hier nu hetzelfde antwoord uit als in part one.
+
+Werkt niet voor de input, werkt alleen voor mijn specifieke puzzel input (programma)
+
+Dit is mooi, maar hoe doe je dit nu achterstevoren?
+Dus, gegeven de output hoe krijg ik register A?
+
+De laatste bewerking op a is =a >> 3=, 3 bits opschuiven. het hoogste getal van 3 bits is 7_10 (111_2)
+Welke waarde van a in [0,7] geeft dan een output van 0 (het laatste getal van mijn programma)?
+
+
+#+begin_src python
+b = 0
+c = 0
+
+out: list[int] = []
+for A in range(8):
+   a = A
+
+   b = a % 8
+   b = b ^ 1
+   c = a >> b
+   b = b ^ 5
+   b = b ^ c
+   a = a >> 3
+   if (b % 8 == 0):
+        out.append(A)
+
+return out
+#+end_src
+
+#+RESULTS:
+| 4 |
+
+
+Blijkbaar is het enige mogelijke antwoord een 4.
+
+De enige bewerking op het a-register is elke keer een 3bit shift.
+De laatste bewerking voor de laatste lus zorgde er dan voor dat a >> 3 == 4.
+
+Als we dit omdraaien dan krijgen we ~4 << 3 == 24~ maar een getal tot 7_10 of 111_2 groter leidt ook tot een 4.
+Dus in de voorlaatste loop is a in [24, 39]
+
+Het voorlaatste getal is, voor mijn input, een 3.
+
+
+#+begin_src python
+b = 0
+c = 0
+
+out: list[int] = []
+for A in range(24, 40):
+   a = A
+
+   b = a % 8
+   b = b ^ 1
+   c = a >> b
+   b = b ^ 5
+   b = b ^ c
+   a = a >> 3
+   if (b % 8 == 3):
+        out.append(A)
+
+return out
+#+end_src
+
+#+RESULTS:
+| 31 | 37 | 39 |
+
+Blijkbaar kan dat met 31, 37 en 39. Dan is het de vraag welke van deze getallen mij de eind reeks 3,0 geeft.
+
+#+begin_src python
+
+b = 0
+c = 0
+
+out: list[int] = []
+for A in [31, 37, 39]:
+   a = A
+   out = []
+   while a:
+      b = a % 8
+      b = b ^ 1
+      c = a >> b
+      b = b ^ 5
+      b = b ^ c
+      a = a >> 3
+      out.append(b % 8)
+      if out == [3,0]:
+        return A
+return -1
+#+end_src
+
+#+RESULTS:
+: 37
+
+Afgaande op bovenstaande is dat 37. ~37 << 3 == 296~
+
+Dus nog een lus eerder moet a in [296, 303] zijn.

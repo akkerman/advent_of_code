@@ -8,7 +8,7 @@ B = 1
 C = 2
 
 def part_one(registers:list[int], program:list[int])->list[int]:
-    """Solution to part one."""
+    """Solve part one with an int computer"""
     out: list[int] = []
     i = 0
     while True:
@@ -62,19 +62,50 @@ def part_one(registers:list[int], program:list[int])->list[int]:
     return out
 
 
-def part_two(registers:list[int], program:list[int])->int:
-    """Solution to part two."""
-    target = part_one(registers.copy(), program)
+def part_one_alt(registers:list[int], _:list[int])->list[int]:
+    """Solve part one with direct computation."""
+    a = registers[A]
+    b = 0
+    c = 0
 
-    registers[A] = 117440
-    print(part_one(registers.copy(), program))
+    out: list[int] = []
+    while a:
+       b = a % 8
+       b = b ^ 1
+       c = a >> b
+       b = b ^ 5
+       b = b ^ c
+       a = a >> 3
+       out.append(b % 8)
 
-    while True:
-        registers[A] += 1
-        out = part_one(registers.copy(), program)
-        if out == target:
-            return registers[A]
+    return out
 
+
+
+
+
+def part_two(program:list[int], reg_a: int)->int|None:
+    if program == []:
+        return reg_a
+
+    for offset in range(8):
+       a = (reg_a << 3) + offset
+       b = a % 8
+       b = b ^ 1
+       c = a >> b
+       b = b ^ 5
+       b = b ^ c
+       if b % 8 == program[-1]:
+           # a lowest value found, try to solve previous loops
+           prev = part_two(program[:-1], a)
+           if prev: return prev
+
+    return None
+
+
+def commas(output: list[int]) -> str:
+    """Convert list of ints to comma separated string."""
+    return ",".join(map(str, output))
 
 def main():
     """Parse input file, pass to puzzle solvers."""
@@ -91,15 +122,16 @@ def main():
         else:
             program = list(map(int, re.findall(r'(\d+)', line)))
 
-    output = part_one(registers.copy(), program)
-    print('part_one', ",".join(map(str,output)))
+    
+    print('part_one', commas(part_one(registers.copy(), program)))
 
-    reg = registers.copy()
-    reg[A] = 117440
-    output = part_one(reg, program)
-    print('test', ",".join(map(str,output)))
+    print('part_alt', commas(part_one_alt(registers.copy(), program)))
 
-    # print('part_two', part_two(registers.copy(), program))
+    p2 = part_two(program.copy(), 0)
+    print('part_two', p2)
+
+    registers[A] = p2
+    print('solved ', commas(part_one_alt(registers.copy(), program)))
 
 
 main()
