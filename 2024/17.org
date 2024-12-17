@@ -10,3 +10,11 @@
 
 
 * Part Two
+
+Brute force duurt lang. Ben bang dat sommige programmas in een loop geraken.
+
+Zodra ik weer tijd heb.
+
+- huidige oplossing aanpassen en de verwachte output meegeven
+- next_expected bijhouden obv de verwachte input
+- als output niet overeenkomt gelijk stoppen en volgende iteratie proberen.

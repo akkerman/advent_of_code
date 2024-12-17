@@ -7,8 +7,9 @@ A = 0
 B = 1
 C = 2
 
-def part_one(registers:list[int], program:list[int]):
+def part_one(registers:list[int], program:list[int])->list[int]:
     """Solution to part one."""
+    out: list[int] = []
     i = 0
     while True:
         if i >= len(program):
@@ -46,7 +47,7 @@ def part_one(registers:list[int], program:list[int]):
             i += 2
             pass
         elif opcode == 5: # out: mod 8
-            print(read_value(operand) % 8, end=',')
+            out.append(read_value(operand) % 8)
             i += 2
             pass
         elif opcode == 6: # bdv: division to B
@@ -58,13 +59,21 @@ def part_one(registers:list[int], program:list[int]):
             i += 2
             pass
 
+    return out
 
-    print()
 
-
-def part_two(lines):
+def part_two(registers:list[int], program:list[int])->int:
     """Solution to part two."""
-    return 'todo'
+    target = part_one(registers.copy(), program)
+
+    registers[A] = 117440
+    print(part_one(registers.copy(), program))
+
+    while True:
+        registers[A] += 1
+        out = part_one(registers.copy(), program)
+        if out == target:
+            return registers[A]
 
 
 def main():
@@ -82,9 +91,15 @@ def main():
         else:
             program = list(map(int, re.findall(r'(\d+)', line)))
 
-    print('part_one', part_one(registers, program))
+    output = part_one(registers.copy(), program)
+    print('part_one', ",".join(map(str,output)))
 
-    print('part_two', part_two(registers))
+    reg = registers.copy()
+    reg[A] = 117440
+    output = part_one(reg, program)
+    print('test', ",".join(map(str,output)))
+
+    # print('part_two', part_two(registers.copy(), program))
 
 
 main()
