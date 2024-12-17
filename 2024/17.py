@@ -15,7 +15,7 @@ def part_one(registers:list[int], program:list[int])->list[int]:
         if i >= len(program):
             break
 
-        def read_value(operand:int) -> int:
+        def combo(operand:int) -> int:
             if 0 <= operand <= 3:
                 return operand
             if operand == 4:
@@ -28,34 +28,34 @@ def part_one(registers:list[int], program:list[int])->list[int]:
 
         opcode, operand = program[i], program[i+1]
 
-        if opcode == 0: # adv: division to 
-            registers[A] = registers[A] // (2 ** read_value(operand))
+        if opcode == 0: # adv: A division
+            registers[A] = registers[A] >> combo(operand)
             i += 2
-        elif opcode == 1: # bxl: bitwise XOR
+        elif opcode == 1: # bxl: B xor literal
             registers[B] = registers[B] ^ operand
             i += 2
         elif opcode == 2: # bst: mod 8
-            registers[B] = read_value(operand) % 8
+            registers[B] = combo(operand) % 8
             i += 2
-        elif opcode == 3: # jnz: noop
+        elif opcode == 3: # jnz: jump not zero
             if registers[A] == 0:
                 i += 2
             else:
                 i = operand
-        elif opcode == 4: # bxc: bitwise XOR
+        elif opcode == 4: # bxc: B xor C
             registers[B] = registers[B] ^ registers[C]
             i += 2
             pass
         elif opcode == 5: # out: mod 8
-            out.append(read_value(operand) % 8)
+            out.append(combo(operand) % 8)
             i += 2
             pass
-        elif opcode == 6: # bdv: division to B
-            registers[B] = registers[A] // (2 ** read_value(operand))
+        elif opcode == 6: # bdv: B division
+            registers[B] = registers[A] >> combo(operand)
             i += 2
             pass
-        elif opcode == 7: # cdv: division to C
-            registers[C] = registers[A] // (2 ** read_value(operand))
+        elif opcode == 7: # cdv: C division
+            registers[C] = registers[A] >> combo(operand)
             i += 2
             pass
 

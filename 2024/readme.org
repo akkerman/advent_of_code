@@ -193,3 +193,20 @@ turn_left = (-dc, cr)
 #+end_src
 
 Kennis voor het eerst toegepast, na een refactor, in [[id:35b46482-e59a-4ea0-915b-b90ffe20d2e7][2024 Day 16: Reindeer Maze]]
+
+** Delen door een 2-macht is equivalent aan bitshifting
+
+Als je deelt door een macht van twee an afrond naar een integer blijkt dit hetzelfde te zijn als het originele getal te shiften met de macht.
+
+#+begin_src python
+getal = 12345
+macht = 6
+
+a = getal // (2 ** macht)
+b = getal >> macht
+
+return a,b
+#+end_src
+
+#+RESULTS:
+| 192 | 192 |
