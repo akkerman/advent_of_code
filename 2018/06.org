@@ -1,0 +1,11 @@
+:PROPERTIES:
+:ID:       440ae597-08f1-446c-ac85-e3c0e0fc75c8
+:END:
+#+title: 2018 Day 6: Chronal Coordinates
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+
+
+* Part Two
