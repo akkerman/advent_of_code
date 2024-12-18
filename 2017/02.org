@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       9cc3274c-bf56-4209-9505-77b901a3ca6c
+:END:
+#+title: 2017 Day 2: Corruption Checksum
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+
+Sumarize the difference of the max and min of each row.
+
+* Part Two
+
+Sumarize the division of the only two numbers that are divisible.
