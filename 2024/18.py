@@ -50,6 +50,19 @@ def part_two(memory:list[tuple[int,int]], start_count: int=1024, exit:tuple[int,
         if part_one(memory, count, exit) == -1:
             return memory[count-1]
 
+@perf_timer
+def part_bin(memory:list[tuple[int,int]], start_count: int=1024, exit:tuple[int,int]=(70,70)):
+    """Binary search for the first byte that blocks the exit."""
+    low = start_count
+    high = len(memory)
+    while low < high:
+        mid = (low + high) // 2
+        if part_one(memory, mid, exit) == -1:
+            high = mid
+        else:
+            low = mid + 1
+    return memory[low-1]
+
 def main():
     """Parse input file, pass to puzzle solvers."""
     bytes:list[tuple[int,int]] = []
@@ -67,7 +80,9 @@ def main():
     # example
     # print('part_two', part_two(bytes, start_time=12, exit=(6,6)))
 
+    
     # input
+    print('part_bin', part_bin(bytes))
     print('part_two', part_two(bytes))
 
 

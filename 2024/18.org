@@ -15,3 +15,14 @@ Kortste pad berekenen na 1024 van die memory blocks te hebben laten vallen.
 Brute force, alle simulaties totdat er geen pad meer is.
 
 Zat nog te denken aan een bisect methode maar dit duurde enkele seconden.
+
+
+Toch nog bisectie geïmplementeerd het is ook wel bekend als [[id:049155c8-c942-422a-8ca7-88e6b339515e][binary search]].
+
+Gaat van 3.5 seconden terug naar ~20ms
+
+'t duurt overigens 5 milliseconden als ik daarvoor eerst de bruteforce van 3.5 seconden heb gedraait.
+Wellicht dat pypy dan iets sneller heeft gedaan ofzo?
+
+Grappig dat, als ik die binary search meerdere keren uitvoer dat het de eerste
+keer ~20ms duurt, dan 10 en daarna steeds dichter bij 5ms.
