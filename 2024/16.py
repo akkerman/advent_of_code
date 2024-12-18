@@ -2,6 +2,7 @@
 import sys
 import heapq
 from collections import defaultdict, deque
+from utils import perf_timer
 
 Coord = tuple[int, int] # row, col
 Direction = tuple[int, int] # row, col
@@ -48,15 +49,15 @@ def print_path(path: set[Coord], tiles: set[Coord], wall: set[Coord]):
                 print(' ', end='')
         print()
 
+@perf_timer
 def part_two(path: set[Coord], start: Coord, end: Coord, wall: set[Coord], target_cost: int) -> int:
-    """Solution to part two."""
     queue: list[CostCD] = [(0, start, (0,1))]
-    visited: set[tuple[Coord, Coord]] = set()
+
+    end_states: set[Step] = set()
 
     back_path: defaultdict[Step, set[Step]] = defaultdict(set)
     lowest_cost: defaultdict[Step, int] = defaultdict(lambda: 8**85)
 
-    end_states: set[Step] = set()
     while queue:
         next = heapq.heappop(queue)
         cost, coord, dir = next
@@ -64,41 +65,32 @@ def part_two(path: set[Coord], start: Coord, end: Coord, wall: set[Coord], targe
             if cost == target_cost:
                 end_states.add((coord, dir))
             continue
-        if (coord, dir) in visited: continue
-        visited.add((coord, dir))
-        lowest_cost[(coord, dir)] = min(cost, lowest_cost[(coord, dir)])
+        if cost > lowest_cost[(coord, dir)]: continue
+        lowest_cost[(coord, dir)] = cost
 
         dr, dc = dir
-        dir_cost = [ ((dr, dc), 1), ((dc, -dr), 1001), ((-dc, dr), 1001) ]
-        for next_dir, added_cost in dir_cost:
-            next = move(coord, next_dir)
+        dir_cost = [ (move(coord, (dr,dc)), (dr, dc), 1), (coord, (dc, -dr), 1000), (coord, (-dc, dr), 1000) ]
+        for next, next_dir, added_cost in dir_cost:
             if next not in path: continue
-            heapq.heappush(queue, (cost+added_cost, next, next_dir))
-            back_path[(next, next_dir)].add((coord, dir))
+            current_cost = cost + added_cost
+            lowest = lowest_cost[(next, next_dir)]
 
+            if current_cost > lowest: continue
+            if current_cost < lowest:
+                back_path[(next, next_dir)] = set()
+            lowest_cost[(next, next_dir)] = current_cost
+            back_path[(next, next_dir)].add((coord, dir))
+            heapq.heappush(queue, (cost+added_cost, next, next_dir))
+
+    
     tiles: set[Coord] = set()
     back_queue: deque[Step] = deque(end_states)
-    visited.clear()
     while back_queue:
         coord, dir = back_queue.popleft()
         tiles.add(coord)
-        if (coord, dir) in visited: continue
-        visited.add((coord, dir))
-        if coord == start: continue
-        lowest = min(lowest_cost[cd] for cd in back_path[coord, dir])
-        for prev in [cd for cd in back_path[coord, dir] if lowest_cost[cd] == lowest]:
+        for prev in back_path[coord, dir]:
             back_queue.append(prev)
-    
-    for coord, back in back_path.items():
-        if not coord == (9,7): continue
-        [print(p, lowest_cost[p]) for p in back]
-    # [print(lowest_cost[p]) for p in back for x, back in back_path.items() if x == ]
 
-    [print(back_path[p]) for p in back_path if p[0] == (9,7)]
-    print(lowest_cost[(9,6), (0,1)])
-    print(lowest_cost[(9,8), (0,-1)])
-
-    print_path(path, tiles, wall)
     return len(tiles)
 
 def main():

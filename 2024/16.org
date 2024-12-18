@@ -69,3 +69,12 @@ Verwacht           Huidig
 #O..#.....#OOO#    #O..#.....#OOO#
 ###############    ###############
 #+end_src
+
+
+Uiteindelijk heb ik nu het goede antwoord maar er zijn een paar dingen raar.
+
+Twee keer een check of de huidige kosten wel kleiner zijn dat wat we al wisten
+1x bij het halen uit de heapq en 1x vlakvoor het in de heapq stoppen. Dit maakt
+het btw ook 3x zo snel.
+
+Wel tof dat mijn antwoord 2^10 is
