@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       901d075e-677b-417a-a4f8-b738adf8881e
+:END:
+#+title: 2024 Day 18: RAM Run
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+
+Kortste pad berekenen na 1024 van die memory blocks te hebben laten vallen.
+
+
+* Part Two
+
+Brute force, alle simulaties totdat er geen pad meer is.
+
+Zat nog te denken aan een bisect methode maar dit duurde enkele seconden.
