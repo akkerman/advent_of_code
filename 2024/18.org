@@ -26,3 +26,7 @@ Wellicht dat pypy dan iets sneller heeft gedaan ofzo?
 
 Grappig dat, als ik die binary search meerdere keren uitvoer dat het de eerste
 keer ~20ms duurt, dan 10 en daarna steeds dichter bij 5ms.
+
+Nog een leuke bevinding is dat het voor dit algorithme niet echt uitmaakt of je
+begint bij 2024, waarvan we in part1 al weten dat het pad niet geblokkeerd is,
+of dat je bij 0 begint.
