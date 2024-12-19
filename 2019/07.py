@@ -76,7 +76,7 @@ def computer(program: list[int], phase_setting: int):
                 write(i, 3, 1 if read(i, 1) == read(i, 2) else 0)
                 i+=4
             else:
-                ValueError('Unknown opcode {}'.format(op))
+                raise ValueError('Unknown opcode {}'.format(op))
 
         return None
 

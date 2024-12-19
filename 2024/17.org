@@ -8,8 +8,9 @@
 * Part One
 - references :: [[id:440ae597-08f1-446c-ac85-e3c0e0fc75c8][2018 Day 6: Chronal Coordinates]]
 
-
 * Part Two
+
+Het is nu de bedoeling dat we een getal zoeken wat er voor zorgt dat het programma een kopie van zichzelf als output geeft. Een zgn [[id:9d6d8f02-f666-4753-bca2-bbcb4eb051e3][Quine]].
 
 Brute force duurt lang. Ben bang dat sommige programmas in een loop geraken.
 
@@ -36,7 +37,6 @@ return ",".join(map(str,out))
 
 #+RESULTS:
 : 6,4,6,0,4,5,7,2,7
-
 
 Met de gegeven input voor A komt hier nu hetzelfde antwoord uit als in part one.
 

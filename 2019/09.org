@@ -1,0 +1,16 @@
+:PROPERTIES:
+:ID:       352f1105-5c7b-4e7d-bf57-a5fa02a40f12
+:END:
+#+title: 2019 Day 9: Sensor Boost
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+
+Deze puzzel introduceert een begrip genaamd [[id:9d6d8f02-f666-4753-bca2-bbcb4eb051e3][Quine]].
+
+Als we elke keer een copy/past moeten doen van dag 5 dan ga ik eerst dag 5 zo refactoren zoals gebruikt in dag 7.
+Start met een copy/paste van het programma uit dag 5.
+
+
+* Part Two
