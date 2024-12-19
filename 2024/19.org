@@ -1,0 +1,20 @@
+:PROPERTIES:
+:ID:       7d807011-6f12-4064-ac77-274a41f79717
+:END:
+#+title: 2024 Day 19: Linen Layout
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+
+- references ::  [[id:9fc61b07-9e42-4b58-9e99-7c577a3755bc][2023 Day 12: Hot Springs]]
+
+Man ik was, in eerste instantie zelfs de patronen aan het bijhouden die het zouden worden.
+Maar omdat er een ja/nee vraag gesteld wordt hoeft dat nu eigenlijk niet.
+
+Heb wel de functie die het gewenste patroon aan het zoeken is met ~@lru_cache~ geannoteerd anders duurt het nogal lang.
+
+* Part Two
+
+Bestaande functie aanpassen zodat deze geen bool teruggeeft maar een int.
+Elke loop moet een count bij houden en daar het resultaat van z'n recursieve aanroep bij optellen.

@@ -1,0 +1,11 @@
+:PROPERTIES:
+:ID:       9fc61b07-9e42-4b58-9e99-7c577a3755bc
+:END:
+#+title: 2023 Day 12: Hot Springs
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+
+
+* Part Two
