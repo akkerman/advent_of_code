@@ -95,14 +95,14 @@ def computer(program: defaultdict[int,int], input:int=1):
     return output
 
 def part_one(program:list[int]):
-    """Solution to part one."""
+    """Produce the boost keycode."""
     return computer(defaultdict(int, enumerate(program)))
 
 
 
-def part_two(lines):
-    """Solution to part two."""
-    return 'todo'
+def part_two(program:list[int]):
+    """Produce the coordinates of the distress signal."""
+    return computer(defaultdict(int, enumerate(program)), 2)
 
 
 def main():

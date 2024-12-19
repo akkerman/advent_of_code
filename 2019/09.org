@@ -9,7 +9,8 @@
 
 Deze puzzel introduceert een begrip genaamd [[id:9d6d8f02-f666-4753-bca2-bbcb4eb051e3][Quine]].
 
-Als we elke keer een copy/past moeten doen van dag 5 dan ga ik eerst dag 5 zo refactoren zoals gebruikt in dag 7.
+Als we elke keer een copy/paste moeten doen van dag 5 dan ga ik eerst dag 5 zo
+refactoren zoals gebruikt in dag 7.
 
 Start met een copy/paste van het programma uit dag 5.
 
@@ -22,3 +23,6 @@ benaderd maar geeft een 0 terug voor alle entries die (nog) niet bestaan.
 
 
 * Part Two
+
+Wow ik dacht ff nu krijgen we het "it might take a few seconds to complete the
+operation on slower hardware". Maar het was zo klaar
