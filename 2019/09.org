@@ -10,7 +10,15 @@
 Deze puzzel introduceert een begrip genaamd [[id:9d6d8f02-f666-4753-bca2-bbcb4eb051e3][Quine]].
 
 Als we elke keer een copy/past moeten doen van dag 5 dan ga ik eerst dag 5 zo refactoren zoals gebruikt in dag 7.
+
 Start met een copy/paste van het programma uit dag 5.
+
+Volg de instructies om de int computer aan te passen.
+
+De uitdaging was dat vergrote geheugen maar dat was snel opgelost door het
+programma niet als een lijst maar als een default dict door te geven. Die
+gedraagt zich op soorgelijke wijze als een array als je deze met indices
+benaderd maar geeft een 0 terug voor alle entries die (nog) niet bestaan.
 
 
 * Part Two
