@@ -1,21 +1,25 @@
 """Day 19: Linen Layout."""
-import sys
+import fileinput
 from functools import lru_cache
+from utils import perf_timer
 
+@perf_timer
 def solve(patterns:list[str], designs:list[str]):
-    @lru_cache
-    def create(design:str)->int:
+    """Check if and how many designs can be created from patterns."""
+    @lru_cache(maxsize=len(patterns))
+    def count_possible_designs(design:str)->int:
+        """Count how many designs can be created from patterns."""
         if design == '':
             return 1
         count = 0
         for pattern in patterns:
-            if design.startswith(pattern):
-                created = create(design[len(pattern):])
-                if created > 0:
-                    count += created
+            if not design.startswith(pattern): continue
+            created = count_possible_designs(design[len(pattern):])
+            if created == 0: continue
+            count += created
         return count
 
-    matches = [create(design) for design in designs]
+    matches = [count_possible_designs(design) for design in designs]
 
     print('part_one',  sum([m > 0 for m in matches]))
     print('part_two',  sum(matches))
@@ -26,7 +30,7 @@ def main():
     patterns:list[str] = []
     designs:list[str] = []
     parsing = 'patterns'
-    for line in sys.stdin:
+    for line in fileinput.input():
         line = line.strip()
         if not line:
             parsing = 'designs'
@@ -37,11 +41,7 @@ def main():
         else:
             designs.append(line)
 
-
-        
-
     solve(patterns, designs)
-
 
 main()
 
