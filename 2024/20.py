@@ -24,7 +24,8 @@ def race(track: set[Coord], start: Coord, end: Coord) -> int:
             heapq.heappush(q, (length+1, next))
     return -1 # no path
 
-def annotate(track: set[Coord], start: Coord, end: Coord) -> dict[Coord, int]:
+def annotate_with_distance(track: set[Coord], start: Coord, end: Coord) -> dict[Coord, int]:
+    """Annotate each track cell with the distance from the start."""
     annotated: dict[Coord, int] = {}
     q = deque([(0, start)])
     while q:
@@ -74,10 +75,9 @@ def part_one_v2(track: set[Coord], wall:set[Coord], start: Coord, end: Coord, bo
         br, bc = bounds
         return r == 0 or c == 0 or r == br or c == bc
 
-    max_path = len(track) -1 # don't count the start
     candidates = { c for c in wall if not is_outer(c) }
 
-    annotated = annotate(track, start, end)
+    annotated = annotate_with_distance(track, start, end)
     counter: Counter[int] = Counter()
 
     for tr in track:
@@ -100,10 +100,38 @@ def part_one_v2(track: set[Coord], wall:set[Coord], start: Coord, end: Coord, bo
 
     return sum(cheat for save,cheat in counter.items() if save >= 100)
 
+def count_cheats(track: set[Coord], start: Coord, end: Coord, cheat_length:int) -> int:
+    """Count the number of cheats of given length that save at least 100 picoseconds."""
+    def coords_at_distance(coord: Coord):
+        r,c = coord
+        for dr in range(-cheat_length, cheat_length+1):
+            for dc in range(-cheat_length, cheat_length+1):
+                if abs(dr) + abs(dc) != cheat_length: continue
+                nb = (r+dr, c+dc)
+                if nb not in track: continue
+                yield nb
 
-def part_two(lines):
+    annotated = annotate_with_distance(track, start, end)
+    count = 0
+
+    for coord in track:
+        current_time = annotated[coord]
+        for nb in coords_at_distance(coord):
+            target_time = annotated[nb]
+            if target_time - current_time - cheat_length < 100: continue
+            count += 1
+
+
+    return count
+
+@perf_timer
+def part_one_v3(track: set[Coord], start: Coord, end: Coord) -> int:
+    return count_cheats(track, start, end, 2)
+
+@perf_timer
+def part_two(track: set[Coord], start:Coord, end:Coord) -> int:
     """Solution to part two."""
-    return 'todo'
+    return sum(count_cheats(track, start, end, distance) for distance in range(2, 21))
 
 
 def main():
@@ -128,8 +156,9 @@ def main():
 
     # print('part_one', part_one(track, wall, start, end, (row, col)))
     print('part_one_v2', part_one_v2(track, wall, start, end, (row, col)))
+    print('part_one_v3', part_one_v3(track, start, end))
     
-    print('part_two', part_two([])) 
+    print('part_two', part_two(track, start, end))
 
 if __name__ == '__main__':
     main()

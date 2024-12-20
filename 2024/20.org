@@ -20,6 +20,7 @@ Ik ga er nu eerst maar even van uit dat de cheat betekend dat je altijd één st
 Nu nog de vraag of er een manier is om gelijk te bepalen hoe lang het pad dan is. Moet ik elke keer gaan langs lopen? Of is er een andere manier?
 
 Eerst brute force proberen. Alle muurstukken 1 voor 1 verwijderen.
+
 Voor het voorbeeld geeft dit het goede result.
 
 Nou voor input niet.
@@ -56,3 +57,55 @@ Het verschil in deze aanpak en de allereerste is significant.
 Brute force is ~23s en deze andere aanpak is ~28ms.
 
 ** solve?
+
+Voor elk muurstuk, alle paden door/via de muur bepalen max 20 lang, (of is het
+max 19 omdat 20 weer on-track moet zijn?). Alleen kijken naar muurstukken die
+aan het pad liggen!
+
+Mag je eigenlijk ook door de outerbounds heen?
+
+Ik ga twee dingen aannemen
+1. je mag alleen door de muren die niet de buitenste ring zijn.
+2. op de laatste seconde moet je weer op een track zijn.
+#+begin_quote
+  At the end of the cheat, the program must be back on normal track again.
+#+end_quote
+
+Dus neem maar even aan dat het einde is de laatste picoseconde van de cheat.
+ipv, zoals in deel één, steeds een stukje muur weg te halen. kunnen we ook kijken of er vanaf een track, op de afstand van 2 t/m 20 een track te vinden is waarje kan komen door alleen door muurdelen te gaan.
+Hoewel, dit is een aanname, dat je cheat eindigt zodra je uit een muur komt. Eigenlijk staat er dat je de cheat voor een bepaalde tijd aanzet, dus of er door een muur gegaan wordt of niet en hoeveel maakt dan eigenlijk niet uit.
+
+Dus als ik een solver maak waar ik deel één een variabele lengte kan geven (ipv 2) dan moet ik door alle lengtes ~range(2,21)~ (range in python is zonder bovengrens) itereren. Als, aan de andere kant van de route door een track is dan _moet_ dat eentje zijn met een hogere timestamp anders ga ik terug op de route, als het goed is, is die al eerder gevonden.
+
+De totale tijd die ik dan bespaar is de gevonden tijd - de tijd op huidig trackdeel + manhattan distance tussen de twee punten (de lengte van de cheat)
+
+Hoe bepaal ik alle punten vanaf een punt obv de manhatten distance?
+Twee lussen 1 voor de afstand voor rij en 1 voor de afstand voor kolom. Als de
+som van de afstanden gelijk is aan de afstand dan, dan heb ik het punt.
+
+#+begin_src python
+Coord = tuple[int, int]
+def coords_at_distance(coord: Coord, distance: int):
+    r,c = coord
+    for dr in range(-distance, distance+1):
+        for dc in range(-distance, distance+1):
+            if abs(dr) + abs(dc) == distance:
+                yield (r+dr, c+dc)
+
+#+end_src
+
+* Refactor refactor
+
+Mooi om te zien hoe het eerste deel steed gerefactored wordt. Ik kan nu deel één
+ook met deze nieuwe aanpak oplossen. Ik hoef alleen maar de lengte van de cheat
+te veranderen.
+
+De tijden die de verschillende versies dan nodig hebbe:
+
+
+| verssie     | tijd  | omschrijving                                                                           |
+|-------------+-------+----------------------------------------------------------------------------------------|
+| part_one    | 22.5s | Steeds een muurdeel weghalen en kortste pad bepalen                                    |
+| part_one_v2 | 23ms  | Steeds eem muurdeel weghalen en vershil in omringende paden bepalen                    |
+| part_one_v3 | 21ms  | Generiek, vanuit elke track op een afstand andere tracks bepalen en verschil berekenen |
+| part_two    | 905ms | Zelfde als v3 maar dan sommatie van alle afstanden 2 tm 20                             |
