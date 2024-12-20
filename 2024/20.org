@@ -1,0 +1,45 @@
+:PROPERTIES:
+:ID:       b7a98423-0e60-43fe-a38f-8ddada72dcdb
+:END:
+#+title: 2024 Day 20: Race Condition
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+- references :: [[id:a0185e77-4195-4935-be88-59acc51b5a98][2017 Day 24: Electromagnetic Moat]]
+
+* Part One
+
+Ik hoef het langste path niet te volgen. Omdat er precies één is, is het het aantal track delen incl ~E~.
+
+De mogelijke stukken muur waar mogelijk een cheat kan zijn is > 10k maar er zijn
+ook blokken van 2 of meer zodat die ongeschikt zijn omdat je dan in de muur vast
+zit.
+
+Afgaande op de uitleg zul je de cheat beginnen op een stukje muur. Maar het is mij onduidelijk of het eind op een track moet zijn (of wel dat je altijd maar door één  muurtje gaat) of dat het einde ook in de muur mag zijn zodat je dus door twee stukken gaat.
+
+Ik ga er nu eerst maar even van uit dat de cheat betekend dat je altijd één stuk muur weghaalt.
+Nu nog de vraag of er een manier is om gelijk te bepalen hoe lang het pad dan is. Moet ik elke keer gaan langs lopen? Of is er een andere manier?
+
+Eerst brute force proberen. Alle muurstukken 1 voor 1 verwijderen.
+Voor het voorbeeld geeft dit het goede result.
+
+Nou voor input niet.
+Hmm. maar ik tel de values op, ik moet de cheats tellen die een besparing van >= 100 leveren.
+Okay, volgens mij geef ik nu de goede waarden, maar volgens aoc is het niet het goede antwoord.
+Nee, ik doe het nogsteeds verkeerd om!
+
+f**, nu is het dus goed. -> Ik ga gelijk refactoren.
+
+Ik heb een counter bij gehouden en de sum moet NIET zijn:
+#+begin_src python
+sum(k for k,v in counter.items() if v >= 100)
+#+end_src
+
+Maar wel:
+#+begin_src python
+sum(cheats for save,cheats in counter.items() if save >= 100)
+#+end_src
+
+* Part Two
+
+Lolz, dus nu mag ik max 20 muursegmenten door?
+Geen idee, en vermodelijk is bruteforce nu helemaal geen optie!
