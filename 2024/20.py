@@ -126,12 +126,10 @@ def main():
         row += 1
         col = len(line)
 
-    print('part_one_v2', part_one_v2(track, wall, start, end, (row, col)))
     # print('part_one', part_one(track, wall, start, end, (row, col)))
+    print('part_one_v2', part_one_v2(track, wall, start, end, (row, col)))
     
-
-    print('part_two', part_two([]))
-
+    print('part_two', part_two([])) 
 
 if __name__ == '__main__':
     main()

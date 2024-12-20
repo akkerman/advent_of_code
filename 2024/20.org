@@ -44,7 +44,7 @@ sum(cheats for save,cheats in counter.items() if save >= 100)
 Lolz, dus nu mag ik max 20 muursegmenten door?
 Geen idee, en vermodelijk is bruteforce nu helemaal geen optie!
 
-
+** refactor one
 Wellicht is er een manier, die ik ook bij deel één al kan inzetten, om voor elk orgineel segment de lengte vast te leggen naar het einde. Als je dan de muur doorbreekt ergens en bij een ander punt uit komt dan is de gewonnen tijd het verschil tussen die twee punten.
 
 Yep dat werkt alleen is de gewonnen tijd niet het verschil tussen die twee punten maar 2 minder.
@@ -53,4 +53,6 @@ Als je door de muur gaat kun je niet gelijk van dat ene punt naar het andere je 
 Voor deel twee moet dat dan dus de lengte zijn van de cheat!
 
 Het verschil in deze aanpak en de allereerste is significant.
-Brute force is 23s en deze andere aanpak is 30ms.
+Brute force is ~23s en deze andere aanpak is ~28ms.
+
+** solve?
