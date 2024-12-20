@@ -10,11 +10,11 @@
 
 Ik hoef het langste path niet te volgen. Omdat er precies één is, is het het aantal track delen incl ~E~.
 
-De mogelijke stukken muur waar mogelijk een cheat kan zijn is > 10k maar er zijn
+De stukken muur waar mogelijk een cheat kan zijn is > 10k maar er zijn
 ook blokken van 2 of meer zodat die ongeschikt zijn omdat je dan in de muur vast
 zit.
 
-Afgaande op de uitleg zul je de cheat beginnen op een stukje muur. Maar het is mij onduidelijk of het eind op een track moet zijn (of wel dat je altijd maar door één  muurtje gaat) of dat het einde ook in de muur mag zijn zodat je dus door twee stukken gaat.
+Afgaande op de uitleg zul je de cheat beginnen op een stukje muur. Maar het is mij onduidelijk of het eind op een track moet zijn (ofwel dat je altijd maar door één  muurtje gaat) of dat het einde ook in de muur mag zijn zodat je dus door twee stukken gaat.
 
 Ik ga er nu eerst maar even van uit dat de cheat betekend dat je altijd één stuk muur weghaalt.
 Nu nog de vraag of er een manier is om gelijk te bepalen hoe lang het pad dan is. Moet ik elke keer gaan langs lopen? Of is er een andere manier?
@@ -43,3 +43,14 @@ sum(cheats for save,cheats in counter.items() if save >= 100)
 
 Lolz, dus nu mag ik max 20 muursegmenten door?
 Geen idee, en vermodelijk is bruteforce nu helemaal geen optie!
+
+
+Wellicht is er een manier, die ik ook bij deel één al kan inzetten, om voor elk orgineel segment de lengte vast te leggen naar het einde. Als je dan de muur doorbreekt ergens en bij een ander punt uit komt dan is de gewonnen tijd het verschil tussen die twee punten.
+
+Yep dat werkt alleen is de gewonnen tijd niet het verschil tussen die twee punten maar 2 minder.
+Als je door de muur gaat kun je niet gelijk van dat ene punt naar het andere je moet via het muur punt dus dat kost ook 2.
+
+Voor deel twee moet dat dan dus de lengte zijn van de cheat!
+
+Het verschil in deze aanpak en de allereerste is significant.
+Brute force is 23s en deze andere aanpak is 30ms.
