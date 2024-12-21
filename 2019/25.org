@@ -1,0 +1,11 @@
+:PROPERTIES:
+:ID:       e44c905c-d851-407a-9bac-b6ceaab4e864
+:END:
+#+title: 2019 Day 25: Cryostasis
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+
+
+* Part Two

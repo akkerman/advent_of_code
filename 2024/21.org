@@ -1,0 +1,73 @@
+:PROPERTIES:
+:ID:       394e4ef5-4579-4611-9e0f-9f3d891b6b79
+:END:
+#+title: 2024 Day 21: Keypad Conundrum
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+- references :: [[id:e44c905c-d851-407a-9bac-b6ceaab4e864][2019 Day 25: Cryostasis]]
+
+* Part One
+
+Stel dat ik alleen de allerlaatste robot zou hoeven doen, hoe zou dat kunnen?
+
+Ik kies weer voor coordinaten
+
+#+NAME: numpad
+#+begin_src python :results value
+buttons = ["789", "456", "123", " 0A"]
+
+numpad: dict(str, tuple[int,int]) = {}
+for row, btns in enumerate(buttons):
+    for col, c in enumerate(btns):
+        numpad[c] = (row,col)
+
+return numpad
+#+end_src
+
+#+RESULTS: numpad
+: {'7': (0, 0), '8': (0, 1), '9': (0, 2), '4': (1, 0), '5': (1, 1), '6': (1, 2), '1': (2, 0), '2': (2, 1), '3': (2, 2), ' ': (3, 0), '0': (3, 1), 'A': (3, 2)}
+
+
+#+begin_src python :results value
+buttons = ["789", "456", "123", " 0A"]
+
+numpad: dict(str, tuple[int,int]) = {}
+for row, btns in enumerate(buttons):
+    for col, c in enumerate(btns):
+        numpad[c] = (row,col)
+
+def gen_keypresses(start:str, end:str)-> str:
+   sr, sc = numpad[start]
+   er, ec = numpad[end]
+
+   dr = er - sr
+   dc = ec - sc
+
+   presses = ''
+   if dr < 0:
+       presses += '^' * abs(dr)
+   if dc > 0:
+       presses += '>' * dc
+   if dr > 0:
+       presses += 'v' * dr
+   if dc < 0:
+       presses += '<' * abs(dc)
+   return presses
+
+inp = list('029A')
+return [gen_keypresses(s,e) for (s,e) in zip(inp, inp[1:])]
+#+end_src
+
+#+RESULTS:
+
+Op 1 of andere manier heb ik een te lange sequence voor 379A, het zou 64 moeten zijn maar ik kom op 68.
+'t is mij totaal onduidelijk waar het mis gaat.
+
+Ik heb een simulatie geschreven.
+Als ik die uitvoer op het voorstelde antwoord van 397A dan krijg ik dat ook als antwoord.
+Als ik die uitvoer op mijn antwoord dan krijg ik ook 397A, en geen foutmelding, dus het is een geldige sequence alleen niet de kortste.
+
+Ik krijg sterk het idee dat ik wellicht niet hele key sequences moet gaan
+genereren maar voor elke letter op het numpad eerst de korste sequence moet gaan
+bepalen. En dan die achter elkaar plakken ofzo?
+* Part Two
