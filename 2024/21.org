@@ -72,3 +72,7 @@ Wat nu als ik een seed maak van alle mogelijke sequences van een knop naar een a
 -> chatgpt zegt itertools.product
 
 * Part Two
+
+Lolz 25? en nu duurt het al lang als ik 1 extra robot er in stop.
+
+Hmm. ipv elke keer hele keystring te bepalen kan ik ook kijken naar korste sequence voor elke knop.

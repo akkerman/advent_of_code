@@ -63,14 +63,26 @@ def shortest_sequence(code: str):
     robot3 = [keys for keys2 in robot2 for keys in dirpad_keypresses(keys2)]
     return min(map(len, robot3))
 
+def shortest_sequence_v2(code: str, num_robots: int):
+    robot = numpad_keypresses(code)
 
+    for _ in range(num_robots-1):
+        robot = [keys for keys1 in robot for keys in dirpad_keypresses(keys1)]
+        min_length = min(map(len, robot))
+        robot = [s for s in robot if len(s) == min_length]
+
+    return min(map(len, robot))
+
+
+@perf_timer
 def part_one(codes: list[str]):
     """Solution to part one."""
     return sum(int(code[:-1]) * shortest_sequence(code) for code in codes)
 
-def part_two(lines):
+@perf_timer
+def part_two(codes: list[str]):
     """Solution to part two."""
-    return 'todo'
+    return sum(int(code[:-1]) * shortest_sequence_v2(code, 3) for code in codes)
 
 
 def main():
