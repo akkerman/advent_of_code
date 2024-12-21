@@ -67,7 +67,8 @@ Ik heb een simulatie geschreven.
 Als ik die uitvoer op het voorstelde antwoord van 397A dan krijg ik dat ook als antwoord.
 Als ik die uitvoer op mijn antwoord dan krijg ik ook 397A, en geen foutmelding, dus het is een geldige sequence alleen niet de kortste.
 
-Ik krijg sterk het idee dat ik wellicht niet hele key sequences moet gaan
-genereren maar voor elke letter op het numpad eerst de korste sequence moet gaan
-bepalen. En dan die achter elkaar plakken ofzo?
+Wat nu als ik een seed maak van alle mogelijke sequences van een knop naar een andere?
+
+-> chatgpt zegt itertools.product
+
 * Part Two
