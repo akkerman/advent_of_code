@@ -109,7 +109,7 @@ def part_two(codes: list[str]):
             paths = shortest_numpad[(start, end)]
             shortest = 8**85
             for path in paths:
-                shortest = min(shortest, shortest_sequence_v3(path, 2))
+                shortest = min(shortest, shortest_sequence_v3(path, 25))
             length += shortest
         total += int(code[:-1])*length
 
