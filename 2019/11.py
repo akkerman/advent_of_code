@@ -128,16 +128,27 @@ def computer(program: defaultdict[int,int], robot:Robot):
 
     return len(robot.painted)
 
-# too low: 249
-# too low: 1901
 def part_one(program:list[int]):
     """Solution to part one."""
     return computer(defaultdict(int, enumerate(program)), Robot())
 
 
-def part_two(lines):
+def part_two(program:list[int]):
     """Solution to part two."""
-    return 'todo'
+
+    robot = Robot()
+    robot.grid[(0,0)] = WHITE
+    computer(defaultdict(int, enumerate(program)), robot)
+
+    min_row = min(( r for r, _ in robot.painted ))
+    max_row = max(( r for r, _ in robot.painted ))
+    min_col = min(( c for _, c in robot.painted ))
+    max_col = max(( c for _, c in robot.painted ))
+
+    for r in range(min_row, max_row+1):
+        for c in range(min_col, max_col+1):
+            print('█' if robot.grid[(r,c)] == WHITE else ' ', end='')
+        print()
 
 
 def main():
