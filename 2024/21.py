@@ -1,11 +1,10 @@
 """Day 21: Keypad Conundrum."""
 import fileinput
-import heapq
-import re
-from collections import deque, defaultdict, Counter
+from collections import deque, defaultdict
 from functools import cache
 from utils import perf_timer
 import itertools
+
 numpad = [['7', '8', '9'], ['4', '5', '6'], ['1', '2', '3'], [' ', '0', 'A']] 
 dirpad = [[' ', '^', 'A'], ['<', 'v', '>']]
 
@@ -63,31 +62,21 @@ def shortest_sequence(code: str):
     robot3 = [keys for keys2 in robot2 for keys in dirpad_keypresses(keys2)]
     return min(map(len, robot3))
 
-def shortest_sequence_v2(code: str, num_robots: int):
-    robot = numpad_keypresses(code)
-
-    for _ in range(num_robots-1):
-        robot = [keys for keys1 in robot for keys in dirpad_keypresses(keys1)]
-        min_length = min(map(len, robot))
-        robot = [s for s in robot if len(s) == min_length]
-
-    return min(map(len, robot))
-
 
 shortest_numpad = shortest_sequences(numpad)
 shortest_dirpad = shortest_sequences(dirpad)
 
 @cache
-def shortest_sequence_v3(code:str, num_robots: int):
+def shortest_sequence_v2(code:str, num_robots: int) -> int:
     if num_robots == 0:
         return len(code)
 
     length = 0
     for start, end in zip('A'+code, code):
         paths = shortest_dirpad[(start, end)]
-        shortest = 8**85
+        shortest:int = 8**85
         for path in paths:
-            shortest = min(shortest, shortest_sequence_v3(path, num_robots-1))
+            shortest = min(shortest, shortest_sequence_v2(path, num_robots-1))
         length += shortest
     return length
 
@@ -98,10 +87,7 @@ def part_one(codes: list[str]):
     """Solution to part one."""
     return sum(int(code[:-1]) * shortest_sequence(code) for code in codes)
 
-@perf_timer
-def part_two(codes: list[str]):
-    """Solution to part two."""
-
+def solve(codes: list[str], num_robots: int):
     total = 0
     for code in codes:
         length = 0
@@ -109,13 +95,21 @@ def part_two(codes: list[str]):
             paths = shortest_numpad[(start, end)]
             shortest = 8**85
             for path in paths:
-                shortest = min(shortest, shortest_sequence_v3(path, 25))
+                shortest = min(shortest, shortest_sequence_v2(path, num_robots))
             length += shortest
         total += int(code[:-1])*length
 
     return total
 
+@perf_timer
+def part_one_v2(codes: list[str]):
+    """Alternative Solution to part one."""
+    return solve(codes, 2)
 
+@perf_timer
+def part_two(codes: list[str]):
+    """Solution to part two."""
+    return solve(codes, 25)
 
 def main():
     """Parse input file, pass to puzzle solvers."""
@@ -123,9 +117,9 @@ def main():
     for line in fileinput.input():
         codes.append(line.strip())
 
-    print('part_one', part_one(codes))
-
-    print('part_two', part_two(codes))
+    print('part_one   ', part_one(codes))
+    print('part_one_v2', part_one_v2(codes))
+    print('part_two   ', part_two(codes))
 
 
 if __name__ == '__main__':
