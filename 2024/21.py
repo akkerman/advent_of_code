@@ -3,7 +3,7 @@ import fileinput
 import heapq
 import re
 from collections import deque, defaultdict, Counter
-from functools import lru_cache
+from functools import cache
 from utils import perf_timer
 import itertools
 numpad = [['7', '8', '9'], ['4', '5', '6'], ['1', '2', '3'], [' ', '0', 'A']] 
@@ -74,6 +74,25 @@ def shortest_sequence_v2(code: str, num_robots: int):
     return min(map(len, robot))
 
 
+shortest_numpad = shortest_sequences(numpad)
+shortest_dirpad = shortest_sequences(dirpad)
+
+@cache
+def shortest_sequence_v3(code:str, num_robots: int):
+    if num_robots == 0:
+        return len(code)
+
+    length = 0
+    for start, end in zip('A'+code, code):
+        paths = shortest_dirpad[(start, end)]
+        shortest = 8**85
+        for path in paths:
+            shortest = min(shortest, shortest_sequence_v3(path, num_robots-1))
+        length += shortest
+    return length
+
+
+
 @perf_timer
 def part_one(codes: list[str]):
     """Solution to part one."""
@@ -82,7 +101,20 @@ def part_one(codes: list[str]):
 @perf_timer
 def part_two(codes: list[str]):
     """Solution to part two."""
-    return sum(int(code[:-1]) * shortest_sequence_v2(code, 3) for code in codes)
+
+    total = 0
+    for code in codes:
+        length = 0
+        for start, end in zip('A'+code, code):
+            paths = shortest_numpad[(start, end)]
+            shortest = 8**85
+            for path in paths:
+                shortest = min(shortest, shortest_sequence_v3(path, 2))
+            length += shortest
+        total += int(code[:-1])*length
+
+    return total
+
 
 
 def main():
