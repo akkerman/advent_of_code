@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       10e49d73-eeba-4b65-a6f8-317b3d1acdff
+:END:
+#+title: 2024 Day 22: Monkey Market
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+- references :: [[id:fabbe98e-619b-4b90-a3c7-c4ed112fd4d8][2022 Day 11: Monkey in the Middle]]
+
+* Part One
+
+'t zijn allemaal machten van 2!
+
+* Part Two
