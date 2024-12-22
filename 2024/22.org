@@ -10,4 +10,36 @@
 
 't zijn allemaal machten van 2!
 
+Lezen is wel het meest belangrijke hier.
+
 * Part Two
+
+
+Wat nu als ik, voor elke buyer, een dictionary ga maken die een rijtje wijzigingen aan een waarde knoopt.
+Dit zijn er 1996 per buyer dus moet passen.
+
+Dan neem ik de doorsnee van al deze dingen voor alle buyer dat zijn dan de
+rijtjes verschillen die ze gemeen hebben.
+
+Als dat er meerdere zijn zal ik voor elk, over alle buyers heen, een optelling
+moeten doen en daar het max van nemen.
+
+Hmm. ik krijg dan een lege set...
+Volgens mij doe ik dan iets verkeerd, want de puzzel gaat er van uit dat er iig
+1 sequence bij alle buyers voor komt.
+
+
+check:
+- hebben ze allemaal een voorkomen van de seq?
+  Het voorbeeld gaat over (-2,1,-3,4) en deze zit NIET in de sequences van 3 dus nee
+- als ie meerdere keren voorkomt, nemen we de eerste of hoogste?
+  We nemen de eerste, en checken later ff of het uit maakt:
+  #+begin_quote
+ the monkey will only look for a specific sequence of four consecutive changes in price, then immediately sell when it sees that sequence
+  #+end_quote
+
+
+Het maakt uit! Als ik alle sequences in de lookup table stop dan krijg ik een
+ander antwoord dan als ik de sequence NIET toevoeg als ik em nogmaals tegenkom.
+
+Het goede antwoord is als je alleen het eerste voorkomen telt.
