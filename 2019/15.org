@@ -30,6 +30,10 @@ antwoord geven.
 * Part Two
 
 Ik zou dezelfde truck kunnen doen als bij part one vwbt bepalen van het doorhof.
+Ik heb gekeken hoeveel keys er zijn in een volledig bezocht doolhof en dit als
+criterium gezet om te stoppen met bewegen.
+
+Helaas zal dit dan wel specifiek alleen voor mijn input werken!
 
 De zuurstof is een kwestie van bepalen de lengte naar alle tegels vanaf het
 zuurstof apparaat, het hoogste getal is bepalend voor het antwoord.

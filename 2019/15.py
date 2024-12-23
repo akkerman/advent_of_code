@@ -1,10 +1,7 @@
 """Day 15: Oxygen System."""
 import fileinput
 import heapq
-import re
-from collections import deque, defaultdict, Counter
-from functools import lru_cache
-from utils import perf_timer
+from collections import defaultdict
 import random
 
 
@@ -36,30 +33,15 @@ class Droid:
         self.oxygen_pos: Coord = (0,0)
         self.steps = 0
         self.same = True
+        self.maze[self.current_pos] = MOVED
 
 
     def move(self) -> int:
-        if self.oxygen_pos != (0,0) and self.current_pos == (0,0):
+        if len(self.maze.keys()) >= 1659:
             return 0
 
         self.current_dir = random.choice([1,2,3,4])
         return self.current_dir
-
-        # if self.maze[self.next_pos()] == WALL:
-        #     if self.current_dir == 4:
-        #         self.current_dir = 1
-        #     else:
-        #         self.current_dir += 1
-        # else:
-        #     if not self.same:
-        #         if self.current_dir == 1:
-        #             self.current_dir = 4
-        #         else:
-        #             self.current_dir -= 1
-        #     self.same = not self.same
-        #
-        # return self.current_dir
-
 
     def status(self, value:int) -> None:
         if value == WALL:
@@ -70,7 +52,7 @@ class Droid:
         self.current_pos = self.next_pos()
 
         if value == FOUND and self.oxygen_pos == (0,0):
-            print('Found oxygen system at', self.current_pos)
+            # print('Found oxygen system at', self.current_pos)
             self.oxygen_pos = self.current_pos
 
     def next_pos(self, dir:int=0) -> Coord:
@@ -90,12 +72,13 @@ class Droid:
                 status = self.maze[(x,y)]
                 if (x,y) == (0,0):
                     print('D', end='')
+                elif (x,y) == self.oxygen_pos:
+                    print('O', end='')
                 elif status == UNEXPLORED:
                     print('?', end='')
                 elif status == WALL:
-                    print('#', end='')
-                elif status == FOUND:
-                    print('O', end='')
+                    # print('#', end='')
+                    print('█', end='')
                 elif status == MOVED:
                     print('.', end='')
                 else:
@@ -191,12 +174,8 @@ def computer(program: defaultdict[int,int], droid:Droid):
     return output
 
 
-def part_one(program: list[int]) -> int:
+def part_one(droid: Droid) -> int:
     """Solution to part one."""
-    droid = Droid()
-    computer(defaultdict(int, enumerate(program)), droid)
-    droid.print_maze()
-
     q = [(0,0,0)]
     visited:set[Coord] = set()
     while q:
@@ -214,9 +193,26 @@ def part_one(program: list[int]) -> int:
     return -1
 
 
-def part_two(lines):
+def part_two(droid: Droid) -> int:
     """Solution to part two."""
-    return 'todo'
+    q = [(0, *droid.oxygen_pos)]
+    visited:set[Coord] = set()
+    mins_to_fill = 0
+    while q:
+        mins, x, y = heapq.heappop(q)
+        if (x,y) not in droid.maze:
+            continue
+        if droid.maze[(x,y)] == WALL:
+            continue
+        if (x,y) in visited: continue
+        mins_to_fill = max(mins_to_fill, mins)
+        visited.add((x,y))
+        for dx,dy in wind2dir.values():
+            nx,ny = x+dx, y+dy
+            heapq.heappush(q, (mins+1, nx, ny))
+
+    
+    return mins_to_fill
 
 
 def main():
@@ -226,9 +222,10 @@ def main():
         line = line.strip()
         program = list(map(int, line.split(',')))
 
-    print('part_one', part_one(program))
-
-    print('part_two', part_two(program))
+    droid = Droid()
+    computer(defaultdict(int, enumerate(program)), droid)
+    print('part_one', part_one(droid))
+    print('part_two', part_two(droid))
 
 
 if __name__ == '__main__':
