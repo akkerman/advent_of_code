@@ -1,0 +1,35 @@
+:PROPERTIES:
+:ID:       900d141c-f05d-4f3d-9d1b-606846ca735c
+:END:
+#+title: 2019 Day 15: Oxygen System
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+'t was ff puzzelen om het doorkrijgen van de status goed te krijgen.
+
+Als er terug komt dat er een muur was en dat de droid niet verplaatst is dan
+betekend dat de locatie waarde droid naartoe wilde een muur is. Niet de plek
+waar de droid op dat moment staat. Als ik dat zo zeg, klinkt het logisch maar
+deze fout had ik iig wel.
+
+Het is mij nogsteeds niet duidelijk hoe ik nu gecontroleerd door het doorlhof
+kan gaan en alles (of iig voldoende) bezocht heb dat ik een kortste pad
+berekening kan gaan doen.
+
+Ik heb nu een antwoord, kortste pad berekening is vrij direct te maken na zo
+vaak aoc puzzels waarin het nodig is. Het verkrijgen van de indeling van het
+doolhof heb ik nu gedaan door de droid random er doorheen te sturen. En dan pas
+te stoppen als de oxygen machine gevonden is *en* de droid weer op het begin punt
+is.
+
+Het antwoord is dan meestal hetzelfde. Als ik dan eerst ook nog even het doolhof
+print dan kan ik visueel bevestigen dat het hele doolhof bekend is en dan het
+antwoord geven.
+
+* Part Two
+
+Ik zou dezelfde truck kunnen doen als bij part one vwbt bepalen van het doorhof.
+
+De zuurstof is een kwestie van bepalen de lengte naar alle tegels vanaf het
+zuurstof apparaat, het hoogste getal is bepalend voor het antwoord.

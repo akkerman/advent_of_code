@@ -70,7 +70,7 @@ class Droid:
         self.current_pos = self.next_pos()
 
         if value == FOUND and self.oxygen_pos == (0,0):
-            print('Found oxygen system at', self.current_pos)
+            print('Found oxygen system at', self.current_pos, 'in', self.steps, 'steps')
             self.oxygen_pos = self.current_pos
 
     def next_pos(self, dir:int=0) -> Coord:
