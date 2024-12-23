@@ -1,0 +1,38 @@
+:PROPERTIES:
+:ID:       50d6641e-106e-4ccc-a9ad-2399893f8845
+:END:
+#+title: 2024 Day 23: LAN Party
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]] · [[id:d635f8a9-8327-414a-9a77-61499af29485][Graph]]
+- references :: [[id:49c59157-05e9-4676-9348-007dbda892e7][2016 Day 9: Explosives in Cyberspace]]
+
+* Part One
+
+Helemaal uitgeschreven.
+
+* Part Two
+
+Okay, bruteforce kan ik het example wel bepalen maar echte input duurt te lang.
+
+Dus we gaan het internet op.
+
+Hetgeen we zoeken is blijkbaar de grootste [[https://nl.wikipedia.org/wiki/Clique_(grafentheorie)][clique]]. Ons wordt gevraagd om een
+variant van "Maximal clique enumeration" te doen.
+
+De variant hier is:
+
+- we weten dat het er precies één is
+- bepaalde nodes (beginnend met een t) moeten in de clique aanwezig
+- zoeken naar een gesorteerde clique
+
+De manier om het op te lossen is blijkbaar het "Bron-Kerbosch-algoritme" (weer nederlanders!)
+
+Laten we deze eerst eens loslaten op de intput en kijken of we die
+verbijzonderingen nog nodig gaan hebben om het evt sneller te maken.
+
+
+Hmm. maar goed dat ik die verbijzonderingen er niet gelijk in gebouwd had want er zit helemaal niet zo'n node, beginnend met t, in de max clique.
+
+Wel jammer, in het voorbeeld kwam er een zinnetje uit `codecata` ik had ook voor
+de echte input op zoiets gehoopt zodat je gelijk herkend "hey dat zal het wel
+zijn".
