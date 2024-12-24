@@ -6,6 +6,12 @@ from collections import deque, defaultdict, Counter
 from functools import lru_cache
 from utils import perf_timer
 
+def value_of_wires(wires: dict[str, int], prefix: str) -> tuple[int, str]:
+    """Return the value of the wires that start with prefix."""
+    wire_names = sorted([k for k in wires.keys() if k.startswith(prefix)], reverse=True)
+    bin_output = ''.join([str(wires[w]) for w in wire_names])
+    return int(bin_output, 2), bin_output
+
 Gate = tuple[str, str, str, str]
 def part_one(wires: dict[str, int], gates: list[Gate]) -> tuple[int, str]:
     """Solution to part one."""
@@ -29,17 +35,30 @@ def part_one(wires: dict[str, int], gates: list[Gate]) -> tuple[int, str]:
         else:
             raise ValueError('Unknown operator')
 
-    zwires = sorted([k for k in wires.keys() if k.startswith('z')], reverse=True)
-
-    bin_output = ''.join([str(wires[w]) for w in zwires])
-
-    return int(bin_output, 2), bin_output
+    return value_of_wires(wires, 'z')
 
 
-def part_two(lines):
+def part_two(wires: dict[str, int], gates: list[Gate]) -> str:
     """Solution to part two."""
+
+    print()
+    print('x', value_of_wires(wires, 'x'))
+    print('y', value_of_wires(wires, 'y'))
+    # print('z', value_of_wires(wires, 'z')) error, no value for z
+
+    desired_z = value_of_wires(wires, 'x')[0] + value_of_wires(wires, 'y')[0]
+    print(' s z', desired_z, str(bin(desired_z))[2:])
     return 'todo'
 
+def missing_input_wires(wires: dict[str, int], gates: list[Gate]) -> list[str]:
+    missing = list[str]()
+    for gate in gates:
+        lhs, _, rhs, _ = gate
+        if lhs[0] in ['x','y'] and lhs not in wires:
+            missing.append(lhs)
+        if rhs[0] in ['x','y'] and rhs not in wires:
+            missing.append(rhs)
+    return missing
 
 def main():
     """Parse input file, pass to puzzle solvers."""
@@ -62,9 +81,14 @@ def main():
             gates.append(tuple(GATE_PATTERN.findall(line)[0])) # type: ignore
         
 
-    print('part_one', part_one(wires, gates))
+    assert len(missing_input_wires(wires.copy(), gates)) == 0
 
-    print('part_two', part_two(wires))
+    print('part_one', part_one(wires.copy(), gates))
+
+
+    print('part_two', part_two(wires.copy(), gates))
+
+
 
 
 if __name__ == '__main__':

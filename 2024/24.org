@@ -18,7 +18,20 @@ Blijkbaar omdat ze wel in de gates staan maar niet in de input...
 Output zit op de z-wires. Dus die van grootstste id naar laagste sorteren en achterklaar plakken.
 Dan omzetten van binary naar decimal.
 
-Denk dat ik de wires in een deque zet.
+Denk dat ik de gates in een deque zet.
 Als ik em niet kan verwerken dan zet ik em terug.
 
 * Part Two
+
+Dus alle x-wires optellen bij alle y-wires.
+Zijn alle x en y wel al in de input? -> Ja.
+
+Okay util functie gemaakt om de waarde van de x,y,z wires te berekenen (zelfde als einde van part_one).
+
+ALs je de optelling doet dan zit het al in de buurt:
+
+
+|          |            dec |                                            bin |
+|----------+----------------+------------------------------------------------|
+| before | 42049478636360 | 1001100011111001101000001111001011001101001000 |
+|      after |                |                                                |
