@@ -1,0 +1,24 @@
+:PROPERTIES:
+:ID:       df7c3721-b7f9-4910-a76b-260ab63d889b
+:END:
+#+title: 2024 Day 24: Crossed Wires
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+- references :: [[id:c7a78d9c-bf47-41a8-827d-2845e2ad4f0a][2022 Day 23: Unstable Diffusion]]
+
+* Part One
+Komt me heel erg bekend voor.
+Beetje zoeken. dit lijkt op [[id:b6ff1641-487f-448a-825a-e6c2cf3ce14b][2015 Day 7: Some Assembly Required]]
+
+De operations lijken alleen and or xor te zijn.
+
+Hoe kunnen wires 'no value at all' hebben?
+Blijkbaar omdat ze wel in de gates staan maar niet in de input...
+
+Output zit op de z-wires. Dus die van grootstste id naar laagste sorteren en achterklaar plakken.
+Dan omzetten van binary naar decimal.
+
+Denk dat ik de wires in een deque zet.
+Als ik em niet kan verwerken dan zet ik em terug.
+
+* Part Two

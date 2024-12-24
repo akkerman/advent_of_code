@@ -40,7 +40,7 @@ def unique_rhs(lines):
     return len(ends) == len(set(ends))
 
 
-def part_one(wires:dict[string,Operation], values=None):
+def part_one(wires:dict[str,Operation], values=None):
     """ part one """
     q = deque()
     op = wires['a']
