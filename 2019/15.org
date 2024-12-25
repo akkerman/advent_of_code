@@ -37,3 +37,76 @@ Helaas zal dit dan wel specifiek alleen voor mijn input werken!
 
 De zuurstof is een kwestie van bepalen de lengte naar alle tegels vanaf het
 zuurstof apparaat, het hoogste getal is bepalend voor het antwoord.
+
+* Refactor maze discovery
+
+Daar waar ik eerst random door het doolhof heen ga heb ik nu een algorithme dat het direct doorzoekt.
+
+Notities voor implementatie hier onder.
+
+Getyped als note in een algorithms boek op m'n kindle want ik had al een
+leesboek ter hand genomen vlak voor het slapen gaan maar het navigeren door het
+doolhof liet me nog niet los.
+
+#+begin_src txt
+how to explore the maze
+
+four data structures
+visited:set[tuple[int,int]]
+maze:dict[tuple[int,int],int]
+unexplored:set[tuple[int,int]]
+path: list[tuple[int,int]]
+
+die unexplored set zal voornamelijk zijn om te weten of we nog iets moeten niet
+perse welke.. Als deze leeg is zijn we klaar.
+
+MOVE
+voor huidige positie bepaal buren.
+als nog niet bezocht stop in unexplored.
+geef commando om naar 1 van die punten te gaan
+
+als alles bezocht kijk naar vorige positie en geef commando om daarnaartoe te gaan.
+
+STATUS
+als muur markeer volgende punt, haal uit unexplored add to visited.
+
+als moved markeer als begaanbaar veld.
+add visited, remove unexplored en add to prev
+#+end_src
+
+
+Naast een move en een status, de equivalent van input en output voor de computer
+die het [[id:8cd1ed8f-6f67-41a6-a8cd-577f8b959eac][intcode]] programma leest is er nog een backtrack functie waaraan move de
+processing overgeeft zodra er vanuit huidig posities alleen nog bekende
+tegeltjes zijn.
+
+
+** move
+
+Als er, vanuit huidige positie, nog buurtegels zijn die niet ontdekt zijn, voeg
+deze allemaal toe aan de ~undiscovered~ set en ga naar het eerste buurpunt.
+Op dit moment houden we bij dat de Droid aan het ontdekken (~DISCOVERING~) is.
+
+Als, vanuit huidige positie, alle buurtegels ontdekt zijn geven we de verwerking
+over aan backtraking functie.
+
+** backtracking
+
+Als er nog te ontdekken tegels (entries in ~undiscovered~) zijn en er zijn nog
+bijgehouden tegels in het pad waarop we gelopen hebben, dan bepalen we de
+richting naar de vorige tegel en markeren we dat we aan het teruglopen
+(~BACKTRACKING~) zijn.
+
+** Status
+
+Als we een status binnen krijgen dan is dat voor het punt waar we naartoe zouden willen bewegen.
+Dit punt is nu ontdekt (remove from ~undiscovered~), evt zelfs voor een zoveelste keer.
+
+Als we aan het teruglopen (~BACKTRACKING~) zijn dan verschuiven we de huidige
+positie naar de volgende en zijn klaar.
+
+Als we aan het ontdekken zijn (~DISCOVERING~) dan zijn er 2 mogelijkheden.
+        1. er is een muur en dan bewegen we niet of
+        2. we markeren huidige positie, zodat we er naar terug kunnen lopen, en nemen een stap.
+           (~add current_pos to path~ and ~current_pos = next_pos~)
+           Additioneel markeren we nog de positie van het zuurstof apparaat mochten we daar aanbeland zijn.

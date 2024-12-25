@@ -5,12 +5,10 @@ from collections import defaultdict
 import random
 from utils import perf_timer
 
-
 NORTH = 1
 SOUTH = 2
 WEST = 3
 EAST = 4
-
 
 UNEXPLORED = -1
 WALL = 0
@@ -32,7 +30,6 @@ class Droid:
         self.current_pos = (0,0)
         self.maze = defaultdict[Coord, int](lambda: UNEXPLORED)
         self.oxygen_pos: Coord = (0,0)
-        self.same = True
         self.maze[self.current_pos] = MOVED
 
     def move(self) -> int:
@@ -63,7 +60,7 @@ class Droid:
                 status = self.maze[(x,y)]
                 if (x,y) == (0,0):
                     print('D', end='')
-                elif (x,y) == self.oxygen_pos:
+                elif (x,y) == self.oxygen_pos or status == FOUND:
                     print('O', end='')
                 elif status == UNEXPLORED:
                     print('?', end='')
@@ -99,6 +96,86 @@ class DrunkenDroid(Droid):
         if value == FOUND and self.oxygen_pos == (0,0):
             # print('Found oxygen system at', self.current_pos)
             self.oxygen_pos = self.current_pos
+
+class DiscoveringDroid(Droid):
+    DISCOVERING = 0
+    BACKTRACKING = 1
+
+    def __init__(self):
+        super().__init__()
+        self.unexplored = set[Coord]()
+        self.path = list[Coord]()
+        self.unexplored.update(self.unexplored_neighbors())
+        self.state: int = DiscoveringDroid.DISCOVERING
+
+
+    def unexplored_neighbors(self) -> list[Coord]:
+        """Return the unexplored neighbors of the current position."""
+        candidates = [self.next_pos(dir) for dir in [NORTH, SOUTH, WEST, EAST]]
+        return [nb for  nb in candidates if self.maze[nb] == UNEXPLORED]
+
+    def move(self) -> int:
+        """Discover or backtrack the maze."""
+        if not self.unexplored:
+            return 0
+
+        unexplored = self.unexplored_neighbors()
+        if unexplored:
+            self.state = DiscoveringDroid.DISCOVERING
+            self.unexplored.update(unexplored)
+            # print('want to move to', unexplored[0])
+            self.current_dir = self.direction(self.current_pos, unexplored[0])
+            return self.current_dir
+
+        return self.backtrack()
+
+
+    def backtrack(self) -> int:
+        """Backtrack the maze."""
+        if self.unexplored and not self.path:
+            raise ValueError('Unexplored but no path')
+
+        if not self.path:
+            return 0
+
+        self.state = DiscoveringDroid.BACKTRACKING
+        self.current_dir = self.direction(self.current_pos, self.path.pop())
+        return self.current_dir
+
+    def status(self, value:int) -> None:
+        next_pos = self.next_pos()
+        self.unexplored.discard(next_pos)
+
+        if self.state == DiscoveringDroid.BACKTRACKING:
+            self.current_pos = next_pos
+            return
+
+        self.maze[next_pos] = value
+        if value == WALL: return
+
+        self.path.append(self.current_pos)
+        self.current_pos = next_pos
+
+        if value == FOUND:
+            self.oxygen_pos = self.current_pos
+
+
+    def direction(self, start: Coord, end: Coord) -> int: 
+        if start == end:
+            raise ValueError('Same position')
+        if (abs(start[0] - end[0]) + abs(start[1] - end[1])) > 1:
+            raise ValueError(f'{end} is more than one step away from {start}')
+
+        if start[0] == end[0]:
+            return NORTH if start[1] < end[1] else SOUTH
+
+        if start[1] == end[1]:
+            return EAST if start[0] < end[0] else WEST
+
+        raise ValueError('Invalid direction')
+
+
+
 
 @perf_timer
 def computer(program: defaultdict[int,int], droid:Droid):
@@ -238,7 +315,8 @@ def main():
         program = list(map(int, line.split(',')))
 
 
-    droid = DrunkenDroid()
+    # droid = DrunkenDroid()
+    droid = DiscoveringDroid()
     computer(defaultdict(int, enumerate(program)), droid)
     print('part_one', part_one(droid.maze, droid.oxygen_pos))
     print('part_two', part_two(droid.maze, droid.oxygen_pos))
