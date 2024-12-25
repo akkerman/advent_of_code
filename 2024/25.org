@@ -1,0 +1,28 @@
+:PROPERTIES:
+:ID:       93d42259-1ca8-4c40-aec3-de8039846b06
+:END:
+#+title: 2024 Day 25: Code Chronicle
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+
+Raar dat de hoogte van de kolom het aantal hekjes -1 is...
+Ik had eerst het aantal hekjes gewoon geteld en toen:
+
+#+begin_src python
+def fit(lock: list[int], key: list[int]) -> bool:
+    """Check if key fits lock."""
+    for l, k in zip(lock, key):
+        if l + k > 5:
+            return False
+    return True
+#+end_src
+
+Op het moment dat ik er achter kwam dat het aantal hekjes dus 1 minder is heb ik in bovenstaande de 5 veranderd naar een 6 maar dat geeft, voor het voorbeeld, 0 ipv 3. Dus toen de berekening voor kolommen aangepast en daarna werkte het wel.
+
+
+* Part Two
+
+Wacht totdat ik alles opgelost heb.
+Dat is er nog 1, die van gister.
