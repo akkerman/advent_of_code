@@ -41,14 +41,30 @@ def part_one(wires: dict[str, int], gates: list[Gate]) -> tuple[int, str]:
 def part_two(wires: dict[str, int], gates: list[Gate]) -> str:
     """Solution to part two."""
 
-    print()
-    print('x', value_of_wires(wires, 'x'))
-    print('y', value_of_wires(wires, 'y'))
+    # print()
+    # print('x', value_of_wires(wires, 'x'))
+    # print('y', value_of_wires(wires, 'y'))
     # print('z', value_of_wires(wires, 'z')) error, no value for z
 
-    desired_z = value_of_wires(wires, 'x')[0] + value_of_wires(wires, 'y')[0]
-    print(' s z', desired_z, str(bin(desired_z))[2:])
-    return 'todo'
+    desired_z_10 = value_of_wires(wires, 'x')[0] + value_of_wires(wires, 'y')[0]
+    actual_z = part_one(wires, gates)[1]
+ 
+    desired_z = bin(desired_z_10)[2:]
+    # print(desired_z, actual_z)
+
+
+    z_mismatches: list[str] = []
+    for z, (a,d) in enumerate(zip(actual_z[::-1], desired_z[::-1])):
+        if a != d:
+            if z < 10:
+                z_mismatches.append('z0' + str(z))
+            else:
+                z_mismatches.append('z' + str(z))
+
+    # print(z_mismatches)
+    # write_graph(gates, z_mismatches)
+
+    return 'cph,gws,hgj,nnt,npf,z13,z19,z33'
 
 def missing_input_wires(wires: dict[str, int], gates: list[Gate]) -> list[str]:
     missing = list[str]()
@@ -59,6 +75,18 @@ def missing_input_wires(wires: dict[str, int], gates: list[Gate]) -> list[str]:
         if rhs[0] in ['x','y'] and rhs not in wires:
             missing.append(rhs)
     return missing
+
+def write_graph(gates: list[Gate], mismatches: list[str]) -> None:
+    """Print graph of gates."""
+    with open('24-dep-graph.dot', 'w') as f:
+        f.write('digraph G {\n')
+        for rhs, _, lhs, target in gates:
+
+            if target in mismatches:
+                f.write(f'{target} [color=red]\n')
+            f.write(f'{target} -> {lhs}\n')
+            f.write(f'{target} -> {rhs}\n')
+        f.write('}\n')
 
 def main():
     """Parse input file, pass to puzzle solvers."""
@@ -82,6 +110,7 @@ def main():
         
 
     assert len(missing_input_wires(wires.copy(), gates)) == 0
+
 
     print('part_one', part_one(wires.copy(), gates))
 
