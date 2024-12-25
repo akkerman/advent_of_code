@@ -1,0 +1,11 @@
+:PROPERTIES:
+:ID:       cb86434c-2200-479a-a7f1-05ccd9a5f939
+:END:
+#+title: 2019 Day 17: Set and Forget
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+* Part One
+
+
+* Part Two
