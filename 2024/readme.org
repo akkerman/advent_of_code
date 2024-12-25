@@ -125,6 +125,22 @@ my_tuple: tuple[int, str] = (42, "hello")
 my_deque: deque[int] = deque([1, 2, 3])
 my_defaultdict: defaultdict[str, list[int]] = defaultdict(list)
 #+end_src
+
+*** generic type alias
+
+Het is blijkbaar ook mogelijk om de type annotation achterwege te laten en een
+generic type direct in de instantiatie te stoppen.
+
+#+begin_src python
+from collections import deque, defaultdict
+
+my_list = list[int]()
+my_tuple = tuple[int, str](42, "hello")
+my_deque = deque[int]deque([1, 2, 3])
+my_defaultdict = defaultdict[str, list[int]](list)
+#+end_src
+
+
 ** Invalid filename
 
 Zie [[id:e11179d1-3728-44ad-9b5b-8276463ccb49][2024 Day 5: Print Queue]]

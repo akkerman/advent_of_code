@@ -3,6 +3,7 @@ import fileinput
 import heapq
 from collections import defaultdict
 import random
+from utils import perf_timer
 
 
 NORTH = 1
@@ -29,38 +30,28 @@ class Droid:
     def __init__(self):
         self.current_dir = NORTH
         self.current_pos = (0,0)
-        self.maze: dict[Coord, int] = defaultdict(lambda: UNEXPLORED)
+        self.maze = defaultdict[Coord, int](lambda: UNEXPLORED)
         self.oxygen_pos: Coord = (0,0)
-        self.steps = 0
         self.same = True
         self.maze[self.current_pos] = MOVED
 
-
     def move(self) -> int:
-        if len(self.maze.keys()) >= 1659:
-            return 0
-
-        self.current_dir = random.choice([1,2,3,4])
-        return self.current_dir
+        """Don't move."""
+        return 0
 
     def status(self, value:int) -> None:
-        if value == WALL:
-            self.maze[self.next_pos()] = WALL
-            return
+        """Don't do anything."""
+        value = value
 
-        self.maze[self.current_pos] = value
-        self.current_pos = self.next_pos()
-
-        if value == FOUND and self.oxygen_pos == (0,0):
-            # print('Found oxygen system at', self.current_pos)
-            self.oxygen_pos = self.current_pos
 
     def next_pos(self, dir:int=0) -> Coord:
+        """Determine the next position based on the current direction."""
         x,y = self.current_pos
         dx,dy = wind2dir[dir] if dir else wind2dir[self.current_dir]
         return (x+dx, y+dy)
 
     def print_maze(self):
+        """Print ascii representation of the maze."""
         min_x = min(x for x,_ in self.maze.keys())
         max_x = max(x for x,_ in self.maze.keys())
         min_y = min(y for _,y in self.maze.keys())
@@ -85,7 +76,31 @@ class Droid:
                     raise ValueError('Unknown status {}'.format(status))
             print()
 
+class DrunkenDroid(Droid):
+    """Droid that moves randomly."""
 
+    def move(self) -> int:
+        """Move the droid in a random direction."""
+        if len(self.maze.keys()) >= 1659:
+            return 0
+
+        self.current_dir = random.choice([1,2,3,4])
+        return self.current_dir
+
+    def status(self, value:int) -> None:
+        """Record the status of the droid's move."""
+        if value == WALL:
+            self.maze[self.next_pos()] = WALL
+            return
+
+        self.maze[self.current_pos] = value
+        self.current_pos = self.next_pos()
+
+        if value == FOUND and self.oxygen_pos == (0,0):
+            # print('Found oxygen system at', self.current_pos)
+            self.oxygen_pos = self.current_pos
+
+@perf_timer
 def computer(program: defaultdict[int,int], droid:Droid):
     """Computer."""
     ADD = 1
@@ -174,35 +189,35 @@ def computer(program: defaultdict[int,int], droid:Droid):
     return output
 
 
-def part_one(droid: Droid) -> int:
+def part_one(maze: dict[Coord, int], end: Coord) -> int:
     """Solution to part one."""
     q = [(0,0,0)]
     visited:set[Coord] = set()
     while q:
         steps, x, y = heapq.heappop(q)
-        if (x,y) == droid.oxygen_pos:
+        if (x,y) == end:
             return steps
         if (x,y) in visited: continue
         visited.add((x,y))
         for dx,dy in wind2dir.values():
             nx,ny = x+dx, y+dy
-            if droid.maze[(nx,ny)] == WALL:
+            if maze[(nx,ny)] == WALL:
                 continue
             heapq.heappush(q, (steps+1, nx, ny))
 
-    return -1
+    raise ValueError('No path found')
 
 
-def part_two(droid: Droid) -> int:
+def part_two(maze: dict[Coord, int], end: Coord) -> int:
     """Solution to part two."""
-    q = [(0, *droid.oxygen_pos)]
-    visited:set[Coord] = set()
+    q = [(0, *end)]
+    visited = set[Coord]()
     mins_to_fill = 0
     while q:
         mins, x, y = heapq.heappop(q)
-        if (x,y) not in droid.maze:
+        if (x,y) not in maze:
             continue
-        if droid.maze[(x,y)] == WALL:
+        if maze[(x,y)] == WALL:
             continue
         if (x,y) in visited: continue
         mins_to_fill = max(mins_to_fill, mins)
@@ -217,15 +232,16 @@ def part_two(droid: Droid) -> int:
 
 def main():
     """Parse input file, pass to puzzle solvers."""
-    program: list[int] = []
+    program = list[int]()
     for line in fileinput.input():
         line = line.strip()
         program = list(map(int, line.split(',')))
 
-    droid = Droid()
+
+    droid = DrunkenDroid()
     computer(defaultdict(int, enumerate(program)), droid)
-    print('part_one', part_one(droid))
-    print('part_two', part_two(droid))
+    print('part_one', part_one(droid.maze, droid.oxygen_pos))
+    print('part_two', part_two(droid.maze, droid.oxygen_pos))
 
 
 if __name__ == '__main__':
