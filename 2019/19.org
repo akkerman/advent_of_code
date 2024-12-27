@@ -10,3 +10,11 @@
 Had verwacht dat we alle coordinaten wel in 1x kunnen voeren. Maar ik moest de computer voor elk coord opnieuw starten.
 
 * Part Two
+
+Er van uitgaande die straal vanuit 0,0 van links boven naar rechts onder gaat dan zijn er 3 mogelijke afbeeldingen:
+
+1. Zoals in het voorbeeld. De beam verlaat de originele grid zowel aan de onderkant als aan de rechterkant.
+2. De beam verlaat de originele grid helemaal aan de onderste kant
+3. de beam verlaat de originele grid helemaal aan de rechter kant
+
+We moeten twee punten zien te vinden die ons de eerste richtingen kunnen geven.
