@@ -7,5 +7,156 @@
 
 * Part One
 
+Als we een video feed krijgen dan slaan we alle scaffolds (~#~) op in een set.
+We houden rijen en colommen bij bij elke ~#~ verhogen we de kolom en bij elke newline de rij.
+
+Nu gaan we door alle scaffold heen opzoek naar een plus form.
+Door voor elk punt kijken we de punten een rij hoger en lager en de punten een
+kolom eerder en later ook een scaffold is.
+
+#+begin_src python
+def intersections(self):
+    """Find scaffold intersections."""
+    intersections = list[tuple[int, int]]()
+    for r, c in self.scaffolds:
+        if (r+1, c) not in self.scaffolds:
+            continue
+        if (r-1, c) not in self.scaffolds:
+            continue
+        if (r, c+1) not in self.scaffolds:
+            continue
+#+end_src
 
 * Part Two
+
+** Hoe werkt dit?
+Het kostte me nogal wat tijd om uit te vogelen hoe het programma werkte nadat het eerste adres veranderd wordt in een 2.
+
+Door wat te proberen kwam ik er achter het het programma allemaal characters output die ik niet verwachtte. Ik het daarom de output aangepast zodat deze er mee om kan gaan. Het blijk dat al deze ints ook te vertalen zijn naar ascii en dan zegt het programma wat het aan het doen is en wat er mis is. Als ik de eerste paar stappen handmatig opvoer,
+
+#+begin_src python
+vacuum.add_instructions('A,B,C') # Main
+vacuum.add_instructions('L,4') # A
+vacuum.add_instructions('L,6') # B
+vacuum.add_instructions('L,8') # C
+vacuum.add_instructions('n') # Continuous video feed
+#+end_src
+dan krijg ik namelijk:
+#+begin_src
+Main:
+Function A:
+Function B:
+Function C:
+Continuous ideo feed?
+
+#+end_src
+
+Dat laatste character is dan eigenlijk geen ascii maar de hoeveelheid verzamelde stof: 57488
+Als je het verkeerd doet, wat ik in het begin de heletijd deed omdat ik eerst de scaffold van links naar rechts printte ipv boven naar beneden (mixup met row,col vs x,y)
+
+Als ik bv vergeed de feed van C te voeren:
+
+#+begin_src python
+vacuum.add_instructions('A,B,C') # Main
+vacuum.add_instructions('L,4') # A
+vacuum.add_instructions('L,6') # B
+# vacuum.add_instructions('L,8') # C
+vacuum.add_instructions('n') # Continuous video feed
+#+end_src
+
+#+begin_src
+Main:
+Function A:
+Function B:
+Function C:
+Expected R, L, or distance but got: n
+#+end_src
+
+** Algorithme
+
+Allereerst bepalen wat het totaal is wat die vacuum moet lopen als deze elke
+plank van de steiger moet lopen. Dit is methode ~walk_scaffolds~
+
+Nu ik dat heb moet ik uitzoeken welke delen er A, B en C zijn.
+Ze hebben allemaal een max lengte daar zou ik kunnen beginnen. Om A te vinden.
+Als ik nu elke keer het grootste patroon vind...
+
+Ik heb geprobeerd 3x het grootste patroon te vinden wat meerdere keren voorkomt. Maar dat leid tot niets. Het is namelijk ook mogelijk dat
+- één of meerdere van de functies komt maar 1x voor.
+- één of meerdere is niet het langst mogelijke pratroon
+
+Wellicht alle mogelijke patronen genereren en kijken of ik bij een permuatatie
+uit kan komen die volledig is.
+
+Eerst alle patronen van A, die uit het volledige patroon halen, en dan de patronen voor B, die eruit halen en de patronen voor C proberen. Dan kijken of ik aleen nog A,B,C,A etc overhoud.
+
+Hoe haal ik die patronen uit het geheel? Een patroon kan aan het begin staan (eindigt met een comma) aan het eind staan (begint met een comma) evt zelfs meerdere keren achterlkaar staan.
+Voldoet het om alle patronen weg te halen. evt dubbele comma's te vervangen door 1tje en dan commas aan het einde en begin te verwijderen?
+
+#+begin_src python
+instructions = 'R,8,R,8,R,4,R,4,R,8,L,6,L,2,R,4,R,4,R,8,R,8,R,8,L,6,L,2'
+fn_a = 'R,8,R,8'
+fn_b = 'R,4,R,4,R,8'
+fn_c = 'L,6,L,2'
+
+main = instructions
+main = main.replace(fn_a, 'A')
+main = main.replace(fn_b, 'B')
+main = main.replace(fn_c, 'C')
+
+
+return main # A,B,C,R,4,R,4,A,R,8,C
+#+end_src
+
+#+RESULTS:
+: A,B,C,R,4,R,4,A,R,8,C
+Aan bovenstaande kan ik zien dat ik met zoek en vervang een issue heb als ik met
+het totaal en de functies main probeer te krijgen.
+Dit komt omdat, in dit geval, ergens in de input 'R,8,R,8,R,8' staat, 'R,8,R,8' is fn_a maar R,8 is ook het einde van B dus wordt A te vroeg vervangen.
+
+Dus het vervang gebeuren moet incrementeel.
+
+#+begin_src python
+instructions = 'R,8,R,8,R,4,R,4,R,8,L,6,L,2,R,4,R,4,R,8,R,8,R,8,L,6,L,2'
+fn_a = 'R,8,R,8'
+fn_b = 'R,4,R,4,R,8'
+fn_c = 'L,6,L,2'
+
+main = ''
+
+while instructions:
+    if instructions.startswith(fn_a):
+        main += 'A,'
+        instructions = instructions[len(fn_a)+1:]
+        continue
+    if instructions.startswith(fn_b):
+        main += 'B,'
+        instructions = instructions[len(fn_b)+1:]
+        continue
+    if instructions.startswith(fn_c):
+        main += 'C,'
+        instructions = instructions[len(fn_c)+1:]
+        continue
+    return None # instruction does not start with any function
+
+return main[:-1] # laatste comma er af
+#+end_src
+
+#+RESULTS:
+: A,B,C,B,A,C
+
+---
+
+Hoe moet het patroon aan het einde er uit zien? Ik begin met A -> ~A(,[A|B|C])+~
+
+#+begin_src python
+import re
+pattern = r^A(,[A|B|C])+$'
+
+main = ['A,B,C', 'A,B,C,B,A,C', 'C,A,B', 'A,A,A', 'A,,A,B']
+
+return [bool(re.match(pattern, x)) for x in main]
+ #+end_src
+
+ #+RESULTS:
+ | True | True | False | True | False |

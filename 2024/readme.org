@@ -207,7 +207,7 @@ Tijdens kijken van oplossingen op reddit en/of youtube:
 #+begin_src python
 dr, dc = direction
 turn_right = (dc, -dr)
-turn_left = (-dc, cr)
+turn_left = (-dc, dr)
 #+end_src
 
 Kennis voor het eerst toegepast, na een refactor, in [[id:35b46482-e59a-4ea0-915b-b90ffe20d2e7][2024 Day 16: Reindeer Maze]]

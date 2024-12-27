@@ -14,16 +14,16 @@ def md5_stretched(s:str)->str:
     return s
 
 
-def quint_from_triplet(h):
+def quint_from_triplet(h:str):
     for i in range(len(h)-2):
         if h[i] == h[i+1] and h[i] == h[i+2]:
             return h[i] * 5
     return None
 
 
-def solve(salt, stretch=False):
-    lookup = set()
-    key_idx = set()
+def solve(salt:str, stretch:bool=False):
+    lookup = set[tuple[str,int]]()
+    key_idx = set[int]()
 
     idx = 0
 
@@ -47,18 +47,18 @@ def solve(salt, stretch=False):
             print('too many for example')
             break
 
-def part_one(salt):
+def part_one(salt:str):
     """ part one """
     return solve(salt)
 
-def part_two(salt):
+def part_two(salt:str):
     """ part two """
     return solve(salt, stretch=True)
 
 
 def main():
     """ main """
-    lines = []
+    lines = list[str]()
     for line in sys.stdin:
         line = line.replace('\n', '')
         lines.append(line)
