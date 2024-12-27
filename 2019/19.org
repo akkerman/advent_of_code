@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       ad71f962-f149-4ed3-a922-eeff3b40f18d
+:END:
+#+title: 2019 Day 19: Tractor Beam
+#+filetags: :python:
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]] · [[id:8cd1ed8f-6f67-41a6-a8cd-577f8b959eac][intcode]]
+
+* Part One
+
+Had verwacht dat we alle coordinaten wel in 1x kunnen voeren. Maar ik moest de computer voor elk coord opnieuw starten.
+
+* Part Two

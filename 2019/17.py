@@ -33,6 +33,7 @@ class Vacuum(IO):
         self.last_output = 0
 
     def add_instructions(self, instructions: str):
+        """Add instructions to the queue."""
         for i, instruction in enumerate(instructions.split(',')):
             if i > 0:
                 self.instructions.append(ord(','))
@@ -45,11 +46,13 @@ class Vacuum(IO):
 
 
     def input(self):
+        """Provide instructions to intcode computer, moving the vacuum"""
         instruction = self.instructions.popleft()
         self.print_msg = False
         return instruction
 
     def output(self, value: int):
+        """Process output from intcode computer, the video feed of the vacuum."""
         self.last_output = value
         if value == NEWLINE:
             self.row += 1
@@ -63,7 +66,6 @@ class Vacuum(IO):
             self.locations[(self.row, self.col)] = chr(value)
             self.col += 1
         else:
-            # print(f'Unexpected output: {value} = {chr(value)}')
             if not self.print_msg:
                 print()
             self.print_msg = True
@@ -186,9 +188,7 @@ class Vacuum(IO):
             return None # instruction does not start with any function
 
         main =  main[:-1] # laatste comma er af
-
         return main if re.match(main_pattern, main) else None
-
 
 
     def generate_instructions(self) -> tuple[str,str,str,str]:
@@ -198,7 +198,6 @@ class Vacuum(IO):
         fn_c: str = ''
 
         instructions = ','.join(self.walk_scaffolds())
-
         for fn_a in self.find_function_candidates(instructions):
             withoutA = instructions.replace(fn_a, '').replace(',,', ',').strip(',')
             for fn_b in self.find_function_candidates(withoutA):
@@ -207,18 +206,14 @@ class Vacuum(IO):
                     main = self.create_main(instructions, fn_a, fn_b, fn_c)
                     if main:
                         return main, fn_a, fn_b, fn_c
-
-
         raise ValueError('No solution found')
-
-
 
 def part_one(intersections: list[tuple[int, int]]):
     """Calculate the sum of the alignment parameters of the scaffold intersections."""
     return sum(r * c for r, c in intersections)
 
 def part_two(program: list[int], p1_vacuum: Vacuum):
-    """Solution to part two."""
+    """Calculate the dust collected by the vacuum robot."""
     vacuum = Vacuum()
     program[0] = 2
 

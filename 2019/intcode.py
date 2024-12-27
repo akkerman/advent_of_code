@@ -1,5 +1,4 @@
 from abc import abstractmethod
-from utils import perf_timer
 from collections import defaultdict
 
 class IO:
@@ -11,7 +10,6 @@ class IO:
     def output(self, value: int):
         pass
 
-@perf_timer
 def computer(program: defaultdict[int,int], io:IO):
     """Computer."""
     ADD = 1
