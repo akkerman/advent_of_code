@@ -151,7 +151,7 @@ Hoe moet het patroon aan het einde er uit zien? Ik begin met A -> ~A(,[A|B|C])+~
 
 #+begin_src python
 import re
-pattern = r^A(,[A|B|C])+$'
+pattern = r'^A(,[A|B|C])+$'
 
 main = ['A,B,C', 'A,B,C,B,A,C', 'C,A,B', 'A,A,A', 'A,,A,B']
 

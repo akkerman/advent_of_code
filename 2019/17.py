@@ -2,7 +2,7 @@
 import fileinput
 from collections import defaultdict, deque
 from intcode import computer, IO
-from utils import find_occurences
+import re
 
 SCAFFOLD = ord('#')
 SPACE = ord('.')
@@ -146,76 +146,96 @@ class Vacuum(IO):
 
         return instructions
 
-    def find_function(self, instructions: str) -> tuple[str, list[int]]:
-        """Find the longest function that fits in the instructions."""
-        function = ''
-        locations = list[int]()
-        print('find_function', instructions)
+    def find_function_candidates(self, instructions: str) -> list[str]:
+        """Find all possible function inputs of max 20 characters."""
+        candidates = list[str]()
 
-        for length in range(2, 21):
-            fun = instructions[:length]
-            if fun[-1] == ',':
-                fun = fun[:-1]
+        if instructions[0] == ',':
+            raise ValueError('Instructions start with comma')
 
-            locs = find_occurences(fun, instructions)
-            if len(locs) > 1:
-                function = fun
-                locations = locs
+        fn = ''
+        for i, part in enumerate(instructions.split(',')):
+            if i > 0:
+                fn += ','
+            fn += part
+            if len(fn) > 20:
+                break
+            candidates.append(fn)
 
-        return function, locations
+        return candidates
+
+
+
+    def create_main(self, instructions: str, fn_a: str, fn_b: str, fn_c: str) -> str|None:
+        main_pattern = r'^A(,[A|B|C])+$'
+        main = ''
+
+        while instructions:
+            if instructions.startswith(fn_a):
+                main += 'A,'
+                instructions = instructions[len(fn_a)+1:]
+                continue
+            if instructions.startswith(fn_b):
+                main += 'B,'
+                instructions = instructions[len(fn_b)+1:]
+                continue
+            if instructions.startswith(fn_c):
+                main += 'C,'
+                instructions = instructions[len(fn_c)+1:]
+                continue
+            return None # instruction does not start with any function
+
+        main =  main[:-1] # laatste comma er af
+
+        return main if re.match(main_pattern, main) else None
+
+
 
     def generate_instructions(self) -> tuple[str,str,str,str]:
         """Distribute instructions to A, B, C."""
-        main: str = ''
         fn_a: str = ''
-        lc_a: list[int] = []
         fn_b: str = ''
-        lc_b: list[int] = []
         fn_c: str = ''
-        lc_c: list[int] = []
 
         instructions = ','.join(self.walk_scaffolds())
 
-        fn_a, lc_a = self.find_function(instructions)
-        withoutA = instructions.replace(fn_a+',', '').replace(fn_a, '')
-        fn_b, lc_b = self.find_function(withoutA)
-        withoutB = withoutA.replace(fn_b+',', '').replace(fn_b, '')
-        fn_c, lc_c = self.find_function(withoutB)
+        for fn_a in self.find_function_candidates(instructions):
+            withoutA = instructions.replace(fn_a, '').replace(',,', ',').strip(',')
+            for fn_b in self.find_function_candidates(withoutA):
+                withoutB = withoutA.replace(fn_b, '').replace(',,', ',').strip(',')
+                while withoutB.startswith(fn_b):
+                    withoutB = withoutB[len(fn_b)+1:]
 
-        print('fn_a', fn_a, lc_a)
-        print('fn_b', fn_b, lc_b)
-        print('fn_c', fn_c, lc_c)
+                for fn_c in self.find_function_candidates(withoutB):
 
-        main = instructions
-        main = main.replace(fn_a, 'A')
-        main = main.replace(fn_b, 'B')
-        main = main.replace(fn_c, 'C')
+                    main = self.create_main(instructions, fn_a, fn_b, fn_c)
+                    if main:
+                        return main, fn_a, fn_b, fn_c
 
-        return main, fn_a, fn_b, fn_c
+
+        raise ValueError('No solution found')
+
 
 
 def part_one(intersections: list[tuple[int, int]]):
     """Calculate the sum of the alignment parameters of the scaffold intersections."""
     return sum(r * c for r, c in intersections)
 
-
-
-
-
 def part_two(program: list[int], p1_vacuum: Vacuum):
     """Solution to part two."""
     vacuum = Vacuum()
     program[0] = 2
 
-    vacuum.add_instructions('A,B,C') # Main
-    vacuum.add_instructions('L,4') # A
-    vacuum.add_instructions('L,6') # B
-    # vacuum.add_instructions('L,8') # C   
+    main, fn_a, fn_b, fn_c = p1_vacuum.generate_instructions()
+
+    vacuum.add_instructions(main)
+    vacuum.add_instructions(fn_a)
+    vacuum.add_instructions(fn_b)
+    vacuum.add_instructions(fn_c)
     vacuum.add_instructions('n') # Continuous video feed
 
-    print('instructions', vacuum.instructions)
     computer(defaultdict(int, enumerate(program)), vacuum)
-    vacuum.print_scaffold()
+    # vacuum.print_scaffold()
     return vacuum.last_output
 
 
@@ -229,13 +249,7 @@ def main():
     vacuum = Vacuum()
     computer(defaultdict(int, enumerate(program)), vacuum)
     print('part_one', part_one(vacuum.intersections()))
-
-    # print('generating instructions')
-    print()
-    print('-'*80)
-    print(vacuum.generate_instructions())
-
-    # print('part_two', part_two(program, vacuum))
+    print('part_two', part_two(program, vacuum))
 
 
 if __name__ == '__main__':
