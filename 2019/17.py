@@ -203,11 +203,7 @@ class Vacuum(IO):
             withoutA = instructions.replace(fn_a, '').replace(',,', ',').strip(',')
             for fn_b in self.find_function_candidates(withoutA):
                 withoutB = withoutA.replace(fn_b, '').replace(',,', ',').strip(',')
-                while withoutB.startswith(fn_b):
-                    withoutB = withoutB[len(fn_b)+1:]
-
                 for fn_c in self.find_function_candidates(withoutB):
-
                     main = self.create_main(instructions, fn_a, fn_b, fn_c)
                     if main:
                         return main, fn_a, fn_b, fn_c
