@@ -1,12 +1,7 @@
 """Day 19: Tractor Beam."""
 import fileinput
-import heapq
-import re
-from collections import deque, defaultdict, Counter
-from functools import lru_cache
-from utils import perf_timer
+from collections import  defaultdict
 from intcode import computer, IO
-from itertools import count
 
 class Drone(IO):
     def __init__(self):
@@ -48,7 +43,6 @@ def part_one(program: list[int]) -> int:
     drone = Drone()
     for _ in range(50*50):
         computer(defaultdict(int, enumerate(program)), drone)
-    drone.print_map()
     return sum(drone.out)
 
 
@@ -56,20 +50,25 @@ def part_two(program: list[int]) -> int:
     """Solution to part two."""
     drone = Drone()
     def check(x:int, y:int):
-        print('checking', x, y)
         drone.instructions = [x, y]
         computer(defaultdict(int, enumerate(program)), drone)
-        return drone.out[0] == 1
+        return drone.out[-1] == 1
 
 
-    left = 0
-    for y in count(20):
-        for x in count(left):
-            if not check(x,y): continue
-            print(x,y)
-            left = x
-            if not check(x+100, y-100): break
-            return x*10000 + y-100
+
+    x = 0
+    y = 100
+    while True:
+        while not check(x,y):
+            x += 1
+
+        if check(x+99, y-99):
+            return x*10000 + y-99
+
+        y += 1
+
+
+        
     
     
 
