@@ -7,6 +7,23 @@
 
 * Part One
 
+Als de eerste asteroïde gevonden is dan is alles er achter *in dezelfde richting* niet te zien.
+Ik dacht eerst het zelfde veelvoud van afstand maar dat is duidelijk te zien
+niet het geval bij ~F~, deze zit op ~(2,4)~ en ~(3,6)~ is b.v. alweer onzicht baar.
+Dit is dus steeds op een afstand van ~(1,2)~
 
+Wat is de algemene manier om de kleinste vector te maken?
+Het lijkt op vereenvoudigen van breuken...
+
+Het blijkt een eenheids vector te heten. De echte eenheidsvector is overigens
+NIET met gehele getallen, wat zou er gebeuren als ik dat voor nu even negeer en
+alle punten markeer met hun eenheidsvector en dat dan dus neem als unieke waarde?
+
+Dit gaat goed voor kleine grids maar voor mijn antwoord is het te hoog. En ook
+voor het laatste voorbeeld is het te hoog. Het juiste punt wordt wel
+teruggegeven.
+
+Omdat ik ~floats~ gebruik is de preciezie wellicht te hoog??
+Yep als ik preciezie 3 neem dan klopt het!
 
 * Part Two

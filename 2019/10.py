@@ -1,75 +1,54 @@
 """Day 10: Monitoring Station."""
 import fileinput
-import heapq
-import re
-from collections import deque, defaultdict, Counter
-from functools import lru_cache
-from utils import perf_timer
+import math
 
-Coord = tuple[int, int]
-Grid = set[Coord]
+def part_one(asteroids: list[tuple[int,int]]):
+    """Determine the best asteroid to place a monitoring station."""
+    unit_vectors = set[tuple[float,float]]()
 
-def part_one(asteroids:Grid):
-    """Solution to part one."""
-    print(asteroids)
-    return 'todo'
+    max_asteroids = 0
+    best_asteroid = (0,0)
+
+    for a in asteroids:
+        unit_vectors.clear()
+        for b in asteroids:
+            if a == b:
+                continue
+
+            x1, y1 = a
+            x2, y2 = b
+            length = math.sqrt((x2-x1)**2 + (y2-y1)**2)
+            normalized = (1000 * (x2 - x1) // length, 1000 *(y2 - y1) // length)
+            unit_vectors.add(normalized)
+
+        if len(unit_vectors) > max_asteroids:
+            max_asteroids = len(unit_vectors)
+            best_asteroid = a
+
+    return max_asteroids, best_asteroid
+
 
 
 def part_two(lines):
     """Solution to part two."""
     return 'todo'
 
-def parse(lines: list[str]) -> Grid:
-    asteroids: Grid = set()
-    for row, line in enumerate(lines):
-        asteroids.update((col, row) for col, char in enumerate(line) if char == '#')
-    return asteroids
-
 
 def main():
     """Parse input file, pass to puzzle solvers."""
-    asteroids: Grid = set()
-    row = 0
+    asteroids = list[tuple[int,int]]() 
+    y = 0
     for line in fileinput.input():
         line = line.strip()
-        asteroids.update((col, row) for col, char in enumerate(line) if char == '#')
-
-        
+        for x, c in enumerate(line):
+            if c == '#':
+                asteroids.append((x, y))
+        y += 1
 
     print('part_one', part_one(asteroids))
 
-    print('part_two', part_two(map))
+    print('part_two', part_two(asteroids))
 
 
 if __name__ == '__main__':
     main()
-
-
-def test_parse():
-    input: list[str] = """#..
-.#.
-..#""".splitlines() # type: ignore
-    assert parse(input) == {(0, 0), (1, 1), (2,2)}
-
-def test_part_one_small():
-    input: list[str] = """.#..#
-.....
-#####
-....#
-...##""".splitlines() # type: ignore
-    assert part_one(parse(input)) == ((3,4), 8)
-#
-# def test_part_one_larger1():
-#     input = """......#.#.
-# #..#.#....
-# ..#######.
-# .#.#.###..
-# .#..#.....
-# ..#....#.#
-# #..#....#.
-# .##.#..###
-# ##...#..#.
-# .#....####"""
-#     grid = parse(input.splitlines())
-#     assert part_one(grid) == ((5,8), 33)
-#
