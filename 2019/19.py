@@ -1,17 +1,12 @@
 """Day 19: Tractor Beam."""
 import fileinput
-from collections import  defaultdict
 from intcode import computer, IO
+from utils import perf_timer
 
 class Drone(IO):
-    def __init__(self):
+    def __init__(self, program:list[int]):
+        self.program = program
         self.instructions = list[int]()
-        self.out = list[int]()
-        self.coords = set[tuple[int, int]]()
-        for y in range(50):
-            for x in range(50):
-                self.instructions.append(x)
-                self.instructions.append(y)
 
     def input(self):
         if self.instructions:
@@ -19,58 +14,43 @@ class Drone(IO):
         return -1
 
     def output(self, value:int):
-        self.out.append(value)
+        self.out = value
 
-    def reconstruct_coords(self):
-        for y in range(50):
-            for x in range(50):
-                if self.out[y*50 + x] == 1:
-                    self.coords.add((y, x))
+    def is_affected(self, x:int, y: int):
+        """Check if this drone is affected by the beam at given coordinate"""
+        self.instructions = [x,y]
+        computer(self.program, self)
+        return self.out == 1
 
-    def print_map(self):
-        self.reconstruct_coords()
-        for y in range(50):
-            for x in range(50):
-                if (y, x) in self.coords:
-                    print('#', end='')
-                else:
-                    print('.', end='')
-            print()
+    def total_affected(self, width: int):
+        """Total points the beam affects this droids in a square area of given width"""
+        total = 0
+        for y in range(width):
+            for x in range(width):
+                if self.is_affected(x,y):
+                    total += 1
+        return total
 
+    def find_square(self, width: int):
+        """Find closest point of a square of given width that fits in the tractor beam"""
+        x = 0
+        y = width
+        while True:
+            while not self.is_affected(x,y):
+                x += 1
+            if self.is_affected(x+width-1, y-width+1):
+                return x*10000 + y-width+1
+            y += 1
 
+@perf_timer
 def part_one(program: list[int]) -> int:
     """Solution to part one."""
-    drone = Drone()
-    for _ in range(50*50):
-        computer(defaultdict(int, enumerate(program)), drone)
-    return sum(drone.out)
+    return Drone(program).total_affected(50)
 
-
+@perf_timer
 def part_two(program: list[int]) -> int:
     """Solution to part two."""
-    drone = Drone()
-    def check(x:int, y:int):
-        drone.instructions = [x, y]
-        computer(defaultdict(int, enumerate(program)), drone)
-        return drone.out[-1] == 1
-
-
-
-    x = 0
-    y = 100
-    while True:
-        while not check(x,y):
-            x += 1
-
-        if check(x+99, y-99):
-            return x*10000 + y-99
-
-        y += 1
-
-
-        
-    
-    
+    return Drone(program).find_square(100)
 
 def main():
     """Parse input file, pass to puzzle solvers."""

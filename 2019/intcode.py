@@ -10,7 +10,7 @@ class IO:
     def output(self, value: int):
         pass
 
-def computer(program: defaultdict[int,int], io:IO):
+def computer(program: list[int] | defaultdict[int,int], io:IO):
     """Computer."""
     ADD = 1
     MULTIPLY = 2
@@ -30,6 +30,9 @@ def computer(program: defaultdict[int,int], io:IO):
     modes = [0,0,0,0]
 
     relative_base = 0
+    
+    if type(program) is list:
+        program = defaultdict(int, enumerate(program))
 
     def write(instruction_pointer:int, parameter:int, value:int):
         # parameters that an instruction writes to wil never be in immediate mode

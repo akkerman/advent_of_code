@@ -17,4 +17,17 @@ Er van uitgaande die straal vanuit 0,0 van links boven naar rechts onder gaat da
 2. De beam verlaat de originele grid helemaal aan de onderste kant
 3. de beam verlaat de originele grid helemaal aan de rechter kant
 
-We moeten twee punten zien te vinden die ons de eerste richtingen kunnen geven.
+Ik zat eerst op de gedachte om de buitenkanten van de beam als vectoren te nemen
+en dan te kijken hoe de diagonaal van het vierkant erin te krijgen. Geen idee
+hoe dat te doen.
+
+Wat ik ook kan doen, is het programma gebruiken/misbruiken, om de meest linker
+zijde van de tractor beam te vinden voor een punt x,y en dan kijken of het
+tegenovergestelde punt van het vierkant ook door de beam aangetrokken wordt.
+Zodra dit zo is dan bepalen we wat hierin het meest linker hoekje is.
+
+Ik had hier nog wel een of-by-one error.
+Als je, van een 100x100 vierkant, het tegenoverliggende punt wilt hebben obv x,y
+is het niet x+100,y-100 maar x+99,y-100.
+
+Je moet het zo zien dat je momenteel op het eerste gridpoint van de zijkant staat en je moet naar  het 100ste, dat is 99 stapjes.
