@@ -1,6 +1,6 @@
 """Day 17: Set and Forget."""
 import fileinput
-from collections import defaultdict, deque
+from collections import deque
 from intcode import computer, IO
 import re
 
@@ -225,7 +225,7 @@ def part_two(program: list[int], p1_vacuum: Vacuum):
     vacuum.add_instructions(fn_c)
     vacuum.add_instructions('n') # Continuous video feed
 
-    computer(defaultdict(int, enumerate(program)), vacuum)
+    computer(program, vacuum)
     # vacuum.print_scaffold()
     return vacuum.last_output
 
@@ -238,7 +238,7 @@ def main():
         program = list(map(int, line.split(',')))
 
     vacuum = Vacuum()
-    computer(defaultdict(int, enumerate(program)), vacuum)
+    computer(program, vacuum)
     print('part_one', part_one(vacuum.intersections()))
     print('part_two', part_two(program, vacuum))
 

@@ -70,7 +70,7 @@ def part_one(program: list[int]) -> int:
     arcade = Arcade()
 
 
-    computer(defaultdict(int, enumerate(program)), arcade)
+    computer(program, arcade)
     return Counter(arcade.screen.values())['█']
 
 
@@ -79,7 +79,7 @@ def part_two(program: list[int]) -> int:
     arcade = Arcade()
 
     program[0] = 2
-    computer(defaultdict(int, enumerate(program)), arcade)
+    computer(program, arcade)
     return arcade.score
 
 

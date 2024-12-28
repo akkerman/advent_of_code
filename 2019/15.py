@@ -231,7 +231,7 @@ def main():
 
     # droid = DrunkenDroid()
     droid = DiscoveringDroid()
-    computer(defaultdict(int, enumerate(program)), droid)
+    computer(program, droid)
     print('part_one', part_one(droid.maze, droid.oxygen_pos))
     print('part_two', part_two(droid.maze, droid.oxygen_pos))
 
