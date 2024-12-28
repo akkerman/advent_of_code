@@ -27,3 +27,13 @@ Omdat ik ~floats~ gebruik is de preciezie wellicht te hoog??
 Yep als ik preciezie 3 neem dan klopt het!
 
 * Part Two
+
+Als ik lijstjes maak per eenheidsvector en dan uitvogel hoe ik elke
+eenheidsvector in een rondje moet benaderen dan haal ik elke keer de eerste van
+die lijst eraf.
+
+Sorteren zou dan moeten obv de hoek van die vector tov huidig punt.
+Recht boven huidig punt zou dan 90° zijn geloof ik.
+
+Ik zal eerst part one eens implementeren met hoeken!
+Dat werkt. Mooie is dat er geen issue is met precisie.

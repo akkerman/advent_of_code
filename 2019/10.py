@@ -2,7 +2,7 @@
 import fileinput
 import math
 
-def part_one(asteroids: list[tuple[int,int]]):
+def part_one_vector(asteroids: list[tuple[int,int]]):
     """Determine the best asteroid to place a monitoring station."""
     unit_vectors = set[tuple[float,float]]()
 
@@ -27,6 +27,30 @@ def part_one(asteroids: list[tuple[int,int]]):
 
     return max_asteroids, best_asteroid
 
+def part_one_angle(asteroids: list[tuple[int,int]]):
+    """Determine the best asteroid to place a monitoring station."""
+    angles = set[float]()
+
+    max_asteroids = 0
+    best_asteroid = (0,0)
+
+    for a in asteroids:
+        angles.clear()
+        for b in asteroids:
+            if a == b:
+                continue
+
+            x1, y1 = a
+            x2, y2 = b
+            angle = math.atan2(y2 - y1, x2 - x1)
+            angles.add(angle)
+
+        if len(angles) > max_asteroids:
+            max_asteroids = len(angles)
+            best_asteroid = a
+
+    return max_asteroids, best_asteroid
+
 
 
 def part_two(lines):
@@ -45,7 +69,8 @@ def main():
                 asteroids.append((x, y))
         y += 1
 
-    print('part_one', part_one(asteroids))
+    print('part_one', part_one_vector(asteroids))
+    print('part_one', part_one_angle(asteroids))
 
     print('part_two', part_two(asteroids))
 
