@@ -64,7 +64,6 @@ def normalize_angle(angle: float) -> float:
     return normalized
 
 
-
 def part_two(asteroids: list[tuple[int,int]], station: tuple[int,int] = (11,13)):
     """Solution to part two."""
     angles = defaultdict[float, list[tuple[int,int]]](lambda: [])
