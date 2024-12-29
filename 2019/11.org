@@ -4,7 +4,6 @@
 #+title: 2019 Day 11: Space Police
 #+filetags: :python:
 - tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]] · [[id:8cd1ed8f-6f67-41a6-a8cd-577f8b959eac][intcode]]
-
 * Part One
 
 

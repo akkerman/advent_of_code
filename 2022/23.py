@@ -1,6 +1,3 @@
-# pylint: disable=missing-module-docstring
-# pylint: disable=invalid-name
-
 import sys
 
 directions_to_check = {
@@ -25,22 +22,24 @@ directions_to_move = {
 
 directions = ['N', 'S', 'W', 'E']
 
+Coord = tuple[int, int]
 
-def moves_to_check(elf, direction: str):
-    """ generate coordinates an elf needs to check before moving """
+
+def moves_to_check(elf: Coord, direction: str):
+    """Generate coordinates an elf needs to check before moving."""
     r, c = elf
     return {(r + dr, c + dc) for (dr, dc) in directions_to_check[direction]}
 
 
-def move_direction(elf, direction: str):
-    """ move the elf in the indicated direction """
+def move_direction(elf: Coord, direction: str):
+    """Move the elf in the indicated direction."""
     r, c = elf
     dr, dc = directions_to_move[direction]
     return (r + dr, c + dc)
 
 
-def calc_empty_tiles(elves):
-    """ calculate empty tiles in the bounding box formed by the elves """
+def calc_empty_tiles(elves: set[Coord]):
+    """Calculate empty tiles in the bounding box formed by the elves."""
     minR = min(r for r, _ in elves)
     maxR = max(r for r, _ in elves)
     minC = min(c for _, c in elves)
@@ -49,9 +48,9 @@ def calc_empty_tiles(elves):
     return (maxR - minR + 1) * (maxC - minC + 1) - len(elves)
 
 
-def one_round(elves):
-    proposals = set()
-    collisions = set()
+def one_round(elves: set[Coord]):
+    proposals = set[Coord]()
+    collisions = set[Coord]()
 
     # first half, generate proposals and collisions
     for elf in elves:
@@ -90,8 +89,8 @@ def one_round(elves):
     return moved_elves
 
 
-def part_one(elves):
-    """ get number of free squares after 10 rounds """
+def part_one(elves: set[Coord]):
+    """Get number of free squares after 10 rounds."""
 
     global directions
     directions = ['N', 'S', 'W', 'E']
@@ -102,8 +101,8 @@ def part_one(elves):
     return calc_empty_tiles(elves)
 
 
-def part_two(elves):
-    """ part_two """
+def part_two(elves: set[Coord]):
+    """part_two."""
 
     global directions
     directions = ['N', 'S', 'W', 'E']
@@ -117,9 +116,9 @@ def part_two(elves):
         elves = new_elves
 
 
-def elves_as_coords(lines):
-    """ translate the input to a set of coordinates """
-    elves = set()
+def elves_as_coords(lines: list[str]):
+    """Translate the input to a set of coordinates."""
+    elves = set[Coord]()
     for r, line in enumerate(lines):
         for c, entry in enumerate(line):
             if entry == '#':
@@ -129,18 +128,17 @@ def elves_as_coords(lines):
 
 
 def main():
-    """ main """
-    lines = []
+    """main"""
+    lines = list[str]()
     for line in sys.stdin:
         line = line.replace('\n', '')
-
         lines.append(line)
 
-    elves1 = elves_as_coords(lines)
-    elves2 = set(elves1)
+    elves: set[Coord] = elves_as_coords(lines)
 
-    print('part_one', part_one(elves1))
-    print('part_two', part_two(elves2))
+
+    print('part_one', part_one(elves.copy()))
+    print('part_two', part_two(elves.copy()))
 
 
 main()

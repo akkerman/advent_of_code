@@ -4,7 +4,7 @@
 #+title: 2022 Day 11: Monkey in the Middle
 #+options: toc:nil num:nil
 
-- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]] · [[id:c24f193e-a83b-4253-aba8-d5bef70a96c9][Math]]
 
 * Solve in javascript
 

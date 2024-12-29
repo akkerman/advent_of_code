@@ -2,6 +2,9 @@
 :ID:       74f224fe-09fc-43b2-b84d-edccd2609af7
 :END:
 #+title: Day 24: Lobby Layout
+
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]] · [[id:8a5fcefc-68be-4871-934c-7033fcee652c][Cellular automaton]]
+
 * Part One
 
 ** Parse Instructions

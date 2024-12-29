@@ -4,7 +4,7 @@
 #+title: 2023 Day 21: Step Counter
 #+options: toc:nil num:nil
 
-- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]] · [[id:c24f193e-a83b-4253-aba8-d5bef70a96c9][Math]] · [[id:8a5fcefc-68be-4871-934c-7033fcee652c][Cellular automaton]]
 
 * Part One
 
@@ -58,7 +58,7 @@ a_{n} = (n+1)^2  · met n aantal stappen
 
 ** Patroon van gehele tuinen
 
-De tuin is 131x131 karakter, en het wordt tot in het oneindige herhaald in
+De tuin is 131x131 karakters, en het wordt tot in het oneindige herhaald in
 alle richtingen. Als we dit, in gedachten, als een schaakbord zien, met
 afwisselend witte en zwarte vakken, en je plakt ze tegen elkaar dan zitten er nu
 ineens twee dezelfde kleuren tegen elkaar. Bij een normaal schaakbord van 8x8
