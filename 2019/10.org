@@ -19,7 +19,7 @@ Het blijkt een eenheids vector te heten. De echte eenheidsvector is overigens
 NIET met gehele getallen, wat zou er gebeuren als ik dat voor nu even negeer en
 alle punten markeer met hun eenheidsvector en dat dan dus neem als unieke waarde?
 
-Dit gaat goed voor kleine grids maar voor mijn antwoord is het te hoog. En ook
+Dit gaat goed voor kleine roosters (grid) maar voor mijn antwoord is het te hoog. En ook
 voor het laatste voorbeeld is het te hoog. Het juiste punt wordt wel
 teruggegeven.
 
@@ -32,8 +32,42 @@ Als ik lijstjes maak per eenheidsvector en dan uitvogel hoe ik elke
 eenheidsvector in een rondje moet benaderen dan haal ik elke keer de eerste van
 die lijst eraf.
 
-Sorteren zou dan moeten obv de hoek van die vector tov huidig punt.
+Sorteren zou dan moeten o.b.v de hoek van die vector t.o.v huidig punt.
 Recht boven huidig punt zou dan 90° zijn geloof ik.
 
 Ik zal eerst part one eens implementeren met hoeken!
 Dat werkt. Mooie is dat er geen issue is met precisie.
+
+Oké nu de coördinaten groeperen per hoek, en sorteren op [[id:307e89a0-f91d-431c-9f1a-2bee88d184d3][manhattan distance]]
+vanaf de gekozen nieuwe station.
+
+Er is nu 1 issue. Hoe de hoeken te sorteren?
+De hoeken beginnen, normaal, rechts van een punten en gaan in tegen de klok in.
+Het is nu de bedoeling om *boven* het punt te beginnen en met de klok mee.
+
+#+CAPTION: angles
+#+NAME:    fig:angles
+[[./10.org_scrot-20241228223112.png]]
+
+
+Bovenstaand figuur is prachtig maar ik zie met ~math.atan2~ negatieve getallen.
+~math.atan2~ geeft hoeken in het bereik -π tot π.
+
+Die negatieven kan ik verhelpen door er 2π bij op te tellen, dat heeft hetzelfde
+effect als modulo 2π.  Als ik de reeks eerst ½π opschuif en dan modulo 2π doe
+dan ben ik er vermoedelijk.
+
+Ik heb dit chatgtp eens voorgelegd en i.p.v de hoeken te veranderen komt deze
+met een gewijzigde manier van sorteren die precies dezelfde formule versteld.
+Voordeel van deze manier is dat ik de hoeken in die volgorde eens kan afdrukken
+om mij er van te vergewissen dat ze in de volgorde staan die ik wil hebben.
+
+Nou nu voor de oplossing, uit deel 1 weten we al dat er meer dan 200 hoeken zijn dus we hoeven geen meerdere rotaties te doen en gewoon de 200ste uit de lijst te pakken (nummer 199).
+
+Ai, waar ik even geen rekening mee gehouden heb is dat de y in de puzzel naar
+beneden gaat en in normale wiskunde naar boven. (positief x,y is naar rechts en naar boven.)
+
+Dus de sortering moet anders. niet een verschuiving van ½π maar ⅔π.
+En nu ik de sortering goed heb komt er, bij het voorbeeld, het goede antwoord.
+
+opgelost!
