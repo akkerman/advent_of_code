@@ -3,7 +3,9 @@
 :END:
 #+title: 2023 Day 20: Pulse Propagation
 
-- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]] · [[id:604461ec-828d-4085-8670-9df3ef2b191e][mermaid.js]] · [[id:c24f193e-a83b-4253-aba8-d5bef70a96c9][Math]]
+
+- tags :: [[id:806c0d8b-70a0-49da-b417-9c75a2d52bbf][aoc2023]]
+ · [[id:604461ec-828d-4085-8670-9df3ef2b191e][mermaid.js]] · [[id:c24f193e-a83b-4253-aba8-d5bef70a96c9][Math]]
 
 * Part One
 

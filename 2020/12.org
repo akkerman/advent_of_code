@@ -1,5 +1,9 @@
-#+title: Day 12: Rain Risk
+:PROPERTIES:
+:ID:       513c5783-5ad8-48e6-9eae-88c3117f4172
+:END:
+#+title: 2020 Day 12: Rain Risk
 
+- tags :: [[id:5b20c534-bad7-4ba2-bcfe-68c39a6f7f1b][aoc2020]]
 * Part one
 
 Choose to translate East,North to ~(x,y)~ and West,South to ~(-x,-y)~

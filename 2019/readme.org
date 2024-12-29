@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       e28a8549-79c6-4060-83a2-a6bcbe0bb09f
+:ROAM_ALIASES: aoc2019
+:END:
+#+title: Advent of Code 2019
+
+Dit zijn de oplossingen voor [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][Advent of Code]] 2019.

@@ -3,7 +3,7 @@
 :END:
 #+title: 2019 Day 25: Cryostasis
 #+filetags: :python:
-- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+- tags :: [[id:e28a8549-79c6-4060-83a2-a6bcbe0bb09f][aoc2019]]
 
 * Part One
 

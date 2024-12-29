@@ -1,5 +1,9 @@
-#+title: Day 17: Conway Cubes
+:PROPERTIES:
+:ID:       714e22bd-615e-4852-9afc-40486ff15b80
+:END:
+#+title: 2020 Day 17: Conway Cubes
 
+- tags :: [[id:5b20c534-bad7-4ba2-bcfe-68c39a6f7f1b][aoc2020]]
 * Part One
 
 Two observations:

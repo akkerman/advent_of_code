@@ -4,7 +4,9 @@
 :END:
 #+title: 2024 Day 2: Red-Nosed Reports
 #+filetags: :python:
-- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]] · [[id:5bdb9d22-39e3-4e70-b36d-4f58d9a3517a][2015 Day 19: Medicine for Rudolph]]
+
+- tags :: [[id:212a04da-2f2f-42a8-aac3-6cc62a805688][aoc2024]]
+- references :: [[id:5bdb9d22-39e3-4e70-b36d-4f58d9a3517a][2015 Day 19: Medicine for Rudolph]]
 
 * Part One
 

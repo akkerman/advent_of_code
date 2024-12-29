@@ -3,11 +3,11 @@
 :END:
 #+title: 2024 Day 13: Claw Contraption
 #+filetags: :python:
-- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+- tags :: [[id:212a04da-2f2f-42a8-aac3-6cc62a805688][aoc2024]]
+- references :: [[id:74f224fe-09fc-43b2-b84d-edccd2609af7][Day 24: Lobby Layout]]
 
 * Part One
 
-- references :: [[id:74f224fe-09fc-43b2-b84d-edccd2609af7][Day 24: Lobby Layout]]
 
 't Ging al gelijk goed met het regex parsen.
 Die ~+~ moet escaped worden. Anderst staat er 1 of meer X-en en dan gelijk een getal.

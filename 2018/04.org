@@ -3,7 +3,7 @@
 :END:
 #+title: 2018 Day 4: Repose Record
 #+filetags: :python:
-- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+- tags :: [[id:858bfcb5-a724-475b-a2fa-c527c7c985d8][aoc2018]]
 
 * Part One
 

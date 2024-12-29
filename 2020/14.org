@@ -1,6 +1,10 @@
-#+title: Day 14: Docking Data
+:PROPERTIES:
+:ID:       b6f3085c-cf91-4445-8cf2-ea6c8db22bd9
+:END:
+#+title: 2020 Day 14: Docking Data
 #+options: toc:nil num:nil
 
+- tags :: [[id:5b20c534-bad7-4ba2-bcfe-68c39a6f7f1b][aoc2020]]
 * Part One
 For me the first challenge here was to figure out how to translate an int to a string of bits.
 Aparently this is easily done with string formatting in python

@@ -1,5 +1,9 @@
-#+title: 13
+:PROPERTIES:
+:ID:       0355ce5a-e555-4190-bb34-705fa8c0f1cc
+:END:
+#+title: 2020 Day 13: Shuttle Search
 
+- tags :: [[id:5b20c534-bad7-4ba2-bcfe-68c39a6f7f1b][aoc2020]]
 * Part One
 
 This is simple multiplication. If we divide the expected departure time by the bus id (retour frequency) we know how many times it can go to and from the airpoirt *before* the expected the departure. If we take the remainder we know how much time it arrives *before* the expected departure. One cycle more and we get the arrival time *after* the expected departure.

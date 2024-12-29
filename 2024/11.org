@@ -3,10 +3,12 @@
 :END:
 #+title: 2024 Day 11: Plutonial Pebbles
 #+filetags: :python:
-- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+- tags :: [[id:212a04da-2f2f-42a8-aac3-6cc62a805688][aoc2024]]
+- references :: [[id:6b9831de-37d4-480e-b3af-c6ed2b872775][2019 Day 20: Donut Maze]]
+
 * Part One
 
-- references :: [[id:6b9831de-37d4-480e-b3af-c6ed2b872775][2019 Day 20: Donut Maze]]
 
 Opgelost door een blink functie te maken die 1 iteratie simuleerd.
 Als je deze dan 25 keer uitvoert heb je een list van ruim 100.000 stenen.

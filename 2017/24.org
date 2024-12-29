@@ -3,7 +3,7 @@
 :END:
 #+title: 2017 Day 24: Electromagnetic Moat
 #+filetags: :python:
-- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+- tags :: [[id:a578bf44-af35-4e23-91f9-03cf7d768731][aoc2017]]
 
 * Part One
 

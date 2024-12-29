@@ -1,9 +1,10 @@
 :PROPERTIES:
 :ID:       74f224fe-09fc-43b2-b84d-edccd2609af7
 :END:
-#+title: Day 24: Lobby Layout
+#+title: 2020 Day 24: Lobby Layout
 
-- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]] · [[id:8a5fcefc-68be-4871-934c-7033fcee652c][Cellular automaton]]
+
+- tags :: [[id:5b20c534-bad7-4ba2-bcfe-68c39a6f7f1b][aoc2020]] · [[id:28354edc-0a99-47bf-b6c1-e6f781b4f3f2][hex grid]] · [[id:8a5fcefc-68be-4871-934c-7033fcee652c][Cellular automaton]]
 
 * Part One
 

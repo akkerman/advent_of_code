@@ -3,7 +3,7 @@
 :END:
 #+title: 2024 Day 16: Reindeer Maze
 #+filetags: :python:
-- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+- tags :: [[id:212a04da-2f2f-42a8-aac3-6cc62a805688][aoc2024]]
 
 * Part One
 

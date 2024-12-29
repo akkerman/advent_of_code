@@ -3,7 +3,7 @@
 :END:
 #+title: 2024 Day 23: LAN Party
 #+filetags: :python:
-- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]] · [[id:d635f8a9-8327-414a-9a77-61499af29485][Graph]]
+- tags :: [[id:212a04da-2f2f-42a8-aac3-6cc62a805688][aoc2024]] · [[id:d635f8a9-8327-414a-9a77-61499af29485][Graph]]
 - references :: [[id:49c59157-05e9-4676-9348-007dbda892e7][2016 Day 9: Explosives in Cyberspace]]
 
 * Part One

@@ -3,10 +3,10 @@
 :END:
 #+title: 2024 Day 15: Warehouse Woes
 #+filetags: :python:
-- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+- tags :: [[id:212a04da-2f2f-42a8-aac3-6cc62a805688][aoc2024]]
+- references :: [[id:342634fc-0bf5-480c-9998-b30261d019d2][2021 Day 6: Lanternfish]]
 
 * Part One
-- references :: [[id:342634fc-0bf5-480c-9998-b30261d019d2][2021 Day 6: Lanternfish]]
 
 Als je een box wilt verplaatsen en deze bots tegen een andere box dan moet je die eerst verplaatsen.
 Dit is een hele rij van boxes. als je 1 daarvan niet kan verplaatsen blijft de robot staan.

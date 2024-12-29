@@ -3,8 +3,7 @@
 :END:
 #+title: 2015 Day 9: All in a Single Night
 #+filetags: :python:
-
-- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]] · [[id:e77b2a13-7f1e-45a0-8e10-5a89155d4da2][dot]]
+- tags :: [[id:3a7e770c-69c5-4264-9fc8-58523282afe7][aoc2015]] · [[id:e77b2a13-7f1e-45a0-8e10-5a89155d4da2][dot]]
 
 * Part One
 

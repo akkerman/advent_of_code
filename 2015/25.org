@@ -4,7 +4,7 @@
 #+title: 2015 Day 25: Let It Snow
 #+filetags:
 
-- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+- tags :: [[id:3a7e770c-69c5-4264-9fc8-58523282afe7][aoc2015]]
 
 * Part one
 

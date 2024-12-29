@@ -1,5 +1,9 @@
-#+title: Day 15: Rambunctious Recitation
+:PROPERTIES:
+:ID:       d30168dd-3ac7-4377-be39-32988efd3abc
+:END:
+#+title: 2020 Day 15: Rambunctious Recitation
 
+- tags :: [[id:5b20c534-bad7-4ba2-bcfe-68c39a6f7f1b][aoc2020]]
 * Part One
 
 While searching for a way to get the last index of an element in a list, it seems like that is done by first reversing the list. So I quickly decided to build a reversed list. I can get the actual index by subtracting it from the lenght of the list.

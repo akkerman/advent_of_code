@@ -2,7 +2,7 @@
 :ID:       342634fc-0bf5-480c-9998-b30261d019d2
 :END:
 #+title: 2021 Day 6: Lanternfish
-- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+- tags :: [[id:5bdadd29-0f9f-42c5-9053-c80a4a324eff][aoc2021]]
 
 * Part One
 

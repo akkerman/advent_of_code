@@ -1,0 +1,5 @@
+:PROPERTIES:
+:ID:       5bdadd29-0f9f-42c5-9053-c80a4a324eff
+:ROAM_ALIASES: aoc2021
+:END:
+#+title: Advent of Code 2021

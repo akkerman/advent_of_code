@@ -4,7 +4,9 @@
 #+title: 2023 Day 21: Step Counter
 #+options: toc:nil num:nil
 
-- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]] · [[id:c24f193e-a83b-4253-aba8-d5bef70a96c9][Math]] · [[id:8a5fcefc-68be-4871-934c-7033fcee652c][Cellular automaton]]
+
+- tags :: [[id:806c0d8b-70a0-49da-b417-9c75a2d52bbf][aoc2023]]
+ · [[id:c24f193e-a83b-4253-aba8-d5bef70a96c9][Math]] · [[id:8a5fcefc-68be-4871-934c-7033fcee652c][Cellular automaton]]
 
 * Part One
 

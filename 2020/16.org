@@ -1,6 +1,10 @@
-#+title: Day 16: Ticket Translation
+:PROPERTIES:
+:ID:       f0fa1863-d379-4292-9616-bf4bb468df65
+:END:
+#+title: 2020 Day 16: Ticket Translation
 #+options: toc:nil num:nil
 
+- tags :: [[id:5b20c534-bad7-4ba2-bcfe-68c39a6f7f1b][aoc2020]]
 * Part one
 A lot of parsing and iterating today.
 

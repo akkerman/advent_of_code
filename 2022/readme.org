@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       aec0815f-5cba-459c-8e9c-4fa09d87a446
+:ROAM_ALIASES: aoc2022
+:END:
+#+title: Advent of Code 2022
+
+Dit zijn de oplossingen voor [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][Advent of Code]] 2022.

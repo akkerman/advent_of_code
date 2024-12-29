@@ -3,7 +3,9 @@
 :END:
 #+title: 2022 Day 23: Unstable Diffusion
 #+filetags: :python:
-- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]] · [[id:8a5fcefc-68be-4871-934c-7033fcee652c][Cellular automaton]]
+
+- tags :: [[id:aec0815f-5cba-459c-8e9c-4fa09d87a446][aoc2022]]
+ · [[id:8a5fcefc-68be-4871-934c-7033fcee652c][Cellular automaton]]
 
 * Part One
 

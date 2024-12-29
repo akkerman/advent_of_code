@@ -3,7 +3,9 @@
 :END:
 #+title: 2021 Day 21: Dirac Dice
 
-- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]] · [[id:c24f193e-a83b-4253-aba8-d5bef70a96c9][Math]]
+
+- tags :: [[id:5bdadd29-0f9f-42c5-9053-c80a4a324eff][aoc2021]]
+ · [[id:c24f193e-a83b-4253-aba8-d5bef70a96c9][Math]]
 
 
 

@@ -1,6 +1,6 @@
 #+title: 2016 Day 13: A Maze of Twisty Little Cubicles
 
-- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+- tags :: [[id:7fb73857-09f6-4a05-a470-aec9ac226993][aoc2016]]
 
 * Part One
 [[id:ccd23e17-bc3e-486c-8127-331517a7dc95][Breadth-first search]] add steps to neighbours, return steps when endpoint reached.

@@ -1,5 +1,9 @@
-#+title: Day 18: Operation Order
+:PROPERTIES:
+:ID:       10f311b0-121b-4ba4-8d3e-c372426af6d7
+:END:
+#+title: 2020 Day 18: Operation Order
 
+- tags :: [[id:5b20c534-bad7-4ba2-bcfe-68c39a6f7f1b][aoc2020]]
 * Part One
 
 Let's ignore parantheses for a moment, a calculation without *operator

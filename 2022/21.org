@@ -4,7 +4,9 @@
 #+title: 2022 Day 21: Monkey Math
 #+options: toc:nil num:nil
 
-- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]] · [[id:c24f193e-a83b-4253-aba8-d5bef70a96c9][Math]]
+
+- tags :: [[id:aec0815f-5cba-459c-8e9c-4fa09d87a446][aoc2022]]
+ · [[id:c24f193e-a83b-4253-aba8-d5bef70a96c9][Math]]
 
 * Solve in JavaScript
 

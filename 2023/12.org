@@ -3,7 +3,9 @@
 :END:
 #+title: 2023 Day 12: Hot Springs
 #+filetags: :python:
-- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+
+- tags :: [[id:806c0d8b-70a0-49da-b417-9c75a2d52bbf][aoc2023]]
+
 
 * Part One
 

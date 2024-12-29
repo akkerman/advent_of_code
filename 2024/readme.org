@@ -1,7 +1,8 @@
 :PROPERTIES:
 :ID:       212a04da-2f2f-42a8-aac3-6cc62a805688
+:ROAM_ALIASES: aoc2024
 :END:
-#+title: AOC 2024
+#+title: Advent of Code 2024
 
 Dit zijn de oplossingen voor [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][Advent of Code]] 2024.
 

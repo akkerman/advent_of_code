@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       7fb73857-09f6-4a05-a470-aec9ac226993
+:ROAM_ALIASES: aoc2016
+:END:
+#+title: Advent of Code 2016
+
+
+Dit zijn de oplossingen voor [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][Advent of Code]] 2016.

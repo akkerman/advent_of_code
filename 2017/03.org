@@ -5,11 +5,11 @@
 #+filetags: :python:
 #+options: num:nil toc:nil
 
-- tags :: [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][aoc]]
+- tags :: [[id:a578bf44-af35-4e23-91f9-03cf7d768731][aoc2017]]
 
 * Part One
 
-Es kijken of we een beeld kunnen krijgven van die spiraal.
+Es kijken of we een beeld kunnen krijgen van die spiraal.
 
 #+begin_src quote
 1x1 -> 1

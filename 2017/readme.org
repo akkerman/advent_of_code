@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       a578bf44-af35-4e23-91f9-03cf7d768731
+:ROAM_ALIASES: aoc2017
+:END:
+#+title: Advent of Code 2017
+
+Dit zijn de oplossingen voor [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][Advent of Code]] 2017.
