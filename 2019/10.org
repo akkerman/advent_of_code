@@ -67,7 +67,7 @@ Nou nu voor de oplossing, uit deel 1 weten we al dat er meer dan 200 hoeken zijn
 Ai, waar ik even geen rekening mee gehouden heb is dat de y in de puzzel naar
 beneden gaat en in normale wiskunde naar boven. (positief x,y is naar rechts en naar boven.)
 
-Dus de sortering moet anders. niet een verschuiving van ½π maar ⅔π.
+Dus de sortering moet anders. niet een verschuiving van ½π maar 2π/3.
 En nu ik de sortering goed heb komt er, bij het voorbeeld, het goede antwoord.
 
 opgelost!
