@@ -5,7 +5,7 @@
 #+options: toc:nil num:nil
 
 
-- tags :: [[id:aec0815f-5cba-459c-8e9c-4fa09d87a446][aoc2022]]
+- tags :: [[id:aec0815f-5cba-459c-8e9c-4fa09d87a446][aoc2022]] · [[id:28998a92-8554-4fb0-9bfa-ee6265ff6258][Scaling problem]]
 
 
 * Solve in Python

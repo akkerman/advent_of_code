@@ -3,7 +3,7 @@
 :END:
 #+title: 2016 Day 9: Explosives in Cyberspace
 #+filetags: :python:
-- tags :: [[id:7fb73857-09f6-4a05-a470-aec9ac226993][aoc2016]]
+- tags :: [[id:7fb73857-09f6-4a05-a470-aec9ac226993][aoc2016]] · [[id:28998a92-8554-4fb0-9bfa-ee6265ff6258][Scaling problem]]
 
 * Part One
 

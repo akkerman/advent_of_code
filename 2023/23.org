@@ -5,7 +5,7 @@
 #+options: toc:nil num:nil
 
 
-- tags :: [[id:806c0d8b-70a0-49da-b417-9c75a2d52bbf][aoc2023]]
+- tags :: [[id:806c0d8b-70a0-49da-b417-9c75a2d52bbf][aoc2023]] · [[id:28998a92-8554-4fb0-9bfa-ee6265ff6258][Scaling problem]]
 
 
 * Part One

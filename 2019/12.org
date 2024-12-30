@@ -4,7 +4,7 @@
 #+title: 2019 Day 12: The N-Body Problem
 #+filetags: :python:
 
-- tags :: [[id:e28a8549-79c6-4060-83a2-a6bcbe0bb09f][aoc2019]]
+- tags :: [[id:e28a8549-79c6-4060-83a2-a6bcbe0bb09f][aoc2019]] · [[id:28998a92-8554-4fb0-9bfa-ee6265ff6258][Scaling problem]]
 
 * Part One
 

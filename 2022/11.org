@@ -5,8 +5,7 @@
 #+options: toc:nil num:nil
 
 
-- tags :: [[id:aec0815f-5cba-459c-8e9c-4fa09d87a446][aoc2022]]
- · [[id:c24f193e-a83b-4253-aba8-d5bef70a96c9][Math]]
+- tags :: [[id:aec0815f-5cba-459c-8e9c-4fa09d87a446][aoc2022]] · [[id:c24f193e-a83b-4253-aba8-d5bef70a96c9][Math]] · [[id:28998a92-8554-4fb0-9bfa-ee6265ff6258][Scaling problem]]
 
 * Solve in javascript
 
