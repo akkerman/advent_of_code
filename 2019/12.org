@@ -1,0 +1,71 @@
+:PROPERTIES:
+:ID:       d83bbbb4-064b-49ca-99dc-2c3e4bc6ffaf
+:END:
+#+title: 2019 Day 12: The N-Body Problem
+#+filetags: :python:
+
+- tags :: [[id:e28a8549-79c6-4060-83a2-a6bcbe0bb09f][aoc2019]]
+
+* Part One
+
+Die snelheidsberekening gaat over het [[id:c07e8c62-9c1d-4bbf-ab64-8a8bd8377385][signum]] van het verschil in posities op dezelfde as.
+
+In eerste instantie had ik die x,y,z in een tuple gestopt maar omdat ik de
+heletijd aan het zippen en mappen was kreeg ik de types niet helemaal goed omdat
+er dan een, theoretisch, oneindig tuple uit kan komen en dat is niet een
+3-tuple. Door te wisselen naar ~list[int]~. Was dat niet meer een issue.
+
+Wat ik gedaan heb is voor elk begrip in de puzzel omschrijving een functie gemaakt:
+- ~apply_gravity~
+- ~apply_velocity~
+- ~calculate_energy~
+
+Wat helper functies ~signum~, ~add~ en ~abs_sum~.
+
+En dan de simulatie gedraaid.
+
+* Part Two
+
+Hmm, nu een simulatie doen gaat veel te veel tijd kosten.
+Wat ik wel kan proberen is om te kijken of er herhalingen te vinden zijn in x, y en z los van elkaar en dan te kijken wanneer deze drie gezamenlijk herhalen.
+
+Als ik dan de herhalingen heb van elke planeet zal ik hetzelfde moeten doen met die vier waarden.
+
+Volgens mij heeft python zelf al iets om het kleinste veelvoud uit te rekenen.
+https://docs.python.org/3/library/math.html#math.lcm
+
+Eerst deel één herschrijven door de componenten van elke positie/vector afzonderlijk uit te rekenen.
+Denk alleen dat het niet mogelijk is om de x, y of z van één maan uit te rekenen
+omdat die dingen afhankelijk zijn van elkaar.
+
+In eerste instantie zat ik te zoeken naar wanneer de positie zich herhaalde, het
+is echter de bedoeling om te achterhalen wanneer de positie, inclusief de
+snelheid zich herhaald.
+
+Ik heb dat nu gedaan door een functie ~component_repeats~ te introduceren die een
+lijst met x, y of z waarden verwacht en begint met een vector die bestaat uit
+die posities + dezelfde lengte aan 0 voor snelheid.
+
+Het eerste voorbeeld volgend:
+
+#+begin_src
+<x=-1, y=0, z=2>
+<x=2, y=-10, z=-7>
+<x=4, y=-8, z=8>
+<x=3, y=5, z=-1>
+#+end_src
+
+Eerst de componenten bij elkaar:
+#+begin_src python
+xs=[-1, 2, 4, 3]
+ys=[0,-10, -8, 5]
+zs=[2, -7, 8, -1]
+#+end_src
+
+Dan de startsituatie:
+
+#+begin_src python
+x_vector = (-1, 2, 4, 3, 0, 0, 0, 0)
+y_vector = (0,-10, -8, 5, 0, 0, 0, 0)
+z_vector = (2, -7, 8, -1, 0, 0, 0, 0)
+#+end_src
