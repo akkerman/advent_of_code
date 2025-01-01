@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       9a4cfbc0-2fd1-4405-b33b-4fe1af2bc2d0
+:END:
+#+title: 2021 Day 13: Transparent Origami
+#+filetags: :python:
+
+- tags :: [[id:5bdadd29-0f9f-42c5-9053-c80a4a324eff][aoc2021]] · [[id:86b93c87-214e-414f-9f20-e9ef6ab341c4][visualization]]
+
+* Part One
+
+
+* Part Two

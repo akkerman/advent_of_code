@@ -4,7 +4,7 @@
 #+title: 2024 Day 11: Plutonial Pebbles
 #+filetags: :python:
 
-- tags :: [[id:212a04da-2f2f-42a8-aac3-6cc62a805688][aoc2024]]
+- tags :: [[id:212a04da-2f2f-42a8-aac3-6cc62a805688][aoc2024]] · [[id:28998a92-8554-4fb0-9bfa-ee6265ff6258][Scaling problem]]
 - references :: [[id:6b9831de-37d4-480e-b3af-c6ed2b872775][2019 Day 20: Donut Maze]]
 
 * Part One

@@ -3,7 +3,7 @@
 :END:
 #+title: 2024 Day 20: Race Condition
 #+filetags: :python:
-- tags :: [[id:212a04da-2f2f-42a8-aac3-6cc62a805688][aoc2024]]
+- tags :: [[id:212a04da-2f2f-42a8-aac3-6cc62a805688][aoc2024]] · [[id:28998a92-8554-4fb0-9bfa-ee6265ff6258][Scaling problem]] · [[id:0039e229-d52a-44bb-b027-b9fa80dd8935][simulation]]
 - references :: [[id:a0185e77-4195-4935-be88-59acc51b5a98][2017 Day 24: Electromagnetic Moat]]
 
 * Part One
@@ -43,7 +43,7 @@ sum(cheats for save,cheats in counter.items() if save >= 100)
 * Part Two
 
 Lolz, dus nu mag ik max 20 muursegmenten door?
-Geen idee, en vermodelijk is bruteforce nu helemaal geen optie!
+Geen idee, en vermoedelijk is bruteforce nu helemaal geen optie!
 
 ** refactor one
 Wellicht is er een manier, die ik ook bij deel één al kan inzetten, om voor elk orgineel segment de lengte vast te leggen naar het einde. Als je dan de muur doorbreekt ergens en bij een ander punt uit komt dan is de gewonnen tijd het verschil tussen die twee punten.

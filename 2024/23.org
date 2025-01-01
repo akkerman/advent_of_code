@@ -3,7 +3,7 @@
 :END:
 #+title: 2024 Day 23: LAN Party
 #+filetags: :python:
-- tags :: [[id:212a04da-2f2f-42a8-aac3-6cc62a805688][aoc2024]] · [[id:d635f8a9-8327-414a-9a77-61499af29485][Graph]]
+- tags :: [[id:212a04da-2f2f-42a8-aac3-6cc62a805688][aoc2024]] · [[id:d635f8a9-8327-414a-9a77-61499af29485][Graph]] · [[id:28998a92-8554-4fb0-9bfa-ee6265ff6258][Scaling problem]]
 - references :: [[id:49c59157-05e9-4676-9348-007dbda892e7][2016 Day 9: Explosives in Cyberspace]]
 
 * Part One
@@ -25,7 +25,8 @@ De variant hier is:
 - bepaalde nodes (beginnend met een t) moeten in de clique aanwezig
 - zoeken naar een gesorteerde clique
 
-De manier om het op te lossen is blijkbaar het "Bron-Kerbosch-algoritme" (weer nederlanders!)
+De manier om het op te lossen is blijkbaar het "[[https://en.wikipedia.org/wiki/Bron%E2%80%93Kerbosch_algorithm][Bron-Kerbosch-algoritme]]" (weer nederlanders!)
+
 
 Laten we deze eerst eens loslaten op de intput en kijken of we die
 verbijzonderingen nog nodig gaan hebben om het evt sneller te maken.

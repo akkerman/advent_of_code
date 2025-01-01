@@ -2,16 +2,19 @@
 import sys
 
 def rotate(grid: list[str]) -> list[str]:
+    """Rotate the grid 90 degrees."""
     return [''.join([grid[j][i] for j in range(len(grid))]) for i in range(len(grid[0]))]
 
 def count_xmas(grid: list[str]) -> int:
+    """Count XMAS and SAMX in each line."""
     count = 0
     for line in grid:
         count += line.count('XMAS')
-        count += line[::-1].count('XMAS')
+        count += line.count('SAMX')
     return count
 
 def main_diagonals(grid: list[str]) -> list[str]:
+    """Extract main diagonals from the grid."""
     rows = len(grid)
     cols = len(grid[0])
 
@@ -26,6 +29,7 @@ def main_diagonals(grid: list[str]) -> list[str]:
     return diagonals
 
 def anti_diagonals(grid: list[str]) -> list[str]:
+    """Extract anti diagonals from the grid."""
     rows = len(grid)
     cols = len(grid[0])
 
@@ -41,7 +45,7 @@ def anti_diagonals(grid: list[str]) -> list[str]:
 
 
 def part_one(grid: list[str]):
-    """ part one """
+    """Count the number of times XMAS appears."""
     count = 0
     count += count_xmas(grid)
     count += count_xmas(rotate(grid))
@@ -61,7 +65,7 @@ def is_xmas(grid: list[str], r: int, c: int) -> bool:
     return main and anti
 
 def part_two(grid: list[str]) -> int:
-    """ part two """
+    """Count the number of times X-MAS appears."""
     rows = len(grid)
     cols = len(grid[0])
     count = 0

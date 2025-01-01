@@ -3,7 +3,7 @@
 :END:
 #+title: 2024 Day 19: Linen Layout
 #+filetags: :python:
-- tags :: [[id:212a04da-2f2f-42a8-aac3-6cc62a805688][aoc2024]]
+- tags :: [[id:212a04da-2f2f-42a8-aac3-6cc62a805688][aoc2024]] · [[id:ea19be69-54e4-4d9d-a3bc-3b64c3b0dde1][DFS]]
 
 * Part One
 

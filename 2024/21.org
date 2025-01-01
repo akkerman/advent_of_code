@@ -3,7 +3,7 @@
 :END:
 #+title: 2024 Day 21: Keypad Conundrum
 #+filetags: :python:
-- tags :: [[id:212a04da-2f2f-42a8-aac3-6cc62a805688][aoc2024]]
+- tags :: [[id:212a04da-2f2f-42a8-aac3-6cc62a805688][aoc2024]] · [[id:0039e229-d52a-44bb-b027-b9fa80dd8935][simulation]] · [[id:28998a92-8554-4fb0-9bfa-ee6265ff6258][Scaling problem]]
 - references :: [[id:e44c905c-d851-407a-9bac-b6ceaab4e864][2019 Day 25: Cryostasis]]
 
 * Part One

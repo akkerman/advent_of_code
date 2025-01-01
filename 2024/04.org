@@ -3,7 +3,8 @@
 :END:
 #+title: 2024 Day 4: Ceres Search
 #+filetags: :python:
-- tags :: [[id:212a04da-2f2f-42a8-aac3-6cc62a805688][aoc2024]] · [[id:51c719ea-61f1-4677-a4dd-06f9b3af889c][2019 Day 10: Monitoring Station]]
+- tags :: [[id:212a04da-2f2f-42a8-aac3-6cc62a805688][aoc2024]]
+- references :: [[id:51c719ea-61f1-4677-a4dd-06f9b3af889c][2019 Day 10: Monitoring Station]]
 
 * Part One
 

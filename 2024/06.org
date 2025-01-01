@@ -3,7 +3,7 @@
 :END:
 #+title: 2024 Day 6: Guard Gallivant
 #+filetags: :python:
-- tags :: [[id:212a04da-2f2f-42a8-aac3-6cc62a805688][aoc2024]]
+- tags :: [[id:212a04da-2f2f-42a8-aac3-6cc62a805688][aoc2024]] · [[id:28998a92-8554-4fb0-9bfa-ee6265ff6258][Scaling problem]]
 
 * Part One
 - references :: [[id:c7a60304-c46f-411c-97e6-36b763d5c49a][2024 Day 4: Ceres Search]]  · [[id:9cf92889-b2ff-453d-9ff1-34e254876ef8][2018 Day 5: Alchemical Reduction]]

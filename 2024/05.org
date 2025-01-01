@@ -9,5 +9,20 @@
 
 * Part One
 
+Allemaal losse functies gemaakt en die getest.
+In eerste instantie wilde ik de tests in een ander bestand doen en dan deze
+importeren maar dat bleek nogal lastig want technisch is 05 helemaal geen
+geldige variabele naam en dat zou het blijkbaar moeten zijn wil je een module
+correct kunnen importeren.
+
+Daarom alle functies naar een apart bestand gehesen en daarnaast de tests gemaakt.
+Toen had ik dus 3 bestanden. In latere dagen heb ik ook af en toe tests
+geschreven maar dan gewoon in de puzzel oplossing, uiteindelijk heb ik dat bij
+deze ook gedaan.
 
 * Part Two
+
+Een comparater gemaakt obv de rules zodat de paginas gesorteert kunnen worden.
+
+De standaard sorted functie van python wil echter een key functie hebben, er is een cmp_to_key in functtools die het voor mij kan ombouwen.
+Omdat beide entries nodig zijn voor de vergelijking zie ik geen manier om rechtstreeks een key functie te schrijven.

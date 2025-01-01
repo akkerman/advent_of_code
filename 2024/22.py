@@ -1,10 +1,5 @@
 """Day 22: Monkey Market."""
 import fileinput
-import heapq
-import re
-from collections import deque, defaultdict, Counter
-from functools import lru_cache
-from utils import perf_timer
 
 def mix(secret:int, value:int) -> int:
     """Mix the secret number."""

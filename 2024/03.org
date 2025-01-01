@@ -3,7 +3,7 @@
 :END:
 #+title: 2024 Day 3: Mull It Over
 #+filetags: :python:
-- tags :: [[id:212a04da-2f2f-42a8-aac3-6cc62a805688][aoc2024]]
+- tags :: [[id:212a04da-2f2f-42a8-aac3-6cc62a805688][aoc2024]] · [[id:40ac912d-4bcf-4a77-8445-b8c3c7f9413d][input parsing]]
 
 * Part One
 

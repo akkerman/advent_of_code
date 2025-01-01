@@ -5,7 +5,7 @@
 #+options: toc:nil num:nil
 
 
-- tags :: [[id:806c0d8b-70a0-49da-b417-9c75a2d52bbf][aoc2023]]
+- tags :: [[id:806c0d8b-70a0-49da-b417-9c75a2d52bbf][aoc2023]] · [[id:f476dcdc-166a-497d-9118-07d15d26469d][computational geometry]]
 
 
 * Part One

@@ -3,7 +3,7 @@
 :END:
 #+title: 2024 Day 17: Chronospatial Computer
 #+filetags: :python:
-- tags :: [[id:212a04da-2f2f-42a8-aac3-6cc62a805688][aoc2024]] · [[id:8cd1ed8f-6f67-41a6-a8cd-577f8b959eac][intcode]]
+- tags :: [[id:212a04da-2f2f-42a8-aac3-6cc62a805688][aoc2024]] · [[id:8cd1ed8f-6f67-41a6-a8cd-577f8b959eac][intcode]] · [[id:28998a92-8554-4fb0-9bfa-ee6265ff6258][Scaling problem]] · [[id:c24f193e-a83b-4253-aba8-d5bef70a96c9][Math]]
 - references :: [[id:440ae597-08f1-446c-ac85-e3c0e0fc75c8][2018 Day 6: Chronal Coordinates]]
 
 * Part One
