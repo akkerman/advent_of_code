@@ -3,7 +3,7 @@
 :END:
 #+title: 2024 Day 12: Garden Groups
 #+filetags: :python:
-- tags :: [[id:212a04da-2f2f-42a8-aac3-6cc62a805688][aoc2024]] · [[id:f476dcdc-166a-497d-9118-07d15d26469d][computational geometry]]
+- tags :: [[id:212a04da-2f2f-42a8-aac3-6cc62a805688][aoc2024]] · [[id:f476dcdc-166a-497d-9118-07d15d26469d][computational geometry]] · [[id:d74b47b0-cd57-43c0-ae15-61e09c0d1955][Grid puzzle]]
 - references :: [[id:bdace667-0f38-439d-a3b5-dcea7611b69f][2023 Day 5: If You Give A Seed A Fertilizer]] · [[id:e19d21af-f4a0-4c5c-a50d-c0f9c1471163][2023 Day 21: Step Counter]]
 
 * Part One

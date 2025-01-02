@@ -3,7 +3,7 @@
 :END:
 #+title: 2024 Day 15: Warehouse Woes
 #+filetags: :python:
-- tags :: [[id:212a04da-2f2f-42a8-aac3-6cc62a805688][aoc2024]] · [[id:0039e229-d52a-44bb-b027-b9fa80dd8935][simulation]] · [[id:28998a92-8554-4fb0-9bfa-ee6265ff6258][Scaling problem]]
+- tags :: [[id:212a04da-2f2f-42a8-aac3-6cc62a805688][aoc2024]] · [[id:d74b47b0-cd57-43c0-ae15-61e09c0d1955][Grid puzzle]] · [[id:0039e229-d52a-44bb-b027-b9fa80dd8935][simulation]] · [[id:28998a92-8554-4fb0-9bfa-ee6265ff6258][Scaling problem]]
 - references :: [[id:342634fc-0bf5-480c-9998-b30261d019d2][2021 Day 6: Lanternfish]]
 
 * Part One

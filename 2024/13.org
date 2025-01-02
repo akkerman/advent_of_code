@@ -3,7 +3,7 @@
 :END:
 #+title: 2024 Day 13: Claw Contraption
 #+filetags: :python:
-- tags :: [[id:212a04da-2f2f-42a8-aac3-6cc62a805688][aoc2024]] · [[id:28998a92-8554-4fb0-9bfa-ee6265ff6258][Scaling problem]] · [[id:c24f193e-a83b-4253-aba8-d5bef70a96c9][Math]]
+- tags :: [[id:212a04da-2f2f-42a8-aac3-6cc62a805688][aoc2024]] · [[id:28998a92-8554-4fb0-9bfa-ee6265ff6258][Scaling problem]] · [[id:c24f193e-a83b-4253-aba8-d5bef70a96c9][Math]] · [[id:40ac912d-4bcf-4a77-8445-b8c3c7f9413d][input parsing]]
 - references :: [[id:74f224fe-09fc-43b2-b84d-edccd2609af7][Day 24: Lobby Layout]]
 
 * Part One

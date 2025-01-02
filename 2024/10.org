@@ -4,7 +4,7 @@
 #+title: 2024 Day 10: Hoof It
 #+filetags: :python:
 
-- tags :: [[id:212a04da-2f2f-42a8-aac3-6cc62a805688][aoc2024]]
+- tags :: [[id:212a04da-2f2f-42a8-aac3-6cc62a805688][aoc2024]] · [[id:d74b47b0-cd57-43c0-ae15-61e09c0d1955][Grid puzzle]]
 
 * Part One
 
