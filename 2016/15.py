@@ -16,9 +16,11 @@ def part_one(disks: list[list[int]]) -> int:
 
     return -1
 
-def part_two(lines):
+def part_two(disks: list[list[int]]) -> int:
     """Solution to part two."""
-    return 'todo'
+    new_disk = [len(disks) + 1, 11, 0, 0]
+    disks.append(new_disk)
+    return part_one(disks)
 
 
 def main():

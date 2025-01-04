@@ -4,7 +4,7 @@
 #+title: 2016 Day 15: Timing is Everything
 #+filetags: :python:
 
-- tags :: [[id:7fb73857-09f6-4a05-a470-aec9ac226993][aoc2016]]
+- tags :: [[id:7fb73857-09f6-4a05-a470-aec9ac226993][aoc2016]] · [[id:0039e229-d52a-44bb-b027-b9fa80dd8935][simulation]]
 
 * Part One
 
@@ -39,7 +39,8 @@ Als lcm uitreken van het voorbeeld (5 en 2) dan lijnen ze elke 10 seconden op.
 Maar hoe kom ik nu vanuit daar en de formules op het antwoord van druk op seconde 5?
 
 Ik kan ook een simulatie doen.
-lcm van werkelijke input is 440895...
-
+lcm van werkelijke input is 440895…
 
 * Part Two
+
+Part One met een extra entry…
