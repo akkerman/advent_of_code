@@ -18,7 +18,7 @@ Disc #1 has 5 positions; at time=0, it is at position 4.
 Disc #2 has 2 positions; at time=0, it is at position 1.
 #+end_src
 
-Uit gedrukt in t voor tijd zijn dit volgens mij de formules:
+Uitgedrukt in t voor tijd zijn dit volgens mij de formules:
 
 #+begin_src txt
 (4 + t) % 5
@@ -38,9 +38,9 @@ Kleinste gemene veelvoud? Hoe die offset toe te passen?
 Als lcm uitreken van het voorbeeld (5 en 2) dan lijnen ze elke 10 seconden op.
 Maar hoe kom ik nu vanuit daar en de formules op het antwoord van druk op seconde 5?
 
-Ik kan ook een simulatie doen.
+Ik kan ook een simulatie doen en kijken wanneer alle formules op 0 uit komen.
 lcm van werkelijke input is 440895…
 
 * Part Two
 
-Part One met een extra entry…
+Part One met een extra entry!
