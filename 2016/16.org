@@ -1,0 +1,27 @@
+:PROPERTIES:
+:ID:       e96c3cd0-3f50-4aa6-ac37-215bc581d914
+:END:
+#+title: 2017 Day 16 Dragon Checksum
+#+filetags: :python:
+
+- tags :: [[id:7fb73857-09f6-4a05-a470-aec9ac226993][aoc2016]]
+
+* Part One
+
+Voor non-overlapping pairs zat ik er aan te denken om zip te gebruiken. Maar
+standaard geeft deze wel overlapping entry.
+Nu blijkt dat je [[id:17d65bf5-444a-4ea0-ba01-ba0654a245db][Every other item in a python list]] kunt nemen en als je dan zipt
+zijn ze wel non-overlapping.
+
+#+begin_src python :results verbatim
+data = '110010110100'
+pairs = zip(data[::2], data[1::2])
+return list(pairs)
+#+end_src
+
+#+RESULTS:
+: [('1', '1'), ('0', '0'), ('1', '0'), ('1', '1'), ('0', '1'), ('0', '0')]
+
+
+Alle stappen uit geprogrammeerd en zelfs eerst de tests geschreven.
+* Part Two
