@@ -7,7 +7,7 @@
 
 * Part One
 
-Ok dijkstra met maatwerk cost.
+Ok [[id:9ce410d0-8c24-4f18-9006-657b55ad549e][Dijkstra]] met maatwerk cost.
 
 Ik heb er voor gekozen om een neighbors functie ~next_step~ te maken die mij alle
 valid next steps geeft met daarbij de kosten voor het maken van die stap.

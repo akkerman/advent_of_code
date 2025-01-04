@@ -1,0 +1,45 @@
+:PROPERTIES:
+:ID:       14a437bc-ab9a-434e-b7f3-ef821c98b12d
+:END:
+#+title: 2016 Day 15: Timing is Everything
+#+filetags: :python:
+
+- tags :: [[id:7fb73857-09f6-4a05-a470-aec9ac226993][aoc2016]]
+
+* Part One
+
+Indrukken van een knop brengt een bal, later in de tijd, bij een disk.
+Elke disk nummer is de time ofset tov het indrukken van de knop.
+
+Het voorbeeld is:
+
+#+begin_src txt
+Disc #1 has 5 positions; at time=0, it is at position 4.
+Disc #2 has 2 positions; at time=0, it is at position 1.
+#+end_src
+
+Uit gedrukt in t voor tijd zijn dit volgens mij de formules:
+
+#+begin_src txt
+(4 + t) % 5
+(1 + t) % 2
+#+end_src
+
+Volgens mij is het niet zo belangrijk om te weten waar welk klepje op moment t is. Ik moet weten wanneer elk klepje is obv button press b:
+
+#+begin_src txt
+(4 + b + 1) % 5
+(1 + b + 2) % 2
+#+end_src
+
+De herhaling weet ik al, dat is het aantal posities.
+Kleinste gemene veelvoud? Hoe die offset toe te passen?
+
+Als lcm uitreken van het voorbeeld (5 en 2) dan lijnen ze elke 10 seconden op.
+Maar hoe kom ik nu vanuit daar en de formules op het antwoord van druk op seconde 5?
+
+Ik kan ook een simulatie doen.
+lcm van werkelijke input is 440895...
+
+
+* Part Two
