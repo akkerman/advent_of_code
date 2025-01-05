@@ -1,5 +1,6 @@
 """Day 16: Dragon Checksum."""
 import fileinput
+from utils import perf_timer
 
 flip = {'0': '1', '1': '0'}
 def step(a:str) -> str:
@@ -18,10 +19,23 @@ def checksum_1(data:str) -> str:
             c += '0'
     return c
 
+def checksum_2(data:str) -> str:
+    """Generate one checksum iteration."""
+    c: list[str] = []
+    for i in range(0, len(data)-1, 2):
+        x,y = data[i], data[i+1]
+        if x == y:
+            c.append('1')
+        else:
+            c.append('0')
+    return ''.join(c)
+
+
+
 def checksum(data:str) -> str:
     """Generate checksum of odd length."""
     while True:
-        data = checksum_1(data)
+        data = checksum_2(data)
         if len(data) % 2 == 1:
             return data
 
@@ -32,15 +46,18 @@ def fill_disk(data:str, size:int) -> str:
     return data[:size]
 
 
-def part_one(data:str, disk_size:int) -> str:
+def solve(data:str, disk_size:int) -> str:
     """Generate checksum of filled disk of given size."""
     filled_disk = fill_disk(data, disk_size)
     return checksum(filled_disk)
 
+@perf_timer
+def part_one(data:str) -> str:
+    return solve(data, 272)
 
-def part_two(line:str):
-    """Solution to part two."""
-    return 'todo'
+@perf_timer
+def part_two(data:str) -> str:
+    return solve(data, 35651584)
 
 
 def main():
@@ -49,7 +66,7 @@ def main():
     for line in fileinput.input():
         line = line.strip()
 
-    print('part_one', part_one(line, 272))
+    print('part_one', part_one(line))
 
     print('part_two', part_two(line))
 
@@ -73,4 +90,4 @@ def test_fill_disk_20():
     assert fill_disk('10000', 20) == '10000011110010000111'
 
 def test_part_one_example():
-    assert part_one('10000', 20) == '01100'
+    assert solve('10000', 20) == '01100'

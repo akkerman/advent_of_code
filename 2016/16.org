@@ -1,10 +1,10 @@
 :PROPERTIES:
 :ID:       e96c3cd0-3f50-4aa6-ac37-215bc581d914
 :END:
-#+title: 2017 Day 16 Dragon Checksum
+#+title: 2016 Day 16 Dragon Checksum
 #+filetags: :python:
 
-- tags :: [[id:7fb73857-09f6-4a05-a470-aec9ac226993][aoc2016]]
+- tags :: [[id:7fb73857-09f6-4a05-a470-aec9ac226993][aoc2016]] · [[id:0039e229-d52a-44bb-b027-b9fa80dd8935][simulation]] · [[id:28998a92-8554-4fb0-9bfa-ee6265ff6258][Scaling problem]]
 
 * Part One
 
@@ -24,4 +24,24 @@ return list(pairs)
 
 
 Alle stappen uit geprogrammeerd en zelfs eerst de tests geschreven.
+
 * Part Two
+
+Okay dus toch een scaling problem.
+Heb t ff geprobeerd maar is niet in een minuut ofzo klaar :-)
+
+'t duurde ongeveer 10 uur en toen was daar het antwoord!
+
+Heb eens gekeken. Het is de checksum berekening die lang duurt.
+Ook bij deel twee is het vullen van de disk klaar in < 1s.
+
+
+Heb wat tests gedaan met grotere getallen, veel is best vlot klaar maar geeft een hele lange checksum.
+Blijkbaar is, voor de input, de checksum berekening heeel erglang van even
+lengte waardoor er steeds opnieuw berekend moet worden.
+
+Heb een tweede variatie gemaakt van checksum berekenen ééntje die geen slimme
+dingen doet met zip en ook string concatenatie overslaat, alles dus eigenlijk
+met lists oplost.
+
+Deel twee duurt nu ~2s dat vind ik prima!
