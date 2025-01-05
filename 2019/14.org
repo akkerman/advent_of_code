@@ -1,0 +1,57 @@
+:PROPERTIES:
+:ID:       7e5fcc5e-2a9c-430e-bde0-8c5a66d75a43
+:END:
+#+title: 2019 Day 14: Space Stoichiometry
+#+filetags: :python:
+
+- tags :: [[id:e28a8549-79c6-4060-83a2-a6bcbe0bb09f][aoc2019]] · [[id:40ac912d-4bcf-4a77-8445-b8c3c7f9413d][input parsing]]
+
+* Part One
+
+Mijn eerste ingeving is om, vanaf FUEL, alle chemicalien te bepalen en dan te kijken hoeveel ORE ik daarvoor nodig heb.
+
+#+begin_src python
+Chemical = tuple[int, str]
+Reactions = dict[str, tuple[int, list[Chemical]]]
+
+def part_one(reactions: Reactions) -> int:
+    """Solution to part one."""
+    queue: deque[Chemical] = deque()
+    queue.append((1, 'FUEL'))
+
+    ore = 0
+    while queue:
+        needed_quantity, needed_chemical = queue.popleft()
+        if needed_chemical == 'ORE':
+            ore += needed_quantity
+            continue
+
+        yield_quantity, input_chemicals = reactions[needed_chemical]
+        factor = math.ceil(needed_quantity / yield_quantity)
+        queue.extend((q*factor, c) for q,c in input_chemicals)
+
+    return ore
+#+end_src
+
+Dit geeft echter niet de juiste aantallen.
+Het is namelijk allemaal te hoog. Dit komt waarschijnlijk omdat er af en toe een
+chemical teveel wordt gemaakt. Ik zou die bij moeten houden om te kunnen
+hergebruiken ipv ze nog maals te berekenen.
+
+Dus zodra de factor bekend is weet ik hoeveel ik teveel produceer. Dat overschot
+moet ik bijhouden om evt later nog eens te gebruiken. overschot => surplus
+
+
+* Part Two
+
+Volgens mij is het hetzelfde alleen dan moet ik fuel variabel maken.
+Alleen is mijn antwoord nu veel te hoog.
+
+Oh wacht. Het is andersom. Ik heb nu 1 trillion ore hoeveel fuel krijg ik. Niet
+hoeveel ore moet ik voor 1 trillion fuel.
+
+Es kijken bij hoeveel ik voor het eerst over 1 trillion ga.
+Als het doorlopen heel lang duurt evt een binary search toepassen.
+
+
+Ja duurt te lang -> binary search

@@ -2,11 +2,10 @@
 import fileinput
 from utils import perf_timer
 
-flip = {'0': '1', '1': '0'}
+flip = str.maketrans({'0': '1', '1': '0'})
 def step(a:str) -> str:
     """Generate the next data string."""
-    b = a[::-1]
-    b = "".join(flip[x] for x in b)
+    b = a[::-1].translate(flip)
     return a + '0' + b
 
 def checksum_1(data:str) -> str:

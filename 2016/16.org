@@ -1,7 +1,7 @@
 :PROPERTIES:
 :ID:       e96c3cd0-3f50-4aa6-ac37-215bc581d914
 :END:
-#+title: 2016 Day 16 Dragon Checksum
+#+title: 2016 Day 16: Dragon Checksum
 #+filetags: :python:
 
 - tags :: [[id:7fb73857-09f6-4a05-a470-aec9ac226993][aoc2016]] · [[id:0039e229-d52a-44bb-b027-b9fa80dd8935][simulation]] · [[id:28998a92-8554-4fb0-9bfa-ee6265ff6258][Scaling problem]]
@@ -45,3 +45,41 @@ dingen doet met zip en ook string concatenatie overslaat, alles dus eigenlijk
 met lists oplost.
 
 Deel twee duurt nu ~2s dat vind ik prima!
+
+* TIL [[id:a7b7ebed-0c33-43fd-87ee-62109edf1487][string translate in python]]
+
+Ik kwam [[https://docs.python.org/3/library/stdtypes.html#str.translate][str.translate]] met [[https://docs.python.org/3/library/stdtypes.html#str.maketrans][str.maketrans]] tegen in de reddit mega thread van deze dag.
+
+In eerste instantie had ik
+
+#+caption: translate by joining a generator comprehension
+#+begin_src python
+flip = {'0': '1', '1': '0'}
+def step(a:str) -> str:
+    """Generate the next data string."""
+    b = a[::-1]
+    b = "".join(flip[x] for x in b)
+    return a + '0' + b
+
+return step('111100001010')
+#+end_src
+
+#+RESULTS:
+: 1111000010100101011110000
+
+
+En met die vondst:
+
+#+caption: translate with builtins
+#+begin_src python
+flip = str.maketrans({'0': '1', '1': '0'})
+def step(a:str) -> str:
+    """Generate the next data string."""
+    b = a[::-1].translate(flip)
+    return a + '0' + b
+
+return step('111100001010')
+#+end_src
+
+#+RESULTS:
+: 1111000010100101011110000
