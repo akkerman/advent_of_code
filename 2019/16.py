@@ -1,10 +1,8 @@
 """Day 16: Flawed Frequency Transmission."""
 import fileinput
-from functools import lru_cache
 
 base_pattern = [0, 1, 0, -1]
 
-@lru_cache
 def pattern(pos: int) -> list[int]:
     return [x for x in base_pattern for _ in range(pos)]
 
@@ -24,11 +22,10 @@ def phase2(fft: list[int]) -> list[int]:
     new_fft = list[int]()
 
     total = 0
-    for x in reversed(fft):
+    for x in fft:
         total += x
         new_fft.append(total % 10)
-
-    return list(reversed(new_fft))
+    return new_fft
 
 
 def part_one(inp: str) -> str:
@@ -44,8 +41,12 @@ def part_two(inp: str) -> str:
     offset = int(inp[:7])
     fft = [int(x) for x in inp] * 10000
     fft = fft[offset:]
+
+    fft = fft[::-1]
     for _ in range(100):
         fft = phase2(fft)
+    fft = fft[::-1]
+
     return ''.join(map(str, fft[:8]))
 
 
@@ -62,8 +63,6 @@ def main():
 
 if __name__ == '__main__':
     main()
-    print('done')
-
 
 class Test_pattern:
 

@@ -93,20 +93,16 @@ return (after_offset, perc_of_total)
   : (524411, 8)
 
 
-Het pattern aan het einde is blijkbaar dat je, vanaf het einde een optelling
-maakt en die mod 10 neemt voor het volgende getal aan het einde.
+Het pattern aan het einde is blijkbaar (zoeken de op youtube en reddit) dat je,
+vanaf het einde een optelling maakt en die mod 10 neemt voor het volgende getal
+aan het einde.
 
-
-Hier de eindes van de eerste 5 phases:
+Hier de eindes van de eerste 2 phases:
 
 #+begin_src
 39778671238589201845
 30147936530279088795
-63328129385536779145
-71853542302729369095
-03249617522031293445
 #+end_src
-
 
 Die komt blijkbaar zo tot stand.
 
@@ -120,16 +116,19 @@ def mod_from_end(xs):
         ys.append(total%10)
     return ys[::-1]
 
-# s = '39778671238589201845'
-s = '12345678'
+s = '39778671238589201845'
 result = mod_from_end([int(x) for x in s])
 return ''.join(map(str,result))
 #+end_src
 
 #+RESULTS:
-: 65306158
+: 30147936530279088795
 
 Zo kunnen we vanaf het einde er doorheen gaan, maar hoeven we dus altijd alleen maar de laatste 8% te berekenen.
 
+Omdat het niet handig lijkt om de hele tijd heen en weer te reversen is de phase berekening nu altijd achterstevoren. Dus ik moet voor de loop van 100 en erna even reverse ipv 100x bij begin en einde.
+
 Die tweede phase berekening geeft NIET de goede antwoorden voor de tests van de
 eerste maar de tests voor part2 slagen nu dus boem.
+
+Part two is nu zelfs sneller dan part 1.
