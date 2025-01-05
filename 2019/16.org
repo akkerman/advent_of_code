@@ -1,0 +1,135 @@
+:PROPERTIES:
+:ID:       7f13a8eb-bb7a-49d9-bb85-c78aafaf4cc7
+:END:
+#+title: 2019 Day 16: Flawed Frequency Transmission
+#+filetags: :python:
+
+- tags :: [[id:e28a8549-79c6-4060-83a2-a6bcbe0bb09f][aoc2019]] · [[id:28998a92-8554-4fb0-9bfa-ee6265ff6258][Scaling problem]]
+
+* Part One
+
+Iets met fasen. Hoe ziet 1 fase er uit?
+
+Elke positie moeten we vermedigvuldigen met een getal uit een herhalende reeks getallen.
+Als dat nu een vaste reeks was, zoals in het voorbeeld ~1, 2, 3~ dan was het zo gepiept.
+
+
+Maar de basis is ~0, 1, 0, -1~. Basis want het echte patroon hangt af van een element?
+Voor de waarde van de positie moeten we elk element in het patroon zo vaak laten voorkomen.
+
+~[x for x in base for _ in range(pos)]~
+
+En dan bij het toepassen het eerste voorkomen niet gebruiken maar zodra je aan het einde bent weer wel.
+
+Dus als je een reeks van 15 wilt voor positie 2 (voorbeeld)
+
+#+begin_src python :results verbatim
+base = [0, 1, 0, -1]
+pattern = [x for x in base for _ in range(2)]
+
+pix = 1 # start position of the index
+
+pattern_pos2 = []
+for _ in range(15):
+    pattern_pos2.append(pattern[pix])
+    pix = (pix + 1) % len(pattern)
+
+return pattern_pos2
+#+end_src
+
+#+RESULTS:
+: [0, 1, 1, 0, 0, -1, -1, 0, 0, 1, 1, 0, 0, -1, -1]
+
+
+Alleen de laatste digit over houden van een getal x: ~abs(x) % 10~
+
+
+* Part Two
+
+Ok nice, dus als de input 10k zo groot is dan duurt 1 phase al meer dan 30s (het
+moment waarop ik een timeout genereer).
+
+Dus kan ik iets slims doen met de input? of met de phase berekening?
+
+Kan ik iets met die offset? Heb ik alles wat er voor gebeur of er na gebeurd nodig?
+
+
+---
+
+In plaats van het bepalen van het patroon en die 1 voor 1 op de elementen toe
+passen kan ik ook groepjes definieren die zo groot zijn als het waarde van het
+element, die optellen en vermedigvuldigen met het patroon.
+
+Om dat de vermenigvuldiging zelfs altijd 1, -1 of 0 is kan ik in 1/3 van de
+gevallen ook ervoor kiezen helemala niets op te tellen want nul.
+
+
+Bij berekening van hele hoge waarden zijn er lange stukken 0.
+
+Het patroon bij 8 bv is eerst +8+ 7 0-en.
+Lekker dan dus niet alles in groepjes delen van gelijke lengte, eerste groepje is altijd 1 korter.
+
+---
+
+phase2 berekening werkt maar is nogsteeds te langzaam.
+
+Observaties:
++ Bij alle iteraties voor deel 1 is het laatste cijfer 5.
++ de offset voor mijn input is ~5975589~
++ de lengte van mijn input is ~650~
++ na de input * 10k te doen is er, na offset nog 524411 of 8% over
+
+#+begin_src python :results verbatim
+offset = 5975589
+length = 650
+extended = length * 10000
+after_offset = extended - offset
+perc_of_total = 100 * after_offset // extended
+
+return (after_offset, perc_of_total)
+#+end_src
+
+  #+RESULTS:
+  : (524411, 8)
+
+
+Het pattern aan het einde is blijkbaar dat je, vanaf het einde een optelling
+maakt en die mod 10 neemt voor het volgende getal aan het einde.
+
+
+Hier de eindes van de eerste 5 phases:
+
+#+begin_src
+39778671238589201845
+30147936530279088795
+63328129385536779145
+71853542302729369095
+03249617522031293445
+#+end_src
+
+
+Die komt blijkbaar zo tot stand.
+
+#+begin_src python :results verbatim
+def mod_from_end(xs):
+    rxs = xs[::-1]
+    ys = []
+    total =0
+    for x in rxs:
+        total += x
+        ys.append(total%10)
+    return ys[::-1]
+
+# s = '39778671238589201845'
+s = '12345678'
+result = mod_from_end([int(x) for x in s])
+return ''.join(map(str,result))
+#+end_src
+
+#+RESULTS:
+: 65306158
+
+Zo kunnen we vanaf het einde er doorheen gaan, maar hoeven we dus altijd alleen maar de laatste 8% te berekenen.
+
+Die tweede phase berekening geeft NIET de goede antwoorden voor de tests van de
+eerste maar de tests voor part2 slagen nu dus boem.
