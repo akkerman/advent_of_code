@@ -62,6 +62,12 @@ def part_one(lines:list[str]):
         for nr, nc in ((r, c+1), (r, c-1), (r+1, c), (r-1, c)):
             if (nr, nc) in path:
                 ns.add((nr, nc))
+        return ns
+
+    def next_portal(coord: Coord):
+        ns = set[Coord]()
+        r,c = coord
+        for nr, nc in ((r, c+1), (r, c-1), (r+1, c), (r-1, c)):
             if (nr, nc) in portals:
                 ns.add(portals[(nr, nc)])
         return ns
@@ -81,6 +87,11 @@ def part_one(lines:list[str]):
             if nxt in visited:
                 continue
             q.append((steps+1, nxt))
+
+        for nxt in next_portal(coord):
+            if nxt in visited:
+                continue
+            q.append((steps+2, nxt))
 
     return -1
 
@@ -129,7 +140,7 @@ class Test_PartOne:
         ]
         assert part_one(lines) == 23
 
-    def xtest_example_2(self):
+    def test_example_2(self):
         lines = [
            '                   A               ',
            '                   A               ',
