@@ -3,9 +3,30 @@
 :END:
 #+title: 2019 Day 20: Donut Maze
 #+filetags: :python:
-- tags :: [[id:e28a8549-79c6-4060-83a2-a6bcbe0bb09f][aoc2019]]
+- tags :: [[id:e28a8549-79c6-4060-83a2-a6bcbe0bb09f][aoc2019]] · [[id:40ac912d-4bcf-4a77-8445-b8c3c7f9413d][input parsing]]
 
 * Part One
+
+Die twee letterige portals maken het parsen wel lastiger zeg.
+Als ik die eerst zou vervangen door 1 lettertje dan is het veel makkelijker.
+
+Ik zie echter in de input dat er een vertikale AA is en een horizontale AS.
+
+Wat ik WEL kan doen is
+
+- parse alle paden (~.~) naar een coord stelsel.
+- zet alle letters in een dict
+- zoek obv de letters en de positie ervan tov paden wat het coord is van de portal
+- construeer een dict van ene portal coord naar andere
+- maak een aangepast neigbors functie die niet alleen in de paden moet zetten maar ook naar ander portal punt kan gaan.
+
+- evt gelijk een graph maken? Aantal stappen van ene portal punt naar andere (zal wellicht in part twee nodig zijn?)
+
+Let op dat we alleen puntjes hoeven te tellen. als je door een portal gaat, ga
+je gelijk van het puntje voor het label naar het puntje na het andere label.
+Je moet het zo zien alsof die paden direct aan elkaar vervonden zijn (deel twee
+kost het tijd om te portallen?)
+
 
 
 * Part Two
