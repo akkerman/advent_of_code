@@ -36,3 +36,11 @@ Tests duren nu ongeveer een halve seconde en werkelijke input ~10s.
 
 
 * Part Two
+
+Let op dat er alleen gevraag wordt voor het minimum aantal stappen niet wie wanneer moet lopen.
+Zoals ik het zie zijn er nu 4 aparte doolhoven en kunnen we obv de locaties van
+de deur bepalen welke sleutels gevonden moeten worden door elk van de robots.
+Dus als we gewoon door de deurheen lopen en 4x kortste pad uitrekenen...
+
+
+Raar 2 van de testcases falen maar het uiteindelijke antwoord is correct.
