@@ -1,0 +1,21 @@
+:PROPERTIES:
+:ID:       ac161594-939d-47bd-a54b-37d764d266d1
+:END:
+#+title: 2019 Day 18: Many-Worlds Interpretation
+#+filetags: :python:
+
+- tags :: [[id:e28a8549-79c6-4060-83a2-a6bcbe0bb09f][aoc2019]]
+
+* Part One
+
+Okay dus alle sleutels pakken, maar niet het kortste pad tussen alle sleutels
+want je komt soms voor een gesloten deur.
+
+
+Stel dat we een pad gaan zoeken dan is bijhouden waar we geweest zijn
+nietvoldoende, want sommige paden leiden tot een dichte deur terwijl als je
+daarvooreerst een anderpad zou hebben gelopen je er wel langs kan (want dan heb
+je desleutel).  Waar ik nu aan denk is om een visited state te hebben NIET
+alleen op coordinaat maar inclusief de verzamelde / geopende deuren.
+
+* Part Two
