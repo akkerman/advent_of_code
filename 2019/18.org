@@ -18,4 +18,21 @@ daarvooreerst een anderpad zou hebben gelopen je er wel langs kan (want dan heb
 je desleutel).  Waar ik nu aan denk is om een visited state te hebben NIET
 alleen op coordinaat maar inclusief de verzamelde / geopende deuren.
 
+Ik heb nu een implementatie die bijna 30s kost om de 5 voorbeelden te testen met een goed resultaat.
+Benieuwd hoelang de echter input dan gaat duren.
+Waar zit de optimalisatie?
+
+Als ik geen tuples meer gebruik maar een frozenset dan duurt de test nog 16s.
+
+Een frozenset, in tegenstelling tot een gewone set, is wel hashable dus kan ik
+deze direct in de visited set stoppen zonder heen en weer te vertalen tussen set
+en tuple.
+
+Okay waar ik geen rekening mee gehouden heb is dat het mogelijk is dat een punt,
+met dezelfde sleutels, al meerdere keren in de queue kan staan voordat deze voor
+de eerste keer bezocht wordt. Daarom dus altijd na het poppen controleren!
+
+Tests duren nu ongeveer een halve seconde en werkelijke input ~10s.
+
+
 * Part Two

@@ -11,38 +11,60 @@ Coord = tuple[int, int]
 def parse_input(lines:list[str]):
     """Parse input into a data structure."""
     walls = set[Coord]()
-    keys = set[Coord]()
-    doors = set[Coord]()
+    keys = dict[Coord, str]()
+    doors = dict[Coord, str]()
     start: Coord = (-1, -1)
     for row, line in enumerate(lines):
         walls.update((row, col) for col, char in enumerate(line) if char == '#')
-        keys.update((row, col) for col, char in enumerate(line) if char.islower())
-        doors.update((row, col) for col, char in enumerate(line) if char.isupper())
+        keys.update({(row, col):char for col, char in enumerate(line) if char.islower()})
+        doors.update({(row, col):char for col, char in enumerate(line) if char.isupper()})
         if '@' in line:
             start = (row, line.index('@'))
 
     return walls, keys, doors, start
 
-directions = [(0, 1), (0,-1), (1, 0), (-1, 0 )]
+def set2tuple(s:set[str]):
+    return tuple(sorted(s))
 
+@perf_timer
 def part_one(lines:list[str]) -> int:
     """Solution to part one."""
     walls, keys, doors, start = parse_input(lines)
 
     def next_steps(coord: Coord): 
         r,c = coord
-        return [nxt for nxt in ((r, c+1), (r,c-1), (r+1, c), (r-1, c )) if nxt not in walls]
-
-    collected_keys = set[Coord]()
-    visited = {}
-    # while collected_keys != keys:
-    #     pass
+        return (nxt for nxt in ((r, c+1), (r,c-1), (r+1, c), (r-1, c )) if nxt not in walls)
 
 
+    all_keys = frozenset(keys.values())
+    visited = set[tuple[Coord, frozenset[str]]]()
 
-    
+    q: list[tuple[int, Coord, frozenset[str]]] = [(0, start, frozenset())]
 
+    while q:
+        steps, coord, collected_keys = heapq.heappop(q)
+        if collected_keys == all_keys:
+            return steps
 
+        if (coord, collected_keys) in visited:
+            continue
+        visited.add((coord, collected_keys))
+
+        for nxt in next_steps(coord):
+            if (nxt, collected_keys) in visited:
+                continue
+
+            if (nxt in doors and doors[nxt].lower() not in collected_keys):
+                visited.add((nxt, collected_keys))
+                continue
+
+            if nxt in keys and keys[nxt] not in collected_keys:
+                heapq.heappush(q, (steps+1, nxt, collected_keys | {keys[nxt]}))
+                continue
+
+            heapq.heappush(q, (steps+1, nxt, collected_keys))
+
+    return -1
 
 def part_two(lines):
     """Solution to part two."""
