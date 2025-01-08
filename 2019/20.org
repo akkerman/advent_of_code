@@ -30,3 +30,37 @@ kost het tijd om te portallen?)
 
 
 * Part Two
+
+Ik begrijp niet helemaal hoe ik dat 'kleiner' moet interpreteren, moet ik de
+stapjes gaan schalen of is het gewoon een aanduiding dat het een nivo dieper
+binnen die donut zit?
+
+De input is overigens wel echt vierkant, dat zien we eigenlijk nooit omdat de characters meestal hoger dan breed zijn.
+
+#+CAPTION: square donut maze
+#+NAME:    fig:donut-maze
+[[./20.org_scrot-20250107071621.png]]
+
+
+Volgens mij maakt het niet uit. Je komt gewoon en level dieper.
+
+Hoe, als het path door een portal gaat, te bepalen of het dieper of minder diep wordt?
+bepaal min en max row en col en als een portal 1 van die heeft dan is het een buitenste.
+
+#+begin_src python
+def is_outer(r, c) -> bool:
+    return r in (min_row, max_row) or c in (min_col, max_col)
+#+end_src
+
+Oh en btw, een portal op level 0 is geen portal en een exit op een dieper level is geen exit.
+
+Appart. Het 'interesting' heeft minder stappen bij mij.
+
+
+Ha! ik weet waarom ik bij part 1 een of bij one error had.
+Ik ben bij het bepalen van portals een stap aan het zetten EN door de portal aan het gaan.
+Ik moet gewoon kijken of het huidige punt connect naar een portal niet eerst een stap nemen.
+
+En nu uitvogelen waarom de oplossing
+1. het verkeerde antwoord geeft bij het interesting voorbeeld.
+2. lang duurt

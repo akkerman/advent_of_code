@@ -33,26 +33,27 @@ def parse_input(lines: list[str]):
             continue
         part = nbrs.intersection(letters.keys())
         if len(part) != 1:
-            print((r,c), letters[(r,c)], part, coords)
-            print(letters)
             raise ValueError('Invalid input')
 
         l1 = (r,c)
         l2 = part.pop()
         labels[label(l1, l2)].append(coords.pop())
 
-    for coords in labels.values():
+    rev_labels = dict[Coord, str]()
+    for lbl, coords in labels.items():
         if len(coords) == 2:
             portals[coords[0]] = coords[1]
             portals[coords[1]] = coords[0]
+            rev_labels[coords[0]] = lbl
+            rev_labels[coords[1]] = lbl
+        rev_labels[coords[0]] = lbl
 
-    return path, labels, portals
+    return path, labels, portals, rev_labels
 
 
 def part_one(lines:list[str]):
-    """Solution to part one."""
-    path, labels, portals = parse_input(lines)
-    print(labels)
+    """Fewest steps through the maze."""
+    path, labels, portals, _ = parse_input(lines)
     start = labels['AA'][0]
     end = labels['ZZ'][0]
 
@@ -67,9 +68,8 @@ def part_one(lines:list[str]):
     def next_portal(coord: Coord):
         ns = set[Coord]()
         r,c = coord
-        for nr, nc in ((r, c+1), (r, c-1), (r+1, c), (r-1, c)):
-            if (nr, nc) in portals:
-                ns.add(portals[(nr, nc)])
+        if (r, c) in portals:
+            ns.add(portals[(r, c)])
         return ns
 
     q = deque[tuple[int, Coord]]([(0, start)])
@@ -91,14 +91,74 @@ def part_one(lines:list[str]):
         for nxt in next_portal(coord):
             if nxt in visited:
                 continue
-            q.append((steps+2, nxt))
+            q.append((steps+1, nxt))
 
     return -1
 
 
 def part_two(lines:list[str]):
-    """Solution to part two."""
-    return 'todo'
+    """Fewest steps through the recursive maze."""
+    path, labels, portals, rev_labels = parse_input(lines)
+    start = labels['AA'][0]
+    end = labels['ZZ'][0]
+    
+    min_row = min(r for r, _ in portals.keys())
+    max_row = max(r for r, _ in portals.keys())
+    min_col = min(c for _, c in portals.keys())
+    max_col = max(c for _, c in portals.keys())
+
+    def is_outer(coord:Coord) -> bool:
+        r,c = coord
+        return r in (min_row, max_row) or c in (min_col, max_col)
+
+    def next_steps(coord: Coord):
+        ns = set[Coord]()
+        r,c = coord
+        for nr, nc in ((r, c+1), (r, c-1), (r+1, c), (r-1, c)):
+            if (nr, nc) in path:
+                ns.add((nr, nc))
+        return ns
+
+    def next_portal(coord: Coord):
+        ns = set[Coord]()
+        r,c = coord
+        if (r, c) in portals:
+            ns.add(portals[(r, c)])
+        return ns
+
+    q = list[tuple[int, int, Coord]]([(0, 0, start)])
+    visited = set[tuple[int,Coord]]()
+    while q:
+        steps, level, coord = heapq.heappop(q)
+        if coord == end and level == 0:
+            return steps
+
+        if (level, coord) in visited:
+            continue
+        visited.add((level, coord))
+
+        for nxt in next_steps(coord):
+            if (level,nxt) in visited:
+                continue
+            heapq.heappush(q, (steps+1, level, nxt))
+
+        for nxt in next_portal(coord):
+            if (level, nxt) in visited:
+                continue
+            if is_outer(nxt):
+                level -= 1
+            else:
+                level += 1
+
+            if level < 0:
+                continue
+
+            # print(f'portal {rev_labels[coord]}: {coord} -> {nxt} level: {level}')
+
+            # print(steps, level, nxt)
+            heapq.heappush(q, (steps+1, level, nxt))
+
+    return -1
 
 
 def main():
@@ -109,13 +169,13 @@ def main():
 
     print('part_one', part_one(lines))
 
-    print('part_two', part_two(lines))
+    # print('part_two', part_two(lines))
 
 
 if __name__ == '__main__':
     main()
 
-class Test_PartOne:
+class Test_part_one:
     def test_example_1(self):
         lines = [
             '         A         ',
@@ -142,44 +202,109 @@ class Test_PartOne:
 
     def test_example_2(self):
         lines = [
-           '                   A               ',
-           '                   A               ',
-           '  #################.#############  ',
-           '  #.#...#...................#.#.#  ',
-           '  #.#.#.###.###.###.#########.#.#  ',
-           '  #.#.#.......#...#.....#.#.#...#  ',
-           '  #.#########.###.#####.#.#.###.#  ',
-           '  #.............#.#.....#.......#  ',
-           '  ###.###########.###.#####.#.#.#  ',
-           '  #.....#        A   C    #.#.#.#  ',
-           '  #######        S   P    #####.#  ',
-           '  #.#...#                 #......VT',
-           '  #.#.#.#                 #.#####  ',
-           '  #...#.#               YN....#.#  ',
-           '  #.###.#                 #####.#  ',
-           'DI....#.#                 #.....#  ',
-           '  #####.#                 #.###.#  ',
-           'ZZ......#               QG....#..AS',
-           '  ###.###                 #######  ',
-           'JO..#.#.#                 #.....#  ',
-           '  #.#.#.#                 ###.#.#  ',
-           '  #...#..DI             BU....#..LF',
-           '  #####.#                 #.#####  ',
-           'YN......#               VT..#....QG',
-           '  #.###.#                 #.###.#  ',
-           '  #.#...#                 #.....#  ',
-           '  ###.###    J L     J    #.#.###  ',
-           '  #.....#    O F     P    #.#...#  ',
-           '  #.###.#####.#.#####.#####.###.#  ',
-           '  #...#.#.#...#.....#.....#.#...#  ',
-           '  #.#####.###.###.#.#.#########.#  ',
-           '  #...#.#.....#...#.#.#.#.....#.#  ',
-           '  #.###.#####.###.###.#.#.#######  ',
-           '  #.#.........#...#.............#  ',
-           '  #########.###.###.#############  ',
-           '           B   J   C               ',
-           '           U   P   P               ',
+            '                   A               ',
+            '                   A               ',
+            '  #################.#############  ',
+            '  #.#...#...................#.#.#  ',
+            '  #.#.#.###.###.###.#########.#.#  ',
+            '  #.#.#.......#...#.....#.#.#...#  ',
+            '  #.#########.###.#####.#.#.###.#  ',
+            '  #.............#.#.....#.......#  ',
+            '  ###.###########.###.#####.#.#.#  ',
+            '  #.....#        A   C    #.#.#.#  ',
+            '  #######        S   P    #####.#  ',
+            '  #.#...#                 #......VT',
+            '  #.#.#.#                 #.#####  ',
+            '  #...#.#               YN....#.#  ',
+            '  #.###.#                 #####.#  ',
+            'DI....#.#                 #.....#  ',
+            '  #####.#                 #.###.#  ',
+            'ZZ......#               QG....#..AS',
+            '  ###.###                 #######  ',
+            'JO..#.#.#                 #.....#  ',
+            '  #.#.#.#                 ###.#.#  ',
+            '  #...#..DI             BU....#..LF',
+            '  #####.#                 #.#####  ',
+            'YN......#               VT..#....QG',
+            '  #.###.#                 #.###.#  ',
+            '  #.#...#                 #.....#  ',
+            '  ###.###    J L     J    #.#.###  ',
+            '  #.....#    O F     P    #.#...#  ',
+            '  #.###.#####.#.#####.#####.###.#  ',
+            '  #...#.#.#...#.....#.....#.#...#  ',
+            '  #.#####.###.###.#.#.#########.#  ',
+            '  #...#.#.....#...#.#.#.#.....#.#  ',
+            '  #.###.#####.###.###.#.#.#######  ',
+            '  #.#.........#...#.............#  ',
+            '  #########.###.###.#############  ',
+            '           B   J   C               ',
+            '           U   P   P               ',
         ]
         assert part_one(lines) == 58
 
+class Test_part_two:
+    def test_example_1(self):
+        lines = [
+            '         A         ',
+            '         A         ',  
+            '  #######.#########',  
+            '  #######.........#',  
+            '  #######.#######.#',  
+            '  #######.#######.#',  
+            '  #######.#######.#',  
+            '  #####  B    ###.#',  
+            'BC...##  C    ###.#',  
+            '  ##.##       ###.#',  
+            '  ##...DE  F  ###.#',  
+            '  #####    G  ###.#',  
+            '  #########.#####.#',  
+            'DE..#######...###.#',  
+            '  #.#########.###.#',  
+            'FG..#########.....#',  
+            '  ###########.#####',  
+            '             Z     ',  
+            '             Z     ',  
+        ]
+        assert part_two(lines) == 26
 
+    def test_example_interesting(self):
+        lines = [
+            '             Z L X W       C                 ',
+            '             Z P Q B       K                 ',
+            '  ###########.#.#.#.#######.###############  ',
+            '  #...#.......#.#.......#.#.......#.#.#...#  ',
+            '  ###.#.#.#.#.#.#.#.###.#.#.#######.#.#.###  ',
+            '  #.#...#.#.#...#.#.#...#...#...#.#.......#  ',
+            '  #.###.#######.###.###.#.###.###.#.#######  ',
+            '  #...#.......#.#...#...#.............#...#  ',
+            '  #.#########.#######.#.#######.#######.###  ',
+            '  #...#.#    F       R I       Z    #.#.#.#  ',
+            '  #.###.#    D       E C       H    #.#.#.#  ',
+            '  #.#...#                           #...#.#  ',
+            '  #.###.#                           #.###.#  ',
+            '  #.#....OA                       WB..#.#..ZH',
+            '  #.###.#                           #.#.#.#  ',
+            'CJ......#                           #.....#  ',
+            '  #######                           #######  ',
+            '  #.#....CK                         #......IC',
+            '  #.###.#                           #.###.#  ',
+            '  #.....#                           #...#.#  ',
+            '  ###.###                           #.#.#.#  ',
+            'XF....#.#                         RF..#.#.#  ',
+            '  #####.#                           #######  ',
+            '  #......CJ                       NM..#...#  ',
+            '  ###.#.#                           #.###.#  ',
+            'RE....#.#                           #......RF',
+            '  ###.###        X   X       L      #.#.#.#  ',
+            '  #.....#        F   Q       P      #.#.#.#  ',
+            '  ###.###########.###.#######.#########.###  ',
+            '  #.....#...#.....#.......#...#.....#.#...#  ',
+            '  #####.#.###.#######.#######.###.###.#.#.#  ',
+            '  #.......#.......#.#.#.#.#...#...#...#.#.#  ',
+            '  #####.###.#####.#.#.#.#.###.###.#.###.###  ',
+            '  #.......#.....#.#...#...............#...#  ',
+            '  #############.#.#.###.###################  ',
+            '               A O F   N                     ',
+            '               A A D   M                     ',
+        ]
+        assert part_two(lines) == 396
