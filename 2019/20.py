@@ -51,12 +51,45 @@ def parse_input(lines: list[str]):
     return path, labels, portals, rev_labels
 
 
-def part_one(lines:list[str]):
-    """Fewest steps through the maze."""
-    path, labels, portals, _ = parse_input(lines)
-    start = labels['AA'][0]
-    end = labels['ZZ'][0]
+def portal_distances(path:set[Coord], coords:set[Coord], portals:dict[Coord, Coord]) -> dict[Coord, dict[Coord, int]]:
+    distances = defaultdict[Coord, dict[Coord, int]](dict)
 
+    def next_steps(coord: Coord):
+        ns = set[Coord]()
+        r,c = coord
+        for nr, nc in ((r, c+1), (r, c-1), (r+1, c), (r-1, c)):
+            if (nr, nc) in path:
+                ns.add((nr, nc))
+        return ns
+
+    for start in coords:
+        for end in coords:
+            if start in portals:
+                distances[start][portals[start]] = 1
+
+            q = deque[tuple[int, Coord]]([(0, start)])
+            visited = set[Coord]()
+            while q:
+                steps, coord = q.popleft()
+                if coord == end:
+                    distances[start][end] = steps
+                    distances[end][start] = steps
+                    break
+
+                if coord in visited:
+                    continue
+                visited.add(coord)
+
+                for nxt in next_steps(coord):
+                    if nxt in visited:
+                        continue
+                    q.append((steps+1, nxt))
+
+    return distances
+
+
+@perf_timer
+def bfs_part_one(path: set[Coord], portals: dict[Coord, Coord], start: Coord, end: Coord) -> int:
     def next_steps(coord: Coord):
         ns = set[Coord]()
         r,c = coord
@@ -78,6 +111,7 @@ def part_one(lines:list[str]):
 
         if coord in visited:
             continue
+
         visited.add(coord)
 
         for nxt in next_steps(coord):
@@ -88,33 +122,68 @@ def part_one(lines:list[str]):
     return -1
 
 
-def part_two(lines:list[str]):
-    """Fewest steps through the recursive maze."""
-    path, labels, portals, rev_labels = parse_input(lines)
+
+@perf_timer
+def part_one(lines:list[str]):
+    """Fewest steps through the maze."""
+    path, labels, portals, _ = parse_input(lines)
     start = labels['AA'][0]
     end = labels['ZZ'][0]
-    
-    min_row = min(r for r, _ in portals.keys())
-    max_row = max(r for r, _ in portals.keys())
-    min_col = min(c for _, c in portals.keys())
-    max_col = max(c for _, c in portals.keys())
+    return bfs_part_one(path, portals, start, end)
+
+
+@perf_timer
+def bfs_part_one_v2(distances:dict[Coord, dict[Coord, int]], start: Coord, end: Coord) -> int:
+
+    q = list[tuple[int, Coord]]([(0, start)])
+    visited = set[Coord]()
+    while q:
+        # print([(d, rev_portals[c]) for d,c in q])
+        steps, coord = heapq.heappop(q)
+        if coord == end:
+            return steps
+
+        if coord in visited:
+            continue
+        visited.add(coord)
+
+        for nxt_coord, nxt_steps in distances[coord].items():
+            if nxt_coord in visited:
+                continue
+            heapq.heappush(q, (steps+nxt_steps, nxt_coord))
+
+    return -1
+
+@perf_timer
+def part_one_v2(lines:list[str]):
+    """Fewest steps through the maze."""
+    path, labels, portals, rev_portals = parse_input(lines)
+    portal_coords = rev_portals.keys()
+    distances = portal_distances(path, set(portal_coords), portals)
+    start = labels['AA'][0]
+    end = labels['ZZ'][0]
+    return bfs_part_one_v2(distances, start, end)
+
+
+@perf_timer
+def bfs_part_two(distances:dict[Coord, dict[Coord, int]], start: Coord, end: Coord, rev_portals:dict[Coord, str]) -> int:
+
+    min_row = min(r for r, _ in distances.keys())
+    max_row = max(r for r, _ in distances.keys())
+    min_col = min(c for _, c in distances.keys())
+    max_col = max(c for _, c in distances.keys())
 
     def is_outer(coord:Coord) -> bool:
         r,c = coord
         return r in (min_row, max_row) or c in (min_col, max_col)
 
-    def next_steps(coord: Coord):
-        ns = set[Coord]()
-        r,c = coord
-        for nr, nc in ((r, c+1), (r, c-1), (r+1, c), (r-1, c)):
-            if (nr, nc) in path:
-                ns.add((nr, nc))
-        return ns
-
-    q = list[tuple[int, int, Coord]]([(0, 0, start)])
+    q = list[tuple[int, int, int, Coord]]([(0, 0, 0, start)])
     visited = set[tuple[int,Coord]]()
     while q:
-        steps, level, coord = heapq.heappop(q)
+        _, steps, level, coord = heapq.heappop(q)
+        # print(steps, level, rev_portals[coord])
+        if steps > 1500:
+            raise ValueError('Too many steps')
         if coord == end and level == 0:
             return steps
 
@@ -122,44 +191,59 @@ def part_two(lines:list[str]):
             continue
         visited.add((level, coord))
 
-        for nxt in next_steps(coord):
-            if (level,nxt) in visited:
-                continue
-            heapq.heappush(q, (steps+1, level, nxt))
-
-
-        if coord in portals:
-            nxt = portals[coord]
-            if (level, nxt) in visited:
-                continue
-            if is_outer(nxt):
-                level -= 1
-            else:
-                level += 1
+        for nxt_coord, nxt_steps in distances[coord].items():
+            if nxt_steps == 1: # portal jump
+                if is_outer(coord):
+                    level -= 1
+                else:
+                    level += 1
 
             if level < 0:
                 continue
 
-            # print(f'portal {rev_labels[coord]}: {coord} -> {nxt} level: {level}')
-            # print(steps, level, nxt)
-            heapq.heappush(q, (steps+1, level, nxt))
+            if (level, nxt_coord) in visited:
+                continue
+            
+            tmp_steps = steps + nxt_steps
+            # print(f'from {rev_portals[coord]} to {rev_portals[nxt_coord]} {tmp_steps} at {level}')
+            heapq.heappush(q, ((1000*level + tmp_steps), tmp_steps, level, nxt_coord))
 
     return -1
 
+
+
+@perf_timer
+def part_two(lines:list[str]):
+    """Fewest steps through the recursive maze."""
+    path, labels, portals, rev_portals = parse_input(lines)
+    portal_coords = rev_portals.keys()
+    distances = portal_distances(path, set(portal_coords), portals)
+
+    # for coord, dists in distances.items():
+    #     print(rev_portals[coord])
+    #     for c, d in dists.items():
+    #         print(f'  {rev_portals[c]}: {d}')
+
+    start = labels['AA'][0]
+    end = labels['ZZ'][0]
+    return bfs_part_two(distances, start, end, rev_portals)
 
 def main():
     """Parse input file, pass to puzzle solvers."""
     lines = list[str]()
     for line in fileinput.input():
-        lines.append(line)
+        lines.append(line.replace('\n', ''))
 
-    print('part_one', part_one(lines))
+    # print('part_one', part_one(lines))
+    # print('part_one_v2', part_one_v2(lines))
 
-    # print('part_two', part_two(lines))
+    # too low: 1109
+    print('part_two', part_two(lines))
 
 
 if __name__ == '__main__':
     main()
+    print('done')
 
 class Test_part_one:
     def test_example_1(self):

@@ -122,7 +122,9 @@ rl.on('close', () => {
 })
 
 function partOne () {
-  const dist = purgeBrokenValves(allPairsShortestPath(valves).dist)
+  const allp = allPairsShortestPath(valves)
+  console.log(allp)
+  const dist = purgeBrokenValves(allp.dist)
 
   const [flow] = dfsFlowRate(dist, 30, 'AA')
   return flow

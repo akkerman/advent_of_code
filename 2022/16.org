@@ -4,7 +4,7 @@
 #+title: 2022 Day 16: Proboscidea Volcanium
 
 
-- tags :: [[id:aec0815f-5cba-459c-8e9c-4fa09d87a446][aoc2022]]
+- tags :: [[id:aec0815f-5cba-459c-8e9c-4fa09d87a446][aoc2022]] · [[id:40ac912d-4bcf-4a77-8445-b8c3c7f9413d][input parsing]]
 
 
 * Solve in javascript
