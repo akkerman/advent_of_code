@@ -72,3 +72,6 @@ Het interesting voorbeeld is nu zo klaar maar geeft een te laag antwoord, en ook
 
 Enkele debug sessies verder.
 Note to self: niet het level updaten in een loop, maar een hulp variable gebruiken en die updaten.
+
+Heb uiteindelijk ook het genomen pad + de levels bij gehouden zodat ik de
+stappen kan printen zoals het voorbeeld en kan zien waar het mis gaat.
