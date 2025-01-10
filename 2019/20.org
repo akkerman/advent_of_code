@@ -68,3 +68,7 @@ En nu uitvogelen waarom de oplossing
 Ok ik heb van alle nodes naar alle andere nodes de afstand bepaald.
 Hiermee krijg ik met part 1, volgens mij, dezelfde getallen (even nog testcases aanpassen)
 Het interesting voorbeeld is nu zo klaar maar geeft een te laag antwoord, en ook het antwoord voor echte input is te laag.
+
+
+Enkele debug sessies verder.
+Note to self: niet het level updaten in een loop, maar een hulp variable gebruiken en die updaten.

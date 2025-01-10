@@ -1,9 +1,7 @@
 """Day 20: Donut Maze."""
 import fileinput
 import heapq
-import re
-from collections import deque, defaultdict, Counter
-from functools import lru_cache
+from collections import deque, defaultdict
 from utils import perf_timer
 
 Coord = tuple[int, int]
@@ -52,6 +50,7 @@ def parse_input(lines: list[str]):
 
 
 def portal_distances(path:set[Coord], coords:set[Coord], portals:dict[Coord, Coord]) -> dict[Coord, dict[Coord, int]]:
+    """Calculate distances between all portals."""
     distances = defaultdict[Coord, dict[Coord, int]](dict)
 
     def next_steps(coord: Coord):
@@ -64,6 +63,8 @@ def portal_distances(path:set[Coord], coords:set[Coord], portals:dict[Coord, Coo
 
     for start in coords:
         for end in coords:
+            if start == end:
+                continue
             if start in portals:
                 distances[start][portals[start]] = 1
 
@@ -84,7 +85,6 @@ def portal_distances(path:set[Coord], coords:set[Coord], portals:dict[Coord, Coo
                     if nxt in visited:
                         continue
                     q.append((steps+1, nxt))
-
     return distances
 
 
@@ -138,7 +138,6 @@ def bfs_part_one_v2(distances:dict[Coord, dict[Coord, int]], start: Coord, end: 
     q = list[tuple[int, Coord]]([(0, start)])
     visited = set[Coord]()
     while q:
-        # print([(d, rev_portals[c]) for d,c in q])
         steps, coord = heapq.heappop(q)
         if coord == end:
             return steps
@@ -164,6 +163,33 @@ def part_one_v2(lines:list[str]):
     end = labels['ZZ'][0]
     return bfs_part_one_v2(distances, start, end)
 
+def print_path(locs:list[tuple[int, int, Coord]], rev_portals:dict[Coord, str]):
+    for loc in locs:
+        print(rev_portals[loc[2]],loc)
+
+    print()
+    print('steps through maze')
+    prev_steps = 0
+    prev_level = 0
+    for i, tpl in enumerate(locs[1:]):
+        steps, level, loc = tpl
+
+        intermediate = steps - prev_steps
+        prev_steps = steps
+
+        lbl = rev_portals[loc]
+        prev_coord = locs[i][2]
+        prev_lbl = rev_portals[prev_coord]
+
+        if intermediate == 1:
+            if prev_level < level:
+                print(f'Recurse into level {level} through {lbl} ({intermediate} step)')
+            else:
+                print(f'Return to level {level} through {lbl} ({intermediate} step)')
+            prev_level = level
+        else:
+            print(f'Walk from {prev_lbl} to {lbl} ({intermediate} steps)')
+
 
 @perf_timer
 def bfs_part_two(distances:dict[Coord, dict[Coord, int]], start: Coord, end: Coord, rev_portals:dict[Coord, str]) -> int:
@@ -177,14 +203,14 @@ def bfs_part_two(distances:dict[Coord, dict[Coord, int]], start: Coord, end: Coo
         r,c = coord
         return r in (min_row, max_row) or c in (min_col, max_col)
 
-    q = list[tuple[int, int, int, Coord]]([(0, 0, 0, start)])
+    q = list[tuple[int, int, Coord, list[tuple[int, int, Coord]]]]([(0, 0, start, [(0, 0, start)])])
     visited = set[tuple[int,Coord]]()
     while q:
-        _, steps, level, coord = heapq.heappop(q)
-        # print(steps, level, rev_portals[coord])
-        if steps > 1500:
+        steps, level, coord, locs = heapq.heappop(q)
+        if steps > 15000:
             raise ValueError('Too many steps')
         if coord == end and level == 0:
+            # print_path(locs, rev_portals)
             return steps
 
         if (level, coord) in visited:
@@ -192,21 +218,21 @@ def bfs_part_two(distances:dict[Coord, dict[Coord, int]], start: Coord, end: Coo
         visited.add((level, coord))
 
         for nxt_coord, nxt_steps in distances[coord].items():
+            nxt_level = level
             if nxt_steps == 1: # portal jump
                 if is_outer(coord):
-                    level -= 1
+                    nxt_level -= 1
                 else:
-                    level += 1
+                    nxt_level += 1
 
-            if level < 0:
+            if nxt_level < 0:
                 continue
 
-            if (level, nxt_coord) in visited:
+            if (nxt_level, nxt_coord) in visited:
                 continue
             
             tmp_steps = steps + nxt_steps
-            # print(f'from {rev_portals[coord]} to {rev_portals[nxt_coord]} {tmp_steps} at {level}')
-            heapq.heappush(q, ((1000*level + tmp_steps), tmp_steps, level, nxt_coord))
+            heapq.heappush(q, (tmp_steps, nxt_level, nxt_coord, locs + [(tmp_steps, nxt_level, nxt_coord)]))
 
     return -1
 
@@ -218,12 +244,6 @@ def part_two(lines:list[str]):
     path, labels, portals, rev_portals = parse_input(lines)
     portal_coords = rev_portals.keys()
     distances = portal_distances(path, set(portal_coords), portals)
-
-    # for coord, dists in distances.items():
-    #     print(rev_portals[coord])
-    #     for c, d in dists.items():
-    #         print(f'  {rev_portals[c]}: {d}')
-
     start = labels['AA'][0]
     end = labels['ZZ'][0]
     return bfs_part_two(distances, start, end, rev_portals)
@@ -234,10 +254,8 @@ def main():
     for line in fileinput.input():
         lines.append(line.replace('\n', ''))
 
-    # print('part_one', part_one(lines))
-    # print('part_one_v2', part_one_v2(lines))
-
-    # too low: 1109
+    print('part_one', part_one(lines))
+    print('part_one_v2', part_one_v2(lines))
     print('part_two', part_two(lines))
 
 
