@@ -19,13 +19,14 @@ class SpringDroid(IO):
     def output(self, value:int):
         self.outputs.append(value)
 
-    def run(self):
+    def start(self):
         computer(self.program, self)
 
-    def send(self, command:str):
+    def instruct(self, command:str):
         for c in command:
             self.inputs.append(ord(c))
         self.inputs.append(10)
+        return self
 
     def get_output(self):
         return ''.join(chr(c) for c in self.outputs[:-1])
@@ -36,14 +37,14 @@ class SpringDroid(IO):
 def part_one(program:list[int]):
     """Solution to part one."""
     droid = SpringDroid(program)
-    droid.send('NOT A T')
-    droid.send('NOT T T')
-    droid.send('AND B T')
-    droid.send('AND C T')
-    droid.send('NOT T J')
-    droid.send('AND D J')
-    droid.send('WALK')
-    droid.run()
+    droid.instruct('NOT A T')
+    droid.instruct('NOT T T')
+    droid.instruct('AND B T')
+    droid.instruct('AND C T')
+    droid.instruct('NOT T J')
+    droid.instruct('AND D J')
+    droid.instruct('WALK')
+    droid.start()
     print(droid.get_output())
     return droid.get_last_output()
 
@@ -51,18 +52,18 @@ def part_one(program:list[int]):
 def part_two(program:list[int]):
     """Solution to part two."""
     droid = SpringDroid(program)
-    droid.send('NOT A T')
-    droid.send('NOT T T')
-    droid.send('AND B T')
-    droid.send('AND C T')
-    droid.send('NOT T J')
-    droid.send('AND D J')
-    droid.send('NOT E T')
-    droid.send('NOT T T')
-    droid.send('OR H T')
-    droid.send('AND T J')
-    droid.send('RUN')
-    droid.run()
+    droid.instruct('NOT A T')
+    droid.instruct('NOT T T')
+    droid.instruct('AND B T')
+    droid.instruct('AND C T')
+    droid.instruct('NOT T J')
+    droid.instruct('AND D J')
+    droid.instruct('NOT E T')
+    droid.instruct('NOT T T')
+    droid.instruct('OR H T')
+    droid.instruct('AND T J')
+    droid.instruct('RUN')
+    droid.start()
     print(droid.get_output())
     return droid.get_last_output()
 
