@@ -1,0 +1,45 @@
+:PROPERTIES:
+:ID:       c919b441-7f54-4652-a679-4b5bab0debc9
+:END:
+#+title: 2019 Day 22: Slam Shuffle
+#+filetags: :python:
+
+- tags :: [[id:e28a8549-79c6-4060-83a2-a6bcbe0bb09f][aoc2019]]
+
+* Part One
+
+*deal into new stack* => reverse list
+
+*cut* => array in twee delen, ff opletten of dat met negatieven goed gaat.
+
+Is eigenlijk een soort rotatie van het array
+
+#+begin_src python :results verbatim
+deck = list(range(10))
+num = 2
+new_deck = deck[num:] + deck[:num]
+
+return new_deck
+#+end_src
+
+#+RESULTS:
+: [2, 3, 4, 5, 6, 7, 8, 9, 0, 1]
+
+#+begin_src python :results verbatim
+deck = list(range(10))
+num = -2
+new_deck = deck[num:] + deck[:num]
+
+return new_deck
+#+end_src
+
+#+RESULTS:
+: [8, 9, 0, 1, 2, 3, 4, 5, 6, 7]
+
+
+deal with increment => modulo lengte van de list met aangegeven increments neerleggen.
+
+
+note to self: position of card 2019 is ~deck.index(2019)~ niet ~deck[2019]~
+
+* Part Two
