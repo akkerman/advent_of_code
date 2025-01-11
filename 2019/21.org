@@ -1,0 +1,33 @@
+:PROPERTIES:
+:ID:       b7a3bb9c-40ff-4090-8d7a-62992ffd1c68
+:END:
+#+title: 2019 Day 21: Springdroid adventure
+#+filetags: :python:
+
+- tags :: [[id:e28a8549-79c6-4060-83a2-a6bcbe0bb09f][aoc2019]]
+
+* Part One
+
+Blijkbaar springt die droid altijd 4 vakjes.
+Dus wat er ook in die instructies staat we moeten er voorzorgen dat daar altijd grond is zodra er gesprongen wordt.
+Als er echter in die andere drie vakjes ervoor een gat is mag je springen.
+
+dus ~D and (not A or not B or not C)~
+of evt ~D and not (A and B and C)~
+
+Lastige is dat je niet kan beginnen met een positieve waarde, je kan alleen een negatieve waarde direct in een register stoppen.
+
+Dus spring als er iets op D is is dan:
+
+#+begin_src
+NOT D T
+NOT T J
+#+end_src
+
+
+* Part Two
+
+Heeft alleen zin als je gelijk weer wilt springen dus springen als er na D (E)
+een gat is of als er 4 verder (H) wel grond is.
+
+De rest zou toch door de originele condities opgevangen moeten worden?
