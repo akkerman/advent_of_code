@@ -48,7 +48,12 @@ def prev_position(instructions: list[str], length: int, position: int) -> int:
             continue
 
         if 'deal with increment' in instruction:
-            position = (length - ((position * num) % length)) % length
+            if num == length - 1:
+                position = (position * num) % length
+                if position == length:
+                    position = 0
+            else:
+                position = (length - ((position * num) % length)) % length
             continue
 
     return position
@@ -58,6 +63,10 @@ def part_one(lines: list[str]) -> int:
     """Solution to part one."""
     new_deck = shuffle(list(range(10007)), lines)
     return new_deck.index(2019)
+
+def part_one_v2(lines: list[str]) -> int:
+    pos = part_one(lines)
+    return prev_position(lines, 10007, pos) # should be 2019
 
 
 
@@ -77,8 +86,9 @@ def main():
         lines.append(line)
 
     print('part_one', part_one(lines))
+    print('part_one_v2', part_one_v2(lines))
 
-    print('part_two', part_two(lines))
+    # print('part_two', part_two(lines))
 
 
 if __name__ == '__main__':
@@ -215,15 +225,15 @@ class Test_Previous_Position_ten():
     @pytest.mark.parametrize('position', [0,1,2,3,4,5,6,7,8,9])
     def test(self, position:int):
         assert prev_position(self.instructions, 10, position) == self.deck[position]
-#
-# class Test_Part_One_Position():
-#     def test(self):
-#         instructions = [
-#             'deal with increment 7',
-#             'deal into new stack',
-#             'deal into new stack'
-#             'cut 2',
-#             'cut -2',
-#         ]
-#         pos = part_one(instructions)
-#         assert prev_position(instructions, 10007, 2019) == pos
+
+class Test_Part_One_Position():
+    def test(self):
+        instructions = [
+            'deal with increment 7',
+            'deal into new stack',
+            'deal into new stack'
+            'cut 2',
+            'cut -2',
+        ]
+        pos = part_one(instructions)
+        assert prev_position(instructions, 10007, pos) == 2019

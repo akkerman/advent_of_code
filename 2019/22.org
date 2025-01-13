@@ -83,3 +83,9 @@ return deck
 
 #+RESULTS:
 : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+--
+Een paar dingen werken nu wel. ik krijg de tests niet allemaal geslaagd.
+Los daarvan duurt het nogsteeds lang voordat de echte input klaar is.
+
+ah als ik een deal heb met increment 9 dan gaat het mis...
