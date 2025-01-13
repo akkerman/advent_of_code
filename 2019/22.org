@@ -39,7 +39,47 @@ return new_deck
 
 deal with increment => modulo lengte van de list met aangegeven increments neerleggen.
 
-
 note to self: position of card 2019 is ~deck.index(2019)~ niet ~deck[2019]~
 
 * Part Two
+
+nice zo'n grote list kannie helemaal niet maken idd.
+
+Er wordt nu wel gevraagd om de kaart in 2020 dus ~deck[2020]
+
+Is er een manier om elke instructie te doen alleen voor positie 2020?
+
+wellicht alles achterste voren?
+
+Dus er is een getal x op positie 2020.
+En dan doen we alle instructie van achter naar voren zodat we weten welke positie we moeten hebben.
+Dus 1 iteratie is dan 'geeft mee een positie om te tracken' en dan als uitkomst, hier heb je een positie waar ie was in het begin.
+
+Zodra je helemaal bij het begin bent dan is positie gelijk aan kaartnummer.
+
+
+dus gegeven positie x
+
+*deal into new stack* => vorige positie ~len(deck) - x -1~
+*cut* =>
+        x < cut => ?? x+cut
+        x > cut => ?? cut -x ?
+        x == cut ??
+
+Wat is het omgekeerde van een cut??
+
+#+begin_src python :results verbatim
+
+deck = list(range(10))
+
+def cut(d, x):
+    return d[x:] + d[:x]
+
+deck = cut(deck, 2)
+deck = cut(deck, -2)
+
+return deck
+#+end_src
+
+#+RESULTS:
+: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
