@@ -1,0 +1,29 @@
+:PROPERTIES:
+:ID:       127e44f2-dca4-4436-acdc-d3ca14bf1a48
+:END:
+#+title: 2019 Day 23: Category Six
+#+filetags: :python:
+
+- tags :: [[id:e28a8549-79c6-4060-83a2-a6bcbe0bb09f][aoc2019]] · [[id:8cd1ed8f-6f67-41a6-a8cd-577f8b959eac][intcode]]
+
+* Part One
+
+Kan ik 50x het programma draaien, zonder multithreading?
+Niet!
+Muli threading geintroduceerd en dan werkt het.
+
+* Part Two
+
+geen idee.
+Ik zie, opp een gegeven moment deze waarden voor Y herhaald langskomen
+
++ 2251799
++ -1
+
+Ik heb nu de computer zo aangepast dat deze altijd stopt na het ontvangen van -1.
+Dit stelt me in staat om elke computer 1 voor 1 uit te voeren.
+
+Part 1 is nu binnen een seconde klaar maar part 2 geeft -1
+
+Okay als je wilt kijken of de computers allemaal idle zijn kijk dan naar de data
+die ze consumeren en niet naar de packet die ze willen uit gaan sturen...
