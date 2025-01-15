@@ -5,7 +5,6 @@
 #+filetags: :python:
 - tags :: [[id:212a04da-2f2f-42a8-aac3-6cc62a805688][aoc2024]]
 - references :: [[id:c7a78d9c-bf47-41a8-827d-2845e2ad4f0a][2022 Day 23: Unstable Diffusion]]
-
 * Part One
 Komt me heel erg bekend voor.
 Beetje zoeken. dit lijkt op [[id:b6ff1641-487f-448a-825a-e6c2cf3ce14b][2015 Day 7: Some Assembly Required]]

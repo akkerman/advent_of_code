@@ -1,0 +1,16 @@
+:PROPERTIES:
+:ID:       5069d37d-6869-49b6-a1bd-4c51c354a2b0
+:END:
+#+title: 2019 Day 24: Planet of Discord
+#+filetags: :python:
+
+- tags :: [[id:e28a8549-79c6-4060-83a2-a6bcbe0bb09f][aoc2019]] · [[id:8a5fcefc-68be-4871-934c-7033fcee652c][Cellular automaton]] · [[id:28998a92-8554-4fb0-9bfa-ee6265ff6258][Scaling problem]]
+
+* Part One
+
+Input omgezet naar een set met bugs.
+
+De manier waarop biodiversity is berekend zorgt er voor dat we geen state bij
+hoeven te houden alleen deze rating
+
+* Part Two
