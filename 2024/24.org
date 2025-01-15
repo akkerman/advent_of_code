@@ -39,3 +39,5 @@ ALs je de optelling doet dan zit het al in de buurt:
 
 
 * TODO deze puzzel zelf oplossen en begrijpen
+
+Zie het boek Code van Charles Petzold vanaf pagina 131 daar wordt een Binary Adding Machine uitgelegd.
