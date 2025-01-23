@@ -14,3 +14,14 @@ De manier waarop biodiversity is berekend zorgt er voor dat we geen state bij
 hoeven te houden alleen deze rating
 
 * Part Two
+
+Recursive levels.
+
+Om te beginnen zijn er alleen bugs op level 0 en verder nergens.
+
+Er moet een step functie komen die grids (levels) kan vergelijken en toevoegen.
+De levels zou ik kunnen weergeven in een lijst.
+Bij elke step zet ik er dan 1 voor en 1 na, als beide eind grids tenmiste bugs bevatten.
+Dan kan ik er altijd door alsof we altijd een nivo dieper gaan.
+
+Die letters kan ik vertalen naar getallen en dan hebben we dat getallen aan de buitenrand, voor een grid in een level lager,
