@@ -1,12 +1,6 @@
 """Day 18: Like a Rogue."""
 import fileinput
-import heapq
-import re
-from collections import deque, defaultdict, Counter
-from functools import lru_cache
-from utils import perf_timer
-
-
+from collections import Counter
 
 traps = [ '^^.', '.^^', '^..', '..^' ]
 
@@ -27,20 +21,13 @@ def next_row(current_row:str) -> str:
 
     return nr
 
-
-def part_one(row:str):
-    """Solution to part one."""
+def solve(row:str, total_rows:int) -> int:
     nr = row
     cnt = Counter(nr)
-    for _ in range(39):
+    for _ in range(total_rows - 1):
         nr = next_row(nr)
         cnt.update(nr)
     return cnt['.']
-
-def part_two(lines):
-    """Solution to part two."""
-    return 'todo'
-
 
 def main():
     """Parse input file, pass to puzzle solvers."""
@@ -50,9 +37,9 @@ def main():
         
         lines.append(line)
 
-    print('part_one', part_one(lines[0]))
+    print('part_one', solve(lines[0], 40))
 
-    print('part_two', part_two(lines))
+    print('part_two', solve(lines[0], 400000))
 
 
 if __name__ == '__main__':
