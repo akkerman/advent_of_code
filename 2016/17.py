@@ -44,24 +44,40 @@ def neighbors(pos:Coord, passwd:str)->list[tuple[Coord, Dir]]:
     
     return nbs
 
-def part_one(passwd:str):
+def part_one(passwd:str) -> str:
     """Solution to part one."""
     start: Coord = (1, 1)
-    q: list[tuple[int, Coord, str]] = [(0, start, passwd)]
+    q: list[tuple[int, Coord, str]] = [(0, start, '')]
     
     while q:
         steps, pos, path = heapq.heappop(q)
 
         if pos == (4,4):
-            return path[len(passwd):]
+            return path
 
-        for npos, dir in neighbors(pos, path):
+        for npos, dir in neighbors(pos, passwd+path):
             heapq.heappush(q, (steps+1, npos, path + dir))
-    
 
-def part_two(lines):
+    return ''
+
+def part_two(passwd:str):
     """Solution to part two."""
-    return 'todo'
+
+    @lru_cache(None)
+    def longest(bla: tuple[int, Coord, str]) -> int: 
+        steps, pos, path = bla
+        if pos == (4,4):
+            return len(path)
+
+        lenpath = -1
+        for npos, dir in neighbors(pos, passwd+path):
+            plen = longest((steps+1, npos, path + dir))
+            if plen > lenpath:
+                lenpath = plen
+        return lenpath
+
+
+    return longest((0, (1, 1), ''))
 
 
 def main():
@@ -91,3 +107,13 @@ def test_part_one2():
 def test_part_one3():
     """Test part one."""
     assert(part_one('ulqzkmiv')) == 'DRURDRUDDLLDLUURRDULRLDUUDDDRR'
+
+def test_part_two1():
+    """Test part two."""
+    assert(part_two('ihgpwlah')) == 370
+def test_part_two2():
+    """Test part two."""
+    assert(part_two('kglvqrro')) == 492
+def test_part_two3():
+    """Test part two."""
+    assert(part_two('ulqzkmiv')) == 830
