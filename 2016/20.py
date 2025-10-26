@@ -1,21 +1,13 @@
 """Day 20: Firewall Rules."""
 import fileinput
-import heapq
-import re
-from collections import deque, defaultdict, Counter
-from functools import lru_cache
-from utils import perf_timer
-
 
 Interval = tuple[int, int]
 
 def part_one(intervals: list[Interval]):
     """Solution to part one."""
-
-    from_ip = 0
     to_ip = 0
     for f, t in sorted(intervals, key=lambda x: x[0]):
-        if from_ip <= f <= to_ip:
+        if 0 <= f <= to_ip:
             to_ip = max(to_ip, t)
             continue
         elif f == to_ip + 1:
@@ -25,13 +17,22 @@ def part_one(intervals: list[Interval]):
             assert to_ip < f
             return to_ip + 1
 
+    assert False, "Shouldn't reach here"
 
-    return 'todo'
 
-
-def part_two(intervals):
+def part_two(intervals: list[Interval]):
     """Solution to part two."""
-    return 'todo'
+    to_ip = 0
+    count = 0
+    for f, t in sorted(intervals, key=lambda x: x[0]):
+        if f > (to_ip + 1):
+            count += f - to_ip - 1
+
+        to_ip = max(to_ip, t)
+
+    assert to_ip == 4294967295
+
+    return count
 
 
 def main():
@@ -44,9 +45,9 @@ def main():
         
         intervals.append(interval)
 
-    # too low: 1847081
     print('part_one', part_one(intervals))
 
+    ## too high: 202
     print('part_two', part_two(intervals))
 
 
