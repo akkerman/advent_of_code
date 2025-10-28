@@ -1,0 +1,39 @@
+:PROPERTIES:
+:ID:       dbcd751e-048a-49fe-a9c3-f54ee4d8743f
+:END:
+#+title: 2016 day 19: An Elephant Named Joseph.
+#+filetags: :python:
+
+- tags :: [[id:7fb73857-09f6-4a05-a470-aec9ac226993][aoc2016]]
+
+* Part One
+Ik zat hier eerst te denken aan hoe ik, in één keer elk tweede element uit een array zou kunnen halen.
+En vervolgens wat dan met het laatste element, en dat ik eigenlijk het eerste element achteraan zou moeten zetten.
+Dat bracht mij bij een dubble ended queue en toen besloot ik maar alles gewoon te simuleren door het eerste element achteraan te zetten en het volgende element te verwijderen.
+
+Uiteindelijk moet er dan 1 overblijven.
+
+
+* Part Two
+
+Hierbij was het m.i. al vlot duidelijk dat ik de cirkel kan representeren met twee lijsten, elk de helft van de ene cirkel. Zeg maar left and right.
+
+Bij de ene helft staat dan altijd de elf die iets gaat pakken voorop en bij de andere de elf waarvan gepakt gaat worden.
+
+#+begin_src python
+right.popleft()
+right.append(left.popleft())
+left.append(right.popleft())
+#+end_src
+
+Volgens die logica kun je dus de grijpgrage elf altijd van de ene helft achter de andere zetten.
+En de elf die naast het 'slachtoffer' zat van de andere naar de ene.
+
+Alleen blijkt dit niet altijd goed te gaan. want zo wordt de rechter cirkel steeds kleiner en blijft linker even groot.
+Wat er eigenlijk moet gebeuren is dat de rechterhelft altijd groter of gelijk is.
+
+Bij gelijk pak je precies de tegenovergelegen elf, en bij groter (altijd 1 groter) neem je de gene met laagste index (de linker van de twee tegenover).
+
+Zodra echter de linker helft groter is dan de recht is de tegenover gelegen elf aan het einde van de eerste helft. dus dan pakken we de kadoos van hem af.
+
+In een discussie met chatgpt, kwam ik er achter dat dit probleem blijkbaar een variant is op [[https://en.wikipedia.org/wiki/Josephus_problem][Josephus problem]] (zie titel van deze puzzel...) hierbij gaat het meer over een aantal personen die geelimineerd worden via een 'sla zoveel personen over' patroon. Het aantal personen dat hier wordt overgeslagen is eigenlijk variabel tov de vorige iteratie.
