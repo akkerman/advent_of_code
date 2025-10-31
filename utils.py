@@ -31,3 +31,7 @@ def perf_timer(func: T) -> T:
             print(f'{func.__name__} took {duration:.2f} seconds')
         return result
     return wrapper
+
+def chunk_list(lst: list[T], size: int) -> list[list[T]]:
+    """Chunk a list into smaller lists of given size."""
+    return [lst[i:i + size] for i in range(0, len(lst), size)]

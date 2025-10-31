@@ -5,6 +5,7 @@ import re
 from collections import deque, defaultdict, Counter
 from functools import reduce
 from operator import xor
+from utils import chunk_list
 
 def reverse_sub(lst: list[int], start:int, length:int):
     n = len(lst)
@@ -43,9 +44,8 @@ def sparse_hash(lst: list[int], lengths: list[int], iterations: int = 64):
 
 def dense_hash(lst: list[int]):
     dense: list[int] = []
-    for i in range(len(lst)//16):
-        idx = i * 16
-        dense.append(reduce(xor,lst[idx:idx+16]))
+    for block in chunk_list(lst, 16):
+        dense.append(reduce(xor,block))
     return dense
 
 def to_hex(lst: list[int]):
