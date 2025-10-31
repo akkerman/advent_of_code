@@ -1,0 +1,42 @@
+:PROPERTIES:
+:ID:       c3e28bbc-2407-49a6-b4f4-ce2c8aaf18ee
+:END:
+#+title: 2017 Day 10: Knot Hash
+#+filetags: :python:
+
+- tags :: [[id:a578bf44-af35-4e23-91f9-03cf7d768731][aoc2017]]
+
+* Part One
+
+Een circulaire lijst, in python kan een gewone lijst zijn met een huidige index alleen dan modulo de lengte van de list.
+
+#+begin_src python :results verbatim
+circular_list = [1,2,3,4,5]
+def value_at(idx):
+    n = len(circular_list)
+    return circular_list[idx % n]
+
+return value_at(4), value_at(13)
+#+end_src
+
+#+RESULTS:
+: (5, 4)
+
+Het omkeren van een lijst kan door de uiteinden met elkaar te verwisselen, de uitdaging in die circulaire lijst is dan dus modulo de index:
+
+#+begin_src python :results verbatim
+lst = [1,2,3,4,5, 6]
+
+n = len(lst)
+for s in range(n//2):
+    e = n - s - 1
+    lst[s],lst[e] = lst[e], lst[s]
+
+return lst
+#+end_src
+
+#+RESULTS:
+: [6, 5, 4, 3, 2, 1]
+
+
+* Part Two
