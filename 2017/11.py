@@ -1,10 +1,5 @@
 """Day 11: Hex Ed."""
 import fileinput
-import heapq
-import re
-from collections import deque, defaultdict, Counter
-from functools import lru_cache
-from utils import perf_timer
 
 Coord = tuple[int,int,int]
 
@@ -16,7 +11,6 @@ dirs = {
     's':  (0, -1, 1),
     'sw': (-1, 0, 1),
     'nw': (-1, 1, 0),
-
 }
 
 
@@ -41,9 +35,17 @@ def part_one(instructions: list[str]):
     return dist(position)
 
 
-def part_two(lines):
+def part_two(instructions: list[str]):
     """Solution to part two."""
-    return 'todo'
+    position: Coord = (0,0,0)
+    max_dist = 0
+
+    for instr in instructions:
+        dir = dirs[instr]
+        position = add(position, dir)
+        max_dist = max(max_dist, dist(position))
+
+    return max_dist
 
 
 def main():

@@ -9,5 +9,11 @@
 
 * Part One
 
+Leuk een hex grid, die zag ik voor het eerst in [[id:74f224fe-09fc-43b2-b84d-edccd2609af7][2020 Day 24: Lobby Layout]]. Ik weet niet helemaal waarom ik dit leuk vind en het betekend zeker niet dat ik het goed uit m'n hoofd kan, zo bewijs ik aan mezelf door de 'dirs' dictionary van die puzzel letterlijk over te nemen en me af te vragen waarom het niet werkt. Dat grid is, volgens mij, 60 graden gedraaid tov deze.
+
+Anyhow, het startpunt en de instructies vertaald naar 3D punten en dan de simulatie afdraaien.
+Na op het eindpunt beland te zijn bepalen van de [[id:307e89a0-f91d-431c-9f1a-2bee88d184d3][manhattan distance]] van dat punt tov het nul punt.
 
 * Part Two
+
+easy, copy paste van deel 1 en dan bij elke stap de afstand bepalen en een lopend maximum bij houden.
