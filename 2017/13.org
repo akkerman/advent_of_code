@@ -1,0 +1,37 @@
+:PROPERTIES:
+:ID:       a21e87a0-40ac-4b54-b5d3-c57d4f1f868a
+:END:
+#+title: 2017 Day 13: Packet Scanners
+#+filetags: :python:
+
+- tags :: [[id:a578bf44-af35-4e23-91f9-03cf7d768731][aoc2017]]
+
+* Part One
+
+Enige wat ik kan bedenken is om, zodra ik moet controleren waar de scanner is,
+de hele simulatie voor die scanner te doen totdat ik bij de gewenste picoseconde
+uitkom.
+
+Gelukkig performt dat voor deel 1
+
+* Part Two
+
+Part Two kan ik uitdrukken in Part One als ik part one verrijk met een delay.
+
+Okay ik kreeg dus, in eerste instantie, als antwoord 4 ipv 10 als ik het voorbeeld bepaalde.
+Na lang zoeken en, op een gegeven moment, chatgpt mij mee laten denken. Niet
+voorzeggen. Kwamen we er achter dat de bepaling voor cost NIET afdoende is voor
+de bepaling of een scanner het pakket ziet. Want de cost voor een hit op positie
+0 is namelijk 0 maar wel een hit.
+
+mijn orignele positie bepaling is nu wel een bottlenek, het duurt meer dan een
+minuut (dan hout mijn programma er vanzelf mee op). Dus moet er een manier
+gevonden worden om de positie direct te bepalen. Ik had direct wel door dat dit
+met iets van modolo kon maar het duurde echt lang om te bedenken hoe ik dat moet
+inzetten voor een heen en weer pattroon.
+
+De truck zit hem er in om modulo het dubbele uit te rekenen. Als de positie dan
+in de eerste helft van het dubbele zit dan hebben we de positie gevonden. als
+het in de tweede helft zit moeten we even terug rekenen vanaf het einde.
+
+Nu is de berekening klaar in enkele seconden.
