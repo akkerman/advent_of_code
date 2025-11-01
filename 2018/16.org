@@ -1,0 +1,34 @@
+:PROPERTIES:
+:ID:       374ddaa3-491e-4097-b5b5-1f929f3982b2
+:END:
+#+title: 2018 Day 16: Chronal Classification
+#+filetags: :python:
+
+- tags :: [[id:858bfcb5-a724-475b-a2fa-c527c7c985d8][aoc2018]] · [[id:8cd1ed8f-6f67-41a6-a8cd-577f8b959eac][intcode]]
+
+* Part One
+
+Altijd leuk puzzeltjes met dynamische berekeningen. Meeste werk zit vaak ik het
+goed uitschrijven van de functies voor opcodes maar daarna ...
+
+Ervoor gekozen om een lookup table te maken die de naam aan de functionaliteit bind.
+
+Het is een kwestie van elke log entry tegen elke operatie aan te houden en
+kijken of, met de gegeven voor/na toestand de instructie levert wat er verwacht
+wordt. als dat zo is, sla dan de naam van de opcode op in een list, zelfde
+positie als de log entry. Dan krijg ik dus een lijst van lijsten van matches die net zo lang
+is als de lijst van log entries.
+
+Dan hoef ik alleen maar te tellen hoeveel lijstjes van matches er groter of gelijk drie zijn.
+
+
+* Part Two
+
+
+Omdat ik een lijst met matches heb die 1-op-1 correspondeerd met de log entries
+kan ik deze gebruik om iig te bepalen welk opcode id er hoort bij de naam voor
+alles wat precies 1 match had.
+
+Als ik deze koppeling in een lookup table zet (dictionary) dan kan ik die verwijderen uit de lijstjes van andere matches.
+
+herhaal dit totdat alle koppelingen gevonden zijn.

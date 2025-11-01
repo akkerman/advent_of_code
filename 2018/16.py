@@ -70,11 +70,12 @@ def part_two(log: list[Entry], program: list[list[int]], matches: list[list[str]
         for entry, match in zip(log, matches):
             op_id = entry.instruction[0]
 
+            match[:] = [x for x in match if x not in mapping.values()]
+
             if len(match) == 1: 
                 if op_id not in mapping:
                     mapping[op_id] = match[0]
 
-            match[:] = [x for x in match if x not in mapping.values()]
 
 
     # run the program
