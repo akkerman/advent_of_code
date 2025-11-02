@@ -35,3 +35,9 @@ ipv alles proberen in 1 keer te doen, eerst deze stappen.
    b. bepaal de grootste
 
 * Part Two
+
+Ik weet niet of het ik het helemaal snap.
+
+Volgens mij grotendeels hetzelfde als eerst maar ipv een minimum tellen we alle
+afstanden op en als het totaal kleiner gelijk 10k is dan hebben we een match.
+En dan optellen hoeveel van die punten er zijn?
