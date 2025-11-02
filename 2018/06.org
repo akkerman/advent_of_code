@@ -7,5 +7,31 @@
 
 * Part One
 
+Hmm een aantal begrippen om te ontleden
+
+Een locatatie is *tied in distance* als er niet precies 1 coord het dichtsbij is maar meerdere met dezelfde afstand.
+
+Hoe herken ik een *infinite area*? Ik zit er aan te denken om min/max x,y waarden
+te vinden, dan heb ik iig 4 punten waarin alle coordinaten zich bevinden.
+
+Mijn intuitie is nu dat _alle_ coordinaten op de uiterste lijnen tussen die punten
+onderdeel zijn van een oneindige area, maar helemaal goed onder woorden brengen
+kan ik het niet.
+
+Laten we hier nu eerst maar even van uit gaan.
+
+ipv alles proberen in 1 keer te doen, eerst deze stappen.
+
+
+1. bepaal de uitsterste punten (observatie: input zit tussen 0 en 1000)
+2. maak een counter voor elke Coord in de input
+3. voor elk punt in het vierkant tussen de uitersten
+   a. bepaal de afstand tot elk coordinaat
+   c. na alle afstanden bepaald te hebben bepaal het minimum
+   d. als dat minimum 1x voorkomt hoog de counter op van het bij behorende coord
+   c. als dat minimum op een buitenrand zit, markeer coord als infinite voor latere verwerking
+4. nu we de counts hebben van alle coords
+   a. verwijder de infinite
+   b. bepaal de grootste
 
 * Part Two
