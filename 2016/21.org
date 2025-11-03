@@ -1,0 +1,72 @@
+:PROPERTIES:
+:ID:       1da91954-b05d-437a-be97-10ba22a08184
+:END:
+#+title: 2016 Day 21: Scrambled Letters and Hash
+#+filetags: :python:
+
+- tags :: [[id:7fb73857-09f6-4a05-a470-aec9ac226993][aoc2016]]
+
+* Part One
+
+Meest werk hier gaat in het ontleden van alle verschillende operaties, als die
+allemaal zijn uitgeschreven is het runnen en evt debuggen.
+
+* Part Two
+
+Alle operaties zijn redelijk triviaal omkeerbaar behalve =rotate based on position of letter=.
+Ik kreeg niet helemaal een ideen had chatgpt gevraagd (gelukkig geeft copilot niet alle antwoorden want die staat uit).
+Deze kwam met het idee van een lookup table. Nu had ik aan een half woord al
+genoeg want ja eigenlijk weet ik wel dat een pure function altijd als een lookup
+table zou kunnen worden geimplementeerd en dus is het dan ineens ook omkeerbaar.
+
+
+#+begin_src python
+rotate_based_lookup: dict[int,int] = { }
+rotate_based_lookup_rev: dict[int,int] = { }
+
+for i in range(8):
+    steps = 1 + i
+    if i >= 4:
+        steps += 1
+    final_pos = (i + steps) % 8
+    rotate_based_lookup[i] = steps
+    rotate_based_lookup_rev[final_pos] = -steps
+#+end_src
+
+Door deze table te gebruiken bij het eerste deel wist ik dat het werkte (want
+zelfde antwoord) en door het antwoord van deel twee te gebruiken als input van
+de eerste
+
+* Optimalizatie
+
+Na oplossen nog wat tips van chatgpt o.a. het gebruik van precompiled regular expressions en de [[https://realpython.com/python-walrus-operator/][The Walrus Operator]]
+zodat in 1 keer een if en een toewijzing te schrijven is.
+
+
+#+begin_src python
+if 'rotate left' in instruction:
+        res = re.match(r'rotate left (\d+) step', instruction)
+        assert res is not None
+        x = res.group(1)
+        p = deque(passwd)
+        p.rotate(-int(x))
+        passwd = list(p)
+        continue
+#+end_src
+
+#+begin_src python
+def rotate(passwd: list[str], steps: int) -> list[str]:
+    p = deque(passwd)
+    p.rotate(steps)
+    return list(p)
+
+
+ROTATE_LEFT = re.compile(r'rotate left (\d+) step')
+#+end_src
+
+#+begin_src python
+if (res := ROTATE_LEFT.match(instruction)):
+        x = res.group(1)
+        passwd = rotate(passwd, -int(x))
+        continue
+#+end_src
