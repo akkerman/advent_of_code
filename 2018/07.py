@@ -83,7 +83,7 @@ def part_two(instructions: list[tuple[str,str]], workers:int=5, cost: Callable[[
         deps[y].add(x)
         _ = deps[x] # ensure every node is present
 
-    finished: list[str] = []
+    finished: set[str] = set()
     in_progress: list[tuple[int, str]] = []
     time = 0
 
@@ -97,7 +97,7 @@ def part_two(instructions: list[tuple[str,str]], workers:int=5, cost: Callable[[
                     continue
                 if step in running:
                     continue
-                if prereqs - set(finished):
+                if prereqs - finished:
                     continue
                 available.append(step)
 
@@ -106,11 +106,11 @@ def part_two(instructions: list[tuple[str,str]], workers:int=5, cost: Callable[[
             for next_step in sorted(available)[:to_add]:
                in_progress.append((time+cost(next_step), next_step))
 
-        time += 1
+        time = min(t for t, _ in in_progress)
 
         for t, s in in_progress:
             if t == time:
-                finished.append(s)
+                finished.add(s)
 
         in_progress = [(t,s) for t,s in in_progress if t > time]
 
