@@ -1,0 +1,57 @@
+:PROPERTIES:
+:ID:       9175b852-8fcb-4e62-b025-d0a8a493ec1d
+:END:
+#+title: 2018 Day 7: The Sum of Its Parts
+#+filetags: :python:
+
+- tags :: [[id:858bfcb5-a724-475b-a2fa-c527c7c985d8][aoc2018]]
+
+* Part One
+
+Allereerst parsen we de instructies in een soort dependency graph, een
+dictionary met voor elke node een lijst met andere nodes die eerst afgelopen
+moeten worden.
+
+Vervolgens heb ik een recursieve zoek functie gemaakt.
+
+Deze functie vind, obv van deze dependency graph en de gefinishte nodes alle
+mogelijke vervolg candidaten en probeert de lexicografisch eerste.
+
+Op dit moment houd ik er rekening mee dat een candidaat mogelijk geen oplossing
+gaat geven en, als dat zo is, probeer ik de volgende.
+
+* Part Two
+
+
+Ik had enorm veel moeite om te volgen wat hier nu de bedoeling was en hoe ik die
+parallelle workers in mijn recursieve functie kon krijgen. Ik ben eens met
+chatgpt in conclaaf gegaan en deze gaf mij de tip dat het geen zoekruimte was
+maar een deterministische sort.
+
+Of het kiezen van een node uit de candidaten geeft altijd een oplossing en omdat
+we altijd de lexicografisch laagste kiezen is het altijd dezelfde.
+
+Ik heb toen eerst part one herschreven naar een imperatieve oplossing zodat het
+veel duideljker werd dat de de mogelijke candidaten niet 1 voor 1 geprobeerd
+hoeven worden maar uiteindelijk parallel gestart.
+
+
+Het idee is nu om een time ticker bij te houden en bij elke tick te controleren
+
+- zijn er nog workers beschikbaar obv het aantal in progress zijnde stappen
+- bepaal mogelijke next steps, rekening houdend met dependencies en reeds afgeronde en nog lopende stappen
+- zet stappen in progress met een verwachtte eindtijd
+- rond stappen af op het moment dat de eindtijd bereikt is, mogelijk meerdere tegelijk!
+
+Dit gaf mij uiteindelijk de oplossing
+
+* optimalizatie
+
+ipv een tijd ticker kan je de tijd opschuiven naar de step die als eerste afgerond gaat worden.
+
+* refactoring
+
+Voor de oefening eens wat ideen uit [[id:92384cf7-fc4c-4b82-9bbd-0a13847d9130][Clean Code]] toegepast. Kleine functies en
+leesbaar van hoogste abstractie nivo (part two = parse dependensies en doe
+simulatie) naar laagste abstractie nivo cost van een step is 60 + de plaats in
+het alphabet.
