@@ -30,7 +30,28 @@ Coord = tuple[int, int]
 TOP_COORD = re.compile(r'/dev/grid/node-x(\d+)-y0')
 NODE_COORD = re.compile(r'/dev/grid/node-x(\d+)-y(\d+)')
 
+diffs = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+def neighbors(c: Coord) -> list[Coord]:
+    """Get adjacent coordinates."""
+    x, y = c
+    return [(x + dx, y + dy) for dx, dy in diffs]
 
+def find_immovable_nodes(nodes: dict[Coord,DiskUsage]) -> set[Coord]:
+    """Find immovable nodes."""
+    immovable: set[Coord] = set()
+
+    max_available = max(
+        du.avail
+        for _, du in nodes.items()
+    )
+    for coord, du in nodes.items():
+        if du.used == 0:
+            continue  # empty node kan altijd data ontvangen
+        if du.used <= max_available:
+            continue  
+
+        immovable.add(coord)
+    return immovable
 
 def print_grid(disk_usages: list[DiskUsage]):
     """Print the grid."""
@@ -45,31 +66,10 @@ def print_grid(disk_usages: list[DiskUsage]):
             max_x = max(max_x, x)
             max_y = max(max_y, y)
 
-    def neighbors(c: Coord) -> list[Coord]:
-        """Get adjacent coordinates."""
-        x, y = c
-        nbs: list[Coord] = []
-        for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
-            nx, ny = x + dx, y + dy
-            nbs.append((nx, ny))
-        return nbs
-
-    immovable: set[Coord] = set()
-    for coord, du in nodes.items():
-        if du.used == 0:
-            continue  # empty node kan altijd data ontvangen
-        if not any(
-            du.used <= nodes[n].size
-            for n in neighbors(coord)
-            if n in nodes
-        ):
-            immovable.add(coord)
-
     max_available = max(
         du.avail
         for _, du in nodes.items()
     )
-    print('max available', max_available)
 
     for y in range(max_y + 1):
         row = ''
@@ -92,19 +92,62 @@ def top_right_coord(disk_usages: list[DiskUsage]) -> Coord:
         )
     return (max_x, 0)
 
+def empty_node_coord(disk_usages: list[DiskUsage]) -> Coord:
+    """Find the empty node coordinate."""
+    for du in disk_usages:
+        if du.used == 0:
+            res = NODE_COORD.match(du.fs)
+            if res:
+                return (int(res.group(1)), int(res.group(2)))
+
+    raise ValueError('No empty node found')
+
+def parse_nodes(disk_usages: list[DiskUsage]) -> dict[Coord, DiskUsage]:
+    """Parse disk usages into nodes dict."""
+    nodes: dict[Coord, DiskUsage] = {}
+    for du in disk_usages:
+        res = NODE_COORD.match(du.fs)
+        if res:
+            x = int(res.group(1))
+            y = int(res.group(2))
+            nodes[(x, y)] = du
+    return nodes
+
+def bfs(start: Coord, goal: Coord, nodes: dict[Coord, DiskUsage]) -> int:
+    """Breadth first search to find shortest path."""
+    queue = deque([(start, 0)])
+    visited: set[Coord] = set()
+
+    immovable = find_immovable_nodes(nodes)
+    while queue:
+        current, dist = queue.popleft()
+        if current == goal:
+            return dist
+        if current in visited:
+            continue
+        visited.add(current)
+        for neighbor in neighbors(current):
+            if neighbor not in nodes:
+                continue
+            if neighbor in immovable or neighbor in visited:
+                continue
+            queue.append((neighbor, dist + 1))
+
+    return -1  # not found
+
 def part_two(disk_usages: list[DiskUsage]):
     """Solution to part two."""
+    goal = top_right_coord(disk_usages)
+    empty_node = empty_node_coord(disk_usages)
+   
+    nodes = parse_nodes(disk_usages)
+    to_goal = bfs(empty_node, goal, nodes)
+    to_start = bfs((0,0), goal, nodes)
 
-
-    gain_access = top_right_coord(disk_usages)
-    print('goal data at', gain_access)
-
-    print_grid(disk_usages)
-
+    return to_goal + (to_start -1) * 5
 
     
 
-    return 'todo'
 
 
 def main():
