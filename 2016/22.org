@@ -1,0 +1,87 @@
+:PROPERTIES:
+:ID:       b43f57bc-83ae-4451-9efe-02af1e99b9b6
+:END:
+#+title: 2016 Day 22: Grid Computing
+#+filetags: :python:
+
+- tags :: [[id:7fb73857-09f6-4a05-a470-aec9ac226993][aoc2016]] · [[id:ccd23e17-bc3e-486c-8127-331517a7dc95][Breadth-first search]]
+* Part One
+
+m.i triviaal. dat had met twee loopjes gekunt en een running total maar even de
+moeite gedaan om een listcomprehensian te maken welke leunt op permutations.g
+
+* Part Two
+
+hmm dit probleem lijkt een beetje op een schuifpuzzel waar de afbeelding door
+elkaar zit en je elke keer 1 tegeltje kunt verplaatsen. alleen hebben de
+tegeltjes nu een bepaalde capaciteit waar je rekening mee moet houden.
+
+Je kan dus alleen verplaatsen als een aangrenzende node genoeg vrijedata heeft
+voor de aangrenzende data.
+
+viable pairs van deel 1 zijn hier alleen relevant als ze ook nog buren van elkaar zijn.
+er blijkt in mijn input ook nog precies 1 lege node te zijn.
+
+Wellicht is het ook handig om eens te bekijken, zoals in het voorbeeld, hoe ik
+bepaal of data ooit verschoven zou *kunnen* worden, omdat deze zo groot is dat
+deze niet verplaatst kan worden naar z'n buur ook al is deze leeg.
+
+Zou ik ook rekening moeten houden met nodes die, tijdens het schuiven, 'vast' komen te zitten?
+Laat ik, voor nu, even doen alsof dat niet bestaat. dus eigenlijk alleen data schuiven naar de lege node.
+
+Ik kan een BFS doen van de lege node naar de doelnode en het minimum aantal stappen bepalen.
+Vanaf dat moment wordt het probleem echter anders, dan moet ik niet bijhouden
+waar de lege node is maar waar de data van goal node is.
+
+Ik zie ook dat er een aantal nodes zijn die SUPER groot zijn, de data zal nooit
+naar een andere node kunnen gaan.
+
+Als ik het grid uitprint dan wordt het zoiets als:
+
+
+#+begin_src
+......G
+.......
+...####
+.......
+....._.
+.......
+#+end_src
+
+Als ik gewoon aanneem dat ik elke node, op volgorde leeg kan maken dan dan kan
+ik gewoon de stappen handmatig simuleren totdat het lege vak links van G staat.
+
+Als ik nu weer aanneem dat de data gewoon van rechts naar links geschoven kan
+worden dan moet moet ik elke keer weer een lege node maken, links van de doel
+data om 1 keer te kunnen schuiven.
+
+dat is 5 stappen voor elke verschuiving van links naar rechts van de Goal data
+
+#+begin_src
+
+0 ....._G
+  .......
+
+1 .....G_
+  .......
+
+2 .....G.
+  ......_
+
+3 .....G.
+  ....._.
+
+4 .....G.
+  ...._..
+
+5 ...._G.
+  .......
+#+end_src
+
+Ik telde het aantal stappen van leeg naar 1 positie links van G als S.
+Dan is daar nog de breedte van het grid B.
+
+Daarmee wordt de formule: S + 1 + 5(B-1)
+
+
+DUS: handmatig opgelost.
