@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       08fe7484-1db4-4109-bce1-10c51448fd19
+:END:
+#+title: 2016 Day 24: Air Duct Spelunking
+#+filetags: :python:
+
+- tags :: [[id:7fb73857-09f6-4a05-a470-aec9ac226993][aoc2016]]
+
+* Part One
+
+Dit lijkt een korste pad zoek actie waarbij we niet 1 punt maar meerdere zoeken.
+Dus ipv het zoeken stoppen na het vinden van de eind locatie moeten we een =found= lijstje bijhouden en vergelijken met de lijst van =to_visit.=
+
+Meestal hou je, in zoiets, een =visited= list bij en daar moeten alle =to_visit= inzitten.
+
+
+* Part Two
