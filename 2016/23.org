@@ -37,3 +37,7 @@ Voor de rest lijk ik geen invalid instructies tegen te komen want met die 2 aanp
 Het voorbeeld zet zelf register a altijd op 3 maar met de echte input moet ik em wel even op 7 zetten.
 
 * Part Two
+
+Ok invullen van 12 geeft snel het antwoord maar niet het goede. Ik zal eens een copy naar die solver sturen van de input ipv de aangepaste lines uit deel 1.
+
+Nu duurt het iig langer dan 30s maar er komt een antwoord dus prima.

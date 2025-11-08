@@ -13,7 +13,7 @@ re_dec = re.compile('dec (.+)')
 re_jnz = re.compile('jnz (.+) (.+)')
 re_tgl = re.compile('tgl (.+)')
 
-def solve(lines: list[str], a: int = 7) -> int:
+def solve(lines: list[str], a: int) -> int:
     idx = 0
     registers: dict[str,int] = defaultdict(int)
     registers['a'] = a
@@ -89,12 +89,12 @@ def solve(lines: list[str], a: int = 7) -> int:
 
 def part_one(lines: list[str]) -> int:
     """Solution to part one."""
-    return solve(lines)
+    return solve(lines, 7)
 
 
 def part_two(lines: list[str]) -> int:
     """Solution to part two."""
-    return 'todo'
+    return solve(lines, 12)
 
 
 def main():
@@ -104,9 +104,9 @@ def main():
         for line in fileinput.input()
         ]
 
-    print('part_one', part_one(lines))
+    print('part_one', part_one(lines.copy()))
 
-    print('part_two', part_two(lines))
+    print('part_two', part_two(lines.copy()))
 
 
 if __name__ == '__main__':
