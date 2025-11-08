@@ -1,0 +1,22 @@
+:PROPERTIES:
+:ID:       2d9980c9-686e-43bf-95fe-c777c788e4cd
+:END:
+#+title: 2016 Day 23: Safe Cracking
+#+filetags: :python:
+
+- tags :: [[id:7fb73857-09f6-4a05-a470-aec9ac226993][aoc2016]]
+
+
+
+* Part One
+
+De uitleg refereerd aan [[id:fe41248e-fb7e-4d5a-8cd2-3df967f323b9][2016 Day 11: Radioisotope Thermoelectric Generators]] en
+[[id:8bf34638-57f8-48b2-bd59-ed5424cbbc4a][2016 Day 12: Leonardo's Monorail]]. Omdat het op dit moment [2025-11-08 Sat] een
+tijdje geleden is dat ik die heb gemaakt weet ik nu niet of ik die code kan
+hergebruiken, of dat er bedoelt word dat het er op lijkt.
+
+Gelukkig staat er bij mijn notities voor dag 12: "Just implement instructions".
+Alleen ga ik dat nu wel doen op de manier die ik recent leerde, met [[id:ce560cdc-730c-4861-85db-ebe2c5046fa1][walrus operator]].
+
+
+* Part Two
