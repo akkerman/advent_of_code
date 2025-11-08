@@ -19,3 +19,7 @@ Meestal hou je, in zoiets, een =visited= list bij en daar moeten alle =to_visit=
 Mijn gedachte hier is dat we bijhouden welke locaties bezocht zijn en zodra deze hetzelfde is als alle posities in de maze *en* we zijn weer terug bij start dan kunnen we stoppen.
 
 Maar het duurt zeer lang...
+
+Okay ik begreep het probleem verkeerd, ik moest gewoon alle cijfers af en weer terug naar 0. Rare omschrijving ik dacht dat ik de hele maze af moest.
+
+Okay dan nogsteeds dezelfde code als bij deel 1, visited stoppen we niet gelijk de start positie en en we zijn klaar als alle cijfers geweest zijn en we zijn op het laatste punt.
