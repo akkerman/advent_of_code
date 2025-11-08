@@ -1,13 +1,11 @@
 """Day 24: Air Duct Spelunking."""
 import fileinput
 import heapq
-import re
-from collections import deque, defaultdict, Counter
-from functools import lru_cache
 from utils import perf_timer
 
 Coord = tuple[int, int]
 
+@perf_timer
 def part_one(lines: list[str]):
     """Solution to part one."""
     maze, start = parse_maze(lines)
@@ -42,9 +40,38 @@ def part_one(lines: list[str]):
 
 
 
-def part_two(lines):
+@perf_timer
+def part_two(lines: list[str]):
     """Solution to part two."""
-    return 'todo'
+    maze, start = parse_maze(lines)
+    to_visit_num = frozenset(set(maze.values()) - {'.'})
+
+    queue: list[tuple[int, Coord, frozenset[str]]] = []
+    visited: set[tuple[Coord, frozenset[str]]] = set()
+    heapq.heappush(queue, (0, start, frozenset()))
+
+    offsets = [(-1,0),(1,0),(0,-1),(0,1)]
+
+    while queue:
+        steps, position, visited_num = heapq.heappop(queue)
+        if visited_num == to_visit_num and position == start:
+            return steps
+        state = (position, visited_num)
+        if state in visited:
+            continue
+        visited.add(state)
+
+        x, y = position
+
+        for neighbor in [n for dx, dy in offsets if (n:=(x+dx, y+dy)) in maze]:
+            char = maze[neighbor]
+            if char in to_visit_num:
+                new_visited_num = frozenset(visited_num | {char})
+            else:
+                new_visited_num = visited_num
+            heapq.heappush(queue, (steps+1, neighbor, new_visited_num))
+
+    assert False, "No solution found"
 
 def parse_maze(lines: list[str]) -> tuple[dict[Coord, str], Coord]:
     """Parse maze into graph representation."""

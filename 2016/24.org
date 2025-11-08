@@ -15,3 +15,7 @@ Meestal hou je, in zoiets, een =visited= list bij en daar moeten alle =to_visit=
 
 
 * Part Two
+
+Mijn gedachte hier is dat we bijhouden welke locaties bezocht zijn en zodra deze hetzelfde is als alle posities in de maze *en* we zijn weer terug bij start dan kunnen we stoppen.
+
+Maar het duurt zeer lang...
