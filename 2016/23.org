@@ -18,5 +18,22 @@ hergebruiken, of dat er bedoelt word dat het er op lijkt.
 Gelukkig staat er bij mijn notities voor dag 12: "Just implement instructions".
 Alleen ga ik dat nu wel doen op de manier die ik recent leerde, met [[id:ce560cdc-730c-4861-85db-ebe2c5046fa1][walrus operator]].
 
+Okay deze tgl operator veranderd dus andere operators:
+
+- =inc= -> =dec=
+- =dec= -> =inc=
+- =jnz= -> =cpy=
+- =cpy= -> =jnz=
+- =tgl= -> =inc=
+
+Ik zat nog wel ff te kijken waarom ik ooit =ValueError= statements in de code had staan maar dat gaat er over dat die parameters de ene keer een int zijn en de andere keer string. In dat geval moest de waarde van de aangeduide register genomen worden ipv een constante.
+
+Het huidige probleem noemt dat een =tgl= er voor kan zorgen dat een instructie ongeldig wordt.
+
+Als ik het voorbeeld run kan mijn programma niet overweg met =jnz 1 a=, ik moet de conclusie trekken dat in dag 12 het tweede argument nooit een register geweest is.
+
+Voor de rest lijk ik geen invalid instructies tegen te komen want met die 2 aanpassingen (toevoegen van =tgl= en rekening houden dat een jnz als beide params een register kan hebben) heb ik het goede antwoord.
+
+Het voorbeeld zet zelf register a altijd op 3 maar met de echte input moet ik em wel even op 7 zetten.
 
 * Part Two

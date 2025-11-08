@@ -11,11 +11,12 @@ re_cpy = re.compile('cpy (.+) (.+)')
 re_inc = re.compile('inc (.+)')
 re_dec = re.compile('dec (.+)')
 re_jnz = re.compile('jnz (.+) (.+)')
+re_tgl = re.compile('tgl (.+)')
 
-def solve(lines: list[str], c:int=0):
+def solve(lines: list[str], a: int = 7) -> int:
     idx = 0
     registers: dict[str,int] = defaultdict(int)
-    registers['c'] = c
+    registers['a'] = a
 
     while 0 <= idx < len(lines):
         line = lines[idx]
@@ -50,9 +51,38 @@ def solve(lines: list[str], c:int=0):
                 value = registers[x]
 
             if value != 0:
-                idx += int(y)
+                try:
+                    idx += int(y)
+                except ValueError:
+                    idx += registers[y]
             else:
                 idx += 1
+            continue
+
+        if (m := re_tgl.match(line)):
+            x = m.groups()[0]
+            try:
+                offset = int(x)
+            except ValueError:
+                offset = registers[x]
+
+            target_idx = idx + offset
+            if 0 <= target_idx < len(lines):
+                instr = lines[target_idx]
+                if 'cpy' in instr:
+                    lines[target_idx] = instr.replace('cpy', 'jnz', 1)
+                elif 'jnz' in instr:
+                    lines[target_idx] = instr.replace('jnz', 'cpy', 1)
+                elif 'inc' in instr:
+                    lines[target_idx] = instr.replace('inc', 'dec', 1)
+                elif 'dec' in instr:
+                    lines[target_idx] = instr.replace('dec', 'inc', 1)
+                elif 'tgl' in instr:
+                    lines[target_idx] = instr.replace('tgl', 'inc', 1)
+
+                print(f'toggled instruction at {target_idx} from "{instr}" to "{lines[target_idx]}"')
+            
+            idx += 1
             continue
 
     return registers['a']
@@ -64,7 +94,7 @@ def part_one(lines: list[str]) -> int:
 
 def part_two(lines: list[str]) -> int:
     """Solution to part two."""
-    return solve(lines, c=1)
+    return 'todo'
 
 
 def main():
