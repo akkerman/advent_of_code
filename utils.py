@@ -14,6 +14,11 @@ def find_occurences(pattern:str, line:str, overlap:bool=False):
 
     return indices
 
+I = TypeVar('I')
+def chunk_list(lst: list[I], size: int) -> list[list[I]]:
+    """Chunk a list into smaller lists of given size."""
+    return [lst[i:i + size] for i in range(0, len(lst), size)]
+
 T = TypeVar('T', bound=Callable[..., Any])
 def perf_timer(func: T) -> T:
     """Decorator to time function performance."""
@@ -32,6 +37,3 @@ def perf_timer(func: T) -> T:
         return result
     return wrapper
 
-def chunk_list(lst: list[T], size: int) -> list[list[T]]:
-    """Chunk a list into smaller lists of given size."""
-    return [lst[i:i + size] for i in range(0, len(lst), size)]

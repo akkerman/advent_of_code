@@ -1,0 +1,42 @@
+:PROPERTIES:
+:ID:       6f432e77-59f9-42e3-a239-f5285e4dcdbe
+:END:
+#+title: 2017 Day 14: Disk Defragmentation
+#+filetags: :python:
+
+- tags :: [[id:a578bf44-af35-4e23-91f9-03cf7d768731][aoc2017]]
+
+* Part One
+
+128x128 grid waarvan de state wordt getracked met [[id:c3e28bbc-2407-49a6-b4f4-ce2c8aaf18ee][knot hashes uit dag 10]].
+
+Okay hoe zet ik 1 hex digit om naar een reeks van binaries met lengte 4?
+
+#+begin_src python :results verbatim
+example = 'a0c2016'
+return [bin(int(h, 16)) for h in example]
+#+end_src
+
+#+RESULTS:
+: ['0b1010', '0b0', '0b1100', '0b10', '0b0', '0b1', '0b110']
+
+#+begin_src python :results verbatim
+example = 'a0c2016'
+return [bin(int(h, 16))[2:] for h in example]
+#+end_src
+
+#+RESULTS:
+: ['1010', '0', '1100', '10', '0', '1', '110']
+
+Eigenlijk hoef ik die voorloopnullen niet, moet alleen weten hoeveel x 1 er is.
+
+#+begin_src python :results verbatim
+example = 'a0c2016'
+bins = [bin(int(h, 16))[2:] for h in example]
+return [one for b in bins for one in b if one == '1' ]
+#+end_src
+
+#+RESULTS:
+: ['1', '1', '1', '1', '1', '1', '1', '1']
+
+* Part Two

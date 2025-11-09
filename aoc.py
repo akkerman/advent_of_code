@@ -31,7 +31,7 @@ def handle_title(year:int, day:int):
     cookie = getenv('cookie')
     response = requests.get(f"https://adventofcode.com/{year}/day/{day}", headers={"cookie": cookie})
     result = response.text.split('<h2>')[1].split('</h2>')[0]
-    output_str = f'"""{result.strip("-").strip()}."""'
+    output_str = f'"""{year} {result.strip("-").strip()}"""'
     print(output_str, end='')
 
 
