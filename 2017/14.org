@@ -49,3 +49,7 @@ Vervolgens is het algorithme.
 - verhoog counter
 - verwijder alle punten van de region uit de set
 - herhaal totdat de set leeg is
+
+
+Dal [[id:7c354c8c-330b-4d99-a259-19cb778c67af][algorithm]] bleek nogal langzaam, maar als ik elke keer het punt dat ik
+vind in de region gelijk ook uit de set haal performed het wel...

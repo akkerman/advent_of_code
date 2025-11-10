@@ -1,0 +1,25 @@
+:PROPERTIES:
+:ID:       58bf4d35-f2a7-49e7-af0e-9b68e8c5cbc3
+:END:
+#+title: 2017 Day 16: Permutation Promenade
+#+filetags: :python:
+
+- tags :: [[id:a578bf44-af35-4e23-91f9-03cf7d768731][aoc2017]]
+
+* Part One
+
+regexes definieren en een programma (denk er aan een copy van het programma door te geven!) en dan instructies 1 voor 1 afspelen.
+
+spin is een rotate van een array, gelukkig was een voorbeeld dus testje voor geschreven
+
+* Part Two
+
+10 miljard keer? Dan hoop ik dat er een herhaling in zit, want anders duurt het heeeeel lang.
+
+idee:
+- elke state bijhouden totdat er een herhaling optreed (herhaald deel 1 aanroepen)
+- dan kijken hoe groot de lus is (cycle) is
+- met de grootte van de lus weten we hoeveel herhalingen we nog moeten en,
+  belangrijker, hoeveel iteraties er overblijven na alle cycles
+- omdat we alle iteraties na het begin van de lus hebben, weten we nu ook direct
+  de iteratie voor het antwoord (huidige index + resterend)
