@@ -11,14 +11,20 @@ def part_one(steps: int):
     buffer = [0]
     pos = 0
     for i in range(1, 2017 + 1):
-        pos = (pos + steps) % len(buffer) + 1
+        pos = (pos + steps) % i + 1
         buffer.insert(pos, i)
-    return buffer[(pos + 1) % len(buffer)]
+    return buffer[(pos + 1) % i]
 
 
 def part_two(steps: int):
     """Solution to part two."""
-    return 'todo'
+    value_after_0 = None
+    pos = 0
+    for i in range(1, 50000000 + 1):
+        pos = (pos + steps) % i + 1
+        if pos == 1:
+            value_after_0 = i
+    return value_after_0
 
 
 def main():
