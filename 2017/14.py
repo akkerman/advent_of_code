@@ -59,17 +59,51 @@ def part_one(key:str):
         count += bin_str.count('1')
     return count
 
+dirs = [(-1,0),(1,0),(0,-1),(0,1)]
 
-def part_two(key):
+
+def part_two(key:str):
     """Solution to part two."""
-    return 'todo'
+    coords_with_ones: set[tuple[int,int]] = set()
+    for i in range(128):
+        hash = knot_hash(f"{key}-{i}")
+        bin_str = to_bin(hash)
+        for j, c in enumerate(bin_str):
+            if c == '1':
+                coords_with_ones.add((i,j))
+
+    regions = 0
+
+    while coords_with_ones:
+        start = coords_with_ones.pop()
+
+        queue = deque([start])
+
+        visited: set[tuple[int,int]] = set()
+        visited.add(start)
+
+        while queue:
+            x,y = queue.popleft()
+            neighbors = [
+                coord for dx,dy in dirs
+                if (coord:=(x+dx, y+dy)) in coords_with_ones
+                    ]
+
+            for n in neighbors:
+                visited.add(n)
+                queue.append(n)
+                coords_with_ones.remove(n)
+
+
+        regions += 1
+
+    return regions
 
 
 def main():
     """Parse input file, pass to puzzle solvers."""
     key: str = next(fileinput.input()).strip() 
 
-    print('to_bin', [one for one in to_bin('a0c2017') if one == '1'])
 
     print('part_one', part_one(key))
 
@@ -78,4 +112,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-

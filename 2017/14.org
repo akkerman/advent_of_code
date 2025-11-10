@@ -40,3 +40,12 @@ return [one for b in bins for one in b if one == '1' ]
 : ['1', '1', '1', '1', '1', '1', '1', '1']
 
 * Part Two
+
+Mijn idee hier is om de coordinaten van alle 1-en in een set te plaatsen.
+Vervolgens is het algorithme.
+
+- haal 1 coord uit de set
+- bepaal de region waarin dit coord valt (BFS / floodfill)
+- verhoog counter
+- verwijder alle punten van de region uit de set
+- herhaal totdat de set leeg is
