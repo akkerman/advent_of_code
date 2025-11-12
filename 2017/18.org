@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       642fb353-951d-4d8d-94ae-32448cba20c1
+:END:
+#+title: 2017 Day 18: Duet
+#+filetags: :python:
+
+- tags :: [[id:a578bf44-af35-4e23-91f9-03cf7d768731][aoc2017]]
+
+* Part One
+Dit lijk wel wat op wat er gebeuren moet in  [[id:2d9980c9-686e-43bf-95fe-c777c788e4cd][2016 Day 23: Safe Cracking]] en daardoor ook op [[id:8bf34638-57f8-48b2-bd59-ed5424cbbc4a][2016 Day 12: Leonardo's Monorail]].  (ik herken het omdat het vandaag [2025-11-12 Wed] slechts een paar dagen gelden is dat ik dag 23 deed.)
+
+
+
+* Part Two
