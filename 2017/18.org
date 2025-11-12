@@ -20,4 +20,15 @@ Aan het begin van deel twee nog een foutje gevonden, zodra =rcv= kwam deed ik di
 
 * Part Two
 
-Dus twee in parallel draaien, dit doet mij denken aan een puzzel die ik eerder gedaan heb waarschijnlijk jaar 2019 die had veel [[id:8cd1ed8f-6f67-41a6-a8cd-577f8b959eac][intcode]] uitdagingen.
+Dus twee in parallel draaien, dit doet mij denken aan een puzzel die ik eerder
+gedaan heb waarschijnlijk jaar 2019 die had veel [[id:8cd1ed8f-6f67-41a6-a8cd-577f8b959eac][intcode]] uitdagingen.
+
+Ik heb een =Partner= class gemaakt die eigen state vast houd en, met een aparte
+=run= methode door gestart kan worden. Elke keer als de queue leeg is stopt het.
+Dan kan ik in een loop elk programma een beurt geven en nadien controleren of
+beide queues leeg zijn. in dat geval zitten ze allebei op input te wachten en
+dan zijn we klaar.
+
+Helaas klapt het programma er nu uit met een =IndexError= op 1 of andere manier is
+het gelukt een hogere index te krijgen dan de lijst van instructies lang is.
+Dit gebeurt 'gelukkig' al op de example input.
