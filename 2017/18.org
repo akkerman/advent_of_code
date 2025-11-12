@@ -7,8 +7,17 @@
 - tags :: [[id:a578bf44-af35-4e23-91f9-03cf7d768731][aoc2017]]
 
 * Part One
-Dit lijk wel wat op wat er gebeuren moet in  [[id:2d9980c9-686e-43bf-95fe-c777c788e4cd][2016 Day 23: Safe Cracking]] en daardoor ook op [[id:8bf34638-57f8-48b2-bd59-ed5424cbbc4a][2016 Day 12: Leonardo's Monorail]].  (ik herken het omdat het vandaag [2025-11-12 Wed] slechts een paar dagen gelden is dat ik dag 23 deed.)
+Dit lijk wel wat op wat er gebeuren moet in  [[id:2d9980c9-686e-43bf-95fe-c777c788e4cd][2016 Day 23: Safe Cracking]] en
+daardoor ook op [[id:8bf34638-57f8-48b2-bd59-ed5424cbbc4a][2016 Day 12: Leonardo's Monorail]].  (ik herken het omdat het
+vandaag [2025-11-12 Wed] slechts een paar dagen gelden is dat ik dag 23 deed.)
 
+Implementatie van de instructies leid tot het juiste antwoord. Wel had ik nog een bug.
+Als je copy/paste van de ene if-statement naar de andere moet je wel de operatie aanpassen...
+Ik heb alle try/except deze keer in een hulp functie gestopt, toen werd de bug namelijk ook sneller zichtbaar.
+
+Aan het begin van deel twee nog een foutje gevonden, zodra =rcv= kwam deed ik direct de laatste sound waarde teruggeven, dat is blijkbaar het goede antwoord maar eigenlijk moest het pas als register ~x != 0~.
 
 
 * Part Two
+
+Dus twee in parallel draaien, dit doet mij denken aan een puzzel die ik eerder gedaan heb waarschijnlijk jaar 2019 die had veel [[id:8cd1ed8f-6f67-41a6-a8cd-577f8b959eac][intcode]] uitdagingen.

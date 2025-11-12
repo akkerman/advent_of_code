@@ -56,15 +56,14 @@ def solve(lines: list[str]):
                 last_sound = int(x)
             except ValueError:
                 last_sound = registers[x]
-            print(f'snd {last_sound}')
+            # print(f'snd {last_sound}')
             idx += 1
             continue
         elif m := re_rcv.match(line):
             x = m.group(1)
             if registers[x] != 0:
-                print(f'rcv {x}, last sound {last_sound}')
+                return last_sound
             idx += 1
-            return last_sound
             continue
         elif m := re_jgz.match(line):
             x, y = m.groups()
