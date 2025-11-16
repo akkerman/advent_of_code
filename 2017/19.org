@@ -16,3 +16,5 @@ de witruimte en newlines na de input maar ook de witruimte voor elke regel en
 die is relevant. Opgelost met =line.strip('\n')=.
 
 * Part Two
+
+Alleen een tellertje toevoegen aan deel 1.
