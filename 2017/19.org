@@ -1,0 +1,18 @@
+:PROPERTIES:
+:ID:       507c0f3c-d57b-40be-a291-37b5daffab39
+:END:
+#+title: 2017 Day 19: A Series of Tubes
+#+filetags: :python:
+
+- tags :: [[id:a578bf44-af35-4e23-91f9-03cf7d768731][aoc2017]]
+
+* Part One
+Zoals zovaak bij traversel of [[id:d74b47b0-cd57-43c0-ae15-61e09c0d1955][grid puzzles]] zet ik het eerst om naar coords.
+Mijn idee is dat ik de travelal een bepaalde kant op laat gaan, ongeacht welk,
+character het tegenkomt en dan 1 andere kant kies zodra het op een + stuit.
+
+Zoo dat was stom. Ik deed, uit gewoonte, =line.strip()= maar dan mis ik niet alleen
+de witruimte en newlines na de input maar ook de witruimte voor elke regel en
+die is relevant. Opgelost met =line.strip('\n')=.
+
+* Part Two

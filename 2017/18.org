@@ -32,3 +32,5 @@ dan zijn we klaar.
 Helaas klapt het programma er nu uit met een =IndexError= op 1 of andere manier is
 het gelukt een hogere index te krijgen dan de lijst van instructies lang is.
 Dit gebeurt 'gelukkig' al op de example input.
+
+Blijkt dat ik ff gemist had dat die voorwaarde voor recover niet geld voor receive.
