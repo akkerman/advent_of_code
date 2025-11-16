@@ -8,12 +8,19 @@
 
 * Part One
 Zoals zovaak bij traversel of [[id:d74b47b0-cd57-43c0-ae15-61e09c0d1955][grid puzzles]] zet ik het eerst om naar coords.
-Mijn idee is dat ik de travelal een bepaalde kant op laat gaan, ongeacht welk,
+Mijn idee is dat ik de traversal een bepaalde kant op laat gaan, ongeacht welk
 character het tegenkomt en dan 1 andere kant kies zodra het op een + stuit.
+Dus van een vertikale richting naar een horizontale of andersom.
+
+Op een gegeven moment loopt de traversal van de grid dat is het einde.
+
 
 Zoo dat was stom. Ik deed, uit gewoonte, =line.strip()= maar dan mis ik niet alleen
 de witruimte en newlines na de input maar ook de witruimte voor elke regel en
-die is relevant. Opgelost met =line.strip('\n')=.
+die is relevant. Opgelost met =line.strip('\n')=. Na review gewijzigd naar =line.rstrip()=
+Omdat ik spaties negeer zijn ze alleen nuttig voor de telling van x coordinaat,
+zodra er alleen nog wat aan de rechterkant van het diagram staat heb ik het niet
+nodig en kan het weg.
 
 * Part Two
 

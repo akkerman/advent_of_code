@@ -1,18 +1,15 @@
 """2017 Day 19: A Series of Tubes"""
 import fileinput
-import string
 
 Coord = tuple[int, int]
 
 vert_dir = [(0, -1), (0, 1)]
 horz_dir = [(-1, 0), (1, 0)]
 
-def add(p: Coord, q: Coord):
-    px,py = p
-    qx,qy = q
-    return (px+qx,py+qy)
+def add(p: Coord, q: Coord) -> Coord:
+    return (p[0] + q[0], p[1] + q[1])
 
-def solve(diagram: dict[Coord, str], start: Coord):
+def solve(diagram: dict[Coord, str], start: Coord) -> tuple[str, int]:
     letters: list[str] = []
     pos = start
     direction = (0, 1)  # initially going down 
@@ -31,9 +28,11 @@ def solve(diagram: dict[Coord, str], start: Coord):
                 if nb in diagram:
                     pos = nb
                     direction = change[i]
+                    break
+
             continue
 
-        if char in string.ascii_uppercase:
+        if char.isalpha():
             letters.append(char)
             
         pos = add(pos,direction)
@@ -44,7 +43,7 @@ def main():
 
     start: Coord = (0, 0)
     for y, line in enumerate(fileinput.input()):
-        for x, char in enumerate(line.strip('\n')):
+        for x, char in enumerate(line.rstrip()):
             if char == ' ':
                 continue
             diagram[(x, y)] = char
