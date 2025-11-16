@@ -1,4 +1,5 @@
 from typing import Callable, TypeVar, Any
+from collections.abc import Sequence
 import re
 
 def find_occurences(pattern:str, line:str, overlap:bool=False):
@@ -37,3 +38,6 @@ def perf_timer(func: T) -> T:
         return result
     return wrapper
 
+def manhattan(a: Sequence[int], b: Sequence[int]) -> int:
+    """Calculate the Manhattan distance between two point/vectors."""
+    return sum(abs(x - y) for x, y in zip(a, b))
