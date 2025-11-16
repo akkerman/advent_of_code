@@ -60,10 +60,33 @@ def part_one(particles: ParticleSwarm):
                 return ids[0]
         particles = simulate_step(particles)
 
+def remove_collisions(particles: ParticleSwarm) -> ParticleSwarm:
+    """Remove particles that have collided."""
+    position_map: defaultdict[Vector, list[int]] = defaultdict(list)
+    for id, vectors in particles.items():
+        position = vectors[0]
+        position_map[position].append(id)
+    collided_ids: set[int] = set()
+    for ids in position_map.values():
+        if len(ids) > 1:
+            collided_ids.update(ids)
+    new_particles: ParticleSwarm = {}
+    for id, vectors in particles.items():
+        if id not in collided_ids:
+            new_particles[id] = vectors
+    return new_particles
 
-def part_two(lines):
+def part_two(particles: ParticleSwarm):
     """Solution to part two."""
-    return 'todo'
+    lengths: deque[int] = deque()
+    while True:
+        lengths.append(len(particles))
+        if len(lengths) > 1000:
+            lengths.popleft()
+            if all(x == lengths[0] for x in lengths):
+                return lengths[0]
+        particles = simulate_step(particles)
+        particles = remove_collisions(particles)
 
 
 def main():
@@ -75,9 +98,9 @@ def main():
         particles[id] = (p,v,a)
 
 
-    # too low 255
     print('part_one', part_one(particles))
 
+    # too high: 931
     print('part_two', part_two(particles))
 
 
