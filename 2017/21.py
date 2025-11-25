@@ -1,10 +1,5 @@
 """2017 Day 21: Fractal Art"""
 import fileinput
-import heapq
-import re
-from collections import deque, defaultdict, Counter
-from functools import lru_cache
-from utils import perf_timer
 from typing import Generator
 
 Grid = list[str]
@@ -74,19 +69,22 @@ def join_grids(grids: list[Grid]) -> Grid:
             new_grid.append(new_row)
     return new_grid
 
-
-def part_one(rules:dict[str,str]):
-    """Solution to part one."""
+def solve(rules:dict[str,str], iterations:int) -> int:
+    """General solution function."""
     grid = start
-    for _ in range(5):
+    for _ in range(iterations):
         split = split_grid(grid)
         transformed = [transform(g, rules) for g in split]
         grid = join_grids(transformed)
     return sum(row.count('#') for row in grid)
 
-def part_two(rules):
+def part_one(rules:dict[str,str]):
+    """Solution to part one."""
+    return solve(rules, 5)
+
+def part_two(rules:dict[str,str]):
     """Solution to part two."""
-    return 'todo'
+    return solve(rules, 18)
 
 
 def main():
@@ -95,8 +93,6 @@ def main():
     for line in fileinput.input():
         f,t = line.strip().split(' => ')
         rules[f]=t
-
-    print(transform(start, rules))
 
     print('part_one', part_one(rules))
 
