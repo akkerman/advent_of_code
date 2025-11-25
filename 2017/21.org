@@ -1,0 +1,28 @@
+:PROPERTIES:
+:ID:       66918c3d-417f-4b38-844e-a1003daa7165
+:END:
+#+title: 2017 Day 21: Fractal Art
+#+filetags: :python:
+
+- tags :: [[id:a578bf44-af35-4e23-91f9-03cf7d768731][aoc2017]]
+
+* Part One
+
+Allemaal rotaties schrijven. Na wat gepuzzel moet het zo zijn dat er altijd representaties zijn van 1 vierkantje.
+
+1. origneel
+2. 90°
+3. 180°
+4. 270°
+5. origineel + horizontal flip
+6. 90° + horizontal flip
+7. 180° + horizontal flip
+8. 270° + horizontal flip
+
+En dan nog wat functies om vertalingen te doen tussen grid en string
+representation. Want ik weet ff niet hoe ik zonder grid die string
+representaties kan permuneren.
+
+
+
+* Part Two

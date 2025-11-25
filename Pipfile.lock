@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "120f5941be8a4b4717e336d07ec0a5556083762021edb035740250ea9179d27d"
+            "sha256": "1065d00eb5c3e030889143db17291c81256b84d0d3ffeb0823eced7af8203bdd"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -159,6 +159,14 @@
             "markers": "python_version >= '3.7'",
             "version": "==2.0.0"
         },
+        "nodeenv": {
+            "hashes": [
+                "sha256:6ec12890a2dab7946721edbfbcd91f3319c6ccc9aec47be7c7e6b7011ee6645f",
+                "sha256:ba11c9782d29c27c70ffbdda2d7415098754709be8a7056d79a737cd901155c9"
+            ],
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4, 3.5, 3.6'",
+            "version": "==1.9.1"
+        },
         "numpy": {
             "hashes": [
                 "sha256:0557eebc699c1c34cccdd8c3778c9294e8196df27d713706895edc6f57d29608",
@@ -237,6 +245,15 @@
             "markers": "python_version >= '3.8'",
             "version": "==1.5.0"
         },
+        "pyright": {
+            "hashes": [
+                "sha256:099674dba5c10489832d4a4b2d302636152a9a42d317986c38474c76fe562262",
+                "sha256:6dd419f54fcc13f03b52285796d65e639786373f433e243f8b94cf93a7444d21"
+            ],
+            "index": "pypi",
+            "markers": "python_version >= '3.7'",
+            "version": "==1.1.407"
+        },
         "pytest": {
             "hashes": [
                 "sha256:50e16d954148559c9a74109af1eaf0c945ba2d8f30f0a3d3335edde19788b6f6",
@@ -301,6 +318,14 @@
             ],
             "markers": "python_version >= '3.8'",
             "version": "==2.2.1"
+        },
+        "typing-extensions": {
+            "hashes": [
+                "sha256:0cea48d173cc12fa28ecabc3b837ea3cf6f38c6d1136f85cbaaf598984861466",
+                "sha256:f0fa19c6845758ab08074a0cfa8b7aecb71c999ca73d62883bc25cc018c4e548"
+            ],
+            "markers": "python_version >= '3.9'",
+            "version": "==4.15.0"
         },
         "urllib3": {
             "hashes": [
