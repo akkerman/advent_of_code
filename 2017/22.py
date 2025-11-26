@@ -1,29 +1,27 @@
 """2017 Day 22: Sporifica Virus"""
 import fileinput
-import heapq
-import re
-from collections import deque, defaultdict, Counter
-from functools import lru_cache
-from utils import perf_timer
 
 Coord = tuple[int, int]
 Dir = tuple[int, int]
 Turn = str
 
-U: Dir = (0, -1)
-D: Dir = (0, 1)
-L: Dir = (-1, 0)
-R: Dir = (1, 0)
+UP: Dir = (0, -1)
+DOWN: Dir = (0, 1)
+LEFT: Dir = (-1, 0)
+RIGHT: Dir = (1, 0)
+
+L: Turn = 'L'
+R: Turn = 'R'
 
 TURNS: dict[tuple[Dir, Turn], Dir] = {
-        (U, 'L'): L,
-        (U, 'R'): R,
-        (D, 'L'): R,
-        (D, 'R'): L,
-        (R, 'L'): U,
-        (R, 'R'): D,
-        (L, 'L'): D,
-        (L, 'R'): U,
+        (UP, L): LEFT,
+        (UP, R): RIGHT,
+        (DOWN, L): RIGHT,
+        (DOWN, R): LEFT,
+        (RIGHT, L): UP,
+        (RIGHT, R): DOWN,
+        (LEFT, L): DOWN,
+        (LEFT, R): UP,
         }
             
 
@@ -33,41 +31,64 @@ def move(pos: Coord, dir: Dir) -> Coord:
 
 def part_one(infected: set[Coord], start: Coord):
     """Solution to part one."""
-    dir: Dir = U
+    dir: Dir = UP
     pos: Coord = start
     infections: int = 0
 
     for _ in range(10000):
         if pos in infected:
-            dir = TURNS[(dir, 'R')]
+            dir = TURNS[(dir, R)]
             infected.remove(pos) # clean
         else:
-            dir = TURNS[(dir, 'L')]
+            dir = TURNS[(dir, L)]
             infected.add(pos) # infect
             infections += 1
 
         pos = move(pos, dir)
 
+    return infections
+
+
+def part_two(infected: set[Coord], start: Coord):
+    """Solution to part two."""
+    dir: Dir = UP
+    pos: Coord = start
+    infections: int = 0
+    weakened: set[Coord] = set()
+    flagged: set[Coord] = set()
+
+    for _ in range(10000000):
+        if pos in infected:
+            dir = TURNS[(dir, R)]
+            infected.remove(pos)
+            flagged.add(pos)
+        elif pos in weakened:
+            weakened.remove(pos)
+            infected.add(pos)
+            infections += 1
+        elif pos in flagged:
+            flagged.remove(pos)
+            dir = TURNS[(dir, L)]
+            dir = TURNS[(dir, L)]
+        else: # clean
+            dir = TURNS[(dir, L)]
+            weakened.add(pos)
+
+        pos = move(pos, dir)
 
     return infections
 
 
-def part_two(lines):
-    """Solution to part two."""
-    return 'todo'
-
-
 def main():
     """Parse input file, pass to puzzle solvers."""
-    maze: set[Coord] = set()
+    infected: set[Coord] = set()
 
-    x:int = 1
-    y:int = 1
+    x:int = 1; y:int = 1
     for line in fileinput.input():
         x = 1
         for char in line.strip():
             if char == '#':
-                maze.add((x, y))
+                infected.add((x, y))
             x += 1
         y += 1
 
@@ -75,9 +96,9 @@ def main():
         
     center: Coord = (x // 2, y // 2)
 
-    print('part_one', part_one(maze, center))
+    print('part_one', part_one(infected.copy(), center))
 
-    print('part_two', part_two(maze))
+    print('part_two', part_two(infected.copy(), center))
 
 
 if __name__ == '__main__':
