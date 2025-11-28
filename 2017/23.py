@@ -24,25 +24,24 @@ def part_one(instructions:list[str])->int:
             return registers[x]
 
     while 0 <= idx < len(instructions):
-        line = instructions[idx]
-        # print(f'idx {idx} line: {line} registers: {registers}')
-        if m := re_set.match(line):
+        instruction = instructions[idx]
+        if m := re_set.match(instruction):
             x, y = m.groups()
             registers[x] = valueof(y)
             idx += 1
             continue
-        elif m := re_sub.match(line):
+        elif m := re_sub.match(instruction):
             x, y = m.groups()
             registers[x] -= valueof(y)
             idx += 1
             continue
-        elif m := re_mul.match(line):
+        elif m := re_mul.match(instruction):
             x, y = m.groups()
             registers[x] *= valueof(y)
             mul_count += 1
             idx += 1
             continue
-        elif m := re_jnz.match(line):
+        elif m := re_jnz.match(instruction):
             x, y = m.groups()
             if valueof(x) != 0:
                 idx += valueof(y)
@@ -50,16 +49,62 @@ def part_one(instructions:list[str])->int:
                 idx += 1
             continue
         else:
-            raise ValueError(f'Unknown instruction: {line}')
+            raise ValueError(f'Unknown instruction: {instruction}')
 
     return mul_count
 
 
 
 
-def part_two(lines):
+def part_two(instructions:list[str])->int:
     """Solution to part two."""
-    return 'todo'
+    registers:dict[str,int] = defaultdict(int)
+    registers['a'] = 1
+    idx = 0
+    mul_count = 0
+
+
+
+
+    registers['b'] = 81 * 100 + 100000
+
+    def valueof(x: str) -> int:
+        try:
+            return int(x)
+        except ValueError:
+            return registers[x]
+
+    while 0 <= idx < len(instructions):
+        print(f"Debug: a={registers['a']} b={registers['b']} c={registers['c']} d={registers['d']} e={registers['e']} f={registers['f']} g={registers['g']} h={registers['h']}")
+
+        instruction = instructions[idx]
+        if m := re_set.match(instruction):
+            x, y = m.groups()
+            registers[x] = valueof(y)
+            idx += 1
+            continue
+        elif m := re_sub.match(instruction):
+            x, y = m.groups()
+            registers[x] -= valueof(y)
+            idx += 1
+            continue
+        elif m := re_mul.match(instruction):
+            x, y = m.groups()
+            registers[x] *= valueof(y)
+            mul_count += 1
+            idx += 1
+            continue
+        elif m := re_jnz.match(instruction):
+            x, y = m.groups()
+            if valueof(x) != 0:
+                idx += valueof(y)
+            else:
+                idx += 1
+            continue
+        else:
+            raise ValueError(f'Unknown instruction: {instruction}')
+
+    return mul_count
 
 
 def main():
