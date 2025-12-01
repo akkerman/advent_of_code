@@ -1,10 +1,6 @@
 """2025 Day 1: Secret Entrance"""
 import fileinput
-import heapq
 import re
-from collections import deque, defaultdict, Counter
-from functools import lru_cache
-from utils import perf_timer
 
 def part_one(instructions: list[tuple[str, int]]):
     """Solution to part one."""
@@ -23,15 +19,29 @@ def part_one(instructions: list[tuple[str, int]]):
 
 
 
-def part_two(lines):
+def part_two(instructions: list[tuple[str, int]]):
     """Solution to part two."""
-    return 'todo'
+    pos = 50
+    zeroes = 0
+    for d, n in instructions:
+        for _ in range(n):
+            if d == 'L':
+                pos -= 1
+            elif d == 'R':
+                pos += 1
+
+            pos %= 100
+
+            if pos == 0:
+                zeroes += 1
+
+    return zeroes
 
 
 re_dir = re.compile(r'([LR])(\d+)')
 def main():
     """Parse input file, pass to puzzle solvers."""
-    instructions = []
+    instructions:list[tuple[str, int]] = []
     for line in fileinput.input():
         line = line.strip()
         if m := re_dir.match(line):
