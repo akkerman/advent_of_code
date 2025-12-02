@@ -16,9 +16,10 @@ def find_occurences(pattern:str, line:str, overlap:bool=False):
     return indices
 
 I = TypeVar('I')
-def chunk_list(lst: list[I], size: int) -> list[list[I]]:
+S = TypeVar('S', bound=Sequence[I])
+def chunk_list(lst: Sequence[I], size: int) -> list[S]:
     """Chunk a list into smaller lists of given size."""
-    return [lst[i:i + size] for i in range(0, len(lst), size)]
+    return [list(lst[i:i + size]) for i in range(0, len(lst), size)]
 
 T = TypeVar('T', bound=Callable[..., Any])
 def perf_timer(func: T) -> T:

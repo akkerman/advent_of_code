@@ -1,13 +1,9 @@
 """2025 Day 2: Gift Shop"""
 import fileinput
-import heapq
 import re
-from collections import deque, defaultdict, Counter
-from functools import lru_cache
-from utils import perf_timer
+from utils import chunk_list
 
 def is_invalid_id(id: int) -> bool:
-    """Check if the given ID string is invalid based on some criteria."""
     id_str = str(id)
     mid = len(id_str) // 2
     return id_str[:mid] == id_str[mid:]
@@ -21,10 +17,22 @@ def part_one(ranges:list[tuple[int,int]]):
                 total += id
     return total
 
+def is_invalid_id2(id: int) -> bool:
+    id_str = str(id)
+    for i in range(1, len(id_str)):
+        parts: list[list[str]] = chunk_list(id_str, i)
+        if all(part == parts[0] for part in parts):
+            return True
+    return False
 
-def part_two(lines):
+def part_two(ranges:list[tuple[int,int]]):
     """Solution to part two."""
-    return 'todo'
+    total = 0
+    for x,y in ranges:
+        for id in range(x, y+1):
+            if is_invalid_id2(id):
+                total += id
+    return total
 
 
 def main():

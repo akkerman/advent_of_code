@@ -1,0 +1,23 @@
+:PROPERTIES:
+:ID:       c59f7fea-4970-47a3-ba3b-91def8af28f9
+:END:
+#+title: 2025 Day 2: Gift Shop
+#+filetags: :python:
+
+- tags :: [[roam:aoc2025]]
+
+* Part One
+
+Na parsen van de input zorgen dat je een =list[tuple[int,int]]= hebt.
+Dan is het een qwestie van alle getallen in die ranges af te gaan om te kijken of ze invalid zijn.
+
+Invalid zijn ze als de eerste helft gelijk is aan de tweede helft
+
+* Part Two
+
+Bij deze is het de bedoeling om, voor elke groupering van de string, te kijken of die groepen even lang zijn.
+Dus alles van 1 lang, 2 lang etc.
+
+Ik had al eens een chunk_list functie gemaakt, die werkte ook op str hoewel de type bljkbaar niet helemaal klopt.
+
+Als je dan vervolgens checkt of elk paar in de groepen gelijk is dan geld ook de invariant dat ze allemaal geljk zijn.
