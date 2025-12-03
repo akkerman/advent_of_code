@@ -1,0 +1,18 @@
+:PROPERTIES:
+:ID:       597e623d-385c-44ff-897b-272400766f7c
+:END:
+#+title: 2025 Day 3: Lobby
+#+filetags: :python:
+
+- tags :: [[roam:aoc2025]]
+
+* Part One
+
+De maximale joltage bepaal je volgens mij zo:
+
+1. bepaal tiental door het max te nemen uit de reeks, hierbij moeten we het laatste getal altijd overlaten voor de eenheid.
+2. bepaal de meest linker positie van dat gevonden maximum
+3. bepaal nu nogmaals het maximum van alle getallen rechts van die positie tbv het vinden van de eenheid
+4. max_joltage = 10 * tiental + eenheid
+
+* Part Two
