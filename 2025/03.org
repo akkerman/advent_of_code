@@ -16,3 +16,11 @@ De maximale joltage bepaal je volgens mij zo:
 4. max_joltage = 10 * tiental + eenheid
 
 * Part Two
+
+Dit is min of meer hetzelfde alleen dan moet je meer getallen aan de rechter kant uitsluiten.
+
+Ik heb een loopje gemaakt die eea bepaald. Dit lijkt ok te gaan behalve als het
+laatste getal in het max gelijk is aan het laatste getal in de batterij. ??
+
+Bleek dat mijn loop dus, terecht alle getallen bepaalde die NIET de laatste
+eenheid waren. Dus deze toegevoegd aan het einde van de loop.

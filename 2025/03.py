@@ -1,28 +1,33 @@
 """2025 Day 3: Lobby"""
 import fileinput
-import heapq
-import re
-from collections import deque, defaultdict, Counter
-from functools import lru_cache
-from utils import perf_timer
 
 Battery = list[int]
 
-
-def max_joltage(battery: Battery) -> int:
+def max_joltage_part1(battery: Battery) -> int:
     """Return the maximum joltage of the battery."""
     tiental = max(battery[:-1])
     idx = battery.index(tiental)
     eenheid = max(battery[idx + 1 :])
     return 10 * tiental  + eenheid
+
 def part_one(batteries: list[Battery]):
     """Solution to part one."""
-    return sum(max_joltage(battery) for battery in batteries)
+    return sum(max_joltage_part1(battery) for battery in batteries)
+
+def max_joltage_part2(battery: Battery) -> int:
+    """Return the maximum joltage of the battery."""
+    mj = 0
+
+    for i in range(11, 0, -1):
+        mx = max(battery[:-i])
+        mj = mj * 10 + mx
+        battery = battery[battery.index(mx) + 1 :]
+    return 10 * mj + max(battery)
 
 
-def part_two(batteries):
+def part_two(batteries: list[Battery]):
     """Solution to part two."""
-    return 'todo'
+    return sum(max_joltage_part2(battery) for battery in batteries)
 
 
 def main():
