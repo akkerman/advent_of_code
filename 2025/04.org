@@ -8,7 +8,7 @@
 
 * Part One
 
-Zoals zo vaak bij een [[id:d74b47b0-cd57-43c0-ae15-61e09c0d1955][Grid puzzle]] zet ik de input om naar coordinaten waar de relevante data staat. In dit geval een set met papier locaties.
+Zoals zo vaak bij een [[id:d74b47b0-cd57-43c0-ae15-61e09c0d1955][Grid puzzle]] zet ik de input om naar coördinaten waar de relevante data staat. In dit geval een set met papier locaties.
 
 De logica voor dit eerste deel is
 - bepaal voor elke positie welke 8 omliggende posities ook in de grid zijn
@@ -32,15 +32,18 @@ return neigbors((3,3))
 #+RESULTS:
 : [(2, 2), (2, 3), (2, 4), (3, 2), (3, 4), (4, 2), (4, 3), (4, 4)]
 
-Omdat we alleen de buren willen moeten we het input Coord, move (0,0), negeren.
+Omdat we alleen de buren willen moeten we het input =Coord=, move =(0,0)=, negeren.
 
-Van alle buren kijken we hoeveel er daadwerkelijk in de originele grid zitten (of er nog een papierrol is). In eerste instatie schreef ik dat, tijdens het oplossen, alsace
+Van alle buren kijken we hoeveel er daadwerkelijk in de originele grid zitten
+(of er nog een papierrol is). In eerste instantie schreef ik dat, tijdens het
+oplossen, als onderstaande:
 
 #+begin_src python
 if sum(1 for c in neighbors((x,y)) if c in grid) < 4:
 #+end_src
 
-Maar later heb ik de neigbors functie een set laten teruggeven en kon het door de intersectie te bepalen:
+Maar later heb ik de neigbors functie een set laten teruggeven en kon het door
+de intersectie te bepalen:
 
 #+begin_src python
 if len(neigbors(c) & grid) < 4:
@@ -60,7 +63,7 @@ verschil bepalen met het origineel. (aantal)
 
 Zoveel mogelijk opgelost met set operaties!
 
-Ook weer de walrus gebruikt zodat ik geen oneindige lus hoefde te definieren met een break. zie het verschil tussen onderstaande loops.
+Ook weer de walrus gebruikt zodat ik geen oneindige lus hoefde te definiëren met een break. zie het verschil tussen onderstaande loops.
 
 #+begin_src python
 # infinite loop with break
@@ -69,9 +72,10 @@ while True
    if not movable:
       break
    current -= movable
+#+end_src
 
+#+begin_src python
 # loop with walrus
 while movable := mark_movable(current):
    current -= movable
-
 #+end_src
