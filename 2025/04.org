@@ -45,4 +45,33 @@ Maar later heb ik de neigbors functie een set laten teruggeven en kon het door d
 #+begin_src python
 if len(neigbors(c) & grid) < 4:
 #+end_src
+
 * Part Two
+
+Deel 1 is eigenlijk de eerste stap van deel twee, daar waar we telden hoeveel er
+verplaatst kunnen worden kunnen we nu een lijst bij houden van *welke* verplaats
+kunnen worden.
+
+Als we dan elke keer die uit de grid verwijderen dan kunnen we die bepaling
+herhalen net zolang we niets meer kunnen verplaatsen.
+
+Uiteindelijk houd je een situatie over na alle verplaatsingen en kun je het
+verschil bepalen met het origineel. (aantal)
+
+Zoveel mogelijk opgelost met set operaties!
+
+Ook weer de walrus gebruikt zodat ik geen oneindige lus hoefde te definieren met een break. zie het verschil tussen onderstaande loops.
+
+#+begin_src python
+# infinite loop with break
+while True
+   movable = mark_movable(current):
+   if not movable:
+      break
+   current -= movable
+
+# loop with walrus
+while movable := mark_movable(current):
+   current -= movable
+
+#+end_src
