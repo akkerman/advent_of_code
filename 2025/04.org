@@ -1,0 +1,48 @@
+:PROPERTIES:
+:ID:       df40fc7e-c3be-4da0-a9e1-c9eed3f0cb0c
+:END:
+#+title: 2025 Day 4: Printing Department
+#+filetags: :python:
+
+- tags :: [[roam:aoc2025]]
+
+* Part One
+
+Zoals zo vaak bij een [[id:d74b47b0-cd57-43c0-ae15-61e09c0d1955][Grid puzzle]] zet ik de input om naar coordinaten waar de relevante data staat. In dit geval een set met papier locaties.
+
+De logica voor dit eerste deel is
+- bepaal voor elke positie welke 8 omliggende posities ook in de grid zijn
+- als dit er kleiner dan 4 zijn verhoog een teller.
+
+Voor de neigbors functie heb ik nu eens niet alle dx,dy eerst uitgeschreven maar ze laten bepalen:
+
+#+begin_src python :results verbatim
+def neigbors(c:tuple[int,int]):
+   x,y = c
+   nbs = []
+   for dx in [-1,0,1]:
+        for dy in [-1,0,1]:
+           if (dx,dy) != (0,0):
+              nbs.append((x+dx,y+dy))
+   return nbs
+
+return neigbors((3,3))
+#+end_src
+
+#+RESULTS:
+: [(2, 2), (2, 3), (2, 4), (3, 2), (3, 4), (4, 2), (4, 3), (4, 4)]
+
+Omdat we alleen de buren willen moeten we het input Coord, move (0,0), negeren.
+
+Van alle buren kijken we hoeveel er daadwerkelijk in de originele grid zitten (of er nog een papierrol is). In eerste instatie schreef ik dat, tijdens het oplossen, alsace
+
+#+begin_src python
+if sum(1 for c in neighbors((x,y)) if c in grid) < 4:
+#+end_src
+
+Maar later heb ik de neigbors functie een set laten teruggeven en kon het door de intersectie te bepalen:
+
+#+begin_src python
+if len(neigbors(c) & grid) < 4:
+#+end_src
+* Part Two
