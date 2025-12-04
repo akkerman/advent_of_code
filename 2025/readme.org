@@ -1,0 +1,41 @@
+:PROPERTIES:
+:ID:       9ca8d2df-3d97-4829-b2b8-db7e08b504ac
+:ROAM_ALIASES: aoc2025
+:END:
+#+title: Advent of Code 2025
+
+Dit zijn de oplossingen voor [[id:3b4d4e31-7340-4c89-a44d-df55e5d0a3d3][Advent of Code]] 2025.
+
+* Goal
+
+Dit jaar schrijf ik, zoals vorig jaar, de oplossingen in [[id:126a1e03-1dcd-4fa3-80dd-59fd6e07ab56][Python]] en wil ga ik de
+code, na het oplossen, refactoren.
+
+Bij de refactoring doe ik de volgende zaken
+
+- voeg types toe
+- schrijf pydoc comments die nog iets meer uitleggen wat een (hulp)functie doet
+- vraag chatgpt om een alternatieve versie die wellicht meer pythonic is
+
+* Lessons learned · spoiler free
+
+** Gebruik [[id:ce560cdc-730c-4861-85db-ebe2c5046fa1][walrus operator]] in een loop
+In plaats van een =while= loop met een break kan je een toewijzing doen in een
+loop voorwaarde.
+
+Zie [[id:df40fc7e-c3be-4da0-a9e1-c9eed3f0cb0c][2025 Day 4: Printing Department]].
+
+b.v. echo loop:
+#+begin_src python
+while True:
+    line = input("> ")
+    if not line:      # lege regel → stoppen
+        break
+    print("echo:", line)
+#+end_src
+
+Met walrus:
+#+begin_src python
+while line := input("> "):
+    print("echo:", line)
+#+end_src
