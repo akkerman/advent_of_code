@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       a296608c-fb22-4730-b166-eddaa1e734b7
+:END:
+#+title: 2025 Day 5: Cafeteria
+#+filetags: :python:
+
+- tags :: [[id:9ca8d2df-3d97-4829-b2b8-db7e08b504ac][aoc2025]]
+
+* Part One
+
+Ranges en ingredienten parsen en dan met een dubbele loop kijken welke spoiled/fresh zijn.
+
+Super handig dat python een else op een loop heb. Dus als een ingredient in 1
+van de ranges zit dan break en anders verhoog fresh:
+
+
+* Part Two

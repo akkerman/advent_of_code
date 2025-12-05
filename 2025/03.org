@@ -4,7 +4,7 @@
 #+title: 2025 Day 3: Lobby
 #+filetags: :python:
 
-- tags :: [[roam:aoc2025]]
+- tags :: [[id:9ca8d2df-3d97-4829-b2b8-db7e08b504ac][aoc2025]]
 
 * Part One
 
