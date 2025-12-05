@@ -1,14 +1,8 @@
 """2025 Day 5: Cafeteria"""
 import fileinput
-import heapq
-import re
-from collections import deque, defaultdict, Counter
-from functools import lru_cache
-from utils import perf_timer
 
 def part_one(ranges: list[tuple[int,int]], ingredients:list[int]):
     """Solution to part one."""
-
     fresh = 0
     for ingredient in ingredients:
         for f,t in ranges:
@@ -19,9 +13,21 @@ def part_one(ranges: list[tuple[int,int]], ingredients:list[int]):
     return len(ingredients) - fresh
 
 
-def part_two(lines):
+def part_two(ranges: list[tuple[int,int]]):
     """Solution to part two."""
-    return 'todo'
+    sorted_uniq = sorted(set(ranges), key=lambda x: x[0])
+
+    fresh = 0
+    prev: tuple[int,int] = sorted_uniq[0]
+
+    for f,t in sorted_uniq[1:]:
+        if f <= prev[1]:
+            prev = (prev[0], max(prev[1], t))
+        else:
+            fresh += prev[1] - prev[0] + 1
+            prev = (f,t)
+
+    return fresh + (prev[1] - prev[0] + 1)
 
 
 

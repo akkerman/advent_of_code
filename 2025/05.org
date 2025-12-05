@@ -15,3 +15,17 @@ van de ranges zit dan break en anders verhoog fresh:
 
 
 * Part Two
+
+De naive manier hier is om de ranges af te gaan en ze in een set te stoppen. Dan
+krijg je wel het antwoord voor het voorbeeld, maar omdat het nogal groot wordt
+duurt het voor de echte input te lang.
+
+De invoer bekijkende valt op dat die ranges allemaal door elkaar staan. Het zou
+helpen om ze eerst te sorteren. Verder is het zo dat als ik ze eerst uniq maak
+er van de 190 nog 172 overblijven dus dat is ook handig om eerst even te doen.
+
+Daarna kunnen de ranges, op volgorde, metelkaar samengevoegd worden. Zodra je
+niet meer kan samenvoegen, omdat er geen overlap is, kan voorgaande aantal
+bepaald worden en door.
+
+Vergeet niet aan het einde ook nog de range bij het totaat op te tellen!
