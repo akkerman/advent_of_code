@@ -1,24 +1,19 @@
 """2017 Day 24: Electromagnetic Moat"""
 import fileinput
-import heapq
-import re
-from collections import deque, defaultdict, Counter
-from functools import lru_cache
-from utils import perf_timer
+from collections import deque, defaultdict
 
 Port = int
 Component = tuple[Port, Port]
 Strength = int
 Used = set[Component]
 
-@perf_timer
 def part_one(components: dict[Port,set[Component]]):
     """Solution to part one."""
     max_strength = 0
-    queue: list[tuple[Strength, Port, Used]] = [(0, 0, set())]
+    queue: deque[tuple[Strength, Port, Used]] = deque([(0, 0, set())])
 
     while queue:
-        strength, port, used = heapq.heappop(queue)
+        strength, port, used = queue.popleft()
         max_strength = max(max_strength, strength)
 
         for component in (components[port] - used):
@@ -28,14 +23,37 @@ def part_one(components: dict[Port,set[Component]]):
             p = right if left == port else left  # order doesn't matter
             u = used | {component}
 
-            heapq.heappush(queue, (s, p, u))
+            queue.append((s, p, u))
 
     return max_strength
 
 
-def part_two(lines):
-    """Solution to part two."""
-    return 'todo'
+def part_two(components: dict[Port,set[Component]]):
+    """Solution to part one."""
+    max_strength = 0
+    max_length = 0
+    queue: deque[tuple[Strength, Port, Used]] = deque([(0, 0, set())])
+
+    while queue:
+        strength, port, used = queue.popleft()
+
+        length = len(used)
+        if length > max_length:
+            max_length = length
+            max_strength = strength
+        elif length == max_length:
+            max_strength = max(max_strength, strength)
+
+        for component in (components[port] - used):
+            left, right = component
+
+            s = strength + left + right
+            p = right if left == port else left  # order doesn't matter
+            u = used | {component}
+
+            queue.append((s, p, u))
+
+    return max_strength
 
 
 def main():
