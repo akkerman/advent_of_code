@@ -28,8 +28,9 @@ lines = [
 
 chars = [list(line) for line in lines]
 # rotate 90 degrees anti-lockwise
-rotated = [list(col) for col in zip(*chars)][::-1]
+rotated = list(zip(*chars))[::-1]
 
+# prepare by making each entry one string without whitespace
 prepared = ["".join(p).strip() for p in rotated]
 
 return prepared
@@ -43,7 +44,7 @@ Hiermee is het moeilijkste gedaan, het is nu een kwestie van grouperen en omzett
 
 
 #+name: nums
-#+begin_src python :var prepared=prepared :results value drawer
+#+begin_src python :var prepared=prepared
 nums = [[]]
 for p in prepared:
     if not p:
@@ -55,6 +56,22 @@ return(nums)
 #+end_src
 
 #+RESULTS: nums
-:results:
-None
-:end:
+|   4 | 431 | 623 |
+| 175 | 581 |  32 |
+|   8 | 248 | 369 |
+| 356 |  24 |   1 |
+
+
+Uiteindelijk zag ik dat, in de echte input, er vaak minder dan 4 getallen werden
+opgeteld/vermenigvuldigd. Dat verontrustte me eerst maar wat uiteindeljk wel
+logisch want bv deze input:
+
+#+begin_src
+12
+23
+34
+45
++
+#+end_src
+
+wordt =2345 + 1234=

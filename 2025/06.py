@@ -20,11 +20,11 @@ def part_two(lines: list[str], operators: list[str]) -> int:
     """Solution to part two."""
     chars = [list(line) for line in lines]
     # rotate 90 degrees anti-lockwise
-    rotated = [list(col) for col in zip(*chars)][::-1]
+    rotated = list(zip(*chars))[::-1]
+
+    print(rotated)
     
     nums = list[list[int]]()
-
-    
 
     for row in rotated:
         num_str = ''.join(row).strip()
