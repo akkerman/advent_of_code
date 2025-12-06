@@ -1,0 +1,60 @@
+:PROPERTIES:
+:ID:       a1c9c980-8552-4707-a597-cb0402bd1d95
+:END:
+#+title: 2025 Day 6: Trash Compactor
+#+filetags: :python:
+
+- tags :: [[id:9ca8d2df-3d97-4829-b2b8-db7e08b504ac][aoc2025]]
+
+* Part One
+
+Meeste werk hier was de input in een handige data structure parsen.
+
+* Part Two
+
+Hiervoor heb ik de lines niet direct geparst maar eerst allemaal verzameld.
+Dan omgezet iin een 2 dimensionale array van characters =list[list[str]]= en ze
+tegen de klok in gedraaid.
+
+
+#+name: prepared
+#+begin_src python :results value
+lines = [
+    "123 328  51 64 ",
+    " 45 64  387 23 ",
+    "  6 98  215 314",
+    ]
+
+
+chars = [list(line) for line in lines]
+# rotate 90 degrees anti-lockwise
+rotated = [list(col) for col in zip(*chars)][::-1]
+
+prepared = ["".join(p).strip() for p in rotated]
+
+return prepared
+#+end_src
+
+#+RESULTS: prepared
+| 4 | 431 | 623 |   | 175 | 581 | 32 |   | 8 | 248 | 369 |   | 356 | 24 | 1 |
+
+
+Hiermee is het moeilijkste gedaan, het is nu een kwestie van grouperen en omzetten naar getallen. Elke groep is gescheiden door een lege string.
+
+
+#+name: nums
+#+begin_src python :var prepared=prepared :results value drawer
+nums = [[]]
+for p in prepared:
+    if not p:
+        nums.append([])
+        continue
+    nums[-1].append(int(p))
+
+return(nums)
+#+end_src
+
+#+RESULTS: nums
+:results:
+None
+:end:
