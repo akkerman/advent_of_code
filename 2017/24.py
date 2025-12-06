@@ -11,7 +11,8 @@ Component = tuple[Port, Port]
 Strength = int
 Used = set[Component]
 
-def part_one(components: list[Component]):
+@perf_timer
+def part_one(components: dict[Port,set[Component]]):
     """Solution to part one."""
     max_strength = 0
     queue: list[tuple[Strength, Port, Used]] = [(0, 0, set())]
@@ -20,20 +21,16 @@ def part_one(components: list[Component]):
         strength, port, used = heapq.heappop(queue)
         max_strength = max(max_strength, strength)
 
-        for component in components:
-            if component in used or port not in component:
-                continue
-            f,t = component
-            next_port = t if f == port else f 
-            next_strength = strength + f + t
-            next_used = used | {component}
-            heapq.heappush(queue, (next_strength, next_port, next_used))
+        for component in (components[port] - used):
+            left, right = component
+
+            s = strength + left + right
+            p = right if left == port else left  # order doesn't matter
+            u = used | {component}
+
+            heapq.heappush(queue, (s, p, u))
 
     return max_strength
-
-
-
-
 
 
 def part_two(lines):
@@ -43,11 +40,16 @@ def part_two(lines):
 
 def main():
     """Parse input file, pass to puzzle solvers."""
-    components = list[Component]()
+    components: dict[Port, set[Component]] = defaultdict(set)
     for line in fileinput.input():
-        f,t = line.strip().split('/')
-        f,t = int(f), int(t)
-        components.append((f,t))
+        left, right = line.strip().split('/')
+        left, right = int(left), int(right)
+
+        component = (left, right)
+        components[left].add(component)
+        components[right].add(component)
+
+        
 
     print('part_one', part_one(components))
 
