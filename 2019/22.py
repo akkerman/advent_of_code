@@ -93,147 +93,146 @@ def main():
 
 if __name__ == '__main__':
     main()
+else:
+
+    class Test_Shuffle():
+        def test_shuffle_1(self):
+            deck = list(range(10))
+            instructions = [
+                'deal with increment 7',
+                'deal into new stack',
+                'deal into new stack'
+            ]
+            assert shuffle(deck, instructions) == [0, 3, 6, 9, 2, 5, 8, 1, 4, 7]
+
+        def test_shuffle_2(self):
+            deck = list(range(10))
+            instructions = [
+                'cut 6',
+                'deal with increment 7',
+                'deal into new stack'
+            ]
+            assert shuffle(deck, instructions) == [3, 0, 7, 4, 1, 8, 5, 2, 9, 6]
+
+        def test_shuffle_3(self):
+            deck = list(range(10))
+            instructions = [
+                'deal with increment 7',
+                'deal with increment 9',
+                'cut -2'
+            ]
+            assert shuffle(deck, instructions) == [6, 3, 0, 7, 4, 1, 8, 5, 2, 9]
+
+        def test_shuffle_4(self):
+            deck = list(range(10))
+            instructions = [
+                'deal into new stack',
+                'cut -2',
+                'deal with increment 7',
+                'cut 8',
+                'cut -4',
+                'deal with increment 7',
+                'cut 3',
+                'deal with increment 9',
+                'deal with increment 3',
+                'cut -1'
+            ]
+            assert shuffle(deck, instructions) == [9,2,5,8,1,4,7,0,3,6]
 
 
-import pytest
-class Test_Shuffle():
-    def test_shuffle_1(self):
-        deck = list(range(10))
-        instructions = [
-            'deal with increment 7',
-            'deal into new stack',
-            'deal into new stack'
-        ]
-        assert shuffle(deck, instructions) == [0, 3, 6, 9, 2, 5, 8, 1, 4, 7]
+    class Test_Previous_Position_deal:
+        @classmethod
+        def setup_class(cls):
+            cls.instructions = [ 'deal into new stack' ]
+            cls.deck = shuffle(list(range(10)), cls.instructions)
 
-    def test_shuffle_2(self):
-        deck = list(range(10))
-        instructions = [
-            'cut 6',
-            'deal with increment 7',
-            'deal into new stack'
-        ]
-        assert shuffle(deck, instructions) == [3, 0, 7, 4, 1, 8, 5, 2, 9, 6]
+        @pytest.mark.parametrize('position', [0,1,2,3,4,5,6,7,8,9])
+        def test(self, position:int):
+            assert prev_position(self.instructions, 10, position) == self.deck[position]
 
-    def test_shuffle_3(self):
-        deck = list(range(10))
-        instructions = [
-            'deal with increment 7',
-            'deal with increment 9',
-            'cut -2'
-        ]
-        assert shuffle(deck, instructions) == [6, 3, 0, 7, 4, 1, 8, 5, 2, 9]
+    class Test_Previous_Position_cut_pos():
+        @classmethod
+        def setup_class(cls):
+            cls.instructions = [ 'cut 3' ]
+            cls.deck = shuffle(list(range(10)), cls.instructions)
 
-    def test_shuffle_4(self):
-        deck = list(range(10))
-        instructions = [
-            'deal into new stack',
-            'cut -2',
-            'deal with increment 7',
-            'cut 8',
-            'cut -4',
-            'deal with increment 7',
-            'cut 3',
-            'deal with increment 9',
-            'deal with increment 3',
-            'cut -1'
-        ]
-        assert shuffle(deck, instructions) == [9,2,5,8,1,4,7,0,3,6]
+        @pytest.mark.parametrize('position', [0,1,2,3,4,5,6,7,8,9])
+        def test(self, position:int):
+            assert prev_position(self.instructions, 10, position) == self.deck[position]
 
+    class Test_Previous_Position_cut_neg():
+        @classmethod
+        def setup_class(cls):
+            cls.instructions = [ 'cut -2' ]
+            cls.deck = shuffle(list(range(10)), cls.instructions)
 
-class Test_Previous_Position_deal:
-    @classmethod
-    def setup_class(cls):
-        cls.instructions = [ 'deal into new stack' ]
-        cls.deck = shuffle(list(range(10)), cls.instructions)
+        @pytest.mark.parametrize('position', [0,1,2,3,4,5,6,7,8,9])
+        def test(self, position:int):
+            assert prev_position(self.instructions, 10, position) == self.deck[position]
 
-    @pytest.mark.parametrize('position', [0,1,2,3,4,5,6,7,8,9])
-    def test(self, position:int):
-        assert prev_position(self.instructions, 10, position) == self.deck[position]
+    class Test_Previous_Position_cut_negpos():
+        @classmethod
+        def setup_class(cls):
+            cls.instructions = [ 'cut -2', 'cut 6' ]
+            cls.deck = shuffle(list(range(10)), cls.instructions)
 
-class Test_Previous_Position_cut_pos():
-    @classmethod
-    def setup_class(cls):
-        cls.instructions = [ 'cut 3' ]
-        cls.deck = shuffle(list(range(10)), cls.instructions)
+        @pytest.mark.parametrize('position', [0,1,2,3,4,5,6,7,8,9])
+        def test(self, position:int):
+            assert prev_position(self.instructions, 10, position) == self.deck[position]
 
-    @pytest.mark.parametrize('position', [0,1,2,3,4,5,6,7,8,9])
-    def test(self, position:int):
-        assert prev_position(self.instructions, 10, position) == self.deck[position]
+    class Test_Previous_Position_increment():
+        @classmethod
+        def setup_class(cls):
+            cls.instructions = [ 'deal with increment 7' ]
+            cls.deck = shuffle(list(range(10)), cls.instructions)
 
-class Test_Previous_Position_cut_neg():
-    @classmethod
-    def setup_class(cls):
-        cls.instructions = [ 'cut -2' ]
-        cls.deck = shuffle(list(range(10)), cls.instructions)
+        @pytest.mark.parametrize('position', [0,1,2,3,4,5,6,7,8,9])
+        def test(self, position:int):
+            assert prev_position(self.instructions, 10, position) == self.deck[position]
 
-    @pytest.mark.parametrize('position', [0,1,2,3,4,5,6,7,8,9])
-    def test(self, position:int):
-        assert prev_position(self.instructions, 10, position) == self.deck[position]
+    class Test_Previous_Position_three():
+        @classmethod
+        def setup_class(cls):
+            cls.instructions = [
+                'deal with increment 7',
+                'deal into new stack',
+                'deal into new stack'
+            ]
+            cls.deck = shuffle(list(range(10)), cls.instructions)
 
-class Test_Previous_Position_cut_negpos():
-    @classmethod
-    def setup_class(cls):
-        cls.instructions = [ 'cut -2', 'cut 6' ]
-        cls.deck = shuffle(list(range(10)), cls.instructions)
+        @pytest.mark.parametrize('position', [0,1,2,3,4,5,6,7,8,9])
+        def test(self, position:int):
+            assert prev_position(self.instructions, 10, position) == self.deck[position]
 
-    @pytest.mark.parametrize('position', [0,1,2,3,4,5,6,7,8,9])
-    def test(self, position:int):
-        assert prev_position(self.instructions, 10, position) == self.deck[position]
+    class Test_Previous_Position_ten():
+        @classmethod
+        def setup_class(cls):
+            cls.instructions = [
+                'deal into new stack',
+                'cut -2',
+                'deal with increment 7',
+                'cut 8',
+                'cut -4',
+                'deal with increment 7',
+                'cut 3',
+                'deal with increment 9',
+                'deal with increment 3',
+                'cut -1',
+            ]
+            cls.deck = shuffle(list(range(10)), cls.instructions)
 
-class Test_Previous_Position_increment():
-    @classmethod
-    def setup_class(cls):
-        cls.instructions = [ 'deal with increment 7' ]
-        cls.deck = shuffle(list(range(10)), cls.instructions)
+        @pytest.mark.parametrize('position', [0,1,2,3,4,5,6,7,8,9])
+        def test(self, position:int):
+            assert prev_position(self.instructions, 10, position) == self.deck[position]
 
-    @pytest.mark.parametrize('position', [0,1,2,3,4,5,6,7,8,9])
-    def test(self, position:int):
-        assert prev_position(self.instructions, 10, position) == self.deck[position]
-
-class Test_Previous_Position_three():
-    @classmethod
-    def setup_class(cls):
-        cls.instructions = [
-            'deal with increment 7',
-            'deal into new stack',
-            'deal into new stack'
-        ]
-        cls.deck = shuffle(list(range(10)), cls.instructions)
-
-    @pytest.mark.parametrize('position', [0,1,2,3,4,5,6,7,8,9])
-    def test(self, position:int):
-        assert prev_position(self.instructions, 10, position) == self.deck[position]
-
-class Test_Previous_Position_ten():
-    @classmethod
-    def setup_class(cls):
-        cls.instructions = [
-            'deal into new stack',
-            'cut -2',
-            'deal with increment 7',
-            'cut 8',
-            'cut -4',
-            'deal with increment 7',
-            'cut 3',
-            'deal with increment 9',
-            'deal with increment 3',
-            'cut -1',
-        ]
-        cls.deck = shuffle(list(range(10)), cls.instructions)
-
-    @pytest.mark.parametrize('position', [0,1,2,3,4,5,6,7,8,9])
-    def test(self, position:int):
-        assert prev_position(self.instructions, 10, position) == self.deck[position]
-
-class Test_Part_One_Position():
-    def test(self):
-        instructions = [
-            'deal with increment 7',
-            'deal into new stack',
-            'deal into new stack'
-            'cut 2',
-            'cut -2',
-        ]
-        pos = part_one(instructions)
-        assert prev_position(instructions, 10007, pos) == 2019
+    class Test_Part_One_Position():
+        def test(self):
+            instructions = [
+                'deal with increment 7',
+                'deal into new stack',
+                'deal into new stack'
+                'cut 2',
+                'cut -2',
+            ]
+            pos = part_one(instructions)
+            assert prev_position(instructions, 10007, pos) == 2019

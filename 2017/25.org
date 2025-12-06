@@ -1,0 +1,24 @@
+:PROPERTIES:
+:ID:       1c896a00-94b8-472a-8439-a0e96fd3c67c
+:END:
+#+title: 2017 Day 25: The Halting Problem
+#+filetags: :python:
+
+- tags :: [[id:a578bf44-af35-4e23-91f9-03cf7d768731][aoc2017]]
+
+* Part One
+
+Zo, dit lijkt een enorme parsing uitdaging.
+
+Gelukkig is alles hetzelfde.
+
+- check value (0 or 1)
+- write value (0 / 1)
+- move left or right ( -1 or 1 )
+- determine next state ()
+
+Het ljkt erop dat het handig is om een machine te schrijven waar transities aan
+toegevoegd kunnen worden en dat deze dan daarna uitgevoerd kunnen worden.
+
+
+* Part Two

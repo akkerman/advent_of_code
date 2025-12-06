@@ -5,10 +5,10 @@ name = "pypi"
 
 [packages]
 numpy = "*"
-pytest = "*"
 python-dotenv = "*"
 requests = "*"
 pyright = "*"
+pytest = "*"
 
 [dev-packages]
 
