@@ -1,0 +1,21 @@
+:PROPERTIES: :ID:       af51c631-71e4-42a5-a7a8-7a953d203573 :END:
+#+title: 2017 Day 23: Coprocessor Conflagration #+filetags: :python:
+
+- tags :: [[id:a578bf44-af35-4e23-91f9-03cf7d768731][aoc2017]]
+
+* Part One
+
+Dit eerste deel is weinig meer dan alle operaties uitschrijven.
+
+* Part Two
+
+elke jnz kun je vertalen naar een loop. een instructie zoals =jnz b -17= betekend
+dat de loop 17 regels eerder begint (=while True:=) en op dat moment er evt uit
+stapt =if b ne 0 break=.
+
+Als alle instructies uit geschreven zijn kunnen de nogal wat formules bijelkaar
+in geschreven worden.  Het blijkt dat de eerste 8 regels alleen maar =b= en =c=
+initialiseren. en =g= is een hulp variabele die altijd geschreven kan worden in
+termen van die andere variabelen.
+
+Ik was hier nooit uitgekomen met wat hulp van youtube en chatgtp.
