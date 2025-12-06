@@ -1,10 +1,7 @@
 """2018 Day 9: Marble Mania"""
 import fileinput
-import heapq
 import re
-from collections import deque, defaultdict, Counter
-from functools import lru_cache
-from utils import perf_timer
+from collections import deque
 
 def marble_game(num_players: int, last_marble: int) -> int:
     """Play the marble game and return the winning score."""
@@ -36,6 +33,7 @@ def marble_game(num_players: int, last_marble: int) -> int:
         circle.rotate(-1)
         circle.append(marble)
 
+    # The player with the highest score wins.
     return max(scores)
 
 def part_one(num_players: int, last_marble: int):
@@ -43,9 +41,9 @@ def part_one(num_players: int, last_marble: int):
     return marble_game(num_players, last_marble)
 
 
-def part_two(lines):
+def part_two(num_players: int, last_marble: int):
     """Solution to part two."""
-    return 'todo'
+    return marble_game(num_players, last_marble*100)
 
 
 re_marble = re.compile(r'(\d+) players; last marble is worth (\d+) points')
@@ -62,7 +60,7 @@ def main():
 
     print('part_one', part_one(*parse(first)))
 
-    print('part_two', part_two(first))
+    print('part_two', part_two(*parse(first)))
 
 
 if __name__ == '__main__':

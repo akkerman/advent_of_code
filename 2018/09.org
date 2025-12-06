@@ -1,0 +1,24 @@
+:PROPERTIES:
+:ID:       0fe25c5b-fff2-4234-a0b5-d6ceb1977c7b
+:END:
+#+title: 2018 Day 9: Marble Mania
+#+filetags: :python:
+
+- tags :: [[id:858bfcb5-a724-475b-a2fa-c527c7c985d8][aoc2018]]
+
+* Part One
+
+See the code. De spelregels zijn daar kort uitgeschreven voor elke code statement.
+Wat je hier moet realiseren is dat 'last marble is worth =x= points' betekend 'er zijn =x= marbles'.
+
+Moest nog wel ff denken over hoe je bijhoud welke speler aan de beurt is maar dat is natuurlijk =marble % num_players= omdat je elke marble op volgorde speelt.
+
+Het bijhouden van de scores dacht ik eerst een default dict. Maar het
+initializeren van een fixed array met 0-en is net zo gemakkelijk. ~scores = [0] *
+num_players~
+
+* Part Two
+
+Omdat ik dacht dat het mogelijk een opschaal probleem zou zijn, gelijk de
+spelregels in een aparte marble_game functie gestopt. Idd wat het nu alleen de
+waarde opschroeven en het spel nogmaals spelen.
