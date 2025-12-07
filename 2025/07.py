@@ -4,15 +4,11 @@ from functools import lru_cache
 
 Coord = tuple[int, int]
 
-def part_one(splitters: set[Coord], start: Coord):
+def part_one(splitters: set[Coord], start: Coord, bottom:int) -> int:
     """Solution to part one."""
-    bottom = max(y for _, y in splitters) + 1
-
     beams = set[Coord]()
     beams.add(start)
-
-
-    splits: int = 0
+    split_count: int = 0
 
     while True:
         new_beams = set[Coord]()
@@ -20,31 +16,27 @@ def part_one(splitters: set[Coord], start: Coord):
             if (x, y+1) in splitters:
                 new_beams.add((x-1, y+1))
                 new_beams.add((x+1, y+1))
-                splits += 1
+                split_count += 1
             else:
                 new_beams.add((x, y+1))
         beams = new_beams
         if any(y >= bottom for _, y in beams):
             break
-    return splits
+    return split_count
 
-
-
-def part_two(splitters: set[Coord], start: Coord):
+def part_two(splitters: set[Coord], start: Coord, bottom: int) -> int:
     """Solution to part two."""
-    bottom = max(y for _, y in splitters) + 1
-
-    @lru_cache(maxsize=None)
-    def split_time(timelines: int, ray: Coord) -> int:
-        x, y = ray
+    @lru_cache()
+    def split_time(x:int, y:int) -> int:
         if y >= bottom:
-            return 1 # count only the last timeline
-        if (x, y+1) in splitters:
-            return split_time(timelines + 1, (x-1, y+1)) + split_time(timelines + 1, (x+1, y+1))
-        else:
-            return split_time(timelines, (x, y+1))
+            return 1
 
-    return split_time(0, start)
+        if (x, y+1) in splitters:
+            return split_time(x-1, y+1) + split_time(x+1, y+1)
+
+        return split_time(x, y+1)
+
+    return split_time(*start)
 
 
 def main():
@@ -61,12 +53,11 @@ def main():
                 splitters.add((x, y))
             else:
                 assert c == '.'
-        
 
+    bottom = max(y for _, y in splitters) + 1
+    print('part_one', part_one(splitters, start, bottom))
 
-    print('part_one', part_one(splitters, start))
-
-    print('part_two', part_two(splitters, start))
+    print('part_two', part_two(splitters, start, bottom))
 
 
 if __name__ == '__main__':

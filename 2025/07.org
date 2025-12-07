@@ -29,3 +29,4 @@ Functie was vrij klein en snel gemaakt maar ik krijg 239 voor de input...
 Vermoedelijk tel ik nu alle intermediate timelines en moet je alleen de uiteindelijke hebben?
 
 Yep, gewoon 1 teruggeven ipv de timelines als we bij de bottom zijn geeft het correcte antwoord.
+Sterker het tussentijds bijhouden van de timeline is volledig overbodig.
