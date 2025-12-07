@@ -8,6 +8,7 @@
 
 * Part One
 
+Weer math homework en terecht een verwijzing naar [[id:445d0552-3618-499f-a5fa-274124dd5f9a][2021 Day 18: Snailfish]].
 Meeste werk hier was de input in een handige data structure parsen.
 
 * Part Two

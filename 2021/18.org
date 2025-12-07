@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       445d0552-3618-499f-a5fa-274124dd5f9a
+:END:
+#+title: 2021 Day 18: Snailfish
+#+filetags: :python:
+
+- tags :: [[id:5bdadd29-0f9f-42c5-9053-c80a4a324eff][aoc2021]]
+
+note later toegevoegd om naar te linken.
+Tijdens aoc toen, welke volgens mij mijn eerste was, geen aantekeningen gemaakt voor deze dag.
+* Part One
+
+
+* Part Two

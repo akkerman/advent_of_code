@@ -1,0 +1,31 @@
+:PROPERTIES:
+:ID:       51dc7f8d-858c-421e-b88d-0c68894e7c83
+:END:
+#+title: 2025 Day 7: Laboratories
+#+filetags: :python:
+
+- tags :: [[id:9ca8d2df-3d97-4829-b2b8-db7e08b504ac][aoc2025]]
+
+
+* Part One
+
+Vandaag referenties naar [[id:547ac2fd-713f-414a-b9f2-b7cbffa704ce][2024 Day 6: Guard Gallivant]] en [[id:96520f57-d815-4f21-874c-24ea3a7a1906][2018 Day 4: Repose Record]].
+
+Dit is wederom een [[id:d74b47b0-cd57-43c0-ae15-61e09c0d1955][grid achtige puzzle]] ik zal de splitters onderbrengen in een set coordinaten.
+
+Idee is nu om elke keer een nieuwe rij met beams te maken. Ik stop de coords van
+die beams in een nieuwe set zodat ikzelf niet rekening hoef te houden met
+overlap.
+
+* Part Two
+
+Hmm mijn input is 142 lang dus een recursieve functie zou niet perse een issue moeten zijn.
+Eens kijken of het performed als ik het idd recursief aftrap bij elke split. ik
+hoef niet alle stralen afzonderlijk bij te houden want er is elke keer maar 1.
+
+Elke state zou wel meerdere keren kunnen voorkomen (alleen via een andere weg er gekomen).
+
+Functie was vrij klein en snel gemaakt maar ik krijg 239 voor de input...
+Vermoedelijk tel ik nu alle intermediate timelines en moet je alleen de uiteindelijke hebben?
+
+Yep, gewoon 1 teruggeven ipv de timelines als we bij de bottom zijn geeft het correcte antwoord.

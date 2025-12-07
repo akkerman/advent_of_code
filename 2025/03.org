@@ -8,6 +8,9 @@
 
 * Part One
 
+
+Joltage is al eens eerder voorgekomen in [[id:1959a218-706e-41ae-a925-e36162968caa][2020 Day 10: Adapter Array]].
+
 De maximale joltage bepaal je volgens mij zo:
 
 1. bepaal tiental door het max te nemen uit de reeks, hierbij moeten we het laatste getal altijd overlaten voor de eenheid.
