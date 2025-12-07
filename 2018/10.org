@@ -1,0 +1,22 @@
+:PROPERTIES:
+:ID:       2bc468db-2dec-4cb8-bb57-a644dee34d0e
+:END:
+#+title: 2018 Day 10: The Stars Align
+#+filetags: :python:
+
+- tags :: [[id:858bfcb5-a724-475b-a2fa-c527c7c985d8][aoc2018]]
+
+* Part One
+
+De punten met snelheid parsen is te doen.
+Het zetten van een stap is ook eenvoudig maar wat is het criterium om te stoppen?
+
+Ik ga aannemen dat de oppervlakte van de kleinste rechthoek waarin de punten
+passen het kleins is als er een text te zien is. Ik kan dan alle punten 1 voor 1
+gaan berekenen en dan de oppervlakte bepalen maar ik kan ook direct de
+oppervlakte bepalen door niet de punten maar de x-en en y-en uit te rekenen en
+daar de min en max van te nemen.
+
+Als we aannemen dat dit gebeuren zich als een soort parabool gedraagt. dus van tijd 0 gaat het naar een minimum en daarna wordt het weer groter dan hebben we em gevonen op het eerste moment dat de oppervlakte weer groter word. dat is het moment waarop we de punten gaan tekenen.
+
+* Part Two
