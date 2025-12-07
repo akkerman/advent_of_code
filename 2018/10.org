@@ -20,3 +20,4 @@ daar de min en max van te nemen.
 Als we aannemen dat dit gebeuren zich als een soort parabool gedraagt. dus van tijd 0 gaat het naar een minimum en daarna wordt het weer groter dan hebben we em gevonen op het eerste moment dat de oppervlakte weer groter word. dat is het moment waarop we de punten gaan tekenen.
 
 * Part Two
+Erh ja, in die tijd was ik ook geinteresseerd dus dat stond al op het beeld.

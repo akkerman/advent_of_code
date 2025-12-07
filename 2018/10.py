@@ -20,7 +20,7 @@ def draw(points: Points):
             if (x,y) in coords:
                 print('#', end='')
             else:
-                print('.', end='')
+                print(' ', end='')
         print()
 
 
@@ -49,16 +49,11 @@ def solve(points: list[tuple[int, int, int, int]]):
         area1 = area2
         time += 1
 
-    print(f"Time: {time}")
     final_points = move(points, time)
     draw(final_points)
-
-
-
-
+    print(f"Time: {time}")
 
 re_points = re.compile(r'position=< ?(.+), ?(.+)> velocity=< ?(.+), ?(.+)>')
-
 
 def main():
     """Parse input file, pass to puzzle solvers."""
@@ -72,7 +67,7 @@ def main():
         points.append((int(x), int(y), int(vx), int(vy)))
         
 
-    print(solve(points))
+    solve(points)
 
 if __name__ == '__main__':
     main()
