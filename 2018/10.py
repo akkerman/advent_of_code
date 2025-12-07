@@ -1,14 +1,11 @@
 """2018 Day 10: The Stars Align"""
 import fileinput
-import heapq
 import re
-from collections import deque, defaultdict, Counter
-from functools import lru_cache
-from utils import perf_timer
 
 Points = list[tuple[int, int, int, int]]  # (x, y, vx, vy)
 
 def draw(points: Points):
+    """Draw points to console."""
     coords = {(x,y) for x,y,xv,yv in points}
     min_x = min(p[0] for p in coords)
     max_x = max(p[0] for p in coords)
