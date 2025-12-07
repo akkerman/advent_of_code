@@ -1,0 +1,42 @@
+:PROPERTIES:
+:ID:       feaca152-acc4-4416-8f61-bc92ca8e7869
+:END:
+#+title: 2018 Day 11: Chronal Charge
+#+filetags: :python:
+
+- tags :: [[id:858bfcb5-a724-475b-a2fa-c527c7c985d8][aoc2018]]
+
+* Part One
+
+Altijd fijn dat als er meerdere voorbeelden staan met input/uit van (een deel
+van) de logica. Reden voor mij om wat tests te maken.
+
+Zodra de functie voor het bepalen van het powerlevel van 1 coordinaat geschreven is maakte ik eerst een dictionary met, voor elk coordinaat, het powerlevel.
+
+Vervolgens een loopje door alle linker-bovenhoeken in de grid om het maximum te
+bepalen van 3x3 grids.
+
+
+* Part Two
+
+Als ik dit met brute-force wil oplossen dan kan ik mijn PC wel een paar uur laten draaien.
+Elk vierkant dat ik wil berekenen duurt langer en langer. Vermoedelijk t/m grootte 150 en daarna neemt het weer af. Alleen die van 150 uitrekenen duurt al ruim 17 seconden!
+
+ff de mega thread er bij nemen om te kijken of er iets te vinden is en ja direct:
+
+[[https://en.wikipedia.org/wiki/Summed-area_table][Summed-area table - Wikipedia]] dat maar eens bestuderen.
+
+In dit geval zou ik dan nog een andere representatie moeten maken, voor elk punt
+moet gelden dat deze de optelling is van alles wat er links en boven staat.
+
+Als ik van links naar rechts en van boven naar beneden opbouw kan ik altijd het
+punt links, boven en links-boven bij huidig punt optellen.
+
+Wiki schrijft het als: =I(x,y) = i(x,y) + I(x,y-1) + I(x-1,y) + I(x-1,y-1)=
+
+Het aardige daarna is dan dat we voor een driehoek (zelfs een rechthoek maar dat
+is nu niet belangrijk) alleen maar de hoekpunten hoeven te weten en die moeten
+optellen.
+
+Als het we hebben over top-left, top-right, bottom-left en bottom-right als ABCD
+dan is de formule: =D-B-C+A=
