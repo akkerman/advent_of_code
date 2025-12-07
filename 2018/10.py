@@ -32,16 +32,16 @@ def move(points: Points, time: int) -> Points:
     return new_points
 
 
-def part_one(points: list[tuple[int, int, int, int]]):
-    """Solution to part one."""
-
+def solve(points: list[tuple[int, int, int, int]]):
     def bounding_box_area(time: int):
+        """Calculate bounding box area at given time."""
         xs = [x + vx * time for (x, y, vx, vy) in points]
         ys = [y + vy * time for (x, y, vx, vy) in points]
         return (max(xs) - min(xs)) * (max(ys) - min(ys))
 
     time = 0
     area1 = bounding_box_area(time)
+
     while True:
         area2 = bounding_box_area(time + 1)
         if area2 > area1:
@@ -56,9 +56,6 @@ def part_one(points: list[tuple[int, int, int, int]]):
 
 
 
-def part_two(lines):
-    """Solution to part two."""
-    return 'todo'
 
 re_points = re.compile(r'position=< ?(.+), ?(.+)> velocity=< ?(.+), ?(.+)>')
 
@@ -75,10 +72,7 @@ def main():
         points.append((int(x), int(y), int(vx), int(vy)))
         
 
-    print('part_one', part_one(points))
-
-    print('part_two', part_two(points))
-
+    print(solve(points))
 
 if __name__ == '__main__':
     main()
