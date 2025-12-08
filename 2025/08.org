@@ -15,7 +15,9 @@ index van elke junction box in de input.
 Dan moet ik per paar kijken of deze al verbonden zijn in een bestaand circuit.
 Een cirquit representeer ik door een set met ids van junktion boxes.
 
-Om niet elke keer elk circuit te hoeven bevragen of deze een juncion box bevat houd ik een dictionary bij van elke junktion box naar het circuit waar deze in zit.
+Om niet elke keer elk circuit te hoeven bevragen of deze een junction box bevat
+houd ik een dictionary bij van elke junktion box naar het circuit waar deze in
+zit.
 
 Zo doende zijn er de volgende situatie voor een willekeurig paar junction boxes.
 
@@ -25,11 +27,17 @@ Zo doende zijn er de volgende situatie voor een willekeurig paar junction boxes.
 4. 1 box is in een circuit en de andere niet → voeg toe aan bestaand
 
 ** goed lezen
-In eeste instantie dacht ik dat ik een one-off error had want als ik het voorbeeld tm 9 liet gaan kreeg ik het juiste antwoord en als ik de input t/m 1000 liet gaan dan kwam deze aan het einde van de lijst ipv te termineren.
+In eeste instantie dacht ik dat ik een one-off error had want als ik het
+voorbeeld tm 9 liet gaan kreeg ik het juiste antwoord en als ik de input t/m
+1000 liet gaan dan kwam deze aan het einde van de lijst ipv te termineren.
 
-Wat mijn interpretatie was van wat ik gelezen had was "maak 1000 verbindigen" en dus telde ik bestaande niet mee.
+Wat mijn interpretatie was van wat ik gelezen had was "maak 1000 verbindigen" en
+dus telde ik bestaande niet mee.
 
-Wat het had moeten zijn is: "Zorg er voor dat de 1000 paren, die het dichts bijelkaar liggen, zijn verbonden."
+Wat het had moeten zijn is: "Zorg er voor dat de 1000 paren, die het dichts
+bijelkaar liggen, zijn verbonden."
+
+Later eens een reddit gekeken en daar waren er veel meer met dezelfde verwarring.
 
 * Part Two
 
@@ -37,3 +45,7 @@ Deze is, m.i. dan weer gemakkelijk als je deel 1 al helemaal uit gecodeerd hebt,
 op elk punt dat je een circuit uitbreid of samenvoegt check even of het circuit
 gelijk zo groot is als het totaal aantal junction boxes. Op dat moment doe je de
 gevraagde berekening met de twee boxes die je dan onderhanden hebt.
+
+* TODO refactor
+
+Dit is allemaal achter elkaar door geschreven. Een refactor slag is op z'n plek wil ik dit later nog eens rustig kunnen nalezen.
