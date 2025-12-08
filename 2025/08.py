@@ -13,7 +13,6 @@ def euclidean_distance(a: Coord, b: Coord) -> float:
     """Calculate Euclidean distance between two 3D coordinates."""
     return ((a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2 + (a[2] - b[2]) ** 2) ** 0.5
 
-@perf_timer
 def pairs_sorted_by_distance(locs: list[Coord]) -> list[Pair]:
     """Generate all unique pairs of junction box locations, sorted by distance."""
     distances = dict[Pair, float]()
@@ -26,34 +25,40 @@ def pairs_sorted_by_distance(locs: list[Coord]) -> list[Pair]:
 
 def create_circuits(pairs:list[Pair], num_junction_boxes: int = 0) -> tuple[list[Circuit], Pair]:
     """Create circuits from all pairs or until all junction boxes are connected."""
-    circuits = dict[JunctionBoxId, Circuit]()
-    left, right = -1, -1
-    for left, right in pairs:
-        if left not in circuits and right not in circuits:
-            circuits[left] = set[int]([left,right])
-            circuits[right] = circuits[left]
+    circuits: dict[JunctionBoxId, Circuit] = {}
+    last_pair: Pair = (-1, -1)
 
-        elif left in circuits and right in circuits:
-            if circuits[left] is not circuits[right]:
-                union = circuits[left] | circuits[right]
-                for member in union:
-                    circuits[member] = union
-            # else they are already connected
+    for a, b in pairs:
+        last_pair = (a, b)
 
-        elif right in circuits:
-            circuits[right].add(left)
-            circuits[left] = circuits[right]
+        circuit_a = circuits.get(a)
+        circuit_b = circuits.get(b)
 
-        else: 
-            assert left in circuits
-            circuits[left].add(right)
-            circuits[right] = circuits[left]
+        if circuit_a is None and circuit_b is None:
+            circuit = {a, b}
+            circuits[a] = circuits[b] = circuit
 
-        if len(circuits[left]) == num_junction_boxes:
-            assert len(circuits[right]) == num_junction_boxes
+        elif circuit_a is not None and circuit_b is not None:
+            if circuit_a is not circuit_b:
+                merged = circuit_a | circuit_b
+                for jb in merged:
+                    circuits[jb] = merged
+
+        elif circuit_a is not None:
+            circuit_a.add(b)
+            circuits[b] = circuit_a
+
+        else:
+            circuit_b.add(a)
+            circuits[a] = circuit_b
+
+        circuit = circuits[a]
+        if len(circuit) == num_junction_boxes:
             break
 
-    return list(circuits.values()), (left, right)
+    unique_circuits = list({id(c): c for c in circuits.values()}.values())
+
+    return unique_circuits, last_pair
 
 def part_one(locations: list[Coord]):
     """Solution to part one."""

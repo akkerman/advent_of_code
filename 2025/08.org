@@ -49,3 +49,20 @@ gevraagde berekening met de twee boxes die je dan onderhanden hebt.
 * TODO refactor
 
 Dit is allemaal achter elkaar door geschreven. Een refactor slag is op z'n plek wil ik dit later nog eens rustig kunnen nalezen.
+
+Inmiddels een refactor slag achter de rug, ziet er al beter uit nu nog wat feedback van chatgpt.
+De pairs_sorted_by_distance kan meer pythonic door combinations uit itertools te gebruiken een een dict comprehension te gebruiken:
+
+#+begin_src python
+from itertools import combinations
+
+def pairs_sorted_by_distance(locs: list[Coord]) -> list[Pair]:
+    distances = {
+        (i, j): euclidean_distance(locs[i], locs[j])
+        for i, j in combinations(range(len(locs)), 2)
+    }
+    return sorted(distances, key=distances.get)
+#+end_src
+
+
+Voor de functie create_circuits stelt chatgpt een union find voor...
