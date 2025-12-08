@@ -1,0 +1,39 @@
+:PROPERTIES:
+:ID:       621624e5-07dc-47f8-b353-75a46a82865e
+:END:
+#+title: 2025 Day 8: Playground
+#+filetags: :python:
+
+- tags :: [[id:9ca8d2df-3d97-4829-b2b8-db7e08b504ac][aoc2025]]
+
+* Part One
+
+Allereerst bepaal ik alle afstanden tussen alle paren zodat ik deze kan sorteren
+op afstand. Een represenatie van een paar kan een tuple zijn met de originele
+index van elke junction box in de input.
+
+Dan moet ik per paar kijken of deze al verbonden zijn in een bestaand circuit.
+Een cirquit representeer ik door een set met ids van junktion boxes.
+
+Om niet elke keer elk circuit te hoeven bevragen of deze een juncion box bevat houd ik een dictionary bij van elke junktion box naar het circuit waar deze in zit.
+
+Zo doende zijn er de volgende situatie voor een willekeurig paar junction boxes.
+
+1. beide zijn nog met niets verbonden → maak een nieuw circuit
+2. beide zijn verbonden in hetzelfde circuit → doe niets
+3. beide zijn verbonden in andere circuits → verbind de circuits
+4. 1 box is in een circuit en de andere niet → voeg toe aan bestaand
+
+** goed lezen
+In eeste instantie dacht ik dat ik een one-off error had want als ik het voorbeeld tm 9 liet gaan kreeg ik het juiste antwoord en als ik de input t/m 1000 liet gaan dan kwam deze aan het einde van de lijst ipv te termineren.
+
+Wat mijn interpretatie was van wat ik gelezen had was "maak 1000 verbindigen" en dus telde ik bestaande niet mee.
+
+Wat het had moeten zijn is: "Zorg er voor dat de 1000 paren, die het dichts bijelkaar liggen, zijn verbonden."
+
+* Part Two
+
+Deze is, m.i. dan weer gemakkelijk als je deel 1 al helemaal uit gecodeerd hebt,
+op elk punt dat je een circuit uitbreid of samenvoegt check even of het circuit
+gelijk zo groot is als het totaal aantal junction boxes. Op dat moment doe je de
+gevraagde berekening met de twee boxes die je dan onderhanden hebt.

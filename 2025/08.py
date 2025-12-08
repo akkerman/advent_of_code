@@ -74,9 +74,63 @@ def part_one(locations: list[Coord]):
 
 
 
-def part_two(lines):
+def part_two(locations: list[Coord]):
     """Solution to part two."""
-    return 'todo'
+    distances = dict[tuple[int, int], float]()
+    for i, coord in enumerate(locations):
+        for j in range(i + 1, len(locations)):
+            other = locations[j]
+            idx = (i, j) if i < j else (j, i)
+            dist = euclidean_distance(coord, other)
+            distances[idx] = dist
+
+    sorted_distances = sorted(distances.items(), key=lambda x: x[1])
+
+    connected = dict[int, set[int]]()
+
+    for (i, j), dist in sorted_distances:
+
+        if i not in connected and j not in connected:
+            pair = set[int]([i,j])
+            connected[i] = pair
+            connected[j] = pair
+            continue
+
+        if i in connected and j in connected:
+            # both are connect to other nodes
+            if connected[i] is connected[j]:
+                continue
+            else: # merge sets
+                assert i not in connected[j] and j not in connected[i]
+
+                union = connected[i] | connected[j]
+
+                if len(union) == len(locations):
+                    return locations[i][0] * locations[j][0]
+
+                for member in union:
+                    connected[member] = union
+
+                continue
+        if j in connected:
+            connected[j].add(i)
+            connected[i] = connected[j]
+            if len(connected[j]) == len(locations):
+                return locations[i][0] * locations[j][0]
+            continue
+        if i in connected:
+            connected[i].add(j)
+            connected[j] = connected[i]
+            if len(connected[i]) == len(locations):
+                return locations[i][0] * locations[j][0]
+            continue
+
+        assert False, "Should not reach end of loop"
+
+
+    print(connected)
+    assert False, "Should not reach end of function"
+     
 
 
 def main():
