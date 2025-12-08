@@ -25,6 +25,7 @@ Elk vierkant dat ik wil berekenen duurt langer en langer. Vermoedelijk t/m groot
 ff de mega thread er bij nemen om te kijken of er iets te vinden is en ja direct:
 
 [[https://en.wikipedia.org/wiki/Summed-area_table][Summed-area table - Wikipedia]] dat maar eens bestuderen.
+Een Summed-area table is een [[roam:data structure]] en een [[id:7c354c8c-330b-4d99-a259-19cb778c67af][algorithm]] voor het snel bepalen van
 
 In dit geval zou ik dan nog een andere representatie moeten maken, voor elk punt
 moet gelden dat deze de optelling is van alles wat er links en boven staat.
