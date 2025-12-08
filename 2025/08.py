@@ -1,8 +1,6 @@
 """2025 Day 8: Playground"""
 import fileinput
 import math
-from utils import perf_timer
-from itertools import combinations
 
 Coord = tuple[int, int, int]
 JunctionBoxId = int
@@ -60,21 +58,18 @@ def create_circuits(pairs:list[Pair], num_junction_boxes: int = 0) -> tuple[list
 
     return unique_circuits, last_pair
 
-def part_one(locations: list[Coord]):
+def part_one(locations: list[Coord], pairs: list[Pair]):
     """Solution to part one."""
-    pairs = pairs_sorted_by_distance(locations)
     max_pairs = 10 if len(locations) < 1000 else 1000
     circuits, _ = create_circuits(pairs[:max_pairs], num_junction_boxes = len(locations))
     unique_circuits = {frozenset(s) for s in circuits}
     sorted_circuits = sorted(unique_circuits, key=lambda x: len(x), reverse=True)
     return math.prod(len(g) for g in sorted_circuits[:3])
 
-def part_two(locations: list[Coord]):
+def part_two(locations: list[Coord], pairs: list[Pair]):
     """Solution to part two."""
-    pairs = pairs_sorted_by_distance(locations)
     _, (left, right) = create_circuits(pairs, num_junction_boxes = len(locations))
     return locations[left][0] * locations[right][0]
-
 
 def main():
     """Parse input file, pass to puzzle solvers."""
@@ -86,8 +81,9 @@ def main():
         locations.append(coord)
 
 
-    print('part_one', part_one(locations))
-    print('part_two', part_two(locations))
+    pairs = pairs_sorted_by_distance(locations)
+    print('part_one', part_one(locations, pairs))
+    print('part_two', part_two(locations, pairs))
 
 
 if __name__ == '__main__':

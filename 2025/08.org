@@ -65,4 +65,6 @@ def pairs_sorted_by_distance(locs: list[Coord]) -> list[Pair]:
 #+end_src
 
 
-Voor de functie create_circuits stelt chatgpt een union find voor...
+Voor de functie create_circuits stelt chatgpt een union find voor... zie o.a. [[https://en.wikipedia.org/wiki/Disjoint-set_data_structure][Disjoint-set data structure - Wikipedia]]
+Leuk om later eens naar te kijken wellicht maar omdat de puzzel is opgelost,
+duurt <1s en code is nu m.i. goed te volgen is het wel mooi zo.
