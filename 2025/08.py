@@ -47,6 +47,7 @@ def create_circuits(pairs:list[Pair], num_junction_boxes: int = 0) -> tuple[list
             circuits[b] = circuit_a
 
         else:
+            assert circuit_b is not None
             circuit_b.add(a)
             circuits[a] = circuit_b
 
