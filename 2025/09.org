@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       a23514c0-1123-48e1-94af-2eed61d38527
+:END:
+#+title: 2025 Day 9: Movie Theater
+#+filetags: :python:
+
+- tags :: [[id:9ca8d2df-3d97-4829-b2b8-db7e08b504ac][aoc2025]]
+
+* Part One
+Gewoon area uitrekenen obv elke 2 punten en dan grootste nemen of niet?
+Ja maar die area is niet gewoon maar iets met punten dus verschil van die coord + 1.
+
+* Part Two
+
+Flood fill?
+
+coords in rect - coords in total must be empty
