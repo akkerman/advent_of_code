@@ -1,5 +1,6 @@
 :PROPERTIES: :ID:       a0763a81-25c8-4048-841f-1ae5a9f2b966 :END:
-#+title: 2025 Day 10: Factory #+filetags: :python:
+#+title: 2025 Day 10: Factory
+#+filetags: :python:
 
 - tags :: [[id:9ca8d2df-3d97-4829-b2b8-db7e08b504ac][aoc2025]]
 
@@ -12,6 +13,8 @@ het aantal keer drukken was en de state die dat op dat moment bereikt is.
 
 Goede antwoord voor het voorbeeld en duurt lang voor de input...
 iig langer dan mijn standaard timeout van 30s nl 45s met pypy3 en 1:40 met python3.
+
+Lolz het blijkt dat als ik een visited state bij houd het in 35ms klaar is
 
 
 * Part Two

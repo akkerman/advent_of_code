@@ -11,17 +11,23 @@ Button = list[int]
 Joltage = list[int]
 Machine = tuple[Lights, list[Button], Joltage]
 
-@perf_timer
 def min_presses_light(machine: Machine) -> int:
     """Simulate machine switching and return number of steps to get the desired combination of lights on."""
     end, buttons, _ = machine
 
     queue: deque[tuple[int, Lights]] = deque()
     queue.append((0, [False] * len(machine[0])))
+    visited: set[tuple[bool, ...]] = set()
+
     while queue:
         presses, lights = queue.popleft()
         if lights == end:
             return presses
+
+        state = tuple(lights)
+        if state in visited:
+            continue
+        visited.add(state)
         
         for button in buttons:
             new_lights = lights[:]
@@ -30,6 +36,11 @@ def min_presses_light(machine: Machine) -> int:
             queue.append((presses + 1, new_lights))
 
     assert False, "Shouldn't reach here"
+
+@perf_timer
+def part_one(machines: list[Machine]):
+    """Solution to part one."""
+    return sum(min_presses_light(m) for m in machines)
 
 def to_bits(button: Button, size: int) -> list[int]:
     """Convert button list to bit representation."""
@@ -71,10 +82,6 @@ def min_presses_joltage(machine: Machine) -> int:
     assert False, "Shouldn't reach here"
 
 
-@perf_timer
-def part_one(machines: list[Machine]):
-    """Solution to part one."""
-    return sum(min_presses_light(m) for m in machines)
 
 def part_two(machines: list[Machine]):
     """Solution to part two."""
@@ -100,9 +107,9 @@ def main():
         machines.append((lights, buttons, joltage))
 
 
-    # print('part_one', part_one(machines))
+    print('part_one', part_one(machines))
 
-    print('part_two', part_two(machines))
+    # print('part_two', part_two(machines))
 
 
 if __name__ == '__main__':
