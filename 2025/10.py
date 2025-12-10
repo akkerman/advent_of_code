@@ -37,10 +37,6 @@ def min_presses_light(machine: Machine) -> int:
 
     assert False, "Shouldn't reach here"
 
-@perf_timer
-def part_one(machines: list[Machine]):
-    """Solution to part one."""
-    return sum(min_presses_light(m) for m in machines)
 
 def to_bits(button: Button, size: int) -> list[int]:
     """Convert button list to bit representation."""
@@ -48,8 +44,6 @@ def to_bits(button: Button, size: int) -> list[int]:
     for idx in button:
         bits[idx] = 1
     return bits
-
-
 
 @perf_timer
 def min_presses_joltage(machine: Machine) -> int:
@@ -69,10 +63,16 @@ def min_presses_joltage(machine: Machine) -> int:
     queue: list[tuple[int, int, Joltage]] = []
     queue.append((0, 0, [0] * len(required_joltage)))
 
+    visited: set[tuple[int, ...]] = set()
+
     while queue:
         _, presses, joltage = heapq.heappop(queue)
         if joltage == required_joltage:
             return presses
+
+        state = tuple(joltage)
+        if state in visited:
+            continue
         
         for button in button_bits:
             new_joltage = [a+b for a, b in zip(joltage, button)]
@@ -81,8 +81,12 @@ def min_presses_joltage(machine: Machine) -> int:
 
     assert False, "Shouldn't reach here"
 
+@perf_timer
+def part_one(machines: list[Machine]):
+    """Solution to part one."""
+    return sum(min_presses_light(m) for m in machines)
 
-
+@perf_timer
 def part_two(machines: list[Machine]):
     """Solution to part two."""
     return sum(min_presses_joltage(m) for m in machines)
@@ -109,7 +113,7 @@ def main():
 
     print('part_one', part_one(machines))
 
-    # print('part_two', part_two(machines))
+    print('part_two', part_two(machines))
 
 
 if __name__ == '__main__':

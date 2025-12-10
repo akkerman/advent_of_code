@@ -27,3 +27,6 @@ de queue als de alle huidige joltages nog onder de required liggen.
 
 Hoewel het antwoord van het voorbeeld klopt, termineerd de eerste machine in de
 input al niet binnen 2 minuten.
+
+Een inzicht hier is te beseffen dat, hoewel het bij deel 1 wel zo was, de
+*volgorde van drukken van knoppen niet meer relevant* is.
