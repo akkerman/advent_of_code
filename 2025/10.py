@@ -11,8 +11,9 @@ Button = list[int]
 Joltage = list[int]
 Machine = tuple[Lights, list[Button], Joltage]
 
-def min_presses(machine: Machine) -> int:
-    """Simulate machine switching and return number of lights on."""
+@perf_timer
+def min_presses_light(machine: Machine) -> int:
+    """Simulate machine switching and return number of steps to get the desired combination of lights on."""
     end, buttons, _ = machine
 
     queue: deque[tuple[int, Lights]] = deque()
@@ -30,15 +31,42 @@ def min_presses(machine: Machine) -> int:
 
     assert False, "Shouldn't reach here"
 
+@perf_timer
+def min_presses_joltage(machine: Machine) -> int:
+    """Simulate machine switching and return number pressesn to match the joltage requirement."""
+    _, buttons, required_joltage = machine
+
+    def check(current_joltage: list[int]) -> bool:
+        return all(c <= r for c, r in zip(current_joltage, required_joltage))
+
+    queue: deque[tuple[int, Joltage]] = deque()
+    queue.append((0, [0] * len(required_joltage)))
+
+    while queue:
+        presses, joltage = queue.popleft()
+        if joltage == required_joltage:
+            return presses
+        
+        for button in buttons:
+            new_joltage = list(joltage)
+            for idx in button:
+                new_joltage[idx] += 1
+            if check(new_joltage):
+                queue.append((presses + 1, new_joltage))
+
+    assert False, "Shouldn't reach here"
 
 
+@perf_timer
 def part_one(machines: list[Machine]):
     """Solution to part one."""
-    return sum(min_presses(m) for m in machines)
+    return sum(min_presses_light(m) for m in machines)
 
-def part_two(lines):
+def part_two(machines: list[Machine]):
     """Solution to part two."""
-    return 'todo'
+    return sum(min_presses_joltage(m) for m in machines)
+
+    
 
 
 def parse(button: str):
@@ -53,12 +81,12 @@ def main():
         parts  = line.strip().split(' ')
         lights = [s == '#' for s in parts[0].strip(r'\[\]')]
         buttons = [parse(button) for button in parts[1:-1]]
-        joltage = [int(x) for x in parts[2].strip('()').split(',')]
+        joltage = [int(x) for x in parts[-1].strip('{}').split(',')]
 
         machines.append((lights, buttons, joltage))
 
 
-    print('part_one', part_one(machines))
+    # print('part_one', part_one(machines))
 
     print('part_two', part_two(machines))
 

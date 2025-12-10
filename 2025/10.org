@@ -11,5 +11,15 @@ Vanuit elke state op elke knop drukken en in een (sorted) queue bijhouden wat
 het aantal keer drukken was en de state die dat op dat moment bereikt is.
 
 Goede antwoord voor het voorbeeld en duurt lang voor de input...
+iig langer dan mijn standaard timeout van 30s nl 45s met pypy3 en 1:40 met python3.
+
 
 * Part Two
+
+Ik heb een functie gemaakt die, voor 1 machine, de joltage probeert te bepalen
+zoals in deel 1 de lampjes bepaald worden.
+
+in elke stap druk op elke knop. Verhoog de joltage obv de indices en zet dit in
+de queue als de alle huidige joltages nog onder de required liggen.
+
+Hoewel het antwoord van het voorbeeld klopt, termineerd de eerste machine in de input al niet binnen 2 minuten.
