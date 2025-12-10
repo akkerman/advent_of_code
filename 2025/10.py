@@ -31,28 +31,42 @@ def min_presses_light(machine: Machine) -> int:
 
     assert False, "Shouldn't reach here"
 
+def to_bits(button: Button, size: int) -> list[int]:
+    """Convert button list to bit representation."""
+    bits = [0] * size
+    for idx in button:
+        bits[idx] = 1
+    return bits
+
+
+
 @perf_timer
 def min_presses_joltage(machine: Machine) -> int:
     """Simulate machine switching and return number pressesn to match the joltage requirement."""
     _, buttons, required_joltage = machine
 
+    button_bits = [to_bits(button, len(required_joltage)) for button in buttons]
+
     def check(current_joltage: list[int]) -> bool:
         return all(c <= r for c, r in zip(current_joltage, required_joltage))
 
-    queue: deque[tuple[int, Joltage]] = deque()
-    queue.append((0, [0] * len(required_joltage)))
+    def dist(a: Joltage) -> int:
+        """Calculate distance between two joltage states."""
+        b = required_joltage
+        return sum(abs(x - y) for x, y in zip(a, b))
+
+    queue: list[tuple[int, int, Joltage]] = []
+    queue.append((0, 0, [0] * len(required_joltage)))
 
     while queue:
-        presses, joltage = queue.popleft()
+        _, presses, joltage = heapq.heappop(queue)
         if joltage == required_joltage:
             return presses
         
-        for button in buttons:
-            new_joltage = list(joltage)
-            for idx in button:
-                new_joltage[idx] += 1
+        for button in button_bits:
+            new_joltage = [a+b for a, b in zip(joltage, button)]
             if check(new_joltage):
-                queue.append((presses + 1, new_joltage))
+                heapq.heappush(queue, (dist(new_joltage), presses + 1, new_joltage))
 
     assert False, "Shouldn't reach here"
 

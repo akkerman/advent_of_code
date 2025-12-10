@@ -22,4 +22,5 @@ zoals in deel 1 de lampjes bepaald worden.
 in elke stap druk op elke knop. Verhoog de joltage obv de indices en zet dit in
 de queue als de alle huidige joltages nog onder de required liggen.
 
-Hoewel het antwoord van het voorbeeld klopt, termineerd de eerste machine in de input al niet binnen 2 minuten.
+Hoewel het antwoord van het voorbeeld klopt, termineerd de eerste machine in de
+input al niet binnen 2 minuten.
