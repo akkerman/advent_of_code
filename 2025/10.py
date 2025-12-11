@@ -8,6 +8,10 @@ Button = list[int]
 Joltage = list[int]
 Machine = tuple[Lights, list[Button], Joltage]
 
+VariableName = str
+Target = int
+Equation = tuple[list[VariableName], Target]
+
 def min_presses_light(machine: Machine) -> int:
     """Simulate machine switching and return number of steps to get the desired combination of lights on."""
     end, buttons, _ = machine
@@ -34,35 +38,34 @@ def min_presses_light(machine: Machine) -> int:
 
     assert False, "Shouldn't reach here"
 
+def part_one(machines: list[Machine]):
+    """Solution to part one."""
+    return sum(min_presses_light(m) for m in machines)
 
-def to_bits(button: Button, size: int) -> list[int]:
-    """Convert button list to bit representation."""
-    bits = [0] * size
-    for idx in button:
-        bits[idx] = 1
-    return bits
 
-def min_presses_joltage(machine: Machine) -> int:
-    """Simulate machine switching and return number presses to match the joltage requirement."""
-    equations = determine_equations(machine)
-    variables = {v: Int(v) for v in sorted({v for q, _ in equations for v in q})}
+def min_presses_joltage_solver(equations: list[Equation]) -> int:
+    """Solve the joltage equations using Z3 solver."""
+    variables = {name: Int(name) 
+                 for variable_names, _ in equations 
+                 for name in variable_names}
 
     o = Optimize()
 
-    for v in variables.values():
+    sorted_variables = [variables[name] for name in sorted(variables)]
+    for v in sorted_variables:
         o.add(v >= 0)
 
     for eq, target in equations:
         o.add(Sum(*[variables[v] for v in eq]) == target)
 
-    h = o.minimize(Sum(*variables.values()))
+    h = o.minimize(Sum(*sorted_variables))
 
     o.check()
     # print(o.model())
     return h.value().as_long()
 
-def determine_equations(machine: Machine) -> list[tuple[list[str], int]]:
-    """Print the system of joltage equations for the machine."""
+def determine_equations(machine: Machine) -> list[Equation]:
+    """Determine the system of joltage equations for the machine."""
     _, buttons, joltage = machine
 
     equations = list[tuple[list[str], int]]()
@@ -74,13 +77,9 @@ def determine_equations(machine: Machine) -> list[tuple[list[str], int]]:
         equations.append((equation, jolt))
     return equations
 
-def part_one(machines: list[Machine]):
-    """Solution to part one."""
-    return sum(min_presses_light(m) for m in machines)
-
 def part_two(machines: list[Machine]):
     """Solution to part two."""
-    return sum(min_presses_joltage(m) for m in machines)
+    return sum(min_presses_joltage_solver(determine_equations(m)) for m in machines)
 
     
 

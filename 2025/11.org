@@ -1,0 +1,98 @@
+:PROPERTIES:
+:ID:       d737abc2-d97f-40c2-ad9c-e565fdb75b16
+:END:
+#+title: 2025 Day 11: Reactor
+#+filetags: :python:
+
+- tags :: [[id:9ca8d2df-3d97-4829-b2b8-db7e08b504ac][aoc2025]]
+
+* Part One
+
+Met een [[id:ccd23e17-bc3e-486c-8127-331517a7dc95][BFS]] kwam hier vlot een antwoord voor. Ipv een aparte visited kon ik
+controleren of de nieuwe 'step' niet al in het eerder gevonden path voor kwam.
+
+* Part Two
+
+Hier zijn nu zo verschrikkelijk veel permutaties dat het algorithme van deel 1 niet meer voldoet.
+Ik vraag me af of het haalbaar is om een [[id:ea19be69-54e4-4d9d-a3bc-3b64c3b0dde1][DFS]] te maken voor
+
+#+begin_src
+A1: srv -> fft (exclude dac)
+A2: fft -> dac
+A3: dac -> out (exclude fft)
+
+B1: srv -> dac (exclude fft)
+B2: dac -> fft
+B3: fft -> out (exclude dac)
+#+end_src
+
+Aangenomen dat A1..B3 allemaal het *aantal* paden representeren dan is het antwoord: =A1*A2*A3 + B1*B2*B3=
+
+Het lijkt erop dat mijn input geen =dac -> fft= heeft.
+
+#+begin_src
+A1 = ?
+A2 = ?
+A3 = 7314
+#+end_src
+
+Het blijkt dat die DFS, eigenlijk net als de bfs nogal inefficient was met al de
+lists die ik aan het maken was. Het was niet echt nodig om dat te doen als je
+een recursieve functie start dan ga je alle paden af. Dit gaat alleen fout als
+er cycles in de graph zitten.
+
+
+In princiepe zou ik nu deel 1 ook kunnen oplossen met deze dfs maar ik laat em
+staan voor als ik er later nog eens naar wil kijken.
+
+aanroep van de dfs:
+
+
+#+begin_src python
+    return (
+        dfs('svr', 'fft') * dfs('fft', 'dac') * dfs('dac', 'out') +
+        dfs('svr', 'dac') * dfs('dac', 'fft') * dfs('fft', 'out')
+    )
+#+end_src
+
+Een klein testje wijst uit dat de onderste regel verwijderen hetzelfde resultaat geeft op mijn input.
+
+
+** Refactor dfs
+
+#+begin_src python
+def dfs(src:str, dst:str) -> int:
+    if src == dst:
+        return 1
+
+    if src not in devices:
+        return 0
+
+    count = 0
+    for nxt in devices[src]:
+        count += dfs(nxt, dst)
+    return count
+#+end_src
+
+Ik begrijp ook dat een dictionary een method heeft met een default waarde:
+
+#+begin_src python
+def dfs(src:str, dst:str) -> int:
+    if src == dst:
+        return 1
+
+    count = 0
+    for nxt in devices.get(src,[])
+        count += dfs(nxt, dst)
+    return count
+#+end_src
+
+Mar dan kunnen we het ook in een iterator stoppen ipv een lus:
+
+#+begin_src python
+def dfs(src:str, dst:str) -> int:
+    if src == dst:
+        return 1
+
+    return sum(dfs(nxt, dst), for nxt in devices.get(src,[]))
+#+end_src

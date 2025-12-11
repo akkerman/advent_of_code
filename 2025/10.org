@@ -1,4 +1,6 @@
-:PROPERTIES: :ID:       a0763a81-25c8-4048-841f-1ae5a9f2b966 :END:
+:PROPERTIES:
+:ID:       a0763a81-25c8-4048-841f-1ae5a9f2b966 :END:
+:END:
 #+title: 2025 Day 10: Factory
 #+filetags: :python:
 
@@ -31,6 +33,8 @@ input al niet binnen 2 minuten.
 Een inzicht hier is te beseffen dat, hoewel het bij deel 1 wel zo was, de
 *volgorde van drukken van knoppen niet meer relevant* is.
 
+** Abandon hope all ye who are searching
+
 Wat er blijkbaar voornamelijk aan de hand is, na wat dingen op reddit gelezen te hebben en met chatgtpt gesparred te hebben, dat dit geen zoek probleem meer is. En zelfs lastig te doen is met [[id:a3ad2337-1bfd-4611-ba70-f8a07ef2189d][dynamic programming]].
 
 Blijkbaar gaat het hier om het oplossen van een stelsel vergelijkingen.
@@ -39,25 +43,26 @@ Neem het allereerste voorbeeld =[.##.] (3) (1,3) (2) (2,3) (0,2) (0,1) {3,5,4,7}
 
 Als we de knoppen nummeren van 1 tm 6 dan komen we op deze vergelijkingen, hierin is b.v. x₁ het aantal keren dat op de eerste knop =(3)= gedrukt wordt en x₅ gaat over =(0,2)=.
 
-#+begin_quote
+#+begin_src
 x5 + x6 = 3
 x2 + x6 = 5
 x3 + x4 + x5 = 4
 x1 + x2 + x4 = 7
-#+end_quote
+#+end_src
 
 Waarbij elke xi een geheel getal moet zijn >= 0
 
 Geautomatiseerd (begin met tellen vanaf 0 ipv 1):
 
-#+begin_src python
+#+name: equations
+#+begin_src python :output value
 Lights = list[bool]
 Button = list[int]
 Joltage = list[int]
 Machine = tuple[Lights, list[Button], Joltage]
 
 def determine_equations(machine: Machine) -> list[tuple[list[str], int]]:
-    """Print the system of joltage equations for the machine."""
+    """Determine the system of joltage equations for the machine."""
     _, buttons, joltage = machine
 
     equations = list[tuple[list[str], int]]()
@@ -74,11 +79,72 @@ machine = ([False, True, True, False], [[3], [1, 3], [2], [2, 3], [0, 2], [0, 1]
 return determine_equations(machine)
 #+end_src
 
-#+RESULTS:
+#+RESULTS: equations
 | (x4 x5)    | 3 |
 | (x1 x5)    | 5 |
 | (x2 x3 x4) | 4 |
 | (x0 x1 x3) | 7 |
 
-Ik heb een lesje z3-solver gedaan met chatgpt, toen ik dat begreep kon ik
-bovenstaande formules wel dynamisch opbouwen met z3.
+Ik heb een [[file:10-z3-tutorial.py][lesje z3-solver]] gedaan met chatgpt.
+
+
+#+begin_src python
+from z3 import Ints, Solver, Or, Optimize, Sum
+
+x1, x2, x3, x4, x5, x6 = Ints('x1 x2 x3 x4 x5 x6')
+
+o = Optimize()
+o.add(x1 >= 0, x2 >= 0, x3 >= 0, x4 >= 0, x5 >= 0, x6 >= 0)
+
+o.add(x5 + x6 == 3)
+o.add(x2 + x6 == 5)
+o.add(x3 + x4 + x5 == 4)
+o.add(x1 + x2 + x4 == 7)
+
+
+h = o.minimize(Sum(x1, x2, x3, x4, x5, x6))
+print(o.check())
+print(o.model())
+print("Optimum =", h.value())
+return h.value()
+#+end_src
+
+#+RESULTS:
+: 10
+
+
+Na het doorlopen van die lessen begreep ik het voldoende om bovenstaande formules dynamisch opbouwen met z3.
+
+
+#+begin_src python :var eq=equations
+from z3 import Int, Optimize, Sum
+
+VariableName = str
+Target = int
+Equation = tuple[list[VariableName], Target]
+
+def min_presses_joltage_solver(equations: list[Equation]) -> int:
+    """Solve the joltage equations using Z3 solver."""
+    variables = {name: Int(name)
+                 for variable_names, _ in equations
+                 for name in variable_names}
+
+    o = Optimize()
+
+    sorted_variables = [variables[name] for name in sorted(variables)]
+    for v in sorted_variables:
+        o.add(v >= 0)
+
+    for eq, target in equations:
+        o.add(Sum(*[variables[v] for v in eq]) == target)
+
+    h = o.minimize(Sum(*sorted_variables))
+
+    o.check()
+    return h.value().as_long()
+
+return min_presses_joltage_solver(eq)
+#+end_src
+
+#+RESULTS:
+: 10

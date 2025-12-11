@@ -39,3 +39,10 @@ Met walrus:
 while line := input("> "):
     print("echo:", line)
 #+end_src
+
+** Soms heb je Integer Linear programming nodig (z3)
+
+z3 had 2 jaar eerder al eens gebruikt in javascript. Ik vermoed dat ik er toen
+een youtube filmpje bij en en dee 'monkey see, monkey do'. Deze keer chatgpt
+gevraag om een les z3 tegen de tijd dat ik begreep hoe die library, in de basis,
+werkte kon ik verder met dynamisch vergelijkingen bouwen.

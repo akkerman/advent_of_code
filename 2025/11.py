@@ -1,10 +1,7 @@
 """2025 Day 11: Reactor"""
 import fileinput
-import heapq
-import re
-from collections import deque, defaultdict, Counter
+from collections import deque
 from functools import lru_cache
-from utils import perf_timer
 
 def part_one(devices: dict[str, list[str]]):
     """Solution to part one."""
@@ -28,38 +25,21 @@ def part_one(devices: dict[str, list[str]]):
 
     return len(paths)
 
-
-
-def find_paths(devices: dict[str, list[str]], final: str) -> set[str]:
-    queue = deque[list[str]]()
-    queue.append(['svr'])
-
-    paths = set[str]()
-    while queue:
-        path = queue.popleft()
-        node = path[-1]
-
-        for dest in devices[node]:
-            if dest == 'out':
-                continue
-            if dest == final:
-                paths.add(','.join(path + [dest]))
-                print('Found path:', path + [dest])
-                continue
-            if dest in path:
-                continue
-            new_path = list(path)
-            new_path.append(dest)
-            queue.append(new_path)
-
-    return paths
-
 def part_two(devices: dict[str, list[str]]):
     """Solution to part two."""
-    fft = find_paths(devices, 'fft')
-    print('fft paths:', len(fft))
-    dac = find_paths(devices, 'dac')
-    print('dac paths:', len(dac))
+    @lru_cache(maxsize=None)
+    def dfs(src:str, dst:str) -> int:
+        if src == dst:
+            return 1
+        
+        return sum(dfs(nxt, dst) 
+                   for nxt in devices.get(src, []))
+    
+    return (
+        dfs('svr', 'fft') * dfs('fft', 'dac') * dfs('dac', 'out') +
+        dfs('svr', 'dac') * dfs('dac', 'fft') * dfs('fft', 'out') 
+    )
+
 
 
 def main():
@@ -72,7 +52,7 @@ def main():
         devices[df] = dt
         
 
-    # print('part_one', part_one(devices))
+    print('part_one', part_one(devices))
 
     print('part_two', part_two(devices))
 
