@@ -1,10 +1,7 @@
 """2025 Day 10: Factory"""
+from collections import deque
 import fileinput
-import heapq
-import re
-from collections import deque, defaultdict, Counter
-from functools import lru_cache
-from utils import perf_timer
+from z3 import Int, Optimize, Sum
 
 Lights = list[bool]
 Button = list[int]
@@ -45,41 +42,24 @@ def to_bits(button: Button, size: int) -> list[int]:
         bits[idx] = 1
     return bits
 
-@perf_timer
 def min_presses_joltage(machine: Machine) -> int:
     """Simulate machine switching and return number presses to match the joltage requirement."""
-    _, buttons, required_joltage = machine
+    equations = determine_equations(machine)
+    variables = {v: Int(v) for v in sorted({v for q, _ in equations for v in q})}
 
-    button_bits = [to_bits(button, len(required_joltage)) for button in buttons]
+    o = Optimize()
 
-    def check(current_joltage: list[int]) -> bool:
-        return all(c <= r for c, r in zip(current_joltage, required_joltage))
+    for v in variables.values():
+        o.add(v >= 0)
 
-    def dist(a: Joltage) -> int:
-        """Calculate distance between two joltage states."""
-        b = required_joltage
-        return sum(abs(x - y) for x, y in zip(a, b))
+    for eq, target in equations:
+        o.add(Sum(*[variables[v] for v in eq]) == target)
 
-    queue: list[tuple[int, int, Joltage]] = []
-    queue.append((0, 0, [0] * len(required_joltage)))
+    h = o.minimize(Sum(*variables.values()))
 
-    visited: set[tuple[int, ...]] = set()
-
-    while queue:
-        _, presses, joltage = heapq.heappop(queue)
-        if joltage == required_joltage:
-            return presses
-
-        state = tuple(joltage)
-        if state in visited:
-            continue
-        
-        for button in button_bits:
-            new_joltage = [a+b for a, b in zip(joltage, button)]
-            if check(new_joltage):
-                heapq.heappush(queue, (dist(new_joltage), presses + 1, new_joltage))
-
-    assert False, "Shouldn't reach here"
+    o.check()
+    # print(o.model())
+    return h.value().as_long()
 
 def determine_equations(machine: Machine) -> list[tuple[list[str], int]]:
     """Print the system of joltage equations for the machine."""
@@ -94,21 +74,14 @@ def determine_equations(machine: Machine) -> list[tuple[list[str], int]]:
         equations.append((equation, jolt))
     return equations
 
-@perf_timer
 def part_one(machines: list[Machine]):
     """Solution to part one."""
     return sum(min_presses_light(m) for m in machines)
 
-@perf_timer
 def part_two(machines: list[Machine]):
     """Solution to part two."""
-    for m in machines:
-        eq = determine_equations(m)
-        print('Machine:', m)
-        print(eq)
-        print()
+    return sum(min_presses_joltage(m) for m in machines)
 
-    print(list(min_presses_joltage(m) for m in machines))
     
 
 
