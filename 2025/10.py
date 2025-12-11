@@ -102,13 +102,13 @@ def part_one(machines: list[Machine]):
 @perf_timer
 def part_two(machines: list[Machine]):
     """Solution to part two."""
-    # return sum(min_presses_joltage(m) for m in machines)
     for m in machines:
         eq = determine_equations(m)
         print('Machine:', m)
         print(eq)
         print()
 
+    print(list(min_presses_joltage(m) for m in machines))
     
 
 
