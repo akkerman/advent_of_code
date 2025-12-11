@@ -30,3 +30,52 @@ input al niet binnen 2 minuten.
 
 Een inzicht hier is te beseffen dat, hoewel het bij deel 1 wel zo was, de
 *volgorde van drukken van knoppen niet meer relevant* is.
+
+Wat er blijkbaar voornamelijk aan de hand is, na wat dingen op reddit gelezen te hebben en met chatgtpt gesparred te hebben, dat dit geen zoek probleem meer is. En zelfs lastig te doen is met [[id:a3ad2337-1bfd-4611-ba70-f8a07ef2189d][dynamic programming]].
+
+Blijkbaar gaat het hier om het oplossen van een stelsel vergelijkingen.
+
+Neem het allereerste voorbeeld =[.##.] (3) (1,3) (2) (2,3) (0,2) (0,1) {3,5,4,7}=.
+
+Als we de knoppen nummeren van 1 tm 6 dan komen we op deze vergelijkingen, hierin is b.v. x₁ het aantal keren dat op de eerste knop =(3)= gedrukt wordt en x₅ gaat over =(0,2)=.
+
+#+begin_quote
+x5 + x6 = 3
+x2 + x6 = 5
+x3 + x4 + x5 = 4
+x1 + x2 + x4 = 7
+#+end_quote
+
+Waarbij elke xi een geheel getal moet zijn >= 0
+
+Geautomatiseerd (begin met tellen vanaf 0 ipv 1):
+
+#+begin_src python
+Lights = list[bool]
+Button = list[int]
+Joltage = list[int]
+Machine = tuple[Lights, list[Button], Joltage]
+
+def determine_equations(machine: Machine) -> list[tuple[list[str], int]]:
+    """Print the system of joltage equations for the machine."""
+    _, buttons, joltage = machine
+
+    equations = list[tuple[list[str], int]]()
+    for idx, jolt in enumerate(joltage):
+        equation = list[str]()
+        for b_idx, button in enumerate(buttons):
+            if idx in button:
+                equation.append(f"x{b_idx}")
+        equations.append((equation, jolt))
+    return equations
+
+machine = ([False, True, True, False], [[3], [1, 3], [2], [2, 3], [0, 2], [0, 1]], [3, 5, 4, 7])
+
+return determine_equations(machine)
+#+end_src
+
+#+RESULTS:
+| (x4 x5)    | 3 |
+| (x1 x5)    | 5 |
+| (x2 x3 x4) | 4 |
+| (x0 x1 x3) | 7 |

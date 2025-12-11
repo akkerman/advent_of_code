@@ -47,7 +47,7 @@ def to_bits(button: Button, size: int) -> list[int]:
 
 @perf_timer
 def min_presses_joltage(machine: Machine) -> int:
-    """Simulate machine switching and return number pressesn to match the joltage requirement."""
+    """Simulate machine switching and return number presses to match the joltage requirement."""
     _, buttons, required_joltage = machine
 
     button_bits = [to_bits(button, len(required_joltage)) for button in buttons]
@@ -81,6 +81,19 @@ def min_presses_joltage(machine: Machine) -> int:
 
     assert False, "Shouldn't reach here"
 
+def determine_equations(machine: Machine) -> list[tuple[list[str], int]]:
+    """Print the system of joltage equations for the machine."""
+    _, buttons, joltage = machine
+
+    equations = list[tuple[list[str], int]]()
+    for idx, jolt in enumerate(joltage):
+        equation = list[str]()
+        for b_idx, button in enumerate(buttons):
+            if idx in button:
+                equation.append(f"x{b_idx}")
+        equations.append((equation, jolt))
+    return equations
+
 @perf_timer
 def part_one(machines: list[Machine]):
     """Solution to part one."""
@@ -89,7 +102,12 @@ def part_one(machines: list[Machine]):
 @perf_timer
 def part_two(machines: list[Machine]):
     """Solution to part two."""
-    return sum(min_presses_joltage(m) for m in machines)
+    # return sum(min_presses_joltage(m) for m in machines)
+    for m in machines:
+        eq = determine_equations(m)
+        print('Machine:', m)
+        print(eq)
+        print()
 
     
 

@@ -9,6 +9,7 @@ python-dotenv = "*"
 requests = "*"
 pyright = "*"
 pytest = "*"
+z3-solver = "*"
 
 [dev-packages]
 
