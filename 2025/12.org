@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       ded3fafa-07ae-4029-9b82-d1115b407404
+:END:
+#+title: 2025 Day 12: Christmas Tree Farm
+#+filetags: :python:
+
+- tags :: [[id:9ca8d2df-3d97-4829-b2b8-db7e08b504ac][aoc2025]]
+
+* Part One
+
+Een inpak puzzel anders dan iets verzinnen om dit brute force te doen zou ik niet weten...
+
+* Part Two
