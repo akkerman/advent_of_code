@@ -1,31 +1,32 @@
 """2025 Day 12: Christmas Tree Farm"""
 import fileinput
-import heapq
 import re
-from collections import deque, defaultdict, Counter
-from functools import lru_cache
-from utils import perf_timer
 
 Coord = tuple[int, int]
+Present = list[Coord]
 BoundingBox = tuple[int, int]
-Requirements = tuple[int, int, int, int, int, int]
+Requirements = list[int]
 Region = tuple[BoundingBox, Requirements]
 
-def part_one(lines):
+def part_one(presents: dict[int,Present], regions: list[Region]):
     """Solution to part one."""
-    return 'todo'
+    present_areas = [len(present) for present in presents.values()]
 
+    count: int = 0
+    for region in regions:
+        (width, length), num_presents = region
+        region_area = width * length
 
-def part_two(lines):
-    """Solution to part two."""
-    return 'todo'
+        present_area = sum([n * a for n, a in zip(num_presents, present_areas)])
+        if present_area <= region_area:
+            count += 1
+
+    return count
 
 re_region = re.compile(r'(.+)x(.+): (.+) (.+) (.+) (.+) (.+) (.+)')
 
 def main():
     """Parse input file, pass to puzzle solvers."""
-    lines = []
-
     present_id = 0
     presents: dict[int, list[Coord]] = {}
     y: int = 0
@@ -36,10 +37,7 @@ def main():
             m = re_region.match(line)
             assert m is not None
             ints = [int(i) for i in m.groups()]
-            region: Region = (
-                    tuple(ints[:2]),
-                    tuple(ints[2:])
-            )
+            region: Region = ((ints[0], ints[1]), ints[2:])
             regions.append(region)
         else:
 
@@ -65,10 +63,7 @@ def main():
         print(region)   
 
 
-    print('part_one', part_one(lines))
-
-    print('part_two', part_two(lines))
-
+    print('part_one', part_one(presents, regions))
 
 if __name__ == '__main__':
     main()
