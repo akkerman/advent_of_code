@@ -70,3 +70,5 @@ Leuk om later eens naar te kijken wellicht maar omdat de puzzel is opgelost,
 duurt <1s en code is nu m.i. goed te volgen is het wel mooi zo.
 
 * STRT Union find
+
+Aller eerst de implementatie gecopieerd van [[https://www.geeksforgeeks.org/dsa/introduction-to-disjoint-set-data-structure-or-union-find-algorithm/][Introduction to Disjoint Set (Union-Find Data Structure) - GeeksforGeeks]].
