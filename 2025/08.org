@@ -46,7 +46,7 @@ op elk punt dat je een circuit uitbreid of samenvoegt check even of het circuit
 gelijk zo groot is als het totaal aantal junction boxes. Op dat moment doe je de
 gevraagde berekening met de twee boxes die je dan onderhanden hebt.
 
-* TODO refactor
+* DONE refactor
 
 Dit is allemaal achter elkaar door geschreven. Een refactor slag is op z'n plek wil ik dit later nog eens rustig kunnen nalezen.
 
@@ -68,3 +68,5 @@ def pairs_sorted_by_distance(locs: list[Coord]) -> list[Pair]:
 Voor de functie create_circuits stelt chatgpt een union find voor... zie o.a. [[https://en.wikipedia.org/wiki/Disjoint-set_data_structure][Disjoint-set data structure - Wikipedia]]
 Leuk om later eens naar te kijken wellicht maar omdat de puzzel is opgelost,
 duurt <1s en code is nu m.i. goed te volgen is het wel mooi zo.
+
+* STRT Union find

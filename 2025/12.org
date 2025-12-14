@@ -10,7 +10,7 @@
 
 Een inpak puzzel anders dan iets verzinnen om dit brute force te doen zou ik niet weten...
 
-Tijdens het ontbijt bedacht ik me: een set puzzel stukjes past niet als de
+Tijdens het ontbijt bedacht ik me: een set puzzelstukjes past niet als de
 totale oppervlakte groter is dan de grid, dus ik kan iig al een aantal van te
 voren uitsluiten. En toen dacht ik "wat nu als dat het antwoord gewoon is?" en
 dan blijkt dus gewoon zo te zijn LOL.
