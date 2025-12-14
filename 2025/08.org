@@ -71,4 +71,14 @@ duurt <1s en code is nu m.i. goed te volgen is het wel mooi zo.
 
 * STRT Union find
 
-Aller eerst de implementatie gecopieerd van [[https://www.geeksforgeeks.org/dsa/introduction-to-disjoint-set-data-structure-or-union-find-algorithm/][Introduction to Disjoint Set (Union-Find Data Structure) - GeeksforGeeks]].
+Aller eerst de implementatie gecopieerd van [[https://www.geeksforgeeks.org/dsa/introduction-to-disjoint-set-data-structure-or-union-find-algorithm/][Introduction to Disjoint Set
+(Union-Find Data Structure) - GeeksforGeeks]]. Daarin is al een voorbeeld van het
+bijhouden van de size van de sets tbv welke set onder welke andere set gemerged
+kan worden.
+
+Na 1000 iteraties lezen we die uit en vermenigvuldigen we de 3 grootste getallen.
+
+Voor deel 2 subclass toegevoegd die bij het aantal sets initialissert op het
+aantal locatie en bij elke wijziging, nav een unite, dit getal verlaagt. Zodra
+deze 1 geworden is doen we de vermenigvuldiging van de gevraagde delen van
+locaties.
