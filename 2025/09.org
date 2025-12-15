@@ -14,5 +14,52 @@ Ja maar die area is niet gewoon maar iets met punten dus verschil van die coord 
 
 * Part Two
 
-Is dit niet area uitrekenen maar dan moet er nog 1 additioneel punt uit de input
-ergens op de lijn van die area liggen?
+Dus vind het grootste rechthoek wat volledig bestaat binnen de polygoon (of op
+de edges) die gevormd wordt door de tiles met elkaar, op volgorde te verbinden.
+
+Floodfill om de zgn groene tegels te maken is *veel* te intensief vanwege de grote afstanden.
+
+Met chatgpt een brainstorm sessie gedaan om te kijken hoe zoiets op te lossen valt, samenvatting:
+
+1. genereer de vierkanten obv twee punten uit de gegeven set
+2. kijk of de andere twee punten binnen de polygoon vallen middels [[https://en.wikipedia.org/w/index.php?title=Point_in_polygon&section=1#Ray_casting_algorithm][ray casting]]
+3. kijk of geen van de 4 zijden een lijn in het polygoon snijden
+
+Na wat heen en weer gesteggel kwamen we op een algorithme. Het duurde even
+voordat ik doorhad waarom het 'all purpose' algorithm ingewikkelder was dan ik
+verwachtte. Dit is omdat deze rekening houd metschuine lijnen en die zijn er nu
+niet. Dus al ik een ray cast naar rechts dan hoe ik alleen te kijken naar
+vertikalen lijnen en 1 punt, bovenste of onderste hoef ik niet te tellen. Het
+doet me een beetje denken aan [[id:edb6e244-0975-4cc0-84cd-8a458021b46c][2023 Day 10: Pipe Maze]].
+
+Het algorithme hieronder bepaalt het aantal snijpunten met de lijn vanuit het punt naar rechts met alle edges van de polygoon. Als dit aantal oneven is dan valt het punt binnen de polygoon.
+
+#+begin_src python
+def point_polygon(test: Coord, tiles: list[Coord]) -> int:
+    """Ray-casting algorithm to determine if point is in polygon."""
+    px,py = test
+    intersections = sum(1
+               for (x1,y1), (x2,y2) in zip(tiles, tiles[1:]+[tiles[0]])
+               if px < x1  and x1 == x2 and (y1 > py) != (y2 > py)
+               )
+    return intersections % 2 == 1
+#+end_src
+
+Het algorithme hieronder bepaalt of twee lijnen elkaar snijden. De eindpunten
+moeten strikt kleiner zijn want ze mogen elkaar wel raken (op de poly is in de
+poly).
+
+#+begin_src python
+def do_intersect(edge1: tuple[Coord, Coord], edge2: tuple[Coord, Coord]) -> bool:
+    """Check if two edges intersect."""
+    (px1,py1), (qx1,qy1) = edge1
+    (px2,py2), (qx2,qy2) = edge2
+    if is_parallel(edge1, edge2):
+        return False
+    if px1 == qx1:  # edge1 is vertical
+        assert(py2 == qy2)
+        return min(py1,qy1) < py2 < max(py1,qy1) and min(px2, qx2) < px1 < max(px2,qx2)
+    else:  # edge1 is horizontal
+        assert(px2 == qx2)
+        return min(py2,qy2) < py1 < max(py2,qy2) and min(px1,qx1) < px2 < max(px1, qx1)
+#+end_src

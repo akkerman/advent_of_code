@@ -7,8 +7,10 @@ from functools import lru_cache
 from utils import perf_timer
 
 from itertools import combinations
+import subprocess
 
 Coord = tuple[int, int]
+Edge = tuple[Coord, Coord]
 
 def area(a: Coord, b: Coord) -> int:
     """Calculate area of rectangle defined by two coords."""
@@ -20,11 +22,17 @@ def part_one(tiles: list[Coord]):
     """Solution to part one."""
     return max(area(a,b) for a,b in combinations(tiles, 2))
 
+def sorted_edges(tiles: list[Coord]) -> list[tuple[int, Edge]]:
+    """Return list of polygon edges sorted distant to eachother."""
+    edges:list[tuple[int,Edge]] = []
 
-def part_two(tiles: list[Coord]):
-    """Solution to part two."""
+    for edge in zip(tiles, tiles[1:]+[tiles[0]]):
+        (x1,y1), (x2,y2) = edge
+        distance = abs(x1 - x2) + abs(y1 - y2)
+        edges.append((distance, edge))
 
-    return 'todo'
+    return sorted(edges, key=lambda e: -e[0])
+
 
 def point_polygon(test: Coord, tiles: list[Coord]) -> int:
     """Ray-casting algorithm to determine if point is in polygon."""
@@ -59,14 +67,50 @@ def do_intersect(edge1: tuple[Coord, Coord], edge2: tuple[Coord, Coord]) -> bool
     if is_parallel(edge1, edge2):
         return False
     if px1 == qx1:  # edge1 is vertical
-        return (min(py2,qy2) <= py1 <= max(py2,qy2)) and (min(px1,qx1) <= px2 <= max(px1,qx1))
+        assert(py2 == qy2)
+        return min(py1,qy1) < py2 < max(py1,qy1) and min(px2, qx2) < px1 < max(px2,qx2)
     else:  # edge1 is horizontal
-        return (min(px2,qx2) <= px1 <= max(px2,qx2)) and (min(py1,qy1) <= py2 <= max(py1,qy1))
+        assert(px2 == qx2)
+        return min(py2,qy2) < py1 < max(py2,qy2) and min(px1,qx1) < px2 < max(px1, qx1)
+
+
+def part_two(tiles: list[Coord]):
+    """Solution to part two."""
+    return 'todo'
 
 def polygon_is_axis_aligned(tiles: list[Coord]) -> bool:
     """Check if all polygon edges are axis-aligned."""
     return all(x1 == x2 or y1 == y2 
                for (x1,y1), (x2,y2) in zip(tiles, tiles[1:]+[tiles[0]]))
+
+def plot_polygon(tiles: list[tuple[int, int]]) -> None:
+    scale = 100
+    with open('09-polygon.dot', 'w') as f:
+        f.write('graph polygon {\n')
+        f.write('   layout = neato;\n')
+        f.write('   node [shape=point];\n')
+
+        for idx, (x, y) in enumerate(tiles):
+            f.write(f'     p{idx} [pos="{x/scale},{y/scale}!"];\n')
+            
+        idxs = list(range(len(tiles))) + [0]
+        for i in range(len(tiles)):
+            f.write(f'     p{idxs[i]} -- p{idxs[i+1]};\n')
+
+        f.write('}\n')
+
+    subprocess.run(
+    [
+        "neato",
+        "-n",
+        "-s0.1",
+        "-Tpng",
+        "09-polygon.dot",
+        "-o",
+        "09-polygon.png",
+    ],
+    check=True,
+    )
 
 
 def main():
@@ -78,13 +122,13 @@ def main():
         assert(len(coord) == 2)
         tiles.append(coord)
 
-
+    # plot_polygon(tiles)
 
     # all polygon edges are axis-aligned
-    assert polygon_is_axis_aligned(tiles)
+    # assert polygon_is_axis_aligned(tiles)
 
-
-    print(point_polygon((10,5), [(20,0),(20, 5), (30, 5), (30,10), (5,10), (5,0)]))
+    for entry in sorted_edges(tiles)[:5]:
+        print(entry)
 
     print('part_one', part_one(tiles))
 
