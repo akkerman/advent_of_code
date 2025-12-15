@@ -69,7 +69,8 @@ Voor de functie create_circuits stelt chatgpt een union find voor... zie o.a. [[
 Leuk om later eens naar te kijken wellicht maar omdat de puzzel is opgelost,
 duurt <1s en code is nu m.i. goed te volgen is het wel mooi zo.
 
-* STRT Union find
+* DONE Union find
+CLOSED: [2025-12-14 Sun 19:34]
 
 Aller eerst de implementatie gecopieerd van [[https://www.geeksforgeeks.org/dsa/introduction-to-disjoint-set-data-structure-or-union-find-algorithm/][Introduction to Disjoint Set
 (Union-Find Data Structure) - GeeksforGeeks]]. Daarin is al een voorbeeld van het
@@ -82,3 +83,5 @@ Voor deel 2 subclass toegevoegd die bij het aantal sets initialissert op het
 aantal locatie en bij elke wijziging, nav een unite, dit getal verlaagt. Zodra
 deze 1 geworden is doen we de vermenigvuldiging van de gevraagde delen van
 locaties.
+
+Ok bij deze implementatie kostte het sorteren van alle paren het meeste tijd.
