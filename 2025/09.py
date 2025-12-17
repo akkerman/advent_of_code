@@ -74,9 +74,29 @@ def do_intersect(edge1: tuple[Coord, Coord], edge2: tuple[Coord, Coord]) -> bool
         return min(py2,qy2) < py1 < max(py2,qy2) and min(px1,qx1) < px2 < max(px1, qx1)
 
 
+
+
 def part_two(tiles: list[Coord]):
     """Solution to part two."""
-    return 'todo'
+    def rect_in_polygon(a: Coord, b: Coord) -> bool:
+        """Determine if rectangle defined by two coords is fully inside polygon."""
+        corners = [a, (a[0], b[1]), b, (b[0], a[1])]
+        if any(not point_polygon(corner, tiles) for corner in corners):
+            return False
+
+        rectangle_edges = list(zip(corners, corners[1:]+[corners[0]]))
+        for polygon_edge in zip(tiles, tiles[1:]+[tiles[0]]):
+            for rectangle_edge in rectangle_edges:
+                if do_intersect(rectangle_edge, polygon_edge):
+                    return False
+
+        return True
+
+    def area_if_inside(a: Coord, b: Coord) -> int:
+        """Calculate area of rectangle defined by two coords if fully inside polygon."""
+        return area(a,b) if rect_in_polygon(a,b) else 0
+
+    return max(area_if_inside(a,b) for a,b in combinations(tiles, 2))
 
 def polygon_is_axis_aligned(tiles: list[Coord]) -> bool:
     """Check if all polygon edges are axis-aligned."""
@@ -127,8 +147,8 @@ def main():
     # all polygon edges are axis-aligned
     # assert polygon_is_axis_aligned(tiles)
 
-    for entry in sorted_edges(tiles)[:5]:
-        print(entry)
+    # for entry in sorted_edges(tiles)[:5]:
+    #     print(entry)
 
     print('part_one', part_one(tiles))
 

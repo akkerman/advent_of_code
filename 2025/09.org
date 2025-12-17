@@ -63,3 +63,28 @@ def do_intersect(edge1: tuple[Coord, Coord], edge2: tuple[Coord, Coord]) -> bool
         assert(px2 == qx2)
         return min(py2,qy2) < py1 < max(py2,qy2) and min(px1,qx1) < px2 < max(px1, qx1)
 #+end_src
+
+Als ik dit voor elke combinatie van paren bijelkaar neem
+
+- bepaal, bij twee coordinaten, de andere coordinaten van de rechthoek
+- controleer dat ze beide in de polygoon liggen
+- controleer dat er geen intersecties met de polygoon zijn
+- we hebben een geldige rechthoek
+
+#+begin_src python
+    def rect_in_polygon(a: Coord, b: Coord) -> bool:
+        """Determine if rectangle defined by two coords is fully inside polygon."""
+        corners = [a, (a[0], b[1]), b, (b[0], a[1])]
+        if any(not point_polygon(corner, tiles) for corner in corners):
+            return False
+
+        rectangle_edges = list(zip(corners, corners[1:]+[corners[0]]))
+        for polygon_edge in zip(tiles, tiles[1:]+[tiles[0]]):
+            for rectangle_edge in rectangle_edges:
+                if do_intersect(rectangle_edge, polygon_edge):
+                    return False
+        return True
+#+end_src
+
+
+en dan is het een kwestie van de max bepalen van elke area van elk geldige rechthoek
