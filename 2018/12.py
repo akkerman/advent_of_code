@@ -7,6 +7,7 @@ from functools import lru_cache
 from utils import perf_timer
 
 
+
 def generation(plants: dict[int, str], spread_notes: dict[str, str]) -> dict[int, str]:
     """Generate next generation of plants based on spread notes."""
     new_plants: dict[int, str] = {}
@@ -21,6 +22,18 @@ def generation(plants: dict[int, str], spread_notes: dict[str, str]) -> dict[int
         new_plants[i] = spread_notes.get(pattern, '.')
     return new_plants
 
+def generation2(plants: str, spread_notes: dict[str, str]) -> str:
+    """Generate next generation of plants based on spread notes."""
+    new_plants: list[str] = []
+
+    padded_plants = '....' + plants + '....'
+
+    for i in range(2, len(padded_plants) - 2):
+        pattern = padded_plants[i - 2:i + 3]
+        new_plants.append(spread_notes.get(pattern, '.'))
+    return ''.join(new_plants)
+
+@perf_timer
 def part_one(spread_notes: list[tuple[str, str]], initial_state: str):
     """Solution to part one."""
     plants: dict[int, str] = {
@@ -33,9 +46,28 @@ def part_one(spread_notes: list[tuple[str, str]], initial_state: str):
     return sum(i for i, pot in plants.items() if pot == '#')
 
 
-def part_two(lines):
+@perf_timer
+def part_two(spread_notes: list[tuple[str, str]], initial_state: str) -> int:
     """Solution to part two."""
-    return 'todo'
+    plants: str = initial_state
+    seen: dict[int, int] = {}
+    for i in range(50000000000):
+        plants = generation2(plants, dict(spread_notes))
+        offset = (i + 1) * 2
+        total = sum(i - offset for i, pot in enumerate(plants) if pot == '#')
+        if total in seen:
+            cycle_length = i - seen[total]
+            remaining_cycles = (50000000000 - i - 1) // cycle_length
+            total += remaining_cycles * cycle_length
+            return total
+        seen[total] = i
+
+
+    assert False, "Shouldn't reach here"
+
+
+
+
 
 
 def main():
@@ -54,7 +86,7 @@ def main():
 
     print('part_one', part_one(spread_notes, initial_state))
 
-    print('part_two', part_two(spread_notes))
+    print('part_two', part_two(spread_notes, initial_state))
 
 
 if __name__ == '__main__':
